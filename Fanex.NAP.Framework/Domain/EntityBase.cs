@@ -1,0 +1,47 @@
+﻿// --------------------------------------------------------------------------
+// <copyright file="EntityBase.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Anders.Le" date="2012.6.6">Created</change>
+// </history>
+
+namespace Fanex.NAP.Framework.Domain
+{
+    using System;
+
+    /// <summary>
+    /// base entity
+    /// </summary>
+    /// <typeparam name="TId">The type of the id.</typeparam>
+    /// <typeparam name="TName">The type of the name.</typeparam>
+    public class EntityBase<TId, TName> : IEntity<TId, TName>
+    {
+        TId IEntity<TId, TName>.Id
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        TName IEntity<TId, TName>.Name
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+    }
+}

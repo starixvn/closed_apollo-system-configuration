@@ -1,0 +1,94 @@
+﻿@using Fanex.NAP.Core.Criteria.User
+@model PagerList<IUser>
+<div class="grid-wrp pnl-wrp no-scale">
+    <div class="pnl-header">
+        <div class="pnl-header-content">
+            &nbsp;</div>
+        <div class="pnl-header-toggle">
+        </div>
+    </div>
+    <div class="pnl-body">
+        <table class="grid no-scale">
+            <thead>
+                <tr>
+                    <th class="first">
+                        @ViewResources.Username
+                    </th>
+                    <th>
+                        @ViewResources.First_Name
+                    </th>
+                    <th>
+                        @ViewResources.Last_Name
+                    </th>
+                    <th>
+                        @ViewResources.Add
+                    </th>
+                </tr>
+            </thead>
+            <tbody id="grid-user">
+                @if (Model != null && Model.Count() > 0)
+                {
+                    int i = 0;
+
+                    foreach (var item in Model)
+                    {
+                        string row_class = i % 2 == 0 ? "class='alt'" : string.Empty;
+
+                    <tr @Html.Raw(row_class)>
+                        <td>
+                            @item.Username
+                        </td>
+                        <td>
+                            @item.FirstName
+                        </td>
+                        <td>
+                            @item.LastName
+                        </td>
+                        <td class="align-center">
+                            <a uid="@item.Id" uname="@item.Username" href="javascript:;"
+                                class="btn-add-user">@ViewResources.Add</a>
+                        </td>
+                    </tr>
+
+                        i++;
+                    }
+                }
+                else
+                {
+                    <tr class="no-info">
+                        <td class="align-center" colspan="4">
+                            @ViewResources.NoInformationAvailable
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="12">
+                        @if (Model != null && Model.Count() > 0)
+                        {
+                            <span class="items-per-page-wrp">@ViewResources.Show
+                                @Html.DropDownList("items-per-page", new List<SelectListItem> {
+							new SelectListItem { Value = "10", Text = "10", Selected = "10" == Model.PageSize.ToString() },
+							new SelectListItem { Value = "20", Text = "20", Selected = "20" == Model.PageSize.ToString() },
+							new SelectListItem { Value = "30", Text = "30", Selected = "30" == Model.PageSize.ToString() }
+						}, new { id = string.Empty, @class = "items-per-page" })</span>
+
+                            @Html.AjaxPager(Model, new PagerOptions()
+                            {
+                                PageIndexParameterName = "id",
+                                ShowFirstLast = true,
+                                CurrentPagerItemWrapperFormatString = "<a class='jp-current'>{0}</a>"
+                            }, new AjaxOptions
+                            {
+                                UpdateTargetId = "grid-wrp",
+                                OnBegin = "NAP.loadingBox.show()",
+                                OnComplete = "NAP.loadingBox.close()"
+                            }, new { @class = "jpages" })
+                        }
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>

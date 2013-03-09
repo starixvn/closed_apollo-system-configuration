@@ -1,0 +1,79 @@
+﻿@model Group
+@{
+    Layout = null;
+}
+@if (!ReferenceEquals(Model, null))
+{
+	<div class="form details w120">
+		<div class="form-row">
+			<div class="lbl-field">
+				@Html.Label(ViewResources.Name)
+			</div>
+			<div class="edit-field">
+				@Html.Label(Model.Name)
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="lbl-field">
+				@Html.Label(ViewResources.Description)
+			</div>
+			<div class="edit-field">
+				<label>@(Model.Description != null ? Model.Description : string.Empty)</label>
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="lbl-field">
+				@Html.Label(ViewResources.Status)
+			</div>
+			<div class="edit-field">
+				<label>@(Model.IsActive ? ViewResources.Active : ViewResources.Inactive)<label>
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="lbl-field">
+				@Html.Label(ViewResources.Created_Date)
+			</div>
+			<div class="edit-field">
+				@if (Model.CreatedDate != DateTime.MinValue)
+				{
+					@Model.CreatedDate.ToFullDateString()
+				}
+				else
+				{
+					<label>@ViewResources.NA</label>
+				}
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="lbl-field">
+				@Html.Label(ViewResources.Creator)
+			</div>
+			<div class="edit-field">
+				<label>@(Model.Creator != null ? Model.Creator.Username : string.Empty)</label>
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="lbl-field">
+				@Html.Label(ViewResources.Modified_Date)
+			</div>
+			<div class="edit-field">
+				@if (Model.ModifiedDate != DateTime.MinValue)
+				{
+					@Model.ModifiedDate.ToFullDateString()
+				}
+				else
+				{
+					<label>@ViewResources.NA</label>
+				}
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="lbl-field">
+				@Html.Label(ViewResources.Modifier)
+			</div>
+			<div class="edit-field">
+				<label>@(Model.Modifier != null ? Model.Modifier.Username : string.Empty)</label>
+			</div>
+		</div>
+	</div>
+}

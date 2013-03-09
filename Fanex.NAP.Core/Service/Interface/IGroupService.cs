@@ -1,0 +1,52 @@
+﻿// --------------------------------------------------------------------------
+// <copyright file="IGroupService.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Anders.Le" date="2012.8.2">Created</change>
+// </history>
+
+namespace Fanex.NAP.Core.Service.Interface
+{
+    using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Web.Mvc;
+    using Fanex.NAP.Core.Criteria.Group;
+    using Fanex.NAP.Core.Domain;
+    using Fanex.NAP.Core.Model.ValueObject;
+    using Fanex.NAP.Framework.Data;
+    using Fanex.NAP.Core.Business;
+
+    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    public interface IGroupService : IBaseService
+    {
+        IGroup GetByUser(int userId);
+
+        IGroup GetById(int id);
+
+        IGroup GetByName(string name);
+
+        IEnumerable<IGroup> GetAll(bool? isActive = null);
+
+        /// <summary>
+        /// Searches group by group name,site, but excludes ones who was assigned
+        /// the function (functionId) already
+        /// </summary>
+        IEnumerable<IGroup> SearchGroupExcludeFunction(string groupName, int siteId = 0, int functionId = 0);
+
+        IList<SelectListItem> GetAllSelectListItem(bool? isActive = null, int selectedGroupId = 0);
+
+        IEnumerable<GroupPolicy> GetByFunctionAndSite(int functionId, int siteId);
+
+        IEnumerable<IGroup> GetAllWithNumOfUser(string name, string env = Constant.UAT, bool? isActive = null);
+
+        ICommandResult AssignFunction(AssignFunctionGroupCriteria function);
+
+        ICommandResult UpdateStatus(UpdateStatusGroupCriteria entity);
+
+        ICommandResult Insert(InsertGroupCriteria entity);
+
+        ICommandResult Update(UpdateGroupCriteria entity);
+    }
+}

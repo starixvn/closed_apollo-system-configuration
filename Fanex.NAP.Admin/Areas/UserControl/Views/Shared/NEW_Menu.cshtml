@@ -1,0 +1,50 @@
+﻿@using Fanex.NAP.Core.Model
+
+@{
+	var menuDic = ViewBag.MenuDic as Dictionary<SiteUrl, List<IMenuItem>>;
+	var napId = ViewBag.ServiceContext.SiteId;
+}
+<nav nid="@napId">
+	<ul class="menu">
+@foreach (var siteUrlMenu in menuDic)
+{
+	var siteUrl = siteUrlMenu.Key;
+	var lvl1Menu = siteUrlMenu.Value.Where(m => m.Parent == null).OrderBy(m => m.DisplayOrder).ToList();
+
+	if (lvl1Menu.Any())
+	{
+	<li class="has-kids" sid="@siteUrl.Site.Id" suid="@siteUrl.SiteUrlId" su="@siteUrl.Url"><a href="javascript:;">@siteUrl.Site.Name</a>
+		<ul>
+		@for (int i = 0; i < lvl1Menu.Count; i++)
+		{
+			var lvl1MenuItem = lvl1Menu[i];
+			var lvl2Menu = siteUrlMenu.Value.Where(x => x.Parent != null && x.Parent.Id == lvl1MenuItem.Id).OrderBy(x => x.DisplayOrder).ToList();
+
+			if (lvl2Menu.Any())
+			{
+			<li class="has-kids"><a href="javascript:;">@lvl1MenuItem.Name</a>
+				<ul>
+				@foreach (var lvl2MenuItem in lvl2Menu)
+				{
+					string url = siteUrl.Site.Id == napId ? Url.Content(lvl2MenuItem.GetValidUrl()) : lvl2MenuItem.Url;
+					<li><a href="@url">@lvl2MenuItem.Name</a></li>
+				}
+				</ul>
+			</li>
+			}
+			else
+			{
+				string url = siteUrl.Site.Id == napId ? Url.Content(lvl1MenuItem.GetValidUrl()) : lvl1MenuItem.Url;
+				<li><a href="@url">@lvl1MenuItem.Name</a></li>
+			}
+		}
+		</ul>
+	</li>
+	}
+	else
+	{
+	<li sid="@siteUrl.Site.Id" suid="@siteUrl.SiteUrlId"><a href="javascript:;">@siteUrl.Site.Name</a></li>
+	}
+}
+	</ul>
+</nav>

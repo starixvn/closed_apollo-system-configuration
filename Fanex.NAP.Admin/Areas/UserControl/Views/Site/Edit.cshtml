@@ -1,0 +1,96 @@
+﻿@model UpdateSiteCriteria
+@{
+	ViewBag.Title = ViewResources.Update_Site;
+	bool success = ViewBag.Success != null && ViewBag.Success;
+	var viewFlags = (ViewBag.ViewFlags ?? new ViewFlags { IsLive = false }) as ViewFlags;
+}
+@section Head {
+	<link href="~/Areas/UserControl/themes/nap/site/add-new.less" rel="stylesheet" type="text/css" />
+}
+@section Headline {
+	<h1>
+		<span class="title">
+			<span class="first">@ViewResources.Site @ViewResources.Management /</span>
+			@ViewBag.Title
+		</span>
+		@Html.ActionLink("← " + ViewResources.Back_To_List, "Manage", "Site", null, new { @class = "lnk" })
+	</h1>
+}
+@using (Html.BeginForm())
+{
+	@Html.HiddenFor(m => m.SiteId)
+	<div class="form">
+		<div class="form-row summary">
+			<div class="lbl-field"></div>
+			<div class="edit-field">
+				@Html.ValidationSummary()
+			</div>
+		</div>
+		<div class="form-row required">
+			<div class="lbl-field">
+				@Html.LabelFor(m => m.SiteName)
+			</div>
+			<div class="edit-field">
+				@Html.TextBoxFor(m => m.SiteName)
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="lbl-field">
+				@Html.LabelFor(m => m.Description)
+			</div>
+			<div class="edit-field">
+				@Html.TextBoxFor(m => m.Description)
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="lbl-field">
+				@Html.LabelFor(m => m.IsActive)
+			</div>
+			<div class="edit-field chk-field">
+				@Html.CheckBoxFor(m => m.IsActive)
+				@Html.LabelFor(m => m.IsActive, ViewResources.Active)
+			</div>
+		</div>
+		@if (viewFlags.IsLive)
+		{
+			@Html.HiddenFor(m => m.Environment)
+		}
+		else
+		{
+			<div class="form-row">
+				<div class="lbl-field">
+					@Html.LabelFor(m => m.Environment)
+				</div>
+				<div class="edit-field rdo-field">
+					@Html.RadioButtonListFor(m => m.Environment, new List<SelectListItem>
+					{
+						new SelectListItem { Value = "UAT", Text = ViewResources.UAT },
+						new SelectListItem { Value = "LIVE", Text = ViewResources.LIVE }
+					})
+				</div>
+			</div>
+		}
+		<div class="form-row">
+			<div class="lbl-field"></div>
+			<div class="edit-field">
+				@if (!success)
+				{
+					<input type="submit" value="@ViewResources.Save" />
+					<button class="cancel" onclick="NAP.redirect('Site/Manage', 0); return false;">@ViewResources.Cancel</button>
+				}
+			</div>
+		</div>
+	</div>
+}
+@section Foot {
+	@if (success)
+	{
+		string dialogMsg = string.Format(ViewResources.EditSuccessMsg, Model.SiteName, 3);
+
+		<script type="text/javascript">
+			$(function () {
+				NAP.showSuccessMsg('@dialogMsg', 'Site/Manage', 4000);
+			});
+		</script>
+	}
+}

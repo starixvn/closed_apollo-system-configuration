@@ -1,0 +1,271 @@
+﻿@using Fanex.NAP.Core.Criteria.User
+@model AssignFunctionUserCriteria
+@{
+    var viewFlags = ViewBag.ViewFlags as ViewFlags;
+
+    bool success = ViewBag.Success != null && ViewBag.Success;
+
+    var functionList = ViewBag.FunctionList as List<IFunction>;
+    var userFuncPolicyList = ViewBag.UserFuncPolicyList as List<FunctionPolicy>;
+    var currentUserFuncPolicyList = ViewBag.CurrentUserFuncPolicyList as List<FunctionPolicy>;
+    var groupFuncPolicyList = ViewBag.GroupFuncPolicyList as List<FunctionPolicy>;
+    var adminLevel = (int)ViewBag.AdminLevel;
+    var userLevel = (int)ViewBag.UserLevel;
+    var isAssignable = userLevel < 50; // do not allow assigning permission if the user is site-admin or portal-admin
+
+    ViewBag.Title = ViewResources.Permission;
+    string headline = isAssignable && viewFlags.HasAssignFunctionRight
+        ? string.Format("Assign Permission to User '{0}'", Model.Username)
+        : string.Format("Permission of User '{0}'", Model.Username);
+}
+@section Head {
+    <link href="~/Areas/UserControl/themes/nap/user/assign-permission.less" rel="stylesheet"
+        type="text/css" />
+}
+@section Headline {
+    <h1>
+        <span class="title"><span class="first">@ViewResources.User_Management /</span>
+            @headline
+        </span>
+        @if (Model.SiteId == null)
+        { 
+            @Html.ActionLink("← " + ViewResources.Back_To_List, "Manage", "User", null, new { @class = "lnk" })
+        }
+        else
+        {
+            @Html.ActionLink("← " + ViewResources.Back_To_List, "Manage", "User",
+                new
+                {
+                    siteId = Model.ReturnSiteId,
+                    id = Model.PageIndex,
+                    groupId = Model.GroupId
+                }, new { @class = "lnk" })
+        }
+    </h1>
+}
+@if (viewFlags.IsNapAdminSite)
+{
+    <section id="filter-bar">
+        @using (Html.BeginForm("AssignPermission", "User", FormMethod.Get))
+        {
+            @Html.HiddenFor(m => m.ReturnSiteId)
+            @Html.HiddenFor(m => m.PageIndex)
+            @Html.HiddenFor(m => m.GroupId)
+            <div class="filter-form">
+                <div class="lbl-field width-auto">
+                    @Html.LabelFor(m => m.SiteId)
+                </div>
+                <div class="edit-field">
+                    @Html.DropDownListFor(m => m.SiteId, ViewBag.Sites as List<SelectListItem>)
+                </div>
+                <div class="submit">
+                    <input type="submit" value="@ViewResources.Submit" />
+                </div>
+            </div>
+        }
+    </section>
+}
+@using (Html.BeginForm())
+{
+    <div class="grid-wrp pnl-wrp no-scale">
+        <div class="pnl-header">
+            <div class="pnl-header-content">
+                &nbsp;</div>
+            <div class="pnl-header-toggle">
+            </div>
+        </div>
+        <div class="pnl-body">
+            <table class="grid no-scale">
+                <thead>
+                    <tr>
+                        <th rowspan="2">
+                            @ViewResources.Function
+                        </th>
+                        <th colspan="2">
+                            @ViewResources.User @ViewResources.Permission
+                        </th>
+                        <th colspan="2">
+                            @ViewResources.Group @ViewResources.Permission
+                        </th>
+                    </tr>
+                    <tr>
+                        <th style="width: 50px">
+                            @ViewResources.Read
+                        </th>
+                        <th style="width: 50px">
+                            @ViewResources.Host
+                        </th>
+                        <th style="width: 50px">
+                            @ViewResources.Read
+                        </th>
+                        <th style="width: 50px">
+                            @ViewResources.Host
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (functionList.Count > 0)
+                    {
+                        var functionCount = functionList.Count;
+                        for (int i = 0; i < functionCount; i++)
+                        {
+                            var function = functionList[i];
+                            var userFuncPolicy = userFuncPolicyList.Where(x => x.Function.Id == function.Id).SingleOrDefault();
+                            var currentUserFuncPolicy = currentUserFuncPolicyList.Where(x => x.Function.Id == function.Id).SingleOrDefault();
+                            var groupFuncPolicy = new FunctionPolicy();
+                            if (!ReferenceEquals(groupFuncPolicyList, null))
+                            {
+                                groupFuncPolicy = groupFuncPolicyList.Where(x => x.Function.Id == function.Id).FirstOrDefault();
+                            }
+
+                            var funcNameStyle = i == functionCount - 1 ? "nbt" : "nbt nbb";
+                            if (function.Parent == null)
+                            {
+                                funcNameStyle = i == functionCount - 1 ? string.Empty : "nbb";
+                            }
+                            string parentId = function.Parent != null ? function.Parent.Id.ToString() : string.Empty;
+                            string chkReadId = "funcRead" + function.Id;
+                            string checkedReadCss = userFuncPolicy != null && userFuncPolicy.Policy >= (int)Constant.Policy.Read
+                                ? "checked='checked'" : string.Empty;
+                            bool isReadDisabled = !isAssignable ||
+                                (adminLevel != (int)Constant.Level.PortalAdmin
+                                && (currentUserFuncPolicy == null || currentUserFuncPolicy.Policy < (int)Constant.Policy.Read
+                                || (userFuncPolicy != null && currentUserFuncPolicy.Policy < userFuncPolicy.Policy)));
+	 
+                        <tr>
+                            <td class="@Html.Raw(funcNameStyle)">@IndentChildFunctions(functionList, function)
+                            </td>
+                            <td class="align-center">
+                                @if (isReadDisabled)
+                                {
+                                    <input disabled="disabled" type="checkbox" @Html.Raw(checkedReadCss) />                            
+                                    if (!string.IsNullOrWhiteSpace(checkedReadCss))
+                                    { 
+                                    <input id="@chkReadId" name="funcRead" value="@function.Id" pid="@parentId" type="hidden"/>
+                                    }
+                                }
+                                else
+                                {
+                                    <input id="@chkReadId" name="funcRead" value="@function.Id" pid="@parentId" 
+							type="checkbox" @Html.Raw(checkedReadCss) />
+                                }
+                            </td>
+                            <td class="align-center">
+                                @if (function.Crud > 0)
+                                {
+                                    string chkHostId = "funcHost" + function.Id;
+                                    string checkedHostCss = userFuncPolicy != null && userFuncPolicy.Policy >= (int)Constant.Policy.Host
+                                        ? "checked='checked'" : string.Empty;
+                                    bool isHostDisabled = !isAssignable ||
+                                        (adminLevel != (int)Constant.Level.PortalAdmin
+                                        && (currentUserFuncPolicy == null || currentUserFuncPolicy.Policy < (int)Constant.Policy.Host
+                                        || (userFuncPolicy != null && currentUserFuncPolicy.Policy < userFuncPolicy.Policy)));
+
+                                    if (isHostDisabled)
+                                    {
+                                    <input disabled="disabled" type="checkbox" @Html.Raw(checkedHostCss) />
+                                        if (!string.IsNullOrWhiteSpace(checkedHostCss))
+                                        { 
+                                    <input id="@chkHostId" name="funcHost" value="@function.Id" pid="@parentId" type="hidden"/>
+                                        }
+                                    }
+                                    else
+                                    {
+                                    <input id="@chkHostId" name="funcHost" value="@function.Id" pid="@parentId"
+								type="checkbox" @Html.Raw(checkedHostCss) />
+                                    }
+                                }
+                            </td>
+                            <td class="align-center">
+                                @if (groupFuncPolicyList != null)
+                                {
+                                    string checkedGroupReadCss =
+                                        groupFuncPolicy != null && groupFuncPolicy.Policy >= (int)Constant.Policy.Read
+                                        ? "checked='checked'" : string.Empty;
+
+                                    <input disabled="disabled" type="checkbox" @Html.Raw(checkedGroupReadCss) />
+                                }
+                            </td>
+                            <td class="align-center">
+                                @if (function.Crud > 0 && groupFuncPolicyList != null)
+                                {
+                                    string checkedGroupHostCss =
+                                        groupFuncPolicy != null && groupFuncPolicy.Policy >= (int)Constant.Policy.Host
+                                        ? "checked='checked'" : string.Empty;
+
+                                    <input disabled="disabled" type="checkbox" @Html.Raw(checkedGroupHostCss) />
+                                }
+                            </td>
+                        </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="5" class="align-center">
+                                @ViewResources.NoInformationAvailable
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    @Html.HiddenFor(m => m.ReturnSiteId)
+    @Html.HiddenFor(m => m.PageIndex)
+    @Html.HiddenFor(m => m.GroupId)
+    @Html.Hidden("HasAssignPermission", viewFlags.HasAssignFunctionRight)
+    <input type="hidden" name="UserId" value="@Model.UserId" />
+    <input type="hidden" name="SiteId" value="@Model.SiteId" />    
+
+                    if (isAssignable && viewFlags.HasAssignFunctionRight)
+                    {
+    <div class="form">
+        <div class="form-row">
+            <div class="edit-field">
+                <input type="submit" value="@ViewResources.Save" />
+                <button class="cancel" onclick="NAP.redirect('User/Manage/@Model.PageIndex?siteId=@Model.ReturnSiteId&groupId=@Model.GroupId', 0); return false;">@ViewResources.Cancel</button>
+            </div>
+        </div>
+    </div>
+                    }
+}
+@section Foot {
+    <script src="~/Areas/UserControl/scripts/User/AssignPermission.js" type="text/javascript"></script>
+    @if (ViewBag.Success != null && ViewBag.Success)
+    {
+        <script type="text/javascript">
+            $(function () {
+                NAP.headlineMsgBox.showInfo('@ViewResources.Your_changes_were_saved', { closeBtn: false });
+            });
+        </script>
+    }
+}
+@helper IndentChildFunctions(List<IFunction> functionList, IFunction function, int level = 0)
+    {
+        if (function.Parent != null)
+        {
+            var parent = functionList.Where(x => x.Id == function.Parent.Id).SingleOrDefault();
+
+    @IndentChildFunctions(functionList, parent, level + 1)
+        }
+        else
+        {
+            for (int i = 0; i < level; i++)
+            {
+                if (i == level - 1)
+                {
+    <span>&#9492;&#9472;&#9472;</span>
+                }
+                else
+                {
+    <span class="invisible">&#9492;&#9472;&#9472;</span>
+                }
+            }
+        }
+
+        if (level == 0)
+        {
+    @function.Name
+        }
+}

@@ -1,0 +1,88 @@
+﻿@{
+    var listGroupOld = (List<GroupPolicy>)ViewBag.GroupPolicyOld ?? null;
+    var ListGroupNew = (List<GroupPolicy>)ViewBag.GroupPolicyNew ?? null;        
+}
+<br />
+<h1>@ViewResources.Group @ViewResources.Old_Value</h1>
+<br />
+<div class="grid-wrp pnl-wrp">
+    <div class="pnl-header">
+        <div class="pnl-header-content">
+            &nbsp;</div>
+    </div>
+    <div class="pnl-body">
+        <table class="grid">
+            <thead>
+                <tr>
+                    <th>
+                        #
+                    </th>
+                    <th>
+                        @ViewResources.Name
+                    </th>
+                    <th>
+                        @ViewResources.Policy
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int i = 1;
+                    foreach (var item in listGroupOld)
+                    {
+                        string rowCss = i % 2 == 0 ? string.Empty : "class='alt'";
+		
+                    <tr @Html.Raw(rowCss)>
+                        <td>
+                            @i
+                        </td>
+                        <td>@item.Group.Name
+                        </td>
+                        <td class="align-center">@item.Policy.ToPolicy()
+                        </td>
+                    </tr>
+                        i++;
+                    }
+                }
+            </tbody>
+        </table>
+        <br />
+        <h1>@ViewResources.Group @ViewResources.Add_New</h1>
+        <br />
+        <table class="grid">
+            <thead>
+                <tr>
+                    <th>
+                        #
+                    </th>
+                    <th>
+                        @ViewResources.Name
+                    </th>
+                    <th>
+                        @ViewResources.Policy
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    i = 1;
+                    foreach (var item in ListGroupNew)
+                    {
+                        string rowCss = i % 2 == 0 ? string.Empty : "class='alt'";
+
+                    <tr @Html.Raw(rowCss)>
+                        <td>
+                            @i
+                        </td>
+                        <td>@item.Group.Name
+                        </td>
+                        <td class="align-center">@item.Policy.ToPolicy()
+                        </td>
+                    </tr>
+                        i++;
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,97 @@
+﻿@import "../style.less";
+
+.form .form-row .edit-field {
+	.btn-add-url {
+		float: left;
+		width: 15px;
+		height: 15px;
+		margin: 4px 0 0;
+		background: url(../img/sprites.png) no-repeat;
+
+		&:focus, &:active {
+			.box-shadow(0 0 2px @baseColor);
+		}
+	}
+
+	.btn-remove-url {
+		.btn-add-url;
+		background-position: 0 -25px;
+		display: none;
+	}
+}
+
+.form .form-row .edit-field.urls {
+	table {
+		th, td {
+			padding: 0 3px 5px;
+		}
+
+		th {
+			padding: 5px 3px 5px;
+			font-weight: normal;
+			text-shadow: 0 1px #fafafa;
+		}
+
+		td.first {
+			padding: 0 3px 5px 0;
+		}
+	}
+}
+
+
+/*
+.btn-activate-url {
+		position: relative;
+		float: left;
+		width: 120px;
+		height: 27px;
+		margin: 0;
+
+		background: #666;
+		border-radius: 15px;
+		box-shadow: 0 1px 1px rgba(0, 0, 0, 1) inset, 0 1px 0 rgba(255, 255, 255, 1);
+
+		&:before, &:after {
+			position: absolute;
+			top: 4px;
+			z-index: 0;
+		}
+
+		&:before {
+			color: #0d0;
+			content: "Active";
+			left: 10px;
+		}
+
+		&:after {
+			color: #000;
+			content: "Inactive";
+			right: 10px;
+			text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.15);
+		}
+
+		.slider {
+			background: #DFE5D7;
+			background: -moz-linear-gradient(center top , #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+			border-radius: 15px;
+			box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3);			
+
+			position: absolute;
+			display: block;
+			height: 21px;
+			top: 3px;
+			left: 3px;
+			
+			transition: all 0.1s ease 0s;
+			width: 60px;
+			z-index: 1;
+			cursor: pointer;
+		}
+	}
+
+	.btn-activate-url.active {
+		.slider {
+			left: 57px;
+		}
+	}
+*/

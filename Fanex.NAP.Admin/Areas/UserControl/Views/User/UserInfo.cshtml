@@ -1,0 +1,111 @@
+﻿@model IUser
+@{
+    Layout = null;
+}
+
+@if (!ReferenceEquals(Model, null))
+{
+	<div class="form details w120">
+		<div class="form-row">
+			<div class="lbl-field">
+				<label>Username:</label>
+			</div>
+			<div class="edit-field">
+				<label>@Model.Username</label>
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="lbl-field">
+				<label>First Name:</label>
+			</div>
+			<div class="edit-field">
+				<label>@Model.FirstName</label>
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="lbl-field">
+				<label>Last Name:</label>
+			</div>
+			<div class="edit-field">
+				<label>@Model.LastName</label>
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="lbl-field">
+				<label>Email:</label>
+			</div>
+			<div class="edit-field">
+				<label>@Model.Email</label>
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="lbl-field">
+				<label>Group:</label>
+			</div>
+			<div class="edit-field">
+				<label>@(Model.Group != null ? Model.Group.Name : string.Empty)</label>
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="lbl-field">
+				<label>Last Login Date:</label>
+			</div>
+			<div class="edit-field">
+				@if (Model.LastLoginDate != DateTime.MinValue)
+				{
+					@Model.LastLoginDate.ToFullDateString()
+				}
+				else
+				{
+					<label>@ViewResources.NA</label>
+				}
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="lbl-field">
+				<label>Created Date:</label>
+			</div>
+			<div class="edit-field">
+				@if (Model.CreatedDate != DateTime.MinValue)
+				{
+					@Model.CreatedDate.ToFullDateString()
+				}
+				else
+				{
+					<label>@ViewResources.NA</label>
+				}
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="lbl-field">
+				<label>Creator:</label>
+			</div>
+			<div class="edit-field">
+				<label>@(Model.Creator != null ? Model.Creator.Username : string.Empty)</label>
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="lbl-field">
+				<label>Modified Date:</label>
+			</div>
+			<div class="edit-field">
+				@if (Model.ModifiedDate != DateTime.MinValue)
+				{
+					@Model.ModifiedDate.ToFullDateString()
+				}
+				else
+				{
+					<label>@ViewResources.NA</label>
+				}
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="lbl-field">
+				<label>Modifier:</label>
+			</div>
+			<div class="edit-field">
+				<label>@(Model.Modifier != null ? Model.Modifier.Username : string.Empty)</label>
+			</div>
+		</div>
+	</div>
+}

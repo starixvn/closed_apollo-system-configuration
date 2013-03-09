@@ -1,0 +1,70 @@
+﻿@using Fanex.NAP.Core.Criteria.User
+@model UpdateCustCriteria
+@{
+    ViewBag.Title = ViewResources.User_Profile;
+    bool success = ViewBag.Success != null && ViewBag.Success;
+}
+@section Head {
+	<link href="~/Areas/UserControl/themes/nap/style.less" rel="stylesheet" type="text/css" />
+}
+@section Headline {
+	<h1>
+		<span class="title">
+			<span class="first">@HttpContext.Current.User.Identity.Name /</span>
+			@ViewResources.Profile
+		</span>
+	</h1>
+}
+@using (Html.BeginForm())
+{
+	<div class="form">
+		<div class="form-row summary">
+			<div class="lbl-field"></div>
+			<div class="edit-field">
+				@Html.ValidationSummary()
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="lbl-field">
+				@Html.LabelFor(c => c.FirstName)
+			</div>
+			<div class="edit-field">
+				@Html.TextBoxFor(c => c.FirstName)
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="lbl-field">
+				@Html.LabelFor(c => c.LastName)
+			</div>
+			<div class="edit-field">
+				@Html.TextBoxFor(c => c.LastName)
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="lbl-field">
+				@Html.LabelFor(c => c.Email)
+			</div>
+			<div class="edit-field">
+				@Html.TextBoxFor(c => c.Email)
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="lbl-field"></div>
+			<div class="edit-field">
+				<input type="submit" value="@ViewResources.Save" />
+				<button class="cancel" onclick="NAP.navigateToRoot('', 0); return false;">@ViewResources.Cancel</button>
+			</div>
+		</div>
+	</div>
+	@Html.HiddenFor(m => m.GroupId)
+}
+@section Foot {
+	@if (success)
+	{
+		<script type="text/javascript">
+			$(function () {
+				NAP.headlineMsgBox.showInfo('@ViewResources.Your_changes_were_saved!', { closeBtn: false });
+			});
+		</script>
+	}
+}

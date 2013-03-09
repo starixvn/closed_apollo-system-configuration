@@ -1,0 +1,37 @@
+﻿@import "../style.less";
+
+.grid {
+	border: 0;
+
+	tr, tr.alt {
+		background: none;
+	}
+
+	thead tr:hover { border: 0 }
+	
+	tr:hover, tr.last:hover { background: none }
+
+	th, td {
+		background: none;
+		border: 0;
+		color: @textColor;
+		font-weight: bold;
+		padding: 10px;
+	}
+
+	td {
+		padding: 4px 10px;
+		height: 40px;
+
+		.btn-apply, .btn-cancel {
+			background: url(../img/delete.png) no-repeat;
+			padding: 0 0 0 18px;
+			display: none;
+		}
+
+		.btn-apply {
+			background: url(../img/accept.png) no-repeat;
+			padding-right: 5px
+		}
+	}
+}

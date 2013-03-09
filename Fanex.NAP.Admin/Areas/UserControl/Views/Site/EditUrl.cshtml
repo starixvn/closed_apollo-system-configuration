@@ -1,0 +1,104 @@
+﻿@{
+    ViewBag.Title = ViewResources.Update_URL;
+    var siteUrlList = ViewBag.Urls as List<SiteUrl>;
+    int siteUrlListCount = siteUrlList.Count;
+    var viewFlags = (ViewFlags)ViewBag.ViewFlags;
+}
+@section Head {
+    <link href="~/Areas/UserControl/themes/nap/site/edit-url.less" rel="stylesheet" type="text/css" />
+}
+@section Headline {
+    <h1>
+        <span class="title"><span class="first">@ViewResources.Site @ViewResources.Management
+            /</span>
+            @string.Format("Update URL of '{0}'", ViewBag.SiteName)
+        </span>
+        @Html.ActionLink("← " + ViewResources.Back_To_List, "Manage", "Site", null, new { @class = "lnk" })
+    </h1>
+}
+<div class="form">
+    <div class="form-row">
+        <table class="grid no-scale">
+            <thead>
+                <tr>
+                    <th>
+                        @ViewResources.Active
+                    </th>
+                    <th>
+                        @ViewResources.URL
+                    </th>
+                    @if (viewFlags.HasEditRight)
+                    {
+                        <th>
+                            @ViewResources.Edit
+                        </th>
+                    }
+                    <th>
+                        @ViewResources.Default
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var siteUrl in siteUrlList)
+                {
+                    if (viewFlags.HasEditRight)
+                    {
+                    <tr>
+                        <td class="align-center">
+                            <input type="checkbox" @(Html.Raw(siteUrl.IsActive ? "checked='checked'" : string.Empty))
+							autocomplete="off" disabled="disabled" />
+                        </td>
+                        <td>
+                            <input type="text" value="@siteUrl.Url" disabled="disabled" autocomplete="off" />
+                        </td>
+                        <td>
+                            <a href="javascript:;" class="btn-edit"></a>
+                            <a href="javascript:;" class="btn-apply" suid="@siteUrl.SiteUrlId">OK</a>
+                            <a href="javascript:;" class="btn-cancel">Cancel</a>
+                        </td>
+                        <td class="align-center">
+                            @Html.RadioButton("Url", siteUrl.IsDefault, siteUrl.IsDefault,
+                                new { id = string.Empty, suid = siteUrl.SiteUrlId })
+                        </td>
+                    </tr>
+                    }
+                    else
+                    {
+                    <tr>
+                        <td class="align-center">
+                            <input type="checkbox" @(Html.Raw(siteUrl.IsActive ? "checked='checked'" : string.Empty)) disabled="disabled" />
+                        </td>
+                        <td>
+                            <input type="text" value="@siteUrl.Url" disabled="disabled" />
+                        </td>
+                        <td class="align-center">
+                            <input type="radio" @(Html.Raw(siteUrl.IsDefault ? "checked='checked'" : string.Empty)) disabled="disabled" />
+                        </td>
+                    </tr>
+                    }
+                }
+                @if (viewFlags.HasEditRight)
+                {
+                    <tr class="last">
+                        <td class="align-center">
+                            <input type="checkbox" id="chk-add-url" />
+                        </td>
+                        <td>
+                            <input type="text" id="txt-add-url" />
+                        </td>
+                        <td class="align-center" colspan="2">
+                            <input type="submit" value="+ @ViewResources.Add @ViewResources.URL"
+							id="btn-add-url" sid="@ViewBag.SiteId" />
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@section Foot {
+    @if (viewFlags.HasEditRight)
+    {
+        <script src="~/Areas/UserControl/scripts/Site/EditUrl.js" type="text/javascript"></script>
+    }
+}

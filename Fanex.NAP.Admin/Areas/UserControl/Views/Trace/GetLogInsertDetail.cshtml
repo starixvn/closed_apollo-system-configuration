@@ -1,0 +1,109 @@
+﻿@{
+    Layout = null;
+    var listData = (List<LogData>)ViewBag.LogData ?? new List<LogData>();
+    var isInsert = ViewBag.IsInsert ?? false;
+    var isSiteUpdate = ViewBag.IsSiteUpdate ?? false;
+}
+@model LogExecSp
+@if (!ReferenceEquals(Model, null))
+{
+    if (Model.ActionId == (int)LogAction.NAP_Cust_Insert)
+    { 
+    @Html.Action("_NAP_Cust_Insert", "Trace", Model)
+    }
+
+    if (Model.ActionId == (int)LogAction.NAP_User_Insert)
+    { 
+    @Html.Action("_NAP_User_Insert", "Trace", Model)
+    }
+
+    if (Model.ActionId == (int)LogAction.NAP_Function_Insert)
+    { 
+    @Html.Action("_NAP_Function_Insert", "Trace", Model)
+    }
+
+    if (Model.ActionId == (int)LogAction.NAP_Group_Insert)
+    { 
+    @Html.Action("_NAP_Group_Insert", "Trace", Model)
+    }
+
+    if (Model.ActionId == (int)LogAction.NAP_MenuItem_Insert)
+    { 
+    @Html.Action("_NAP_MenuItem_Insert", "Trace", Model)
+    }
+
+    if (Model.ActionId == (int)LogAction.NAP_Site_InsertWithSiteURL)
+    {
+    @Html.Action("_NAP_Site_InsertWithSiteURL", "Trace", Model)
+    }
+
+    if (Model.ActionId == (int)LogAction.NAP_MenuItem_Update)
+    { 
+    @Html.Action("_NAP_MenuItem_Update", "Trace", Model)
+    }
+
+    if (Model.ActionId == (int)LogAction.NAP_MenuItem_UpdateStatus)
+    { 
+    @Html.Action("_NAP_MenuItem_UpdateStatus", "Trace", Model)
+    }
+
+    if (Model.ActionId == (int)LogAction.NAP_Function_Update
+        || Model.ActionId == (int)LogAction.NAP_Function_Duplicate)
+    { 
+    @Html.Action("_NAP_Function_Update", "Trace", Model)
+    }
+
+    if (Model.ActionId == (int)LogAction.NAP_Function_UpdateStatus)
+    { 
+    @Html.Action("_NAP_Function_UpdateStatus", "Trace", Model)
+    }
+
+    if (Model.ActionId == (int)LogAction.NAP_Site_Update)
+    { 
+    @Html.Action("_NAP_Site_Update", "Trace", Model)
+    }
+
+    if (Model.ActionId == (int)LogAction.NAP_Site_UpdateStatus)
+    { 
+    @Html.Action("_NAP_Site_UpdateStatus", "Trace", Model)
+    }
+
+    if (Model.ActionId == (int)LogAction.NAP_Group_Update)
+    { 
+    @Html.Action("_NAP_Group_Update", "Trace", Model)
+    }
+
+    if (Model.ActionId == (int)LogAction.NAP_Group_UpdateStatus)
+    { 
+    @Html.Action("_NAP_Group_UpdateStatus", "Trace", Model)
+    }
+
+    if (Model.ActionId == (int)LogAction.NAP_Cust_Update)
+    { 
+    @Html.Action("_NAP_Cust_Update", "Trace", Model)
+    }
+
+    if (Model.ActionId == (int)LogAction.NAP_Site_UpdateSiteURL
+        || Model.ActionId == (int)LogAction.NAP_Site_InsertSiteURL
+        || Model.ActionId == (int)LogAction.NAP_Site_UpdateDefaultSiteURL)
+    {
+    @Html.Action("_NAP_Site_Url", "Trace", Model)
+    }
+    if (Model.ActionId == (int)LogAction.NAP_Group_AssignFunction
+        || Model.ActionId == (int)LogAction.NAP_User_AssignFunction)
+    {
+    @Html.Action("_NAP_Assign_Permission", "Trace", Model)
+    }
+    if (Model.ActionId == (int)LogAction.NAP_User_AssignSite)
+    {
+    @Html.Action("_NAP_Assign_Site", "Trace", Model)
+    }
+    if (Model.ActionId == (int)LogAction.NAP_Function_AssignFunctionToUsers)
+    {
+    @Html.Action("_NAP_Function_AssignToUsers", "Trace", Model)
+    }
+       if (Model.ActionId == (int)LogAction.NAP_Function_AssignFunctionToGroups)
+    {
+    @Html.Action("_NAP_Function_AssignFunctionToGroups", "Trace", Model)
+    }
+}

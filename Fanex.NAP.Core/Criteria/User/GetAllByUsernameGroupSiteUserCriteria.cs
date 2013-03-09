@@ -1,0 +1,72 @@
+// --------------------------------------------------------------------------
+// <copyright file="GetAllByUsernameGroupSiteUserCriteria.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Edward.Nguyen" date="2012.8.21">Created</change>
+// </history>
+
+namespace Fanex.NAP.Core.Criteria.User
+{
+    using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Text;
+    using System.Web.Mvc;
+    using Fanex.NAP.Framework.Data;
+
+    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    public class GetAllByUsernameGroupSiteUserCriteria : CriteriaBase
+    {
+        private readonly string _siteTml = "<Site SiteId='{0}'></Site>";
+
+        public string Username { get; set; }
+
+        public int GroupId { get; set; }
+
+        /// <summary>
+        /// <ROOT>
+        ///     <Site SiteId="1"></Site>
+        ///     <Site SiteId="2"></Site>
+        /// </ROOT>
+        /// </summary>
+        public string Site
+        {
+            get
+            {
+                if (ListSite != null)
+                {
+                    var value = new StringBuilder("<ROOT>");
+
+                    foreach (var siteId in ListSite)
+                    {
+                        value.AppendFormat(_siteTml, siteId.Value); // 1 -> read
+                    }
+
+                    return value.Append("</ROOT>").ToString();
+                }
+
+                return string.Empty;
+            }
+        }
+
+        [SpParam(Ignored = true)]
+        public List<SelectListItem> ListSite { get; set; }
+
+        public int PageIndex { get; set; }
+
+        public int PageSize { get; set; }
+
+        public int TotalRows { get; set; }
+
+        public override string GetSettingKey()
+        {
+            return "NAP_User_GetAllByUsernameGroupSite";
+        }
+
+        public override bool IsValid()
+        {
+            return true;
+        }
+    }
+}

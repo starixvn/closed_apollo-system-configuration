@@ -1,0 +1,73 @@
+﻿@using Fanex.NAP.Core.Criteria.User
+@model PagerList<IUser>
+@{
+    ViewBag.Title = ViewResources.Add_Existing_User;
+
+    var groupId = ViewBag.GroupId != null ? (int)ViewBag.GroupId : 0;
+    var siteId = ViewBag.SiteId != null ? (int)ViewBag.SiteId : 0;
+    var returnPageIndex = ViewBag.PageIndex != null ? (int)ViewBag.PageIndex : 1;
+    var viewFlags = (ViewFlags)ViewBag.ViewFlags;
+    var groups = ViewBag.Groups as IList<SelectListItem> ?? new List<SelectListItem>();
+}
+@section Head {
+    <link href="~/Areas/UserControl/themes/nap/user/add-existing.less" rel="stylesheet"
+        type="text/css" />
+}
+@section Headline {
+    <h1>
+        <span class="title"><span class="first">@ViewResources.User_Management /</span>
+            @ViewBag.Title
+        </span>
+        @Html.ActionLink("← " + ViewResources.Back_To_List, "Manage", "User",
+            new
+            {
+                siteId = siteId,
+                id = returnPageIndex,
+                groupId = groupId
+            }, new { @class = "lnk" })
+    </h1>
+}
+<section id="filter-bar">
+    @using (Html.BeginForm("AddExisting", "User", FormMethod.Get))
+    {
+        <div class="filter-form">
+            <div class="lbl-field width-auto">
+                @Html.Label(ViewResources.Username)
+            </div>
+            <div class="edit-field">
+                <input type="hidden" value="@(ViewBag.Username)" id="hdnUsename" />
+                <input type="text" value="@(ViewBag.Username)" name="q" id="Username" />
+            </div>
+            <div class="submit">
+                <input type="submit" value="@ViewResources.Search" />
+            </div>
+        </div>
+    }
+</section>
+<div id="grid-wrp">
+    @{Html.RenderPartial("AddExisting_UserList", Model); }
+</div>
+<div id="form-wrp" style="display: none">
+    <div class="form">
+        <div class="form-row">
+            <div class="lbl-field width-auto">
+                <label>@ViewResources.Group</label>
+            </div>
+            <div class="edit-field">
+                @Html.DropDownList("Group", groups)
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field width-auto">
+                <label style="visibility: hidden">@ViewResources.Group</label>
+            </div>
+            <div class="edit-field">
+                <input type="submit" value="@ViewResources.Save" />
+                <button class="cancel" onclick="NAP.closePopup()">@ViewResources.Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section Foot {
+    <script src="~/Areas/UserControl/scripts/User/AddExisting.js" type="text/javascript"></script>
+}

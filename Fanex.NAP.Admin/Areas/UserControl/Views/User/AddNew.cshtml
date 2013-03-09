@@ -1,0 +1,105 @@
+﻿@using Fanex.NAP.Core.Criteria.User
+@model InsertCustCriteria
+@{
+	ViewBag.Title = ViewResources.Create_New_User;
+	bool success = ViewBag.Success != null && ViewBag.Success;
+}
+@section Head {
+	<link href="~/Areas/UserControl/themes/nap/style.less" rel="stylesheet" type="text/css" />
+}
+@section Headline {
+	<h1>
+		<span class="title">
+			<span class="first">@ViewResources.User_Management /</span>
+			@ViewBag.Title
+		</span>
+		@if (Model.SiteId == null) {
+			@Html.ActionLink("← " + ViewResources.Back_To_List, "Manage", "User", null, new { @class = "lnk" })
+		} else {
+			@Html.ActionLink("← " + ViewResources.Back_To_List, "Manage", "User", new { siteId = Model.SiteId, id = Model.PageIndex, groupId = Model.RerturnGroupId }, new { @class = "lnk" })
+		}
+	</h1>
+}
+@using (Html.BeginForm())
+{
+	<div class="form">
+		<div class="form-row summary">
+			<div class="lbl-field"></div>
+			<div class="edit-field">
+				@Html.ValidationSummary()
+			</div>
+		</div>
+		<div class="form-row required">
+			<div class="lbl-field">
+				@Html.LabelFor(c => c.Username)
+			</div>
+			<div class="edit-field">
+				@Html.TextBoxFor(c => c.Username)
+			</div>
+		</div>
+		<div class="form-row required">
+			<div class="lbl-field">
+				@Html.LabelFor(c => c.UserPwd)
+			</div>
+			<div class="edit-field">
+				@Html.PasswordFor(c => c.UserPwd)
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="lbl-field">
+				@Html.LabelFor(c => c.FirstName)
+			</div>
+			<div class="edit-field">
+				@Html.TextBoxFor(c => c.FirstName)
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="lbl-field">
+				@Html.LabelFor(c => c.LastName)
+			</div>
+			<div class="edit-field">
+				@Html.TextBoxFor(c => c.LastName)
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="lbl-field">
+				@Html.LabelFor(c => c.Email)
+			</div>
+			<div class="edit-field">
+				@Html.TextBoxFor(c => c.Email)
+			</div>
+		</div>
+		<div class="form-row required">
+			<div class="lbl-field">
+				@Html.LabelFor(c => c.GroupId)
+			</div>
+			<div class="edit-field">
+				@Html.DropDownListFor(c => c.GroupId, (List<SelectListItem>)ViewBag.Groups)
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="lbl-field"></div>
+			<div class="edit-field">
+				@if (!success)
+				{
+					<input type="submit" value="@ViewResources.Save" />
+					<button class="cancel" onclick="NAP.redirect('User/Manage/@Model.PageIndex?siteId=@Model.SiteId&amp;groupId=@Model.RerturnGroupId', 0); return false;">
+						@ViewResources.Cancel</button>
+				}
+			</div>
+		</div>
+	</div>
+	@Html.HiddenFor(m => m.SiteId)
+}
+@section Foot {
+	@if (success)
+	{
+		string dialogMsg = string.Format(ViewResources.Add_New_User_Success, Model.Username, 3);
+
+		<script type="text/javascript">
+			$(function () {
+				NAP.showSuccessMsg('@dialogMsg', 'User/AssignSite/' + '@ViewBag.UserId', 3000);                
+			});
+		</script>
+	}
+}

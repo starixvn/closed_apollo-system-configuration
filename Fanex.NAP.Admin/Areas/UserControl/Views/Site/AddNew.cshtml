@@ -1,0 +1,126 @@
+﻿@model InsertSiteCriteria
+@{
+	ViewBag.Title = ViewResources.Create_New_Site;
+	bool success = ViewBag.Success != null && ViewBag.Success;
+	var viewFlags = (ViewBag.ViewFlags ?? new ViewFlags { IsLive = false }) as ViewFlags;
+}
+@section Head {
+	<link href="~/Areas/UserControl/themes/nap/site/add-new.less" rel="stylesheet" type="text/css" />
+}
+@section Headline {
+	<h1>
+		<span class="title">
+			<span class="first">@ViewResources.Site @ViewResources.Management /</span>
+			@ViewBag.Title
+		</span>
+		@Html.ActionLink("← " + ViewResources.Back_To_List, "Manage", "Site", null, new { @class = "lnk" })
+	</h1>
+}
+@using (Html.BeginForm())
+{
+	<div class="form">
+		<div class="form-row summary">
+			<div class="lbl-field"></div>
+			<div class="edit-field">
+				@Html.ValidationSummary()
+			</div>
+		</div>
+		<div class="form-row required">
+			<div class="lbl-field">
+				@Html.LabelFor(m => m.SiteName)
+			</div>
+			<div class="edit-field">
+				@Html.TextBoxFor(m => m.SiteName)
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="lbl-field">
+				@Html.LabelFor(m => m.Description)
+			</div>
+			<div class="edit-field">
+				@Html.TextBoxFor(m => m.Description)
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="lbl-field">
+				@Html.LabelFor(m => m.Urls)
+			</div>
+			<div class="edit-field urls">
+				<table>
+					<thead>
+						<tr>
+							<th></th>
+							<th> @ViewResources.Active </th>
+							<th> @ViewResources.Default </th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						@for (int i = Model.Urls.Count - 1; i >= 0; --i)
+						{
+							<tr>
+								<td class="align-center first">
+									@Html.TextBoxFor(m => m.Urls[i].Url, new { idx = i, id = string.Empty })
+								</td>
+								<td class="align-center">
+									@Html.CheckBoxFor(m => m.Urls[i].IsActive, new { id = string.Empty })
+								</td>
+								<td class="align-center">
+									<input type="radio" value="Urls[@i].IsDefault" name="Urls" 
+									@(Model.Urls[i].IsDefault ? "checked=checked" : string.Empty) />
+								</td>
+								@if (i == 0)
+								{
+									<td class="align-center">
+										<a href="javascript:;" class="btn-add-url" title="@ViewResources.Add_alternative_URL">
+										</a>
+									</td>
+								}
+								else
+								{
+									<td class="align-center">
+										<a href="javascript:;" class="btn-remove-url" title="@ViewResources.Remove" style="display: inline">
+										</a>
+									</td>
+								}
+							</tr>
+						}
+					</tbody>
+				</table>
+				<a href="javascript:;" class="btn-remove-url" title="@ViewResources.Remove"></a>
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="lbl-field">
+				@Html.LabelFor(m => m.IsActive)
+			</div>
+			<div class="edit-field chk-field">
+				@Html.CheckBoxFor(m => m.IsActive)
+				@Html.LabelFor(m => m.IsActive, ViewResources.Active)
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="lbl-field"></div>
+			<div class="edit-field">
+				@if (!success)
+				{
+					<input type="submit" value="@ViewResources.Save" />
+					<button class="cancel" onclick="NAP.redirect('Site/Manage', 0); return false;">@ViewResources.Cancel</button>
+				}
+			</div>
+		</div>
+	</div>
+}
+@section Foot {
+	<script src="~/Areas/UserControl/scripts/Site/AddNew.js" type="text/javascript"></script>
+	@if (success)
+	{
+		string dialogMsg = string.Format(ViewResources.AddSuccessMsg, ViewResources.Site + " '" + Model.SiteName + "'", 3);
+
+		<script type="text/javascript">
+			$(function () {
+				NAP.showSuccessMsg('@dialogMsg', 'Site/Manage', 4000);
+			});
+		</script>
+	}
+}
