@@ -850,6 +850,12 @@ header {
 		input, select {
 			&:active, &:focus { border: 1px solid #7EADD9 }
 		}
+		input[type=text].input-validation-error,
+		input[type=password].input-validation-error,
+		select.input-validation-error {
+			border: solid 1px #c30;
+			background: @white url(img/invalid_line.gif) repeat-x bottom;
+		}
 	}
 
 	.rdo-field, .chk-field {
