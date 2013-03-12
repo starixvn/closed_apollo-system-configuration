@@ -371,6 +371,7 @@
     <Content Include="Areas\UserControl\themes\nap\img\page-prev.gif" />
     <Content Include="Areas\UserControl\themes\nap\img\prev.png" />
     <Content Include="Areas\UserControl\themes\nap\img\red-triangle.png" />
+    <Content Include="Areas\UserControl\themes\nap\img\selected-tab.png" />
     <Content Include="Areas\UserControl\themes\nap\img\setting.png" />
     <Content Include="Areas\UserControl\themes\nap\img\sprites.png" />
     <Content Include="Areas\UserControl\themes\nap\img\text-bg.gif" />

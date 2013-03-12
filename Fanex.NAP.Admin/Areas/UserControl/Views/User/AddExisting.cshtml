@@ -10,8 +10,7 @@
     var groups = ViewBag.Groups as IList<SelectListItem> ?? new List<SelectListItem>();
 }
 @section Head {
-    <link href="~/Areas/UserControl/themes/nap/user/add-existing.less" rel="stylesheet"
-        type="text/css" />
+    <link href="~/Areas/UserControl/themes/nap/user/add-existing.less" rel="stylesheet" type="text/css" />
 }
 @section Headline {
     <h1>
@@ -30,6 +29,10 @@
 <section id="filter-bar">
     @using (Html.BeginForm("AddExisting", "User", FormMethod.Get))
     {
+        <input type="hidden" name="returnPageIndex" value="@Request.QueryString["returnPageIndex"]" />
+        <input type="hidden" name="siteId" value="@Request.QueryString["siteId"]" />
+        <input type="hidden" name="groupId" value="@Request.QueryString["groupId"]" />        
+        
         <div class="filter-form">
             <div class="lbl-field width-auto">
                 @Html.Label(ViewResources.Username)
