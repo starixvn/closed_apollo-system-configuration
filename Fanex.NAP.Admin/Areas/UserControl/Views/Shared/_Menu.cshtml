@@ -18,12 +18,12 @@
 		@foreach (var subMenuItem in lvl1MenuItemList)
 		{
 				<li mid="@subMenuItem.Id"><a href="@Url.Content(subMenuItem.GetValidUrl())">@subMenuItem.Name</a></li>
-		}
+        }
 			</ul>
 		</li>
-	}
-	else
-	{
+    }
+    else
+    {
 		<li mid="@menuItem.Id"><a href="@Url.Content(menuItem.GetValidUrl())">@menuItem.Name</a></li>
 	}
 }

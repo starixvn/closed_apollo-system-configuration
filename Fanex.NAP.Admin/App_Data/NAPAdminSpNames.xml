@@ -32,9 +32,9 @@
         <Setting Key="NAP_User_AssignSite" SpName="NAP_User_AssignSite" DbName="Nap"  />                        
         <Setting Key="NAP_User_Insert" SpName="NAP_User_Insert" DbName="Nap"  />        
     </Function>
-    <Function Name="Cust">        
+    <Function Name="Cust">
         <Setting Key="NAP_Cust_Insert" SpName="NAP_Cust_Insert" DbName="Nap"  />
         <Setting Key="NAP_Cust_Update" SpName="NAP_Cust_Update" DbName="Nap"  />
-        <Setting Key="NAP_Cust_UpdatePassword" SpName="NAP_Cust_UpdatePassword" DbName="bodb02"  />
+        <Setting Key="NAP_Cust_UpdatePassword" SpName="NAP_Cust_UpdatePassword" DbName="CustDB"  />
     </Function>  
 </Functions>

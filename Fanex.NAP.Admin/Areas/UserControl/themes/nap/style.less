@@ -555,6 +555,8 @@ header, #headline, #msg-bar, #body, #filter-bar, footer { .clearfix }
 
 header {
 	#gradient.vertical(#AEAAAB, #CECECE);
+	border-top: 1px solid @grayLighter;
+	border-bottom: 1px solid @grayLight;
 	.box-shadow(0 1px 5px rgba(0,0,0,0.5));
 	.font_yanone;
 
@@ -592,19 +594,37 @@ header {
 		.menu {
 			li {
 				float: left;
-				a { color: @textColor }
-				&.current > a { text-decoration: underline }
-			}
-			li {
+				a {
+					color: @textColor;
+					text-shadow: 0 1px darken(@grayLighter, 10%);
+				}
 				> a {
 					display: block;
 					font-size: 1.4em;
-					padding: 12px;
+					padding: 4px 12px;
+					margin: 8px;
 				}
+
+				&.current > a {
+					background: @grayLighter url(img/selected-tab.png) repeat-x;
+					border-color: @gray;
+					border-image: none;
+					border-style: solid none none solid;
+					border-width: 1px medium medium 1px;
+					.border-radius(6px);
+					.box-shadow(1px 1px 3px rgba(0, 0, 0, 0.1) inset);
+					color: @white;
+					text-shadow: 0 -1px @gray;
+				}
+				&.selected {
+					> ul { display: block }
+					&.current > a { text-decoration: underline }
+				}
+
 				ul {
 					position: absolute; top: 46px; left: 0; right: 0; z-index: 99;
 					display: none;
-					background-color: #CECECE;
+					background-color: darken(@grayLighter, 13%);
 					.box-shadow(0 8px 10px -4px rgba(0,0,0,0.4));
 					margin: 0;
 					padding: 6px 0;
@@ -620,7 +640,8 @@ header {
 							font-size: 1.2em;
 						}
 						ul {
-							top: 35px;
+							top: 45px;
+							left: 2px;
 							right: auto;
 							background: @white;
 							border: 1px solid @grayLight;
@@ -639,14 +660,14 @@ header {
 								border-color: rgba(255, 255, 255, 0);
 								border-bottom-color: @white;
 								border-width: 10px;
-								left: 20px;
+								left: 25px;
 								margin-left: -10px;
 							}
 							&:before {
 								border-color: rgba(153, 153, 153, 0);
 								border-bottom-color: @grayLight;
 								border-width: 11px;
-								left: 20px;
+								left: 25px;
 								margin-left: -11px;
 							}
 							li {
@@ -654,32 +675,30 @@ header {
 								float: none;
 								a {
 									padding: 4px 16px;
+									text-shadow: none;
 									&:hover {
 										background: darken(@baseColor, 20%);
 										color: @white;
-										text-decoration: none;
+										text-decoration: none;										
 									}
 								}
 							}
 						}
-						&.selected {
-							> a {
-								background: none;
-								.box-shadow(none);
-								text-decoration: none;
-							}
-						}
 					}
 				}
+			}
+			> li {
 				&.selected {
+					#gradient.vertical(#CECECE, #AEAAAB);
+					.box-shadow(0 5px 5px rgba(0, 0, 0, 0.2) inset);
+					text-decoration: none;
 					> a {
-						#gradient.vertical(#CECECE, #AEAAAB);
-						.box-shadow(0 5px 5px rgba(0, 0, 0, 0.2) inset);
-						text-decoration: none;
+						background: none;
+						.box-shadow(none);
+						border: 0;
 						color: @textColor;
+						text-shadow: 0 -1px darken(@grayLighter, 10%);
 					}
-					> ul { display: block }
-					&.current > a { text-decoration: underline }
 				}
 			}
 		}
@@ -699,6 +718,7 @@ header {
 				padding: 6px 16px;
 				font-weight: normal;
 				font-size: 1.4em;
+				text-shadow: 0 1px darken(@grayLighter, 10%);
 				i {
 					margin: 4px 0 0 2px;
 				}

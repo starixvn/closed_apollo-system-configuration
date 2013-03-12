@@ -244,7 +244,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="WebConnectionString.config" />
+    <Content Include="Web.ConnectionString.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\UserLogin\Views\Login\Index.cshtml" />

@@ -123,16 +123,16 @@ namespace Fanex.NAP.Core.Web.Context
 
         public DomainElement GetCurrentDomain()
         {
-            var listDoamin = NapSettings.Settings.Domains;
+            var domainList = NapSettings.Settings.Domains;
 
             string currentDomain = HttpContext.Current.Request.Url.Authority;
             string currentPath = HttpContext.Current.Request.ApplicationPath;
 
-            foreach (DomainElement item in listDoamin)
+            foreach (DomainElement domain in domainList)
             {
-                if (string.Compare(item.Name, currentDomain, true) == 0 && string.Compare(item.Path, currentPath, true) == 0)
+                if (string.Compare(domain.Name, currentDomain, true) == 0 && string.Compare(domain.Path, currentPath, true) == 0)
                 {
-                    return item;
+                    return domain;
                 }
             }
 
