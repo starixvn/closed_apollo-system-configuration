@@ -192,6 +192,7 @@
     <Compile Include="Areas\UserControl\UserControlAreaRegistration.cs" />
     <Compile Include="Areas\UserLogin\Controllers\BaseController.cs" />
     <Compile Include="Areas\UserLogin\Controllers\CommonController.cs" />
+    <Content Include="Areas\UserControl\themes\nap\ie.less" />
     <None Include="Areas\UserLogin\Controllers\LoginController.cs.bk" />
     <Compile Include="Areas\UserLogin\Controllers\LoginController.cs" />
     <Compile Include="Areas\UserLogin\Controllers\SSOController.cs">
