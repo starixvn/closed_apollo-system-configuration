@@ -60,10 +60,28 @@ namespace Fanex.NAP.Core.Configuration
         }
 
         [ConfigurationProperty(__ENABLE_DIRECT_LOGIN, IsRequired = true)]
+        private string _EnableDirectLogin
+        {
+            get { return (string)this[__ENABLE_DIRECT_LOGIN]; }
+            set { this[__ENABLE_DIRECT_LOGIN] = value; }
+        }
+
         public bool EnableDirectLogin
         {
-            get { return (bool)this[__ENABLE_DIRECT_LOGIN]; }
-            set { this[__ENABLE_DIRECT_LOGIN] = value; }
+            get
+            {
+                var result = false;
+                var check = bool.TryParse(_EnableDirectLogin, out result);
+
+                result = check ? result : Equals(_EnableDirectLogin, "1");
+
+                return result;
+            }
+
+            set
+            {
+                _EnableDirectLogin = value.ToString();
+            }
         }
 
         [ConfigurationProperty(__HUB_URL, IsRequired = true)]
@@ -88,17 +106,53 @@ namespace Fanex.NAP.Core.Configuration
         }
 
         [ConfigurationProperty(__ENABLE_CHECK_UM, IsRequired = true)]
-        public bool EnableCheckUM
+        private string _EnableCheckUM
         {
-            get { return (bool)this[__ENABLE_CHECK_UM]; }
+            get { return (string)this[__ENABLE_CHECK_UM]; }
             set { this[__ENABLE_CHECK_UM] = value; }
         }
 
+        public bool EnableCheckUM
+        {
+            get
+            {
+                var result = false;
+                var check = bool.TryParse(_EnableCheckUM, out result);
+
+                result = check ? result : Equals(_EnableCheckUM, "1");
+
+                return result;
+            }
+
+            set
+            {
+                _EnableCheckUM = value.ToString();
+            }
+        }
+
         [ConfigurationProperty(__ENABLE_RECHECKIN, IsRequired = true)]
+        private string _EnableReCheckIn
+        {
+            get { return (string)this[__ENABLE_RECHECKIN]; }
+            set { this[__ENABLE_RECHECKIN] = value; }
+        }
+
         public bool EnableReCheckIn
         {
-            get { return (bool)this[__ENABLE_RECHECKIN]; }
-            set { this[__ENABLE_RECHECKIN] = value; }
+            get
+            {
+                var result = false;
+                var check = bool.TryParse(_EnableReCheckIn, out result);
+
+                result = check ? result : Equals(_EnableReCheckIn, "1");
+
+                return result;
+            }
+
+            set
+            {
+                _EnableReCheckIn = value.ToString();
+            }
         }
 
         [ConfigurationProperty(__UNAUTHORIZE_URL, IsRequired = false)]
