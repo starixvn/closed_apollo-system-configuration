@@ -106,7 +106,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 IsLive = Environment.Equals(Constant.LIVE),
                 IsNapAdminSite = SiteId.Equals(NapAdminId),
                 HasEditRight = false,
-                IsReCheckin = NapSettings.Settings.ReCheckIn
+                IsReCheckin = NapSettings.Settings.EnableReCheckIn
             };
         }
 

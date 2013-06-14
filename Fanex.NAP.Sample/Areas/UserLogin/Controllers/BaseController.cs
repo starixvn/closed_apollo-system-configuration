@@ -21,7 +21,7 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
 
         protected readonly int _siteId = NapSettings.Settings.SiteId;
 
-        protected readonly int _isSiteLogin = NapSettings.Settings.IsSiteLogin;
+        protected readonly bool _enableDirectLogin = NapSettings.Settings.EnableDirectLogin;
 
         protected readonly CurrentContext _currentContext;
 
@@ -34,11 +34,11 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
         /// Indicates whether the current site allows users login directly.
         /// If "0", users must login through NAP Hub
         /// </summary>
-        public int IsSiteLogin
+        public bool EnableDirectLogin
         {
             get
             {
-                return this._isSiteLogin;
+                return this._enableDirectLogin;
             }
         }
     }

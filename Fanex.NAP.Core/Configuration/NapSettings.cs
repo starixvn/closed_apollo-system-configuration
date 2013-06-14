@@ -22,12 +22,12 @@ namespace Fanex.NAP.Core.Configuration
 
         private const string __NAP_SETTINGS = "NapSettings";
         private const string __ENVIRONMENT = "Environment";
-        private const string __IS_SITE_LOGIN = "IsSiteLogin";
+        private const string __ENABLE_DIRECT_LOGIN = "EnableDirectLogin";
         private const string __HUB_URL = "HubUrl";
         private const string __SITE_ID = "SiteId";
-        private const string __LB_URL = "LBUrl";
-        private const string __UM = "UM";
-        private const string __RE_CHECKIN = "ReCheckin";
+        private const string __UM_URL = "UMUrl";
+        private const string __ENABLE_CHECK_UM = "EnableCheckUM";
+        private const string __ENABLE_RECHECKIN = "EnableReCheckin";
         private const string __UNAUTHORIZE_URL = "UnauthorizeUrl";
         private const string __NAP_DOMAIN = "Domain";
         private const string __NAP_DOMAIN__ADD = "add";
@@ -59,11 +59,11 @@ namespace Fanex.NAP.Core.Configuration
             set { this[__SITE_ID] = value; }
         }
 
-        [ConfigurationProperty(__IS_SITE_LOGIN, IsRequired = true)]
-        public int IsSiteLogin
+        [ConfigurationProperty(__ENABLE_DIRECT_LOGIN, IsRequired = true)]
+        public bool EnableDirectLogin
         {
-            get { return (int)this[__IS_SITE_LOGIN]; }
-            set { this[__IS_SITE_LOGIN] = value; }
+            get { return (bool)this[__ENABLE_DIRECT_LOGIN]; }
+            set { this[__ENABLE_DIRECT_LOGIN] = value; }
         }
 
         [ConfigurationProperty(__HUB_URL, IsRequired = true)]
@@ -80,25 +80,25 @@ namespace Fanex.NAP.Core.Configuration
             set { this[__ENVIRONMENT] = value; }
         }
 
-        [ConfigurationProperty(__LB_URL, IsRequired = true)]
-        public string LbServiceUrl
+        [ConfigurationProperty(__UM_URL, IsRequired = true)]
+        public string UMServiceUrl
         {
-            get { return (string)this[__LB_URL]; }
-            set { this[__LB_URL] = value; }
+            get { return (string)this[__UM_URL]; }
+            set { this[__UM_URL] = value; }
         }
 
-        [ConfigurationProperty(__UM, IsRequired = true)]
-        public bool IsUMTime
+        [ConfigurationProperty(__ENABLE_CHECK_UM, IsRequired = true)]
+        public bool EnableCheckUM
         {
-            get { return (bool)this[__UM]; }
-            set { this[__UM] = value; }
+            get { return (bool)this[__ENABLE_CHECK_UM]; }
+            set { this[__ENABLE_CHECK_UM] = value; }
         }
 
-        [ConfigurationProperty(__RE_CHECKIN, IsRequired = true)]
-        public bool ReCheckIn
+        [ConfigurationProperty(__ENABLE_RECHECKIN, IsRequired = true)]
+        public bool EnableReCheckIn
         {
-            get { return (bool)this[__RE_CHECKIN]; }
-            set { this[__RE_CHECKIN] = value; }
+            get { return (bool)this[__ENABLE_RECHECKIN]; }
+            set { this[__ENABLE_RECHECKIN] = value; }
         }
 
         [ConfigurationProperty(__UNAUTHORIZE_URL, IsRequired = false)]

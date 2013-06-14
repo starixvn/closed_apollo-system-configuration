@@ -115,7 +115,7 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            if (!NapSettings.Settings.IsNapHub && IsSiteLogin == 0)
+            if (!NapSettings.Settings.IsNapHub && !EnableDirectLogin)
             {
                 // if login-directly feature is disabled then redirect users to NAP Hub
                 return Redirect(NapSettings.Settings.HubUrl);
@@ -187,7 +187,7 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
 
                                 #region redirects user
                                 // if the user login directly, not through NAP Hub
-                                if (this.IsSiteLogin == 1)
+                                if (this.EnableDirectLogin)
                                 {
                                     #region checks if logging-in user is active on this site
                                     bool userIsActiveOnThisSite = false;

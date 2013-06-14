@@ -29,7 +29,7 @@ namespace Fanex.NAP.Core.Service.Impl
                 IsDowntime = false
             };
 
-            if (!NapSettings.Settings.IsUMTime)
+            if (!NapSettings.Settings.EnableCheckUM)
             {
                 return downTime;
             }
@@ -43,7 +43,7 @@ namespace Fanex.NAP.Core.Service.Impl
                 // gets Agent Site UM Status.
                 isdowntime = umctrl.isUnderMaintainence(
                     Sites.AccountSite,
-                    NapSettings.Settings.LbServiceUrl,
+                    NapSettings.Settings.UMServiceUrl,
                     ref timeFrom,
                     ref timeTo);
             }

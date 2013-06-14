@@ -147,7 +147,7 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
                                 #endregion
 
                                 #region redirects user
-                                if (this.IsSiteLogin == 1) // if the user login directly, not through NAP Hub
+                                if (this.EnableDirectLogin) // if the user login directly, not through NAP Hub
                                 {
                                     #region checks if logging-in user is active on this site
                                     bool userIsActiveOnThisSite = false;
