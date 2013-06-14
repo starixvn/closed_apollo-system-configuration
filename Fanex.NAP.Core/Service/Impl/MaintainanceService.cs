@@ -43,7 +43,7 @@ namespace Fanex.NAP.Core.Service.Impl
                 // gets Agent Site UM Status.
                 isdowntime = umctrl.isUnderMaintainence(
                     Sites.AccountSite,
-                    NapSettings.Settings.UMServiceUrl,
+                    NapSettings.Settings.UMAddress,
                     ref timeFrom,
                     ref timeTo);
             }

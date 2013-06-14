@@ -25,7 +25,7 @@ namespace Fanex.NAP.Core.Configuration
         private const string __ENABLE_DIRECT_LOGIN = "EnableDirectLogin";
         private const string __HUB_URL = "HubUrl";
         private const string __SITE_ID = "SiteId";
-        private const string __UM_URL = "UMUrl";
+        private const string __UM_ADDRESS = "UMAddress";
         private const string __ENABLE_CHECK_UM = "EnableCheckUM";
         private const string __ENABLE_RECHECKIN = "EnableReCheckin";
         private const string __UNAUTHORIZE_URL = "UnauthorizeUrl";
@@ -80,11 +80,11 @@ namespace Fanex.NAP.Core.Configuration
             set { this[__ENVIRONMENT] = value; }
         }
 
-        [ConfigurationProperty(__UM_URL, IsRequired = true)]
-        public string UMServiceUrl
+        [ConfigurationProperty(__UM_ADDRESS, IsRequired = true)]
+        public string UMAddress
         {
-            get { return (string)this[__UM_URL]; }
-            set { this[__UM_URL] = value; }
+            get { return (string)this[__UM_ADDRESS]; }
+            set { this[__UM_ADDRESS] = value; }
         }
 
         [ConfigurationProperty(__ENABLE_CHECK_UM, IsRequired = true)]
