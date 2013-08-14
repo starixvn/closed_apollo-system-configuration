@@ -51,17 +51,19 @@ body {
 }
 
 #login-box .header .welcome {
-	background: url(img/welcome.png) no-repeat center left;
-	width: 178px;
-	height: 54px;
-	display: inline-block;
+    background: url("img/CSDAdminSite.png") no-repeat left center;
+    display: inline-block;
+    float: left;
+    height: 54px;
+    width: 270px;
 }
 
 #login-box .header .secure {
-	background: url(img/lock.png) no-repeat center right;
-	width: 174px;
-	height: 54px;
-	display: inline-block;
+    background: url("img/lock.png") no-repeat right center;
+    display: inline-block;
+    float: right;
+    height: 54px;
+    width: 16px;
 }
 
 #login-box .auth {
