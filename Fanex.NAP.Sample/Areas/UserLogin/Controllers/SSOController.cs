@@ -94,7 +94,7 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
 
                     if (this._siteId != 0)
                     {
-                        _currentSession.MenuItemList =
+                        _currentSession.Menu =
                             _menuItemService.GetByUserAndSiteIncludeGroup(user.Id, _siteId,
                                 _environment, true) as IList<MenuItem>;
                     }
