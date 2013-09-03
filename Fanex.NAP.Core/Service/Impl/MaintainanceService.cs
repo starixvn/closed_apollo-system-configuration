@@ -14,7 +14,8 @@ namespace Fanex.NAP.Core.Service.Impl
     using Fanex.NAP.Core.Configuration;
     using Fanex.NAP.Core.Model.ValueObject;
     using Fanex.NAP.Core.Service.Interface;
-    using Sunplus.UMControllerLibrary;
+    using Apollo.UMService.Model;
+    using Apollo.UMService;
 
     [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
     public class MaintainanceService : BaseService, IMaintainanceService
@@ -41,11 +42,11 @@ namespace Fanex.NAP.Core.Service.Impl
             try
             {
                 // gets Agent Site UM Status.
-                isdowntime = umctrl.isUnderMaintainence(
-                    Sites.AccountSite,
-                    NapSettings.Settings.UMAddress,
-                    ref timeFrom,
-                    ref timeTo);
+                var umInfo = umctrl.GetMaintainenceInfo(Sites.CSD, NapSettings.Settings.UMAddress);
+
+                isdowntime = umInfo.status;
+                timeFrom = umInfo.start_time;
+                timeTo = umInfo.end_time;
             }
             catch (Exception ex)
             {
