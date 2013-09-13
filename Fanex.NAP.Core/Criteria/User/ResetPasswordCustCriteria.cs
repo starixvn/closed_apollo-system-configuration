@@ -27,9 +27,9 @@ namespace Fanex.NAP.Core.Criteria.User
         [StringLength(50, MinimumLength = 2,
             ErrorMessageResourceName = "InputLengthValidationMsg",
             ErrorMessageResourceType = typeof(ViewResources))]
-        [RegularExpression(@"^[\w\s]{1,}$",
-            ErrorMessageResourceName = "InvalidFieldValidationNewPassword",
-            ErrorMessageResourceType = typeof(ViewResources))]
+        //[RegularExpression(@"^[\w\s]{1,}$",
+        //    ErrorMessageResourceName = "InvalidFieldValidationNewPassword",
+        //    ErrorMessageResourceType = typeof(ViewResources))]
         public string UserPwd { get; set; }
 
         [Required]
@@ -37,9 +37,9 @@ namespace Fanex.NAP.Core.Criteria.User
         [StringLength(50, MinimumLength = 2,
             ErrorMessageResourceName = "InputLengthValidationMsg",
             ErrorMessageResourceType = typeof(ViewResources))]
-        [RegularExpression(@"^[\w\s]{1,}$",
-            ErrorMessageResourceName = "InvalidFieldValidationConfirmPassword",
-            ErrorMessageResourceType = typeof(ViewResources))]
+        //[RegularExpression(@"^[\w\s]{1,}$",
+        //    ErrorMessageResourceName = "InvalidFieldValidationConfirmPassword",
+        //    ErrorMessageResourceType = typeof(ViewResources))]
         [SpParam(Ignored = true)]
         public string ConfirmUserPwd { get; set; }
 
