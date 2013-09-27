@@ -1,0 +1,69 @@
+﻿.form .form-row {
+    
+	.edit-field {
+        .chosen-container-multi *
+        {
+		    vertical-align: text-top;
+	    }
+    }
+
+	#to-list, #cc-list, #bcc-list {
+		width: 500px;
+		min-height: 130px;
+        margin-bottom: 20px;
+
+		.list {
+			min-height: 130px;	
+			padding: 5px;
+            overflow: auto;
+
+			.item {
+				width: 50px;
+			}
+		}
+
+        ul.chosen-choices li.search-choice li.search-field {
+	        margin: 5px 0 3px 5px;
+        }
+
+        ul.chosen-choices{
+            li.invalid-email{
+	            span{
+		            color: red;
+	            }
+            }
+
+            li.search-choice{
+                .search-choice-close {
+		            top: 6px;
+	            }
+            }
+        }
+	}    
+}
+
+/* FIX IE */
+
+.ie7 {
+	.form .form-row {
+		float: none;
+
+		ul.chosen-choices li.search-choice {
+			padding-bottom: 9px;
+
+			.search-choice-close {
+				top: 8px;
+			}
+		}
+	}
+}
+
+.ie8, .ie9 {
+	.form .form-row ul.chosen-choices li.search-choice {
+		padding-bottom: 7px;
+
+		.search-choice-close {
+			top: 6px;
+		}		
+	}
+}

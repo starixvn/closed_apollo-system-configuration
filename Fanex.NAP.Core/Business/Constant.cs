@@ -30,6 +30,8 @@ namespace Fanex.NAP.Core.Business
 
         public const int SearchAllSite = -9999;
 
+        public const string IT = "IT";
+
         public enum Policy
         {
             None = 0,

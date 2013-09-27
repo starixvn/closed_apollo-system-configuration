@@ -36,5 +36,21 @@
         <Setting Key="NAP_Cust_Insert" SpName="NAP_Cust_Insert" DbName="Nap"  />
         <Setting Key="NAP_Cust_Update" SpName="NAP_Cust_Update" DbName="Nap"  />
         <Setting Key="NAP_Cust_UpdatePassword" SpName="NAP_Cust_UpdatePassword" DbName="CustDB"  />
-    </Function>  
+    </Function>
+    <Function Name="MailingList">
+      <Setting Key="NAP_Function_GetByParentKeyAndSite" SpName="NAP_Function_GetByParentKeyAndSite" DbName="Nap">
+        <Mapping DataField="FunctionId" ObjectProperty="Id" />
+        <Mapping DataField="FunctionName" ObjectProperty="Name" />
+        <Mapping DataField="FunctionKey" ObjectProperty="Key" />
+        <Mapping DataField="ParentId" ObjectProperty="Id" />
+        <Mapping DataField="ParentName" ObjectProperty="Name" />
+        <Mapping DataField="SiteId" ObjectProperty="Id" />
+        <Mapping DataField="SiteName" ObjectProperty="Name" />
+        <Mapping DataField="CreatorId" ObjectProperty="Id" />
+        <Mapping DataField="CreatorUsername" ObjectProperty="Username" />
+        <Mapping DataField="ModifierId" ObjectProperty="Id" />
+        <Mapping DataField="ModifierUsername" ObjectProperty="Username" />
+      </Setting>
+      <Setting Key="NAP_MailingLists_Insert" SpName="NAP_MailingLists_Insert" DbName="Nap"/>
+    </Function>
 </Functions>

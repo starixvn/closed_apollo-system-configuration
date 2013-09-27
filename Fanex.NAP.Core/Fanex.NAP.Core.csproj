@@ -116,6 +116,7 @@
     <Compile Include="Criteria\Function\AssignFunctionToGroupsCriteria.cs" />
     <Compile Include="Criteria\Function\DuplicateFunctionCriteria.cs" />
     <Compile Include="Criteria\Function\GetByGroupAndSiteFunctionCriteria.cs" />
+    <Compile Include="Criteria\Function\GetByParentKeyAndSiteCriteria.cs" />
     <Compile Include="Criteria\Function\GetByUserAndFunctionKeyIncludeGroupFunctionCriteria.cs" />
     <Compile Include="Criteria\Function\GetParentByIdFunctionCriteria.cs" />
     <Compile Include="Criteria\Function\UpdateStatusFunctionCriteria.cs" />
@@ -142,6 +143,7 @@
     <Compile Include="Criteria\Group\UpdateGroupCriteria.cs" />
     <Compile Include="Criteria\Group\UpdateStatusGroupCriteria.cs" />
     <Compile Include="Criteria\Group\InsertGroupCriteria.cs" />
+    <Compile Include="Criteria\MailingList\InsertMailingListCriteria.cs" />
     <Compile Include="Criteria\MenuItem\GetByUserIncludeGroupMenuItemCriteria.cs" />
     <Compile Include="Criteria\MenuItem\GetParentByIdMenuItemCriteria.cs" />
     <Compile Include="Criteria\MenuItem\SearchAllMenuItemCriteria.cs" />
@@ -207,10 +209,12 @@
     <Compile Include="Criteria\User\UserCheckInUserCriteria.cs" />
     <Compile Include="Domain\IGroup.cs" />
     <Compile Include="Domain\IFunction.cs" />
+    <Compile Include="Domain\IMailingList.cs" />
     <Compile Include="Domain\IMenuItem.cs" />
     <Compile Include="Domain\ISite.cs" />
     <Compile Include="Domain\IUser.cs" />
     <Compile Include="Helpers\PagerList.cs" />
+    <Compile Include="Model\MailingList.cs" />
     <Compile Include="Model\ValueObject\LogFunction.cs" />
     <Compile Include="Model\ValueObject\LogUserLogin.cs" />
     <Compile Include="Model\ValueObject\Downtime.cs" />
@@ -228,6 +232,7 @@
     <Compile Include="Model\ValueObject\UserLevel.cs" />
     <Compile Include="Model\ValueObject\UserPolicy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\Impl\MailingListRepository.cs" />
     <Compile Include="Repository\Impl\TraceRepository.cs" />
     <Compile Include="Repository\Impl\FunctionRepository.cs" />
     <Compile Include="Repository\Impl\GroupRepository.cs" />
@@ -235,12 +240,14 @@
     <Compile Include="Repository\Impl\RepositoryBase.cs" />
     <Compile Include="Repository\Impl\SiteRepository.cs" />
     <Compile Include="Repository\Impl\UserRepository.cs" />
+    <Compile Include="Repository\Interface\IMailingListRepository.cs" />
     <Compile Include="Repository\Interface\ITraceRepository.cs" />
     <Compile Include="Repository\Interface\IGroupRepository.cs" />
     <Compile Include="Repository\Interface\IFunctionRepository.cs" />
     <Compile Include="Repository\Interface\IMenuItemRepository.cs" />
     <Compile Include="Repository\Interface\ISiteRepository.cs" />
     <Compile Include="Repository\Interface\IUserRepository.cs" />
+    <Compile Include="Service\Impl\MailingListService.cs" />
     <Compile Include="Service\Impl\TraceService.cs" />
     <Compile Include="Service\Impl\MaintainanceService.cs" />
     <Compile Include="Service\Impl\FunctionService.cs" />
@@ -250,6 +257,7 @@
     <Compile Include="Service\Impl\SiteService.cs" />
     <Compile Include="Service\Impl\BaseService.cs" />
     <Compile Include="Service\Impl\UserService.cs" />
+    <Compile Include="Service\Interface\IMailingListService.cs" />
     <Compile Include="Service\Interface\ITraceService.cs" />
     <Compile Include="Service\Interface\IGroupService.cs" />
     <Compile Include="Service\Interface\IFunctionService.cs" />

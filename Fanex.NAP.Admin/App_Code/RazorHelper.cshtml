@@ -1,0 +1,15 @@
+﻿@helper ShowMailingList(string mailList)
+{
+    if (!string.IsNullOrWhiteSpace(mailList))
+    {
+        var arrMail = mailList.Split(';');
+        
+        foreach(var mail in arrMail)
+        {
+            <li class="search-choice"> 
+                <span>@mail</span>
+                <a class="search-choice-close"></a>
+            </li>
+        }
+    }
+}

@@ -185,6 +185,7 @@
     <Compile Include="Areas\UserControl\Controllers\CommonController.cs" />
     <Compile Include="Areas\UserControl\Controllers\FunctionController.cs" />
     <Compile Include="Areas\UserControl\Controllers\GroupController.cs" />
+    <Compile Include="Areas\UserControl\Controllers\MailingListController.cs" />
     <Compile Include="Areas\UserControl\Controllers\TraceController.cs" />
     <Compile Include="Areas\UserControl\Controllers\MenuController.cs" />
     <Compile Include="Areas\UserControl\Controllers\SiteController.cs" />
@@ -192,7 +193,11 @@
     <Compile Include="Areas\UserControl\UserControlAreaRegistration.cs" />
     <Compile Include="Areas\UserLogin\Controllers\BaseController.cs" />
     <Compile Include="Areas\UserLogin\Controllers\CommonController.cs" />
+    <Content Include="Areas\UserControl\scripts\MailingList\MailingList.js" />
     <Content Include="Areas\UserControl\themes\nap\ie.less" />
+    <Content Include="App_Code\RazorHelper.cshtml" />
+    <None Include="Areas\UserControl\themes\nap\mailinglist\MailingList.less" />
+    <Content Include="Areas\UserControl\Views\MailingList\AddNew.cshtml" />
     <None Include="Areas\UserLogin\Controllers\LoginController.cs.bk" />
     <Compile Include="Areas\UserLogin\Controllers\LoginController.cs" />
     <Compile Include="Areas\UserLogin\Controllers\SSOController.cs">
@@ -410,6 +415,8 @@
     <Content Include="Areas\UserControl\themes\nap\img\win8\editing\delete.png" />
     <Content Include="Areas\UserControl\themes\nap\img\win8\editing\edit.png" />
     <Content Include="Areas\UserControl\themes\nap\img\win8\editing\erase.png" />
+    <Content Include="Areas\UserControl\themes\nap\mailinglist\chosen-sprite.png" />
+    <Content Include="Areas\UserControl\themes\nap\mailinglist\chosen.css" />
     <Content Include="Areas\UserControl\themes\reset.css" />
     <Content Include="Areas\UserLogin\scripts\lib\jquery-1.8.0.min.js" />
     <Content Include="Areas\UserLogin\scripts\lib\msgbox\images\alert.png" />

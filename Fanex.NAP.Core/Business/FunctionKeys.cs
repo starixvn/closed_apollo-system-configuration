@@ -7,7 +7,7 @@
 // </summary>
 //
 // <history>
-// Lasted generated date: 1/16/2013 2:20:21 PM
+// Lasted generated date: 9/27/2013 11:37:53 AM
 // </history>
 using System.Diagnostics.CodeAnalysis;
 
@@ -22,19 +22,27 @@ public static class FunctionKeys
 
     public const string AssignSiteToUser = "AssignSiteToUser";
 
+    public const string CreateMailingList = "CreateMailingList";
+
     public const string Dashboard = "Dashboard";
 
     public const string ExecSpLog = "ExecSpLog";
 
     public const string FunctionLog = "FunctionLog";
 
-    public const string home1234566756756tinfgtuyrtu = "home1234566756756tinfgtuyrtu";
+    public const string home123 = "home123";
 
     public const string LogManagement = "LogManagement";
+
+    public const string MailingList = "MailingList";
+
+    public const string MailingListExchangeRate = "MailingListExchangeRate";
 
     public const string ManageFunction = "ManageFunction";
 
     public const string ManageGroup = "ManageGroup";
+
+    public const string ManageMailingList = "ManageMailingList";
 
     public const string ManageMenu = "ManageMenu";
 
@@ -52,7 +60,11 @@ public static class FunctionKeys
 
     public const string Taitest = "Taitest";
 
+    public const string Taitest3 = "Taitest3";
+
     public const string TaitestCopy = "TaitestCopy";
+
+    public const string TaitestCopy1 = "TaitestCopy1";
 
     public const string testtesttestttt123 = "testtesttestttt123";
 

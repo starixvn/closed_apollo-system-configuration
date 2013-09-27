@@ -353,6 +353,36 @@ namespace Fanex.NAP.Core.Service.Impl
             throw new NotImplementedException();
         }
 
+        public IEnumerable<IFunction> GetByParentKeyAndSite(int siteId, string parentKey, string environment = Constant.UAT, bool? isActive = null)
+        {
+            // check parameters
+            Check.Argument.IsNotNegativeOrZero(siteId, "SiteId");
+            Check.Argument.IsNotEmpty(parentKey, "ParentKey");
+            Check.Argument.IsNotEmpty(environment, "Environment");
+
+            try
+            {
+                var criteria = new GetByParentKeyAndSiteCriteria
+                {
+                    SiteId = siteId,
+                    ParentKey = parentKey,
+                    Environment = environment,
+                    IsActive = isActive
+                };
+
+                if (criteria.IsValid())
+                {
+                    return _functionRepository.Fetch(criteria);
+                }
+            }
+            catch (Exception ex)
+            {
+                HandleException(ex);
+            }
+
+            return null;
+        }
+
         #endregion
 
         #region Gets Function Policy
