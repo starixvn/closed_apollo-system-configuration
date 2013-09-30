@@ -11,15 +11,14 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 {
     using System.Diagnostics.CodeAnalysis;
     using System.Web.Mvc;
-
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Configuration;
     using Fanex.NAP.Core.Service.Impl;
     using Fanex.NAP.Core.Service.Interface;
     using Fanex.NAP.Core.Web;
+    using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.Core.Web.Context;
     using Fanex.NAP.Core.Web.Session;
-    using Fanex.NAP.Core.Web.Attribute;
 
     [NapSuperAuth]
     [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]

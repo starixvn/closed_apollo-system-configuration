@@ -12,11 +12,11 @@ namespace Fanex.NAP.Core.Service.Interface
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Web.Mvc;
+    using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Criteria.Group;
     using Fanex.NAP.Core.Domain;
     using Fanex.NAP.Core.Model.ValueObject;
     using Fanex.NAP.Framework.Data;
-    using Fanex.NAP.Core.Business;
 
     [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
     public interface IGroupService : IBaseService

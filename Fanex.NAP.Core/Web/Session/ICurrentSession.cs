@@ -12,8 +12,6 @@ namespace Fanex.NAP.Core.Web.Session
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.Core.Model;
-    using Fanex.NAP.Core.Domain;
-    using Fanex.NAP.Core.Model.ValueObject;
 
     [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
     public interface ICurrentSession

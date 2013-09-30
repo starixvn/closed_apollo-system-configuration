@@ -10,9 +10,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.Hub", "Fanex.NAP.Hub\Fanex.NAP.Hub.csproj", "{FBA53435-FE84-4C1B-93F1-64407A1ED6DF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StyleCop", "StyleCop", "{96F00BB8-E8D9-47EC-BBB6-CF0DA64D3CDA}"
-	ProjectSection(SolutionItems) = preProject
-		Settings.StyleCop = Settings.StyleCop
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.Sample", "Fanex.NAP.Sample\Fanex.NAP.Sample.csproj", "{3CEFD6D7-B408-452C-B2DF-0DD9BFCF60A8}"
 EndProject
