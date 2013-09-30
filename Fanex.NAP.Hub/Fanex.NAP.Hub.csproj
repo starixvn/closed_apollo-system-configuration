@@ -205,9 +205,11 @@
     <Content Include="Areas\UserLogin\scripts\ReCheckIn.js" />
     <Content Include="Areas\UserLogin\themes\fonts\YanoneKaffeesatz.svg" />
     <Content Include="Areas\UserLogin\themes\fonts\YanoneKaffeesatz.woff" />
+    <Content Include="Areas\UserLogin\themes\img\accounting_portal.png" />
     <Content Include="Areas\UserLogin\themes\img\auth-bg.png" />
     <Content Include="Areas\UserLogin\themes\img\bg.png" />
     <Content Include="Areas\UserLogin\themes\img\bg_header.png" />
+    <Content Include="Areas\UserLogin\themes\img\CSDAdminSite.png" />
     <Content Include="Areas\UserLogin\themes\img\down.png" />
     <Content Include="Areas\UserLogin\themes\img\lock.png" />
     <Content Include="Areas\UserLogin\themes\img\password.png" />
@@ -217,11 +219,14 @@
     <Content Include="Areas\UserLogin\themes\img\warn.png" />
     <Content Include="Areas\UserLogin\themes\img\welcome-napadmin.png" />
     <Content Include="Areas\UserLogin\themes\img\welcome.png" />
+    <Content Include="Areas\UserLogin\themes\img\welcome_to_accounting_portal.png" />
     <Content Include="Areas\UserLogin\themes\login.css" />
     <Content Include="Areas\UserLogin\themes\select-site.less" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
