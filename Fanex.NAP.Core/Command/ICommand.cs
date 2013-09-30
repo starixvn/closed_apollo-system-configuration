@@ -12,11 +12,17 @@ namespace Fanex.NAP.Core.Command
     using System.Data;
     using System.Diagnostics.CodeAnalysis;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Command interface.
+    /// </summary>
     public interface ICommand
     {
         string SettingKey { get; set; }
 
+        /// <summary>
+        /// Gets the parameter.
+        /// </summary>
+        /// <returns>Return parameter.</returns>
         IDataParameterCollection GetParameter();
     }
 }

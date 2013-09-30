@@ -11,13 +11,10 @@ namespace Fanex.NAP.Core.Criteria.Function
 {
     using System;
     using System.ComponentModel.DataAnnotations;
-    using System.Diagnostics.CodeAnalysis;
-
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web;
     using Fanex.NAP.Framework.Data;
-
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    
     public class DuplicateFunctionCriteria : CriteriaBase
     {
         public int DuplicateFunctionId { get; set; }
@@ -88,6 +85,11 @@ namespace Fanex.NAP.Core.Criteria.Function
             this.Environment = Constant.UAT;
         }
 
+        /// <summary>
+        /// Gets the setting key.
+        /// </summary>
+        /// <returns>Return setting key.</returns>
+        /// <value>Setting key : NAP_Function_Duplicate</value>
         public override string GetSettingKey()
         {
             return "NAP_Function_Duplicate";

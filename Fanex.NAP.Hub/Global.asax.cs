@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------
-// <copyright file="MvcApplication.cs" company="Nexcel Solutions Vietnam">
+// <copyright file="Global.asax.cs" company="Nexcel Solutions Vietnam">
 // Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------
@@ -11,7 +11,6 @@
 namespace Fanex.NAP.Hub
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using System.Web;
     using System.Web.Http;
     using System.Web.Mvc;
@@ -24,16 +23,24 @@ namespace Fanex.NAP.Hub
     using Fanex.NAP.Core.Web.Auth;
     using Fanex.NAP.Core.Web.Session;
 
-    // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
-    // visit http://go.microsoft.com/?LinkId=9394801
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Note: For instructions on enabling IIS6 or IIS7 classic mode, visit http://go.microsoft.com/?LinkId=9394801 .
+    /// </summary>
     public class MvcApplication : System.Web.HttpApplication
     {
+        /// <summary>
+        /// Registers the global filters.
+        /// </summary>
+        /// <param name="filters">The filters.</param>
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
         }
 
+        /// <summary>
+        /// Registers the routes.
+        /// </summary>
+        /// <param name="routes">The routes.</param>
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
@@ -49,6 +56,9 @@ namespace Fanex.NAP.Hub
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional });
         }
 
+        /// <summary>
+        /// Application the start.
+        /// </summary>
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
@@ -61,6 +71,11 @@ namespace Fanex.NAP.Hub
             Fanex.Data.Configuration.DbSettingProviderManager.Current.Start();
         }
 
+        /// <summary>
+        /// Handles the Error event of the Application control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         protected void Application_Error(object sender, EventArgs e)
         {
             // Get the exception object.
@@ -79,6 +94,11 @@ namespace Fanex.NAP.Hub
             }
         }
 
+        /// <summary>
+        /// Handles the End event of the Session control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         protected void Session_End(object sender, EventArgs e)
         {
             ICurrentSession _currentSession = new CurrentSession();
@@ -89,6 +109,11 @@ namespace Fanex.NAP.Hub
             _currentSession.ClearAll();
         }
 
+        /// <summary>
+        /// Handles the AuthenticateRequest event of the Application control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         protected void Application_AuthenticateRequest(object sender, EventArgs e)
         {
             if (HttpContext.Current.User != null)
@@ -100,25 +125,25 @@ namespace Fanex.NAP.Hub
                     HttpCookie httpCookie = Context.Request.Cookies[cookie];
 
                     if (httpCookie == null)
-                    {                        
+                    {
                         return;
                     }
 
                     FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(httpCookie.Value);
                     if (ticket == null || ticket.Expired)
-                    {                     
+                    {
                         return;
                     }
 
                     FormsIdentity identity = new FormsIdentity(ticket);
                     if (string.IsNullOrEmpty(ticket.UserData))
-                    {                     
+                    {
                         return;
                     }
 
                     AuthInfo udata = AuthInfo.CreateUserData(ticket.UserData);
                     NapPrincipal principal = new NapPrincipal(identity, udata);
-                    Context.User = principal;                   
+                    Context.User = principal;
                 }
             }
         }

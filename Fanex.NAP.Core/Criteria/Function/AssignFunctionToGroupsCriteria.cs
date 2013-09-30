@@ -11,11 +11,12 @@ namespace Fanex.NAP.Core.Criteria.Function
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using System.Text;
     using Fanex.NAP.Framework.Data;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Assign function to group.
+    /// </summary>
     public class AssignFunctionToGroupsCriteria : CriteriaBase
     {
         protected readonly string AssignPermissionTpl = "<FunctionPolicy GroupId='{0}' Policy='{1}'></FunctionPolicy>";
@@ -25,8 +26,11 @@ namespace Fanex.NAP.Core.Criteria.Function
         public int SiteId { get; set; }
 
         /// <summary>
-        /// <ROOT><User GroupId='1' Policy='2'></User></ROOT>
+        ///   <ROOT><User GroupId="1" Policy="2"></User></ROOT>
         /// </summary>
+        /// <value>
+        /// The value.
+        /// </value>
         public string Value
         {
             get
@@ -63,11 +67,22 @@ namespace Fanex.NAP.Core.Criteria.Function
         [SpParam(Ignored = true)]
         public List<string> GroupHost { get; set; }
 
+        /// <summary>
+        /// Gets the setting key.
+        /// </summary>
+        /// <returns>
+        /// Return setting key : NAP_Function_AssignFunctionToGroups.
+        /// </returns>
+        /// <value>Return setting key NAP_Function_AssignFunctionToGroups.</value>
         public override string GetSettingKey()
         {
             return "NAP_Function_AssignFunctionToGroups";
         }
 
+        /// <summary>
+        /// Determines whether this instance is valid.
+        /// </summary>
+        /// <returns></returns>
         public override bool IsValid()
         {
             return true;

@@ -42,11 +42,18 @@ namespace Fanex.NAP.Core.Service.Impl
             try
             {
                 // gets Agent Site UM Status.
-                var umInfo = umctrl.GetMaintainenceInfo(Sites.Agent, NapSettings.Settings.UMAddress);
+                var umInfo = umctrl.GetMaintainenceInfo(Sites.CSD, NapSettings.Settings.UMAddress);
 
-                isdowntime = umInfo.status;
-                timeFrom = umInfo.start_time;
-                timeTo = umInfo.end_time;
+                if (!ReferenceEquals(umInfo, null))
+                {
+                    isdowntime = umInfo.status;
+                    timeFrom = umInfo.start_time;
+                    timeTo = umInfo.end_time;
+                }
+                else
+                {
+                    return downTime;
+                }
             }
             catch (Exception ex)
             {

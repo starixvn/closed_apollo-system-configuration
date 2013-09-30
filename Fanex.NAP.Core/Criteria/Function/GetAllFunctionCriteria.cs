@@ -14,8 +14,7 @@ namespace Fanex.NAP.Core.Criteria.Function
 
     /// <summary>
     /// TODO: Update summary.
-    /// </summary>
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// </summary>    
     public class GetAllFunctionCriteria : CriteriaBase
     {
         public string Environment { get; set; }
@@ -23,18 +22,18 @@ namespace Fanex.NAP.Core.Criteria.Function
         public bool? IsActive { get; set; }
 
         /// <summary>
-        /// Get the reference SP's Name which is specified in Config file.
+        /// Get the reference SP's Name which is specified in configuration file.
         /// </summary>
-        /// <returns>NAP_Function_GetAll</returns>
+        /// <returns>Return setting key : NAP_Function_GetAll.</returns>
         public override string GetSettingKey()
         {
             return "NAP_Function_GetAll";
         }
 
         /// <summary>
-        /// Check data's constrains
+        /// Check data's constrains.
         /// </summary>
-        /// <returns>True: valid; False: invalid</returns>
+        /// <returns>True: valid; False: invalid.</returns>
         public override bool IsValid()
         {
             return true;

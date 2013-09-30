@@ -11,7 +11,9 @@ namespace Fanex.NAP.Framework.Data
 {
     using System.Diagnostics.CodeAnalysis;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Command result.
+    /// </summary>
     public class CommandResult : CommandResultBase
     {
         public override bool IsSuccessful

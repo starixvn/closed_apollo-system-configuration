@@ -11,7 +11,9 @@ namespace Fanex.NAP.Core.Business
 {
     using System.Diagnostics.CodeAnalysis;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// The constant class.
+    /// </summary>
     public static class Constant
     {
         public const string SPACE = " ";
@@ -30,23 +32,61 @@ namespace Fanex.NAP.Core.Business
 
         public const int SearchAllSite = -9999;
 
+        /// <summary>
+        /// The user policy.
+        /// </summary>
         public enum Policy
         {
+            /// <summary>
+            /// The none permission.
+            /// </summary>
             None = 0,
+
+            /// <summary>
+            /// The read permission.
+            /// </summary>
             Read = 1,
+
+            /// <summary>
+            /// The host permission.
+            /// </summary>
             Host = 2
         }
 
+        /// <summary>
+        /// Crud permission.
+        /// </summary>
         public enum Crud
         {
+            /// <summary>
+            /// The read permission.
+            /// </summary>
             Read = 0,
+
+            /// <summary>
+            /// The host permission.
+            /// </summary>
             Host = 1
         }
 
+        /// <summary>
+        /// User level.
+        /// </summary>
         public enum Level
         {
+            /// <summary>
+            /// The user level.
+            /// </summary>            
             User = 0,
+
+            /// <summary>
+            /// The site admin.
+            /// </summary>
             SiteAdmin = 50,
+
+            /// <summary>
+            /// The portal admin.
+            /// </summary>
             PortalAdmin = 100
         }
     }

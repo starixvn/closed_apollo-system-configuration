@@ -10,7 +10,9 @@ namespace Fanex.NAP.Core.Business
 {
     using System.Diagnostics.CodeAnalysis;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Cache key.
+    /// </summary>
     public static class CacheKey
     {
         public const string CacheSiteStatus = "NAP.Core.SiteStatus";

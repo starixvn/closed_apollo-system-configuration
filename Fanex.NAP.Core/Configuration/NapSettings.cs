@@ -13,9 +13,8 @@ namespace Fanex.NAP.Core.Configuration
     using System.Diagnostics.CodeAnalysis;
 
     /// <summary>
-    /// Custom config for NAP
-    /// </summary>
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// Custom configuration for NAP.
+    /// </summary>    
     public class NapSettings : ConfigurationSection
     {
         #region consts
@@ -34,7 +33,7 @@ namespace Fanex.NAP.Core.Configuration
 
         #endregion consts
 
-        private static NapSettings _settings = ConfigurationManager.GetSection(__NAP_SETTINGS) as NapSettings;
+        private static NapSettings _settings = ConfigurationManager.GetSection(__NAP_SETTINGS) as NapSettings;       
 
         public static NapSettings Settings
         {
@@ -57,14 +56,7 @@ namespace Fanex.NAP.Core.Configuration
         {
             get { return (int)this[__SITE_ID]; }
             set { this[__SITE_ID] = value; }
-        }
-
-        [ConfigurationProperty(__ENABLE_DIRECT_LOGIN, IsRequired = true)]
-        private string _EnableDirectLogin
-        {
-            get { return (string)this[__ENABLE_DIRECT_LOGIN]; }
-            set { this[__ENABLE_DIRECT_LOGIN] = value; }
-        }
+        }        
 
         public bool EnableDirectLogin
         {
@@ -103,14 +95,7 @@ namespace Fanex.NAP.Core.Configuration
         {
             get { return (string)this[__UM_ADDRESS]; }
             set { this[__UM_ADDRESS] = value; }
-        }
-
-        [ConfigurationProperty(__ENABLE_CHECK_UM, IsRequired = true)]
-        private string _EnableCheckUM
-        {
-            get { return (string)this[__ENABLE_CHECK_UM]; }
-            set { this[__ENABLE_CHECK_UM] = value; }
-        }
+        }        
 
         public bool EnableCheckUM
         {
@@ -128,14 +113,7 @@ namespace Fanex.NAP.Core.Configuration
             {
                 _EnableCheckUM = value.ToString();
             }
-        }
-
-        [ConfigurationProperty(__ENABLE_RECHECKIN, IsRequired = true)]
-        private string _EnableReCheckIn
-        {
-            get { return (string)this[__ENABLE_RECHECKIN]; }
-            set { this[__ENABLE_RECHECKIN] = value; }
-        }
+        }        
 
         public bool EnableReCheckIn
         {
@@ -174,24 +152,46 @@ namespace Fanex.NAP.Core.Configuration
                 return domainCollection;
             }
         }
+
+        [ConfigurationProperty(__ENABLE_DIRECT_LOGIN, IsRequired = true)]
+        private string _EnableDirectLogin
+        {
+            get { return (string)this[__ENABLE_DIRECT_LOGIN]; }
+            set { this[__ENABLE_DIRECT_LOGIN] = value; }
+        }
+
+        [ConfigurationProperty(__ENABLE_CHECK_UM, IsRequired = true)]
+        private string _EnableCheckUM
+        {
+            get { return (string)this[__ENABLE_CHECK_UM]; }
+            set { this[__ENABLE_CHECK_UM] = value; }
+        }
+
+        [ConfigurationProperty(__ENABLE_RECHECKIN, IsRequired = true)]
+        private string _EnableReCheckIn
+        {
+            get { return (string)this[__ENABLE_RECHECKIN]; }
+            set { this[__ENABLE_RECHECKIN] = value; }
+        }
     }
 
     /// <summary>
-    /// Server Collection, map to collection in config file
-    /// </summary>
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// Server Collection, map to collection in configuration file.
+    /// </summary>    
     public class DomainCollection : ConfigurationElementCollection
     {
         /// <summary>
-        /// Controller
+        /// Initializes a new instance of the <see cref="DomainCollection"/> class.
         /// </summary>
         public DomainCollection()
         {
         }
 
         /// <summary>
-        /// Collection Type
+        /// Gets the type of the <see cref="T:System.Configuration.ConfigurationElementCollection" />.
         /// </summary>
+        /// <returns>The <see cref="T:System.Configuration.ConfigurationElementCollectionType" /> of this collection.</returns>
+        /// <value>Configuration element collection.</value>
         public override ConfigurationElementCollectionType CollectionType
         {
             get
@@ -201,47 +201,13 @@ namespace Fanex.NAP.Core.Configuration
         }
 
         /// <summary>
-        /// Add Element
+        /// Gets or sets the <see cref="DomainElement"/> at the specified index.
         /// </summary>
-        /// <param name="mappingElement">Mapping element</param>
-        public void Add(DomainElement mappingElement)
-        {
-            BaseAdd(mappingElement);
-        }
-
-        /// <summary>
-        /// Base Add
-        /// </summary>
-        /// <param name="element">Element</param>
-        protected override void BaseAdd(ConfigurationElement element)
-        {
-            BaseAdd(element, false);
-        }
-
-        /// <summary>
-        /// Create New Element
-        /// </summary>
-        /// <returns></returns>
-        protected override ConfigurationElement CreateNewElement()
-        {
-            return new DomainElement();
-        }
-
-        /// <summary>
-        /// Get Element Key
-        /// </summary>
-        /// <param name="element">Element</param>
-        /// <returns></returns>
-        protected override object GetElementKey(ConfigurationElement element)
-        {
-            return ((DomainElement)element).Name + ((DomainElement)element).Path;
-        }
-
-        /// <summary>
-        /// Get Element
-        /// </summary>
-        /// <param name="index">Index</param>
-        /// <returns></returns>
+        /// <value>
+        /// The <see cref="DomainElement"/>.
+        /// </value>
+        /// <param name="index">The index.</param>
+        /// <returns>Return domain element object.</returns>
         public DomainElement this[int index]
         {
             get
@@ -259,12 +225,52 @@ namespace Fanex.NAP.Core.Configuration
                 BaseAdd(index, value);
             }
         }
+
+        /// <summary>
+        /// Adds the specified mapping element.
+        /// </summary>
+        /// <param name="mappingElement">The mapping element.</param>
+        public void Add(DomainElement mappingElement)
+        {
+            BaseAdd(mappingElement);
+        }
+
+        /// <summary>
+        /// Adds a configuration element to the <see cref="T:System.Configuration.ConfigurationElementCollection" />.
+        /// </summary>
+        /// <param name="element">The <see cref="T:System.Configuration.ConfigurationElement" /> to add.</param>
+        protected override void BaseAdd(ConfigurationElement element)
+        {
+            BaseAdd(element, false);
+        }
+
+        /// <summary>
+        /// When overridden in a derived class, creates a new <see cref="T:System.Configuration.ConfigurationElement" />.
+        /// </summary>
+        /// <returns>
+        /// A new <see cref="T:System.Configuration.ConfigurationElement" />.
+        /// </returns>
+        protected override ConfigurationElement CreateNewElement()
+        {
+            return new DomainElement();
+        }
+
+        /// <summary>
+        /// Gets the element key for a specified configuration element when overridden in a derived class.
+        /// </summary>
+        /// <param name="element">The <see cref="T:System.Configuration.ConfigurationElement" /> to return the key for.</param>
+        /// <returns>
+        /// An <see cref="T:System.Object" /> that acts as the key for the specified <see cref="T:System.Configuration.ConfigurationElement" />.
+        /// </returns>
+        protected override object GetElementKey(ConfigurationElement element)
+        {
+            return ((DomainElement)element).Name + ((DomainElement)element).Path;
+        }        
     }
 
     /// <summary>
-    /// Domain Element
-    /// </summary>
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// Domain Element.
+    /// </summary>    
     public class DomainElement : ConfigurationElement
     {
         private const string __NAP_DOMAIN_NAME = "Name";
@@ -272,8 +278,11 @@ namespace Fanex.NAP.Core.Configuration
         private const string __NAP_DOMAIN_PATH = "Path";
 
         /// <summary>
-        /// Name
+        /// Gets or sets the domain name.
         /// </summary>
+        /// <value>
+        /// The domain name.
+        /// </value>
         [ConfigurationProperty(__NAP_DOMAIN_NAME, IsRequired = true)]
         public string Name
         {
@@ -289,8 +298,11 @@ namespace Fanex.NAP.Core.Configuration
         }
 
         /// <summary>
-        /// Path
+        /// Gets or sets the path.
         /// </summary>
+        /// <value>
+        /// The path name.
+        /// </value>
         [ConfigurationProperty(__NAP_DOMAIN_PATH, IsRequired = true)]
         public string Path
         {

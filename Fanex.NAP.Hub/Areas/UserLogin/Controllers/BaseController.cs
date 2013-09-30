@@ -9,37 +9,25 @@
 
 namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
 {
-    using System.Diagnostics.CodeAnalysis;
     using System.Web.Mvc;
     using Fanex.NAP.Core.Configuration;
     using Fanex.NAP.Core.Web;
     using Fanex.NAP.Core.Web.Context;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Base controller.
+    /// </summary>
     public class BaseController : Controller
     {
         protected readonly string Environment = NapSettings.Settings.Environment;
 
         protected readonly int SiteId = NapSettings.Settings.SiteId;
 
-        private bool _enableDirectLogin = NapSettings.Settings.EnableDirectLogin;
-
         protected readonly CurrentContext CurrentContext;
 
-        private ViewFlags _viewFlags;
+        private bool _enableDirectLogin = NapSettings.Settings.EnableDirectLogin;
 
-        protected ViewFlags ViewFlags
-        {
-            get
-            {
-                return ViewBag.ViewFlags;
-            }
-
-            set
-            {
-                ViewBag.ViewFlags = _viewFlags = value;
-            }
-        }
+        private ViewFlags _viewFlags;             
 
         public BaseController()
         {
@@ -52,9 +40,10 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
         }
 
         /// <summary>
-        /// Indicates whether the current site allows users login directly.
-        /// If "0", users must login through NAP Hub
+        /// Gets a value indicating whether the current site allows users login directly.
+        /// If "0", users must login through NAP Hub.
         /// </summary>
+        /// <value>Check site enable direct login.</value>
         public bool EnableDirectLogin
         {
             get
@@ -62,5 +51,18 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
                 return this._enableDirectLogin;
             }
         }
+
+        protected ViewFlags ViewFlags
+        {
+            get
+            {
+                return ViewBag.ViewFlags;
+            }
+
+            set
+            {
+                ViewBag.ViewFlags = _viewFlags = value;
+            }
+        }  
     }
 }

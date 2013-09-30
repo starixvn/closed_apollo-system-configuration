@@ -12,12 +12,18 @@ namespace Fanex.NAP.Hub.Controllers
     using System.Diagnostics.CodeAnalysis;
     using System.Web.Mvc;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Home controller.
+    /// </summary>
     public class HomeController : Controller
     {
+        /// <summary>
+        /// Indexes this instance.
+        /// </summary>
+        /// <returns>Return login page.</returns>
         public ActionResult Index()
         {
-            return base.RedirectToAction("Index", "Login", new { Area = "UserLogin" });
+            return RedirectToAction("Index", "Login", new { Area = "UserLogin" });
         }
     }
 }

@@ -11,7 +11,6 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Security;
@@ -23,7 +22,9 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
     using Fanex.NAP.Core.Web.Auth;
     using Fanex.NAP.Core.Web.Session;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// SSO controller.
+    /// </summary>
     public class SSOController : BaseController
     {
         #region members
@@ -54,6 +55,13 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
 
         #endregion
 
+        /// <summary>
+        /// Indexes the specified user identifier.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="onuserId">The on user identifier.</param>
+        /// <param name="time">The time expired.</param>
+        /// <returns>Return to site.</returns>
         [AllowAnonymous]
         [HttpGet]
         public ActionResult Index(string userId, string onuserId, string time)
@@ -122,6 +130,10 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
 
         #region utilities
 
+        /// <summary>
+        /// Creates the authentication information.
+        /// </summary>
+        /// <param name="user">The user object.</param>
         private void CreateAuthInfo(User user)
         {
             var currentDomain = CurrentContext.GetCurrentDomain();
