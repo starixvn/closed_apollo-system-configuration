@@ -435,7 +435,6 @@
     <Content Include="Areas\UserLogin\themes\img\auth-bg.png" />
     <Content Include="Areas\UserLogin\themes\img\bg.png" />
     <Content Include="Areas\UserLogin\themes\img\bg_header.png" />
-    <Content Include="Areas\UserLogin\themes\img\CSDAdminSite.png" />
     <Content Include="Areas\UserLogin\themes\img\down.png" />
     <Content Include="Areas\UserLogin\themes\img\lock.png" />
     <Content Include="Areas\UserLogin\themes\img\password.png" />
@@ -444,9 +443,7 @@
     <Content Include="Areas\UserLogin\themes\img\tool-sprites.gif" />
     <Content Include="Areas\UserLogin\themes\img\username.png" />
     <Content Include="Areas\UserLogin\themes\img\warn.png" />
-    <Content Include="Areas\UserLogin\themes\img\welcome-napadmin.png" />
     <Content Include="Areas\UserLogin\themes\img\welcome.png" />
-    <Content Include="Areas\UserLogin\themes\img\welcome_to_system_configuration.png" />
     <Content Include="Areas\UserLogin\themes\select-site.less" />
     <Content Include="Areas\UserLogin\themes\login.css" />
     <Content Include="favicon.ico" />
