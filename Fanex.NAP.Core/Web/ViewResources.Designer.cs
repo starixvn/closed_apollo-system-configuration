@@ -781,6 +781,15 @@ namespace Fanex.NAP.Core.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Internal.
+        /// </summary>
+        public static string Internal {
+            get {
+                return ResourceManager.GetString("Internal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Internal-only.
         /// </summary>
         public static string Internal_Only {
@@ -916,6 +925,15 @@ namespace Fanex.NAP.Core.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to List Key.
+        /// </summary>
+        public static string List_Key {
+            get {
+                return ResourceManager.GetString("List_Key", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to LIVE.
         /// </summary>
         public static string LIVE {
@@ -1006,6 +1024,15 @@ namespace Fanex.NAP.Core.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mailing List Item.
+        /// </summary>
+        public static string MailingList_Item {
+            get {
+                return ResourceManager.GetString("MailingList_Item", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to List Name.
         /// </summary>
         public static string MailingList_Name {
@@ -1038,6 +1065,15 @@ namespace Fanex.NAP.Core.Web {
         public static string Manage_Function {
             get {
                 return ResourceManager.GetString("Manage_Function", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage Mailing List.
+        /// </summary>
+        public static string Manage_MailingList {
+            get {
+                return ResourceManager.GetString("Manage_MailingList", resourceCulture);
             }
         }
         
@@ -1695,6 +1731,15 @@ namespace Fanex.NAP.Core.Web {
         public static string Update_Group {
             get {
                 return ResourceManager.GetString("Update_Group", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update Mailing List.
+        /// </summary>
+        public static string Update_MailingList {
+            get {
+                return ResourceManager.GetString("Update_MailingList", resourceCulture);
             }
         }
         

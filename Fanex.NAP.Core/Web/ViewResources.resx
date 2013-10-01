@@ -729,4 +729,19 @@
   <data name="MailingList_Name" xml:space="preserve">
     <value>List Name</value>
   </data>
+  <data name="Manage_MailingList" xml:space="preserve">
+    <value>Manage Mailing List</value>
+  </data>
+  <data name="MailingList_Item" xml:space="preserve">
+    <value>Mailing List Item</value>
+  </data>
+  <data name="Internal" xml:space="preserve">
+    <value>Internal</value>
+  </data>
+  <data name="List_Key" xml:space="preserve">
+    <value>List Key</value>
+  </data>
+  <data name="Update_MailingList" xml:space="preserve">
+    <value>Update Mailing List</value>
+  </data>
 </root>

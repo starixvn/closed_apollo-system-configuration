@@ -52,5 +52,48 @@
         <Mapping DataField="ModifierUsername" ObjectProperty="Username" />
       </Setting>
       <Setting Key="NAP_MailingLists_Insert" SpName="NAP_MailingLists_Insert" DbName="Nap"/>
+      <Setting Key="NAP_MailingLists_Update" SpName="NAP_MailingLists_Update" DbName="Nap"/>
+      <Setting Key="NAP_MailingLists_UpdateStatus" SpName="NAP_MailingLists_UpdateStatus" DbName="Nap"/>
+      <Setting Key="NAP_MailingLists_UpdateIsInternal" SpName="NAP_MailingLists_UpdateIsInternal" DbName="Nap"/>
+      <Setting Key="NAP_MailingLists_GetById" SpName="NAP_MailingLists_GetById" DbName="Nap">
+        <Mapping DataField="ListId" ObjectProperty="Id" />
+        <Mapping DataField="ListName" ObjectProperty="Name" />
+        <Mapping DataField="ListKey" ObjectProperty="Key" />
+        <Mapping DataField="SiteName" ObjectProperty="Name" />
+        <Mapping DataField="ListFunctionId" ObjectProperty="Id" />
+        <Mapping DataField="ListFunctionName" ObjectProperty="Name" />
+        <Mapping DataField="FunctionId" ObjectProperty="Id" />
+        <Mapping DataField="FunctionName" ObjectProperty="Name" />
+      </Setting>
+      <Setting Key="NAP_MailingLists_GetByKey" SpName="NAP_MailingLists_GetByKey" DbName="Nap">
+        <Mapping DataField="ListId" ObjectProperty="Id" />
+        <Mapping DataField="ListName" ObjectProperty="Name" />
+        <Mapping DataField="ListKey" ObjectProperty="Key" />
+        <Mapping DataField="SiteName" ObjectProperty="Name" />
+        <Mapping DataField="ListFunctionId" ObjectProperty="Id" />
+        <Mapping DataField="ListFunctionName" ObjectProperty="Name" />
+        <Mapping DataField="FunctionId" ObjectProperty="Id" />
+        <Mapping DataField="FunctionName" ObjectProperty="Name" />
+      </Setting>
+      <Setting Key="NAP_MailingLists_GetByName" SpName="NAP_MailingLists_GetByName" DbName="Nap">
+        <Mapping DataField="ListId" ObjectProperty="Id" />
+        <Mapping DataField="ListName" ObjectProperty="Name" />
+        <Mapping DataField="ListKey" ObjectProperty="Key" />
+        <Mapping DataField="SiteName" ObjectProperty="Name" />
+        <Mapping DataField="ListFunctionId" ObjectProperty="Id" />
+        <Mapping DataField="ListFunctionName" ObjectProperty="Name" />
+        <Mapping DataField="FunctionId" ObjectProperty="Id" />
+        <Mapping DataField="FunctionName" ObjectProperty="Name" />
+      </Setting>
+      <Setting Key="NAP_MailingLists_GetBySite" SpName="NAP_MailingLists_GetBySite" DbName="Nap">
+        <Mapping DataField="ListId" ObjectProperty="Id" />
+        <Mapping DataField="ListName" ObjectProperty="Name" />
+        <Mapping DataField="ListKey" ObjectProperty="Key" />
+        <Mapping DataField="SiteName" ObjectProperty="Name" />
+        <Mapping DataField="ListFunctionId" ObjectProperty="Id" />
+        <Mapping DataField="ListFunctionName" ObjectProperty="Name" />
+        <Mapping DataField="FunctionId" ObjectProperty="Id" />
+        <Mapping DataField="FunctionName" ObjectProperty="Name" />
+      </Setting>
     </Function>
 </Functions>

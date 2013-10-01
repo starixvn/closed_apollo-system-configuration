@@ -9,10 +9,6 @@
 
 namespace Fanex.NAP.Core.Model
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using Fanex.NAP.Core.Domain;
 
     public class MailingList : IMailingList
@@ -24,5 +20,25 @@ namespace Fanex.NAP.Core.Model
         public string Key { get; set; }
 
         public string Description { get; set; }
+
+        public short SiteId { get; set; }
+
+        public string Environment { get; set; }
+
+        public IFunction MailFunction { get; set; }
+
+        public IFunction Function { get; set; }
+
+        public string ToList { get; set; }
+
+        public string CCList { get; set; }
+
+        public string BCCList { get; set; }
+
+        public bool IsInternal { get; set; }
+
+        public bool IsActive { get; set; }
+
+        public byte Policy { get; set; }
     }
 }

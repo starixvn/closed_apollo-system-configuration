@@ -9,16 +9,19 @@
 
 namespace Fanex.NAP.Core.Repository.Interface
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using Fanex.NAP.Framework.Data;
-    using Fanex.NAP.Core.Criteria.Function;
     using Fanex.NAP.Core.Criteria.MailingList;
+    using Fanex.NAP.Core.Domain;
+    using Fanex.NAP.Framework.Data;
 
     public interface IMailingListRepository
     {
+        IMailingList Get(ICriteria criteria);
+
+        IEnumerable<IMailingList> Fetch(ICriteria criteria);
+
         ICommandResult Insert(ref InsertMailingListCriteria criteria, ICriteria logCriteria);
+
+        ICommandResult Update(ICriteria criteria, ICriteria logCriteria);
     }
 }

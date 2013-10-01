@@ -17,5 +17,28 @@ namespace Fanex.NAP.Core.Domain
 
     public interface IMailingList : IEntity<short, string>
     {
+        string Key { get; set; }
+
+        string Description { get; set; }
+
+        short SiteId { get; set; }
+
+        string Environment { get; set; }
+
+        IFunction MailFunction { get; set; }
+
+        IFunction Function { get; set; }
+
+        string ToList { get; set; }
+
+        string CCList { get; set; }
+
+        string BCCList { get; set; }
+
+        bool IsInternal { get; set; }
+
+        bool IsActive { get; set; }
+
+        byte Policy { get; set; }
     }
 }

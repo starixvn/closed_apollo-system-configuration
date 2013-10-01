@@ -143,7 +143,14 @@
     <Compile Include="Criteria\Group\UpdateGroupCriteria.cs" />
     <Compile Include="Criteria\Group\UpdateStatusGroupCriteria.cs" />
     <Compile Include="Criteria\Group\InsertGroupCriteria.cs" />
+    <Compile Include="Criteria\MailingList\GetMailingListByIdCriteria.cs" />
+    <Compile Include="Criteria\MailingList\GetMailingListByKeyCriteria.cs" />
+    <Compile Include="Criteria\MailingList\GetMailingListByNameCriteria.cs" />
+    <Compile Include="Criteria\MailingList\GetMailingListBySiteCriteria.cs" />
     <Compile Include="Criteria\MailingList\InsertMailingListCriteria.cs" />
+    <Compile Include="Criteria\MailingList\UpdateIsInternalMailingListCriteria.cs" />
+    <Compile Include="Criteria\MailingList\UpdateMailingListCriteria.cs" />
+    <Compile Include="Criteria\MailingList\UpdateStatusMailingListCriteria.cs" />
     <Compile Include="Criteria\MenuItem\GetByUserIncludeGroupMenuItemCriteria.cs" />
     <Compile Include="Criteria\MenuItem\GetParentByIdMenuItemCriteria.cs" />
     <Compile Include="Criteria\MenuItem\SearchAllMenuItemCriteria.cs" />

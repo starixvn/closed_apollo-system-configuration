@@ -1,0 +1,213 @@
+﻿@using Fanex.NAP.Core.Criteria.MailingList
+@using Fanex.NAP.Core.Web
+@model GetMailingListBySiteCriteria
+@{
+    ViewBag.Title = ViewResources.Manage_MailingList;
+    
+    var viewFlags = (ViewFlags)ViewBag.ViewFlags;
+    var mailingList = (List<MailingList>)ViewBag.MailingList;
+    var isITGroup = (bool)ViewBag.IsITGroup;
+}
+
+@section Head {
+    <link href="~/Areas/UserControl/themes/nap/style.less" rel="stylesheet" type="text/css" />
+}
+
+@section Headline {
+    <h1>
+        <span class="title"><span class="first">@ViewResources.MailingList @ViewResources.Management
+            /</span>
+            @ViewBag.Title
+        </span>
+        @if (viewFlags.HasEditRight)
+        {
+            @Html.ActionLink("+ " + ViewResources.Create_New + " " + ViewResources.MailingList_Item,
+            "AddNew", "MailingList", new { siteId = Model.SiteId }, new { @class = "lnk" })
+        }
+    </h1>
+}
+
+<section id="filter-bar">
+    @using (Html.BeginForm())
+    {
+        <div class="filter-form">
+            <div class="lbl-field width-auto">
+                @Html.LabelFor(m => m.SiteId)
+            </div>
+            <div class="edit-field">
+                @Html.DropDownListFor(m => m.SiteId, (List<SelectListItem>)ViewBag.SiteItemList)
+            </div>
+            @Html.HiddenFor(m => m.Environment)
+            <div class="submit">
+                <input type="submit" value="Submit" />
+            </div>
+        </div>
+    }
+</section>
+
+<div class="grid-wrp pnl-wrp">
+    <div class="pnl-header">
+        <div class="pnl-header-content">
+            &nbsp;</div>
+        <div class="pnl-header-toggle">
+        </div>
+    </div>
+    <div class="pnl-body">
+        <table class="grid">
+            <thead>
+                <tr>
+                    <th>
+                        #
+                    </th>
+                    <th class="first">
+                        @ViewResources.MailingList_Name
+                    </th>
+                    <th>
+                        @ViewResources.MailFunction
+                    </th>
+                    <th>
+                        @ViewResources.Function
+                    </th>
+                    <th>
+                        @ViewResources.To
+                    </th>
+                    <th>
+                        @ViewResources.Cc
+                    </th>
+                    <th>
+                        @ViewResources.Bcc
+                    </th>
+                    @if (isITGroup)
+                    { 
+                        <th class="cmd nbr">
+                            @ViewResources.Internal
+                        </th>
+                    }
+                    
+                    <th class="cmd nbr">
+                        @ViewResources.Active
+                    </th>
+                    @if (!viewFlags.IsLive)
+                    {
+                        <th>
+                            @ViewResources.Environment
+                        </th>
+                    }
+                    
+                    @if (viewFlags.HasEditRight)
+                    {
+                        <th class="cmd nbl last">
+                            @ViewResources.Edit
+                        </th>
+                    }
+                </tr>
+            </thead>
+            <tbody id="contentMenuItem">
+                @{
+                    int i = 0;
+
+                    foreach (var item in mailingList)
+                    {
+                        string rowCss = i % 2 == 0 ? string.Empty : "class=\"alt\"";
+
+                    <tr @Html.Raw(rowCss)>
+                        <td class="align-center">
+                            @(i + 1)
+                        </td>
+                        <td>
+                            @item.Name
+                        </td>
+                        <td>
+                            @item.MailFunction.Name
+                        </td>
+                        <td>
+                            @item.Function.Name
+                        </td>
+                        <td>
+                            @item.ToList
+                        </td>
+                        <td>
+                            @item.CCList
+                        </td>
+                        <td>
+                            @item.BCCList
+                        </td>
+                        @if (isITGroup)
+                        {
+                            string activateText = item.IsInternal ? "IsNotInternal" : "IsInternal";
+
+                            <td class="align-center">
+                            @Html.CheckBox(string.Format("chk-internal-item-{0}", item.Id), item.IsInternal,
+                            new
+                            {
+                                dataid = item.Id,
+                                dataname = item.Name,
+                                @class = "chk-internal-item",
+                                title = string.Format("{0} '{1}'", activateText, item.Name)
+                            })
+                            </td>
+                        }
+    
+                        <td class="align-center">
+                            @if (viewFlags.HasEditRight && item.Policy >= (byte)Constant.Policy.Host)
+                            {
+                                string activateText = item.IsActive ? "Deactivate" : "Activate";
+
+                                @Html.CheckBox(string.Format("chk-active-item-{0}", item.Id), item.IsActive,
+                            new
+                            {
+                                dataid = item.Id,
+                                dataname = item.Name,
+                                @class = "chk-active-item",
+                                title = string.Format("{0} '{1}'", activateText, item.Name)
+                            })
+                            }
+                            else if (item.IsActive)
+                            {
+                                <img src="~/areas/usercontrol/themes/nap/img/blank.png" alt="" class="ico-tick" />
+                            }
+                        </td>
+                        @if (!viewFlags.IsLive)
+                        {
+                            <td class="align-center">
+                                @item.Environment
+                            </td>
+                        }
+                        @if (viewFlags.HasEditRight)
+                        {
+                            if (item.Policy >= (byte)Constant.Policy.Host)
+                            {
+                                <td> 
+                                @Html.ActionLink("Edit", "Edit", new { id = item.Id },
+                                new
+                                {
+                                    @class = "btn-edit tip",
+                                    title = string.Format("{0} '{1}'", ViewResources.Edit, item.Name)
+                                })
+                                </td>
+                            }
+                            else
+                            {
+                                <td></td>
+                            }
+                        }
+                    </tr>
+                        i++;
+                    }
+
+                    if (i == 0)
+                    {
+                    <tr>
+                        <td colspan="11" class="align-center">
+                            @ViewResources.NoInformationAvailable
+                        </td>
+                    </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@section Foot {
+    <script src="~/Areas/UserControl/scripts/MailingList/Manage.js" type="text/javascript"></script>
+}

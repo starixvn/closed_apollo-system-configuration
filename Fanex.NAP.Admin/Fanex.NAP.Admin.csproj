@@ -194,10 +194,13 @@
     <Compile Include="Areas\UserLogin\Controllers\BaseController.cs" />
     <Compile Include="Areas\UserLogin\Controllers\CommonController.cs" />
     <Content Include="Areas\UserControl\scripts\MailingList\MailingList.js" />
+    <Content Include="Areas\UserControl\scripts\MailingList\Manage.js" />
     <Content Include="Areas\UserControl\themes\nap\ie.less" />
     <Content Include="App_Code\RazorHelper.cshtml" />
     <None Include="Areas\UserControl\themes\nap\mailinglist\MailingList.less" />
     <Content Include="Areas\UserControl\Views\MailingList\AddNew.cshtml" />
+    <Content Include="Areas\UserControl\Views\MailingList\Manage.cshtml" />
+    <Content Include="Areas\UserControl\Views\MailingList\Edit.cshtml" />
     <None Include="Areas\UserLogin\Controllers\LoginController.cs.bk" />
     <Compile Include="Areas\UserLogin\Controllers\LoginController.cs" />
     <Compile Include="Areas\UserLogin\Controllers\SSOController.cs">

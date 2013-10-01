@@ -15,8 +15,8 @@
         <span class="title"><span class="first">@ViewResources.MailingList @ViewResources.Management
             /</span>
             @ViewBag.Title
-        </span>@*@if (Model.SiteId == null)*@
-        @if (1 == 1)
+        </span>
+        @if (Model.SiteId == null)
         { 
             @Html.ActionLink("← " + ViewResources.Back_To_List, "Manage", "MailingList", null,
                 new { @class = "lnk" })
@@ -216,7 +216,7 @@
 
         <script type="text/javascript">
             $(function () {
-                NAP.showSuccessMsg('@dialogMsg', 'MailingList/AddNew?siteId=@Model.SiteId', 4000);
+                NAP.showSuccessMsg('@dialogMsg', 'MailingList/Manage?siteId=@Model.SiteId', 4000);
             });
         </script>
     }

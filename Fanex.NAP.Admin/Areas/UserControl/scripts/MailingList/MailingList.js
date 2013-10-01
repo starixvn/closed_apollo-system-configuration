@@ -5,7 +5,7 @@
         SiteId: null,
 
         init: function () {
-            $('.summary').hide();
+           // $('.summary').hide();
 
             MailingList.ListFunctionId = $("#ListFunctionId")
             MailingList.FunctionId = $("#FunctionId");
@@ -21,14 +21,13 @@
                 }
 
                 MailingList.getFunctionBySite(environment, $("#SiteId").val());
-                MailingList.getMailFunctionByEnvironment(environment, $("#SiteId").val());
             });
 
             $('input[type=radio]').click(function () {
                 var environment = $(this).val();
                 var siteId = $('#SiteId').val();
                 MailingList.getFunctionBySite(environment, siteId);
-                MailingList.getMailFunctionByEnvironment(environment, siteId);
+                MailingList.getMailFunctionByEnvironment(environment);
             });
 
             $(".input-to").keydown(function (e) {
@@ -213,8 +212,8 @@
                 }
             });
         },
-        getMailFunctionByEnvironment: function (environment, siteId) {
-            var url = NAP.resolveClientUrl('MailingList/GetMailFunctionByEnvironment?siteId=' + siteId + '&environment=' + environment);
+        getMailFunctionByEnvironment: function (environment) {
+            var url = NAP.resolveClientUrl('MailingList/GetMailFunctionByEnvironment?environment=' + environment);
 
             $.ajax({
                 url: url,
