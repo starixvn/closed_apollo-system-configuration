@@ -15,6 +15,7 @@ namespace Fanex.NAP.Core.Service.Impl
     using System.Linq;
     using System.Web.Mvc;
     using Fanex.Common.Helper;
+    using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Criteria.Group;
     using Fanex.NAP.Core.Criteria.Misc;
     using Fanex.NAP.Core.Domain;
@@ -23,7 +24,6 @@ namespace Fanex.NAP.Core.Service.Impl
     using Fanex.NAP.Core.Repository.Interface;
     using Fanex.NAP.Core.Service.Interface;
     using Fanex.NAP.Framework.Data;
-    using Fanex.NAP.Core.Business;
 
     [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
     public class GroupService : BaseService, IGroupService

@@ -51,15 +51,15 @@ body {
 }
 
 #login-box .header .welcome {
-	background: url(img/welcome.png) no-repeat center left;
-	width: 178px;
+	background: url(img/system_configuration.png) no-repeat center left;
+	width: 300px;
 	height: 54px;
 	display: inline-block;
 }
 
 #login-box .header .secure {
 	background: url(img/lock.png) no-repeat center right;
-	width: 174px;
+	width: 50px;
 	height: 54px;
 	display: inline-block;
 }
