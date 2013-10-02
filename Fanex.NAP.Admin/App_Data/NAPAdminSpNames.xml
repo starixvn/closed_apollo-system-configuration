@@ -59,6 +59,7 @@
         <Mapping DataField="ListId" ObjectProperty="Id" />
         <Mapping DataField="ListName" ObjectProperty="Name" />
         <Mapping DataField="ListKey" ObjectProperty="Key" />
+        <Mapping DataField="SiteId" ObjectProperty="Id" />
         <Mapping DataField="SiteName" ObjectProperty="Name" />
         <Mapping DataField="ListFunctionId" ObjectProperty="Id" />
         <Mapping DataField="ListFunctionName" ObjectProperty="Name" />
@@ -69,6 +70,7 @@
         <Mapping DataField="ListId" ObjectProperty="Id" />
         <Mapping DataField="ListName" ObjectProperty="Name" />
         <Mapping DataField="ListKey" ObjectProperty="Key" />
+        <Mapping DataField="SiteId" ObjectProperty="Id" />
         <Mapping DataField="SiteName" ObjectProperty="Name" />
         <Mapping DataField="ListFunctionId" ObjectProperty="Id" />
         <Mapping DataField="ListFunctionName" ObjectProperty="Name" />
@@ -79,6 +81,7 @@
         <Mapping DataField="ListId" ObjectProperty="Id" />
         <Mapping DataField="ListName" ObjectProperty="Name" />
         <Mapping DataField="ListKey" ObjectProperty="Key" />
+        <Mapping DataField="SiteId" ObjectProperty="Id" />
         <Mapping DataField="SiteName" ObjectProperty="Name" />
         <Mapping DataField="ListFunctionId" ObjectProperty="Id" />
         <Mapping DataField="ListFunctionName" ObjectProperty="Name" />
@@ -89,6 +92,7 @@
         <Mapping DataField="ListId" ObjectProperty="Id" />
         <Mapping DataField="ListName" ObjectProperty="Name" />
         <Mapping DataField="ListKey" ObjectProperty="Key" />
+        <Mapping DataField="SiteId" ObjectProperty="Id" />
         <Mapping DataField="SiteName" ObjectProperty="Name" />
         <Mapping DataField="ListFunctionId" ObjectProperty="Id" />
         <Mapping DataField="ListFunctionName" ObjectProperty="Name" />

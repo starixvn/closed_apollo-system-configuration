@@ -9,10 +9,6 @@
 
 namespace Fanex.NAP.Core.Domain
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using Fanex.NAP.Framework.Domain;
 
     public interface IMailingList : IEntity<short, string>
@@ -21,7 +17,7 @@ namespace Fanex.NAP.Core.Domain
 
         string Description { get; set; }
 
-        short SiteId { get; set; }
+        ISite Site { get; set; }
 
         string Environment { get; set; }
 

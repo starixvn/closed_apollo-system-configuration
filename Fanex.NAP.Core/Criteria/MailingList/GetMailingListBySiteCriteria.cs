@@ -11,6 +11,9 @@ namespace Fanex.NAP.Core.Criteria.MailingList
 {
     using Fanex.NAP.Framework.Data;
 
+    /// <summary>
+    /// GetMailingListBySite Criteria.
+    /// </summary>
     public class GetMailingListBySiteCriteria : CriteriaBase
     {
         public int SiteId { get; set; }

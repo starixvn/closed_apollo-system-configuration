@@ -10,10 +10,14 @@
 namespace Fanex.NAP.Core.Criteria.MailingList
 {
     using System;
-    using Fanex.NAP.Core.Business;
-    using Fanex.NAP.Framework.Data;
     using System.ComponentModel.DataAnnotations;
+    using Fanex.NAP.Core.Business;
+    using Fanex.NAP.Core.Web;
+    using Fanex.NAP.Framework.Data;
 
+    /// <summary>
+    /// InsertMailingList Criteria.
+    /// </summary>
     public class InsertMailingListCriteria : CriteriaBase
     {
         public InsertMailingListCriteria()
@@ -26,6 +30,7 @@ namespace Fanex.NAP.Core.Criteria.MailingList
         public string ListKey { get; set; }
 
         [Required]
+        [Display(Name = "MailingList_Name", ResourceType = typeof(ViewResources))]
         public string ListName { get; set; }
 
         public string Description { get; set; }

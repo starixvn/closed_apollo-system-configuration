@@ -52,7 +52,8 @@
 					new SelectListItem { Text = ViewResources.Group, Value = "2"}, 
 					new SelectListItem { Text = ViewResources.Site, Value = "3"}, 
 					new SelectListItem { Text = ViewResources.Function, Value = "4"}, 
-					new SelectListItem { Text = ViewResources.Menu, Value = "5"} })
+					new SelectListItem { Text = ViewResources.Menu, Value = "5"},
+                    new SelectListItem { Text = ViewResources.MailingList, Value = "7"} })
             </div>
             <div class="submit">
                 <input type="submit" value="@ViewResources.Submit" />
@@ -102,6 +103,10 @@
                        break;
                         case 5:
                         <th>@ViewResources.Menu
+                        </th>
+                       break;
+                       case 7:
+                        <th>@ViewResources.MailingList
                         </th>
                        break;
                     }
@@ -174,11 +179,11 @@
 							new SelectListItem { Value = "30", Text = "30", Selected = "30" == Model.PageSize.ToString() } 
 						}, new { id = string.Empty, @class = "items-per-page" })</span>
                             @Html.Pager(listLog, new PagerOptions()
-                        {
-                            PageIndexParameterName = "id",
-                            ShowFirstLast = true,
-                            CurrentPagerItemWrapperFormatString = "<a class='jp-current'>{0}</a>"
-                        }, new { @class = "jpages" })
+                       {
+                           PageIndexParameterName = "id",
+                           ShowFirstLast = true,
+                           CurrentPagerItemWrapperFormatString = "<a class='jp-current'>{0}</a>"
+                       }, new { @class = "jpages" })
                         }
                     </td>
                 </tr>

@@ -10,7 +10,6 @@
 namespace Fanex.NAP.Core.Service.Interface
 {
     using System.Collections.Generic;
-    using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Criteria.MailingList;
     using Fanex.NAP.Core.Domain;
     using Fanex.NAP.Framework.Data;

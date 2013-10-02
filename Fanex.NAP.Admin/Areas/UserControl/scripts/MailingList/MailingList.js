@@ -3,6 +3,7 @@
         ListFunctionId: null,
         FunctionId: null,
         SiteId: null,
+        Regenerate: null,
 
         init: function () {
            // $('.summary').hide();
@@ -10,6 +11,14 @@
             MailingList.ListFunctionId = $("#ListFunctionId")
             MailingList.FunctionId = $("#FunctionId");
             MailingList.SiteId = $("#SiteId");
+            MailingList.Regenerate = $("#btn-regen");
+
+            MailingList.Regenerate.click(function () {
+                var msg = "Are you sure you want to generate List Key from List Name?";
+                NAP.headlineMsgBox.confirm(msg, function () {
+                    MailingList.getMailingListKey();
+                }, { modal: true, closeBtn: false });
+            });
 
             MailingList.SiteId.change(function () {
                 var environment = "";
@@ -116,40 +125,9 @@
                 ccList = ccList.length > 0 ? ccList.substr(0, (ccList.length - 2)) : "";
                 bccList = bccList.length > 0 ? bccList.substr(0, (bccList.length - 2)) : "";
 
-                console.log(toList);
-
                 $("#ToList").val(toList);
                 $("#CCList").val(ccList);
                 $("#BCCList").val(bccList);
-
-                // e.preventDefault();
-                //                var url = "MailingList/AddNew?"
-                //                + "tolist=" + encodeURIComponent(toList)
-                //                + "&cclist=" + encodeURIComponent(ccList)
-                //                + "&bcclist=" + encodeURIComponent(bccList);
-
-                //                $.ajax({
-                //                    url: NAP.resolveClientUrl(url),
-                //                    type: 'POST',
-                //                    dataType: "json",
-                //                    beforeSend: function () {
-                //                        // lock ui
-                //                    },
-                //                    success: function (data) {
-                //                        $('.summary').show();
-                //                        if (data) {
-                //                            if (data.ErrorCode == 0) {
-                //                                var successUpdate = data.ErrorMsg;
-                //                                Site.showSuccessMsg(successUpdate, 'MailingList/Index', 1000);
-                //                            } else {
-                //                                Site.showErrorMsg(data.ErrorMsg);
-                //                            }
-                //                        }
-                //                    },
-                //                    error: function (jqXHR, textStatus, errorThrown) {
-                //                        alert(textStatus + ': ' + errorThrown);
-                //                    }
-                //                });
             });
         },
         validateEmail: function (email) {
@@ -233,6 +211,64 @@
                     else {
                         MailingList.ListFunctionId.attr('disabled', true);
                     }
+                },
+                error: function (xhr, status, err) {
+                    NAP.handleAjaxError(xhr, status, err);
+                }
+            });
+        },
+        getMailingListKey: function () {
+            var listId = $('#ListId').val();
+            var listName = $('#ListName').val();
+
+            $.ajax({
+                url: NAP.resolveClientUrl("MailingList/GetMailingListKey" + "?listId=" + listId + "&listName=" + listName),
+                type: 'POST',
+                contentType: 'application/json',
+                dataType: 'json',
+                cache: false,
+                beforeSend: function () {
+                    //NAP.loadingBox.show();
+                },
+                complete: function () {
+                    //NAP.loadingBox.close();
+                },
+                success: function (result) {
+
+                    switch (result) {
+                        case 0:
+
+                            $('#error').append("");
+
+                            var template = '<div data-valmsg-summary="true" class="validation-summary-errors">'
+											+ '<ul><li>' + functionName + ' already exists. Please choose another!</li></ul>'
+											+ '</div>';
+
+                            $('#error').append(template);
+
+                            $('#ListName').addClass('input-validation-error');
+
+                            break;
+                        case -1:
+                            break;
+                        case -2:
+                            $('#error').append("");
+
+                            var template = '<div data-valmsg-summary="true" class="validation-summary-errors">'
+											+ '<ul><li>' + result + ' already exists. Please choose another!</li></ul>'
+											+ '</div>';
+
+                            $('#error').append(template);
+
+                            $('#ListName').addClass('input-validation-error');
+                            break;
+                        default:
+                            $('#txtListKey').removeAttr('disabled');
+                            $('#ListKey').val(result);
+                            $('#txtListKey').val(result);
+                            $('#txtListKey').attr('disabled', 'disabled');
+                    }
+
                 },
                 error: function (xhr, status, err) {
                     NAP.handleAjaxError(xhr, status, err);

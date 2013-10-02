@@ -12,6 +12,9 @@ namespace Fanex.NAP.Core.Criteria.MailingList
     using System;
     using Fanex.NAP.Framework.Data;
 
+    /// <summary>
+    /// UpdateIsInternalMailingList Criteria.
+    /// </summary>
     public class UpdateIsInternalMailingListCriteria : CriteriaBase
     {
         public int ListId { get; set; }

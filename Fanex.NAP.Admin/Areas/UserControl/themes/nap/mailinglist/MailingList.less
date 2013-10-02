@@ -1,83 +1,91 @@
-﻿.form .form-row {
-    
-	.edit-field {
+@import "../style.less";
+
+.form .form-row {
+    .edit-field {
         .chosen-container-multi *
         {
-		    vertical-align: text-top;
-	    }
+            vertical-align: text-top;
+        }
+        .site-label
+        {
+            padding-left: 10px;
+            font-weight: bold;
+        }
     }
 
-	#to-list, #cc-list, #bcc-list {
-		width: 500px;
-		min-height: 130px;
+    #to-list, #cc-list, #bcc-list {
+        width: 500px;
+        min-height: 130px;
         margin-bottom: 20px;
-
-		.list {
-			min-height: 130px;	
-			padding: 5px;
+        
+        .list {
+            min-height: 130px;	
+            padding: 5px;
             overflow: auto;
 
-			.item {
-				width: 50px;
-			}
-		}
+            .item {
+                width: 50px;
+            }
+        }
 
         ul.chosen-choices li.search-choice li.search-field {
-	        margin: 5px 0 3px 5px;
+            margin: 5px 0 3px 5px;
         }
 
         ul.chosen-choices{
             li.invalid-email{
-	            span{
-		            color: red;
-	            }
+                span{
+                    color: red;
+                }
             }
 
             li.search-choice{
                 .search-choice-close {
-		            top: 6px;
-	            }
+                    top: 6px;
+                }
             }
         }
-	}    
+    }
 }
 
 /* FIX IE */
 
 .ie7 {
-	.form .form-row {
-		float: none;
+    .form .form-row {
+        float: none;
 
-		ul.chosen-choices li.search-choice {
-			padding-bottom: 9px;
+        ul.chosen-choices li.search-choice {
+            padding-bottom: 9px;
 
-			.search-choice-close {
-				top: 8px;
-			}
-		}
-	}
+            .search-choice-close {
+                top: 8px;
+            }
+        }
+    }
 }
 
 .ie8, .ie9 {
-	.form .form-row ul.chosen-choices li.search-choice {
-		padding-bottom: 7px;
+    .form .form-row ul.chosen-choices li.search-choice {
+        padding-bottom: 7px;
 
-		.search-choice-close {
-			top: 6px;
-		}		
-	}
+        .search-choice-close {
+            top: 6px;
+        }
+    }
 }
 
 #btn-regen {
-	background: url(../img/refresh.gif) no-repeat center;
-	border: 1px solid transparent;
-	.border-radius;
-	float: right;
-	font-size: 0;
-	width: 16px;
-	height: 16px;
-	margin: 0 0 0 5px;
-	padding: 2px;
+    background: url(../img/refresh.gif) no-repeat center;
+    border: 1px solid transparent;
+    .border-radius;
+    float: right;
+    font-size: 0;
+    width: 16px;
+    height: 16px;
+    margin: 0 0 0 5px;
+    padding: 2px;
 
-	&:hover { border-color: @baseColor; }
+    &:hover {
+        border-color: @baseColor;
+    }
 }

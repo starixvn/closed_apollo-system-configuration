@@ -11,14 +11,14 @@ namespace Fanex.NAP.Core.Repository.Impl
 {
     using System;
     using System.Collections;
+    using System.Collections.Generic;
     using Fanex.Data;
     using Fanex.NAP.Core.Criteria.MailingList;
     using Fanex.NAP.Core.Criteria.Misc;
     using Fanex.NAP.Core.Domain;
+    using Fanex.NAP.Core.Model;
     using Fanex.NAP.Core.Repository.Interface;
     using Fanex.NAP.Framework.Data;
-    using Fanex.NAP.Core.Model;
-    using System.Collections.Generic;
 
     public class MailingListRepository : RepositoryBase<IMailingList>, IMailingListRepository
     {
@@ -28,14 +28,15 @@ namespace Fanex.NAP.Core.Repository.Impl
             {
                 using (var db = new ObjectDb(criteria.GetSettingKey()))
                 {
-                    return db.QueryEntity<MailingList, Function, Function, MailingList>(
-                         (m, mf, f) =>
+                    return db.QueryEntity<MailingList, Site,Function, Function, MailingList>(
+                         (m, si, mf, f) =>
                          {
+                             m.Site = si;
                              m.MailFunction = mf;
                              m.Function = f;
                              return m;
                          },
-                        "ListFunctionId,FunctionId",
+                        "SiteId,ListFunctionId,FunctionId",
                          criteria.GetSpParams());
                 }
             }
@@ -51,14 +52,15 @@ namespace Fanex.NAP.Core.Repository.Impl
             {
                 using (var db = new ObjectDb(criteria.GetSettingKey()))
                 {
-                    return db.Query<MailingList, Function, Function, MailingList>(
-                        (m, mf, f) =>
+                    return db.Query<MailingList, Site, Function, Function, MailingList>(
+                        (m, si, mf, f) =>
                         {
+                            m.Site = si;
                             m.MailFunction = mf;
                             m.Function = f;
                             return m;
                         },
-                        "ListFunctionId,FunctionId",
+                        "SiteId,ListFunctionId,FunctionId",
                         criteria.GetSpParams());
                 }
             }

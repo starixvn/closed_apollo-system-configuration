@@ -10,17 +10,19 @@
 namespace Fanex.NAP.Core.Service.Impl
 {
     using System;
+    using System.Collections.Generic;
     using Fanex.Common.Helper;
     using Fanex.NAP.Core.Criteria.MailingList;
     using Fanex.NAP.Core.Criteria.Misc;
+    using Fanex.NAP.Core.Domain;
     using Fanex.NAP.Core.Repository.Impl;
     using Fanex.NAP.Core.Repository.Interface;
     using Fanex.NAP.Core.Service.Interface;
     using Fanex.NAP.Framework.Data;
-    using Fanex.NAP.Core.Domain;
-    using System.Collections.Generic;
-    using Fanex.NAP.Core.Business;
 
+    /// <summary>
+    /// MailingList Service.
+    /// </summary>
     public class MailingListService : BaseService, IMailingListService
     {
         private readonly IMailingListRepository _mailingListRepository;
@@ -38,15 +40,16 @@ namespace Fanex.NAP.Core.Service.Impl
 
         #endregion
 
+        /// <summary>
+        /// Get MailingList by id.
+        /// </summary>
+        /// <param name="listId">Mailing list ID.</param>
+        /// <returns>MailingList Object.</returns>
         public IMailingList GetById(int listId)
         {
             try
             {
-                var criteria = new GetMailingListByIdCriteria
-                {
-                    ListId = listId
-                };
-
+                var criteria = new GetMailingListByIdCriteria { ListId = listId };
                 if (criteria.IsValid())
                 {
                     return _mailingListRepository.Get(criteria);
@@ -60,6 +63,11 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Get MailingList by key.
+        /// </summary>
+        /// <param name="listKey">Mailing list key.</param>
+        /// <returns>MailingList Object.</returns>
         public IMailingList GetByKey(string listKey)
         {
             try
@@ -82,6 +90,11 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Get MailingList by name.
+        /// </summary>
+        /// <param name="listName">Mailing list name.</param>
+        /// <returns>MailingList Object.</returns>
         public IMailingList GetByName(string listName)
         {
             try
@@ -104,20 +117,17 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Get list Mailing List form site with grand.
+        /// </summary>
+        /// <param name="criteria">GetMailingListBySite Criteria to query database.</param>
+        /// <returns>List MailingList Object.</returns>
         public IEnumerable<IMailingList> GetBySite(GetMailingListBySiteCriteria criteria)
         {
             Check.Argument.IsNotEmpty(criteria.Environment, "Environment");
 
             try
             {
-                //var criteria = new GetMailingListBySiteCriteria
-                //{
-                //    SiteId = siteId,
-                //    Environment = env,
-                //    IsActive = isActive.HasValue ? isActive.Value : true,
-                //    IsInternal = isInternal.HasValue ? isInternal.Value : false
-                //};
-
                 if (criteria.IsValid())
                 {
                     return _mailingListRepository.Fetch(criteria);
@@ -131,6 +141,11 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Insert a Mailing List to DB.
+        /// </summary>
+        /// <param name="criteria">InsertMailingList Criteria contains field to insert to DB.</param>
+        /// <returns>ICommand Result.</returns>
         public ICommandResult Insert(InsertMailingListCriteria criteria)
         {
             Check.Argument.IsNotNull(criteria, "criteria");
@@ -155,6 +170,11 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Update a Mailing List to DB.
+        /// </summary>
+        /// <param name="criteria">Criteria contains field to update to DB.</param>
+        /// <returns>ICommand Result.</returns>
         public ICommandResult Update(ICriteria criteria)
         {
             Check.Argument.IsNotNull(criteria, "criteria");

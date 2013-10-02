@@ -12,6 +12,9 @@ namespace Fanex.NAP.Core.Criteria.MailingList
     using System;
     using Fanex.NAP.Framework.Data;
 
+    /// <summary>
+    /// UpdateStatusMailingList Criteria.
+    /// </summary>
     public class UpdateStatusMailingListCriteria : CriteriaBase
     {
         public int ListId { get; set; }

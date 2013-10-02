@@ -21,7 +21,7 @@
         </span>
         @if (viewFlags.HasEditRight)
         {
-            @Html.ActionLink("+ " + ViewResources.Create_New + " " + ViewResources.MailingList_Item,
+            @Html.ActionLink("+ " + ViewResources.Create_New + " " + ViewResources.MailingList,
             "AddNew", "MailingList", new { siteId = Model.SiteId }, new { @class = "lnk" })
         }
     </h1>
@@ -32,7 +32,7 @@
     {
         <div class="filter-form">
             <div class="lbl-field width-auto">
-                @Html.LabelFor(m => m.SiteId)
+                @Html.LabelFor(m => m.SiteId, ViewResources.Site)
             </div>
             <div class="edit-field">
                 @Html.DropDownListFor(m => m.SiteId, (List<SelectListItem>)ViewBag.SiteItemList)
@@ -79,12 +79,12 @@
                     </th>
                     @if (isITGroup)
                     { 
-                        <th class="cmd nbr">
+                        <th>
                             @ViewResources.Internal
                         </th>
                     }
                     
-                    <th class="cmd nbr">
+                    <th>
                         @ViewResources.Active
                     </th>
                     @if (!viewFlags.IsLive)
@@ -134,7 +134,7 @@
                         </td>
                         @if (isITGroup)
                         {
-                            string activateText = item.IsInternal ? "IsNotInternal" : "IsInternal";
+                            string activateText = item.IsInternal ? "Set internal for" : "Unset internal for";
 
                             <td class="align-center">
                             @Html.CheckBox(string.Format("chk-internal-item-{0}", item.Id), item.IsInternal,

@@ -10,10 +10,13 @@
 namespace Fanex.NAP.Core.Criteria.MailingList
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Framework.Data;
-    using System.ComponentModel.DataAnnotations;
 
+    /// <summary>
+    /// UpdateMailingList Criteria.
+    /// </summary>
     public class UpdateMailingListCriteria : CriteriaBase
     {
         public UpdateMailingListCriteria()

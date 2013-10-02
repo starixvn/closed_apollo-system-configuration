@@ -8,7 +8,7 @@
     var viewFlags = (ViewFlags)ViewBag.ViewFlags;
 }
 @section Head {
-    <link href="~/Areas/UserControl/themes/nap/style.less" rel="stylesheet" type="text/css" />
+    @*<link href="~/Areas/UserControl/themes/nap/style.less" rel="stylesheet" type="text/css" />*@
     <link href="~/Areas/UserControl/themes/nap/mailinglist/chosen.css" rel="stylesheet" type="text/css" />
     <link href="~/Areas/UserControl/themes/nap/mailinglist/mailinglist.less" rel="stylesheet" type="text/css" />
 }
@@ -29,6 +29,7 @@
             </div>
             <div class="edit-field">
                 @Html.ValidationSummary()
+                @Html.HiddenFor(m => m.ListId)
             </div>
         </div>
         <div class="form-row required" style="margin-top: 10px;">
@@ -55,7 +56,7 @@
                 @Html.LabelFor(m => m.SiteId, ViewResources.Site)
             </div>
             <div class="edit-field">
-                @Html.Label(Model.SiteId.ToString())
+                @Html.Label((string)ViewBag.SiteName, new { @class = "site-label" })
                 @Html.HiddenFor(m => m.SiteId)
             </div>
         </div>

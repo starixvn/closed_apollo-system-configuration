@@ -9,10 +9,10 @@
 
             ManageMailingList.Grid.on('mousedown', '.chk-active-item', function (e) {
                 var $this = $(this),
-			    functionName = $this.attr('dataname'),
+			    listName = $this.attr('dataname'),
 			    active = !$this.is(':checked'),
 			    action = active ? 'activate' : 'deactivate',
-			    msg = "Are you sure you want to " + action + " '" + functionName + "' ?";
+			    msg = "Are you sure you want to " + action + " '" + listName + "' ?";
 
                 NAP.headlineMsgBox.confirm(msg, function () {
                     var mailingListId = $this.attr('dataid');
@@ -52,15 +52,15 @@
 
             ManageMailingList.Grid.on('mousedown', '.chk-internal-item', function (e) {
                 var $this = $(this),
-			    functionName = $this.attr('dataname'),
+			    listName = $this.attr('dataname'),
 			    isInternal = !$this.is(':checked'),
-			    action = isInternal ? 'isinternal' : 'isnotinternal',
-			    msg = "Are you sure you want to " + action + " '" + functionName + "' ?";
+			    action = isInternal ? 'set' : 'unset',
+			    msg = "Are you sure to " + action + " internal for '" + listName + "' ?";
 
                 NAP.headlineMsgBox.confirm(msg, function () {
                     var mailingListId = $this.attr('dataid');
 
-                    $this.attr('checked', active).change();
+                    $this.attr('checked', isInternal).change();
 
                     $.ajax({
                         url: NAP.resolveClientUrl("MailingList/Internal" + "?id=" + mailingListId + "&isInternal=" + isInternal),
@@ -76,13 +76,13 @@
                         },
                         success: function (result) {
                             if (result == 'OK') {
-                                var msg = active ? "IsInternal succeeded!" : "IsNotInternal succeeded!";
+                                var msg = isInternal ? "Set internal succeeded!" : "Unset internal succeeded!";
 
                                 NAP.headlineMsgBox.showInfo(msg, { closeBtn: false });
                                 if (isInternal) {
-                                    $this.attr('title', $this.attr('title').replace('IsInternal', 'IsNotInternal'));
+                                    $this.attr('title', $this.attr('title').replace('Set', 'Unset'));
                                 } else {
-                                    $this.attr('title', $this.attr('title').replace('IsNotInternal', 'IsInternal'));
+                                    $this.attr('title', $this.attr('title').replace('Unset', 'Set'));
                                 }
                             }
                         },

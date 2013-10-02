@@ -11,6 +11,9 @@ namespace Fanex.NAP.Core.Criteria.MailingList
 {
     using Fanex.NAP.Framework.Data;
 
+    /// <summary>
+    /// GetMailingListByKey Criteria.
+    /// </summary>
     public class GetMailingListByKeyCriteria : CriteriaBase
     {
         public string ListKey { get; set; }

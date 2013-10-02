@@ -16,7 +16,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
     using System.Linq;
     using System.Web.Mvc;
     using System.Xml.Linq;
-
     using Fanex.NAP.Core.Criteria.Trace;
     using Fanex.NAP.Core.Helpers;
     using Fanex.NAP.Core.Model;
@@ -1347,6 +1346,234 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
             return PartialView("~/Areas/UserControl/Views/Trace/_NAP_Function_AssignToGroups.cshtml");
         }
+        #endregion
+
+        #region Mailing list log
+
+        public PartialViewResult _NAP_MailingList_Insert(LogExecSp log)
+        {
+            XElement elementNew = XElement.Parse(log.Data);
+            XElement elementOld = XElement.Parse(log.OldData ?? "<ROOT/>");
+
+            #region NAP_MailingLists_Insert
+
+            if (log.ActionId == (int)LogAction.NAP_MailingLists_Insert)
+            {
+                var listLogData = new List<LogData>();
+                listLogData.Add(new LogData
+                {
+                    FieldName = ViewResources.List_Key,
+                    NewValue = elementNew.Attribute("ListKey").Value
+                });
+                listLogData.Add(new LogData
+                {
+                    FieldName = ViewResources.MailingList_Name,
+                    NewValue = elementNew.Attribute("ListName").Value
+                });
+                listLogData.Add(new LogData
+                {
+                    FieldName = ViewResources.Description,
+                    NewValue = elementNew.Attribute("Description").Value
+                });
+                listLogData.Add(new LogData
+                {
+                    FieldName = ViewResources.Site_Name,
+                    NewValue = elementNew.Attribute("SiteName").Value
+                });
+                listLogData.Add(new LogData
+                {
+                    FieldName = ViewResources.Environment,
+                    NewValue = elementNew.Attribute("Environment").Value
+                });
+                listLogData.Add(new LogData
+                {
+                    FieldName = ViewResources.MailFunction,
+                    NewValue = elementNew.Attribute("ListFunctionName").Value
+                });
+                listLogData.Add(new LogData
+                {
+                    FieldName = ViewResources.Function,
+                    NewValue = elementNew.Attribute("FunctionName").Value
+                });
+                listLogData.Add(new LogData
+                {
+                    FieldName = ViewResources.To,
+                    NewValue = elementNew.Attribute("ToList").Value
+                });
+                listLogData.Add(new LogData
+                {
+                    FieldName = ViewResources.Cc,
+                    NewValue = elementNew.Attribute("CcList").Value
+                });
+                listLogData.Add(new LogData
+                {
+                    FieldName = ViewResources.Bcc,
+                    NewValue = elementNew.Attribute("BccList").Value
+                });
+                listLogData.Add(new LogData
+                {
+                    FieldName = ViewResources.Internal,
+                    NewValue = elementNew.Attribute("IsInternal").Value
+                });
+                listLogData.Add(new LogData
+                {
+                    FieldName = ViewResources.Activate,
+                    NewValue = elementNew.Attribute("IsActive").Value
+                });
+
+                ViewBag.IsInsert = true;
+                ViewBag.LogData = listLogData;
+            }
+
+            #endregion
+
+            return PartialView("~/Areas/UserControl/Views/Trace/_NAPLogInsert.cshtml");
+        }
+
+        public PartialViewResult _NAP_MailingList_Update(LogExecSp log)
+        {
+            XElement elementNew = XElement.Parse(log.Data);
+            XElement elementOld = XElement.Parse(log.OldData ?? "<ROOT/>");
+
+            #region NAP_MailingLists_Update
+
+            if (log.ActionId == (int)LogAction.NAP_MailingLists_Update)
+            {
+                var listLogData = new List<LogData>();
+                listLogData.Add(new LogData
+                {
+                    FieldName = ViewResources.List_Key,
+                    OldValue = elementOld.Attribute("ListKey").Value,
+                    NewValue = elementNew.Attribute("ListKey").Value
+                });
+                listLogData.Add(new LogData
+                {
+                    FieldName = ViewResources.MailingList_Name,
+                    OldValue = elementOld.Attribute("ListName").Value,
+                    NewValue = elementNew.Attribute("ListName").Value
+                });
+                listLogData.Add(new LogData
+                {
+                    FieldName = ViewResources.Description,
+                    OldValue = elementOld.Attribute("Description").Value,
+                    NewValue = elementNew.Attribute("Description").Value
+                });
+                listLogData.Add(new LogData
+                {
+                    FieldName = ViewResources.Site_Name,
+                    OldValue = elementOld.Attribute("SiteName").Value,
+                    NewValue = elementNew.Attribute("SiteName").Value
+                });
+                listLogData.Add(new LogData
+                {
+                    FieldName = ViewResources.Environment,
+                    OldValue = elementOld.Attribute("Environment").Value,
+                    NewValue = elementNew.Attribute("Environment").Value
+                });
+                listLogData.Add(new LogData
+                {
+                    FieldName = ViewResources.MailFunction,
+                    OldValue = elementOld.Attribute("ListFunctionName").Value,
+                    NewValue = elementNew.Attribute("ListFunctionName").Value
+                });
+                listLogData.Add(new LogData
+                {
+                    FieldName = ViewResources.Function,
+                    OldValue = elementOld.Attribute("FunctionName").Value,
+                    NewValue = elementNew.Attribute("FunctionName").Value
+                });
+                listLogData.Add(new LogData
+                {
+                    FieldName = ViewResources.To,
+                    OldValue = elementOld.Attribute("ToList").Value,
+                    NewValue = elementNew.Attribute("ToList").Value
+                });
+                listLogData.Add(new LogData
+                {
+                    FieldName = ViewResources.Cc,
+                    OldValue = elementOld.Attribute("CcList").Value,
+                    NewValue = elementNew.Attribute("CcList").Value
+                });
+                listLogData.Add(new LogData
+                {
+                    FieldName = ViewResources.Bcc,
+                    OldValue = elementOld.Attribute("BccList").Value,
+                    NewValue = elementNew.Attribute("BccList").Value
+                });
+                listLogData.Add(new LogData
+                {
+                    FieldName = ViewResources.Internal,
+                    OldValue = elementOld.Attribute("IsInternal").Value,
+                    NewValue = elementNew.Attribute("IsInternal").Value
+                });
+                listLogData.Add(new LogData
+                {
+                    FieldName = ViewResources.Activate,
+                    OldValue = elementOld.Attribute("IsActive").Value,
+                    NewValue = elementNew.Attribute("IsActive").Value
+                });
+
+                ViewBag.IsInsert = true;
+                ViewBag.LogData = listLogData;
+            }
+
+            #endregion
+
+            return PartialView("~/Areas/UserControl/Views/Trace/_NAPLogUpdate.cshtml");
+        }
+
+        public PartialViewResult _NAP_MailingList_UpdateStatus(LogExecSp log)
+        {
+            XElement elementNew = XElement.Parse(log.Data);
+            XElement elementOld = XElement.Parse(log.OldData ?? "<ROOT/>");
+
+            #region NAP_MailingLists_UpdateStatus
+
+            if (log.ActionId == (int)LogAction.NAP_MailingLists_UpdateStatus)
+            {
+                var listLogData = new List<LogData>();
+                listLogData.Add(new LogData
+                {
+                    FieldName = ViewResources.Status,
+                    OldValue = elementOld.Attribute("IsActive").Value == "1" ? "Active" : "Unactive",
+                    NewValue = elementNew.Attribute("IsActive").Value == "1" ? "Active" : "Unactive"
+                });
+
+                ViewBag.IsInsert = true;
+                ViewBag.LogData = listLogData;
+            }
+
+            #endregion
+
+            return PartialView("~/Areas/UserControl/Views/Trace/_NAPLogUpdate.cshtml");
+        }
+
+        public PartialViewResult _NAP_MailingList_UpdateInternal(LogExecSp log)
+        {
+            XElement elementNew = XElement.Parse(log.Data);
+            XElement elementOld = XElement.Parse(log.OldData ?? "<ROOT/>");
+
+            #region NAP_Function_Insert
+
+            if (log.ActionId == (int)LogAction.NAP_MailingLists_UpdateIsInternal)
+            {
+                var listLogData = new List<LogData>();
+                listLogData.Add(new LogData
+                {
+                    FieldName = ViewResources.Internal,
+                    OldValue = elementOld.Attribute("IsInternal").Value == "1" ? "True" : "False",
+                    NewValue = elementNew.Attribute("IsInternal").Value == "1" ? "True" : "False"
+                });
+
+                ViewBag.IsInsert = true;
+                ViewBag.LogData = listLogData;
+            }
+
+            #endregion
+
+            return PartialView("~/Areas/UserControl/Views/Trace/_NAPLogUpdate.cshtml");
+        }
+
         #endregion
     }
 }

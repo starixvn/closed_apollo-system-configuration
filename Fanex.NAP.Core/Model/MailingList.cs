@@ -11,6 +11,9 @@ namespace Fanex.NAP.Core.Model
 {
     using Fanex.NAP.Core.Domain;
 
+    /// <summary>
+    /// MailingList Class.
+    /// </summary>
     public class MailingList : IMailingList
     {
         public short Id { get; set; }
@@ -21,7 +24,7 @@ namespace Fanex.NAP.Core.Model
 
         public string Description { get; set; }
 
-        public short SiteId { get; set; }
+        public ISite Site { get; set; }
 
         public string Environment { get; set; }
 

@@ -106,4 +106,21 @@
     {
     @Html.Action("_NAP_Function_AssignFunctionToGroups", "Trace", Model)
     }
+    
+    if (Model.ActionId == (int)LogAction.NAP_MailingLists_Insert)
+    {
+        @Html.Action("_NAP_MailingList_Insert", "Trace", Model)
+    }
+    if (Model.ActionId == (int)LogAction.NAP_MailingLists_Update)
+    {
+        @Html.Action("_NAP_MailingList_Update", "Trace", Model)
+    }
+    if (Model.ActionId == (int)LogAction.NAP_MailingLists_UpdateStatus)
+    {
+        @Html.Action("_NAP_MailingList_UpdateStatus", "Trace", Model)
+    }
+    if (Model.ActionId == (int)LogAction.NAP_MailingLists_UpdateIsInternal)
+    {
+        @Html.Action("_NAP_MailingList_UpdateInternal", "Trace", Model)
+    }
 }
