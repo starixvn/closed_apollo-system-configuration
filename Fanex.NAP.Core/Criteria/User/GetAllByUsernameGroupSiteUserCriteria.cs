@@ -16,7 +16,7 @@ namespace Fanex.NAP.Core.Criteria.User
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
-    /// Get all by username, group and site
+    /// Get all by username, group and site.
     /// </summary>
     public class GetAllByUsernameGroupSiteUserCriteria : CriteriaBase
     {

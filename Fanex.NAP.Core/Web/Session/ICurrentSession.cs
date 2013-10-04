@@ -28,8 +28,6 @@ namespace Fanex.NAP.Core.Web.Session
 
         IList<MenuItem> Menu { get; set; }
 
-        //Dictionary<SiteUrl, List<IMenuItem>> MenuDic { get; set; }
-
         void ClearAll();
     }
 }

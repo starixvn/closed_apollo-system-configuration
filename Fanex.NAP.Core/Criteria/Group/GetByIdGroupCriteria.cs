@@ -12,17 +12,25 @@ namespace Fanex.NAP.Core.Criteria.Group
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
-    /// Get by ID
+    /// Get by ID.
     /// </summary>
     public class GetByIdGroupCriteria : CriteriaBase
     {
         public int GroupId { get; set; }
 
+        /// <summary>
+        /// Get the reference SP's Name which is specified in Config file.
+        /// </summary>
+        /// <returns>Setting key.</returns>
         public override string GetSettingKey()
         {
             return "NAP_Group_GetById";
         }
 
+        /// <summary>
+        /// Check data's constrains.
+        /// </summary>
+        /// <returns>True: valid; False: invalid.</returns>
         public override bool IsValid()
         {
             return true;

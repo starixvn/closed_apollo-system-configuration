@@ -9,10 +9,11 @@
 
 namespace Fanex.NAP.Core.Service.Interface
 {
-    using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.Core.Model.ValueObject;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Maintainance repository interface.
+    /// </summary>
     public interface IMaintainanceService : IBaseService
     {
         Downtime GetDowntimeInfo();

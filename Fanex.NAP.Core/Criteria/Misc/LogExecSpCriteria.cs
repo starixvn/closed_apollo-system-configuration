@@ -13,7 +13,7 @@ namespace Fanex.NAP.Core.Criteria.Misc
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
-    /// Log SP execution
+    /// Log SP execution.
     /// </summary>
     public class LogExecSpCriteria : CriteriaBase
     {
@@ -25,6 +25,10 @@ namespace Fanex.NAP.Core.Criteria.Misc
 
         public string LoginIp { get; set; }
 
+        /// <summary>
+        /// Check data's constrains.
+        /// </summary>
+        /// <returns>True: valid; False: invalid.</returns>
         public override bool IsValid()
         {
             return true;

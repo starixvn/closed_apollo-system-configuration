@@ -145,28 +145,6 @@ namespace Fanex.NAP.Core.Web.Session
             }
         }
 
-        //public Dictionary<SiteUrl, List<IMenuItem>> MenuDic
-        //{
-        //    get
-        //    {
-        //        var menuDic = HttpContext.Current.Session[MENU_DIC] as Dictionary<SiteUrl, List<IMenuItem>>;
-
-        //        if (menuDic == null)
-        //        {
-        //            // ensure menu should be empty instead of null
-        //            menuDic = new Dictionary<SiteUrl, List<IMenuItem>>();
-        //            HttpContext.Current.Session[MENU_DIC] = menuDic;
-        //        }
-
-        //        return menuDic;
-        //    }
-
-        //    set
-        //    {
-        //        HttpContext.Current.Session[MENU_DIC] = value;
-        //    }
-        //}
-
         public int Level
         {
             get

@@ -15,7 +15,7 @@ namespace Fanex.NAP.Core.Criteria.Group
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
-    /// Insert group
+    /// Insert group.
     /// </summary>
     public class InsertGroupCriteria : CriteriaBase
     {

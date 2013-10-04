@@ -10,12 +10,13 @@
 
 namespace Fanex.NAP.Core.Repository.Interface
 {
-    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using Fanex.NAP.Core.Model.ValueObject;
     using Fanex.NAP.Framework.Data;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Trace repository interface.
+    /// </summary>
     public interface ITraceRepository : IDynamicRepository
     {
         IQueryable<LogExecSp> SearchLogExecSp(ICriteria criteria, out int totalRows);

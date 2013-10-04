@@ -10,13 +10,14 @@
 namespace Fanex.NAP.Core.Repository.Interface
 {
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.Core.Criteria.Group;
     using Fanex.NAP.Core.Domain;
     using Fanex.NAP.Core.Model.ValueObject;
     using Fanex.NAP.Framework.Data;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Group repository interface.
+    /// </summary>
     public interface IGroupRepository : IRepository<IGroup>
     {
         ICommandResult Insert(ref InsertGroupCriteria criteria, ICriteria logCriteria);

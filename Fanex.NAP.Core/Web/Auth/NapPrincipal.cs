@@ -10,15 +10,14 @@
 namespace Fanex.NAP.Core.Web.Auth
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using System.Security.Principal;
     using System.Web;
     using System.Web.Security;
 
     /// <summary>
+    /// NAP principal
     /// <see cref="http://stackoverflow.com/questions/1064271/asp-net-mvc-set-custom-iidentity-or-iprincipal"/>
     /// </summary>   
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
     public class NapPrincipal : IPrincipal
     {
         private IIdentity _identity;

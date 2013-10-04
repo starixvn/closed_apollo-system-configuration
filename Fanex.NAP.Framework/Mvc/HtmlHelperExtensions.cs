@@ -18,7 +18,7 @@ namespace Fanex.NAP.Framework.Mvc
     using Fanex.Common.Helper;
 
     /// <summary>
-    /// HTML helper
+    /// HTML helper.
     /// </summary>
     public static class HtmlHelperExtensions
     {

@@ -9,12 +9,9 @@
 
 namespace Fanex.NAP.Core.Web
 {
-    using System.Diagnostics.CodeAnalysis;
-
     /// <summary>
     /// Url Helper.
     /// </summary>
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
     public static class UrlHelperExtensions
     {
     }

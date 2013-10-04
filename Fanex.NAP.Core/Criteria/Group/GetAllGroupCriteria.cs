@@ -12,17 +12,25 @@ namespace Fanex.NAP.Core.Criteria.Group
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
-    /// Get all group
+    /// Get all group.
     /// </summary>
     public class GetAllGroupCriteria : CriteriaBase
     {
         public bool? IsActive { get; set; }
 
+        /// <summary>
+        /// Get the reference SP's Name which is specified in Config file.
+        /// </summary>
+        /// <returns>Setting key.</returns>
         public override string GetSettingKey()
         {
             return "NAP_Group_GetAll";
         }
 
+        /// <summary>
+        /// Check data's constrains.
+        /// </summary>
+        /// <returns>True: valid; False: invalid.</returns>
         public override bool IsValid()
         {
             return true;

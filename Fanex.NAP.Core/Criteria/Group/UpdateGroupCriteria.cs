@@ -15,7 +15,7 @@ namespace Fanex.NAP.Core.Criteria.Group
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
-    /// Update group
+    /// Update group.
     /// </summary>
     public class UpdateGroupCriteria : CriteriaBase
     {
@@ -43,13 +43,21 @@ namespace Fanex.NAP.Core.Criteria.Group
 
         public int ModifiedBy { get; set; }
 
-        public DateTime ModifiedDate { get; set; }        
+        public DateTime ModifiedDate { get; set; }
 
+        /// <summary>
+        /// Get the reference SP's Name which is specified in Config file.
+        /// </summary>
+        /// <returns>Setting key.</returns>
         public override string GetSettingKey()
         {
             return "NAP_Group_Update";
         }
 
+        /// <summary>
+        /// Check data's constrains.
+        /// </summary>
+        /// <returns>True: valid; False: invalid.</returns>
         public override bool IsValid()
         {
             return true;
