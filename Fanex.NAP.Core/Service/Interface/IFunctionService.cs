@@ -62,7 +62,8 @@ namespace Fanex.NAP.Core.Service.Interface
 
         IEnumerable<FunctionPolicy> GetByGroup(int groupId, string env = Constant.UAT);
 
-        Dictionary<ISite, IEnumerable<FunctionPolicy>> GetByGroupAndGroupBySite(int groupId,
+        Dictionary<ISite, IEnumerable<FunctionPolicy>> GetByGroupAndGroupBySite(
+            int groupId,
             string env = Constant.UAT);
 
         IEnumerable<FunctionPolicy> GetByGroupAndSite(int groupId, int siteId, string env = Constant.UAT);

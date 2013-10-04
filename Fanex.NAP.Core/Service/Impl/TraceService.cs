@@ -204,7 +204,8 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
-        public ICommandResult InsertLogUserLogin(int userId,
+        public ICommandResult InsertLogUserLogin(
+            int userId,
             int siteId,
             string ip,
             DateTime date,

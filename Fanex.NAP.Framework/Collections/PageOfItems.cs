@@ -12,6 +12,9 @@ namespace Fanex.NAP.Framework.Collections
     using System;
     using System.Collections.Generic;
 
+    /// <summary>
+    /// Page of items
+    /// </summary>
     public class PageOfItems<T> : List<T>, IPageOfItems<T>
     {
         public PageOfItems(IEnumerable<T> items)

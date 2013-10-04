@@ -499,7 +499,8 @@ namespace Fanex.NAP.Core.Service.Impl
                 {
                     _userRepository.UserCheckIn(ref criteria);
 
-                    _traceService.InsertLogUserLogin(criteria.UserId,
+                    _traceService.InsertLogUserLogin(
+                        criteria.UserId,
                         criteria.SiteId,
                         criteria.Ip,
                         criteria.LoginDate,
@@ -561,16 +562,17 @@ namespace Fanex.NAP.Core.Service.Impl
                 {
                     _userRepository.UserSSOCheckIn(ref criteria);
 
-                    _traceService.InsertLogUserLogin(criteria.UserId,
-                       criteria.SiteId,
-                       criteria.IP,
-                       criteria.LoginDate,
-                       criteria.Domain,
-                       criteria.BrowserName,
-                       criteria.Platform,
-                       criteria.CountryCode,
-                       criteria.Doing,
-                       criteria.Duration);
+                    _traceService.InsertLogUserLogin(
+                        criteria.UserId,
+                        criteria.SiteId,
+                        criteria.IP,
+                        criteria.LoginDate,
+                        criteria.Domain,
+                        criteria.BrowserName,
+                        criteria.Platform,
+                        criteria.CountryCode,
+                        criteria.Doing,
+                        criteria.Duration);
                 }
             }
             catch (Exception ex)

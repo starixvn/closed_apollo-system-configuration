@@ -14,7 +14,10 @@ namespace Fanex.NAP.Core.Criteria.Function
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web;
     using Fanex.NAP.Framework.Data;
-    
+
+    /// <summary>
+    /// Duplicate function
+    /// </summary>
     public class DuplicateFunctionCriteria : CriteriaBase
     {
         public int DuplicateFunctionId { get; set; }
@@ -80,6 +83,9 @@ namespace Fanex.NAP.Core.Criteria.Function
         [SpParam(Ignored = true)]
         public int ReturnSiteId { get; set; }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public DuplicateFunctionCriteria()
         {
             this.Environment = Constant.UAT;

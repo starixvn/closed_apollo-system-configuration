@@ -20,6 +20,9 @@ namespace Fanex.NAP.Framework.Data
     using Fanex.Common.Helper;
     using Fanex.Data;
 
+    /// <summary>
+    /// Readonly repository
+    /// </summary>
     public class ReadonlyRepository<T> : DynamicRepository, IReadonlyRepository<T>
     {
         public virtual T Get(int id)

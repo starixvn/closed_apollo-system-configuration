@@ -38,7 +38,8 @@ namespace Fanex.NAP.Framework.Mvc
         /// <param name="clientFormateDate">Format date time of client side</param>
         /// <param name="cssDatePicker">The CSS date picker</param>
         /// <returns></returns>
-        public static MvcHtmlString DatePicker(this HtmlHelper htmlHelper, 
+        public static MvcHtmlString DatePicker(
+            this HtmlHelper htmlHelper, 
             string name, 
             DateTime? date,
             DateTime? minDate = null, 
@@ -55,7 +56,8 @@ namespace Fanex.NAP.Framework.Mvc
                 maxDate = DateTime.Now;
             }
 
-            var textbox = htmlHelper.TextBox(name,
+            var textbox = htmlHelper.TextBox(
+                name,
                 date.HasValue ? date.Value.ToString(formatDate) : string.Empty,
                 new
                 {
@@ -80,7 +82,8 @@ namespace Fanex.NAP.Framework.Mvc
         /// <param name="maxDate">The max date.</param>
         /// <param name="formatDate">The format date.</param>
         /// <returns></returns>
-        public static MvcHtmlString DatePickerFor<TModel, TValue>(this HtmlHelper<TModel> html, 
+        public static MvcHtmlString DatePickerFor<TModel, TValue>(
+            this HtmlHelper<TModel> html, 
             Expression<Func<TModel, TValue>> expression, 
             DateTime? minDate = null, 
             DateTime? maxDate = null, 
@@ -109,8 +112,12 @@ namespace Fanex.NAP.Framework.Mvc
         /// <param name="currentYear">The current year.</param>
         /// <param name="htmlAttributes">The HTML attributes.</param>
         /// <returns></returns>
-        public static MvcHtmlString YearPicker(this HtmlHelper htmlHelper, string name, int fromYear = 2006, 
-            int currentYear = 2000, object htmlAttributes = null)
+        public static MvcHtmlString YearPicker(
+            this HtmlHelper htmlHelper, 
+            string name, 
+            int fromYear = 2006, 
+            int currentYear = 2000, 
+            object htmlAttributes = null)
         {
             var list = new List<SelectListItem>();
             var now = DateTime.Now.Year;
@@ -140,8 +147,11 @@ namespace Fanex.NAP.Framework.Mvc
         /// <param name="fromYear">From year.</param>
         /// <param name="htmlAttributes">The HTML attributes.</param>
         /// <returns></returns>
-        public static MvcHtmlString YearPickerFor<TModel, TValue>(this HtmlHelper<TModel> html, 
-            Expression<Func<TModel, TValue>> expression, int fromYear = 2006, object htmlAttributes = null)
+        public static MvcHtmlString YearPickerFor<TModel, TValue>(
+            this HtmlHelper<TModel> html, 
+            Expression<Func<TModel, TValue>> expression, 
+            int fromYear = 2006, 
+            object htmlAttributes = null)
         {
             var metaData = ModelMetadata.FromLambdaExpression(expression, html.ViewData);
             var currentYear = (int)metaData.Model;
@@ -157,7 +167,10 @@ namespace Fanex.NAP.Framework.Mvc
         /// <param name="fromYear">default from month 2006</param>
         /// <param name="currentYear">>default currentYear year 2006</param>
         /// <returns></returns>
-        public static MvcHtmlString MonthPicker(this HtmlHelper htmlHelper, string name, int currentMonth, 
+        public static MvcHtmlString MonthPicker(
+            this HtmlHelper htmlHelper, 
+            string name, 
+            int currentMonth, 
             object htmlAttributes = null)
         {
             // currentYear = currentYear ?? DateTime.Now.Year;
@@ -189,7 +202,8 @@ namespace Fanex.NAP.Framework.Mvc
         /// <param name="currentMonth">The current month.</param>
         /// <param name="htmlAttributes">The HTML attributes.</param>
         /// <returns></returns>
-        public static MvcHtmlString MonthPickerFor<TModel, TValue>(this HtmlHelper<TModel> html,
+        public static MvcHtmlString MonthPickerFor<TModel, TValue>(
+            this HtmlHelper<TModel> html,
             Expression<Func<TModel, TValue>> expression,
             int currentMonth, 
             object htmlAttributes = null)

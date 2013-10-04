@@ -15,6 +15,9 @@ namespace Fanex.NAP.Framework.Data
     using System.Collections;
     using System.Reflection;
 
+    /// <summary>
+    /// Criteria base
+    /// </summary>
     public abstract class CriteriaBase : ICriteria
     {
         public virtual Hashtable GetSpParams()
@@ -25,7 +28,8 @@ namespace Fanex.NAP.Framework.Data
             foreach (PropertyInfo propertyInfo in type.GetProperties())
             {
                 Type typeOfPropertyAttribute = typeof(SpParamAttribute);
-                SpParamAttribute attr = (SpParamAttribute)Attribute.GetCustomAttribute(propertyInfo, 
+                SpParamAttribute attr = (SpParamAttribute)Attribute.GetCustomAttribute(
+                    propertyInfo, 
                     typeOfPropertyAttribute);
 
                 if (attr == null)
@@ -50,7 +54,8 @@ namespace Fanex.NAP.Framework.Data
             foreach (PropertyInfo propertyInfo in type.GetProperties())
             {
                 Type typeOfPropertyAttribute = typeof(SpParamAttribute);
-                SpParamAttribute attr = (SpParamAttribute)Attribute.GetCustomAttribute(propertyInfo,
+                SpParamAttribute attr = (SpParamAttribute)Attribute.GetCustomAttribute(
+                    propertyInfo,
                     typeOfPropertyAttribute);
 
                 if (attr == null)

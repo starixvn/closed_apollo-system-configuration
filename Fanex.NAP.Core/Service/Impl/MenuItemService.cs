@@ -257,24 +257,6 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
-        private IEnumerable<IMenuItem> SortMenuItemsInHierarchy(IEnumerable<IMenuItem> menuItemList, int parentId = 0)
-        {
-            var sortedMenuItemList = new List<IMenuItem>();
-
-            foreach (var menuItem in menuItemList)
-            {
-                // top menu items || sub menu items
-                if ((menuItem.Parent == null && parentId == 0)
-                    || (menuItem.Parent != null && menuItem.Parent.Id == parentId))
-                {
-                    sortedMenuItemList.Add(menuItem);
-                    sortedMenuItemList.AddRange(SortMenuItemsInHierarchy(menuItemList, menuItem.Id));
-                }
-            }
-
-            return sortedMenuItemList;
-        }
-
         public IEnumerable<IMenuItem> GetParentById(int id, string env = Constant.UAT)
         {
             // check parameters
@@ -493,6 +475,24 @@ namespace Fanex.NAP.Core.Service.Impl
             }
 
             return null;
+        }
+
+        private IEnumerable<IMenuItem> SortMenuItemsInHierarchy(IEnumerable<IMenuItem> menuItemList, int parentId = 0)
+        {
+            var sortedMenuItemList = new List<IMenuItem>();
+
+            foreach (var menuItem in menuItemList)
+            {
+                // top menu items || sub menu items
+                if ((menuItem.Parent == null && parentId == 0)
+                    || (menuItem.Parent != null && menuItem.Parent.Id == parentId))
+                {
+                    sortedMenuItemList.Add(menuItem);
+                    sortedMenuItemList.AddRange(SortMenuItemsInHierarchy(menuItemList, menuItem.Id));
+                }
+            }
+
+            return sortedMenuItemList;
         }
     }
 }

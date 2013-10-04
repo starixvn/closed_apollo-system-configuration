@@ -104,40 +104,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return View(criteria);
         }
 
-        private void PrepareManageData(GetBySiteFunctionCriteria criteria)
-        {
-            ViewBag.FunctionList = _functionService.GetBySiteInHierarchy(criteria.SiteId, criteria.Environment);
-
-            if (this.UserIsPortalAdmin) // portal admin
-            {
-                ViewBag.SiteItemList = _siteService.GetAllSelectListItem(criteria.Environment, true, criteria.SiteId);
-                ViewBag.ViewFlags.HasEditRight = true;
-            }
-            else
-            {
-                ViewBag.SiteItemList =
-                    _siteService.GetSelectListItemByUserAndFunctionKeyIncludeGroup(
-                        CurrentSession.UserId,
-                        FunctionKeys.ManageFunction.ToString(),
-                        criteria.Environment,
-                        policy: Constant.Policy.Read,
-                        selectedSiteId: criteria.SiteId);
-
-                int policyCurrentSite = _userService.GetUserSiteFunctionKeyPolicy(
-                        CurrentSession.UserId,
-                        this.SiteId,
-                        FunctionKeys.ManageFunction.ToString());
-
-                int policy = _userService.GetUserSiteFunctionKeyPolicy(
-                        CurrentSession.UserId,
-                        criteria.SiteId,
-                        FunctionKeys.ManageFunction.ToString());
-
-                ViewBag.ViewFlags.HasEditRight = policy >= (int)Constant.Policy.Host
-                                                    && policyCurrentSite >= (int)Constant.Policy.Host;
-            }
-        }
-
         #endregion
 
         #region Add new
@@ -182,7 +148,8 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
                     if (function != null)
                     {
-                        ModelState.AddModelError("FunctionName",
+                        ModelState.AddModelError(
+                            "FunctionName",
                             string.Format(ViewResources.DuplicateMsg, functionName));
 
                         return View(criteria);
@@ -221,7 +188,8 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
                     if (function != null)
                     {
-                        ModelState.AddModelError("FunctionKey",
+                        ModelState.AddModelError(
+                            "FunctionKey",
                             string.Format(ViewResources.DuplicateMsg, functionKey));
 
                         return View(criteria);
@@ -254,49 +222,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             }
 
             return View(criteria);
-        }
-
-        private void GetSitesAndFunctionsForAddNew(dynamic criteria, bool getSiteList = true)
-        {
-            #region gets site list
-            if (getSiteList)
-            {
-                // portal admin
-                if (this.UserIsPortalAdmin)
-                {
-                    ViewBag.SiteItemList = _siteService
-                        .GetAllSelectListItem(criteria.Environment, isActive: true, selectedSiteId: criteria.SiteId);
-                }
-                else
-                {
-                    ViewBag.SiteItemList =
-                        _siteService.GetSelectListItemByUserAndFunctionKeyIncludeGroup(
-                                CurrentSession.UserId,
-                                FunctionKeys.ManageFunction.ToString(),
-                                criteria.Environment,
-                                policy: Constant.Policy.Host,
-                                selectedSiteId: criteria.SiteId);
-                }
-            }
-            #endregion
-
-            #region gets function list
-            if (criteria.ParentId == null)
-            {
-                ViewBag.FunctionList = _functionService.GetSelectListItemBySite(
-                                                criteria.SiteId,
-                                                criteria.Environment,
-                                                isActive: true);
-            }
-            else
-            {
-                ViewBag.FunctionList = _functionService.GetSelectListItemBySite(
-                                                criteria.SiteId,
-                                                criteria.Environment,
-                                                isActive: true,
-                                                selectedFunctionId: (int)criteria.ParentId);
-            }
-            #endregion
         }
 
         #endregion
@@ -373,7 +298,8 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
                     if (_functionService.GetByNameAndSite(functionName, criteria.SiteId) != null)
                     {
-                        ModelState.AddModelError("FunctionName",
+                        ModelState.AddModelError(
+                            "FunctionName",
                             string.Format(ViewResources.DuplicateMsg, functionName));
 
                         return View(criteria);
@@ -388,7 +314,8 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
                     if (_functionService.GetByKeyAndSite(functionKey, criteria.SiteId) != null)
                     {
-                        ModelState.AddModelError("FunctionKey",
+                        ModelState.AddModelError(
+                            "FunctionKey",
                             string.Format(ViewResources.DuplicateMsg, functionKey));
 
                         return View(criteria);
@@ -1029,5 +956,82 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         }
 
         #endregion
+
+        private void PrepareManageData(GetBySiteFunctionCriteria criteria)
+        {
+            ViewBag.FunctionList = _functionService.GetBySiteInHierarchy(criteria.SiteId, criteria.Environment);
+
+            if (this.UserIsPortalAdmin) // portal admin
+            {
+                ViewBag.SiteItemList = _siteService.GetAllSelectListItem(criteria.Environment, true, criteria.SiteId);
+                ViewBag.ViewFlags.HasEditRight = true;
+            }
+            else
+            {
+                ViewBag.SiteItemList =
+                    _siteService.GetSelectListItemByUserAndFunctionKeyIncludeGroup(
+                        CurrentSession.UserId,
+                        FunctionKeys.ManageFunction.ToString(),
+                        criteria.Environment,
+                        policy: Constant.Policy.Read,
+                        selectedSiteId: criteria.SiteId);
+
+                int policyCurrentSite = _userService.GetUserSiteFunctionKeyPolicy(
+                        CurrentSession.UserId,
+                        this.SiteId,
+                        FunctionKeys.ManageFunction.ToString());
+
+                int policy = _userService.GetUserSiteFunctionKeyPolicy(
+                        CurrentSession.UserId,
+                        criteria.SiteId,
+                        FunctionKeys.ManageFunction.ToString());
+
+                ViewBag.ViewFlags.HasEditRight = policy >= (int)Constant.Policy.Host
+                                                    && policyCurrentSite >= (int)Constant.Policy.Host;
+            }
+        }
+
+        private void GetSitesAndFunctionsForAddNew(dynamic criteria, bool getSiteList = true)
+        {
+            #region gets site list
+            if (getSiteList)
+            {
+                // portal admin
+                if (this.UserIsPortalAdmin)
+                {
+                    ViewBag.SiteItemList = _siteService
+                        .GetAllSelectListItem(criteria.Environment, isActive: true, selectedSiteId: criteria.SiteId);
+                }
+                else
+                {
+                    ViewBag.SiteItemList =
+                        _siteService.GetSelectListItemByUserAndFunctionKeyIncludeGroup(
+                                CurrentSession.UserId,
+                                FunctionKeys.ManageFunction.ToString(),
+                                criteria.Environment,
+                                policy: Constant.Policy.Host,
+                                selectedSiteId: criteria.SiteId);
+                }
+            }
+            #endregion
+
+            #region gets function list
+            if (criteria.ParentId == null)
+            {
+                ViewBag.FunctionList = _functionService.GetSelectListItemBySite(
+                                                criteria.SiteId,
+                                                criteria.Environment,
+                                                isActive: true);
+            }
+            else
+            {
+                ViewBag.FunctionList = _functionService.GetSelectListItemBySite(
+                                                criteria.SiteId,
+                                                criteria.Environment,
+                                                isActive: true,
+                                                selectedFunctionId: (int)criteria.ParentId);
+            }
+            #endregion
+        }
     }
 }

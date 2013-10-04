@@ -40,8 +40,9 @@ namespace Fanex.NAP.Framework.Data
             return this;
         }
 
-        public Orderable<T> Asc<TKey1, TKey2>(Expression<Func<T, TKey1>> keySelector1,
-                                              Expression<Func<T, TKey2>> keySelector2)
+        public Orderable<T> Asc<TKey1, TKey2>(
+            Expression<Func<T, TKey1>> keySelector1,
+            Expression<Func<T, TKey2>> keySelector2)
         {
             this._queryable = this._queryable
                 .AsQueryable<T>()
@@ -50,9 +51,10 @@ namespace Fanex.NAP.Framework.Data
             return this;
         }
 
-        public Orderable<T> Asc<TKey1, TKey2, TKey3>(Expression<Func<T, TKey1>> keySelector1,
-                                                     Expression<Func<T, TKey2>> keySelector2,
-                                                     Expression<Func<T, TKey3>> keySelector3)
+        public Orderable<T> Asc<TKey1, TKey2, TKey3>(
+            Expression<Func<T, TKey1>> keySelector1,
+            Expression<Func<T, TKey2>> keySelector2,
+            Expression<Func<T, TKey3>> keySelector3)
         {
             this._queryable = this._queryable
                 .AsQueryable<T>()
@@ -70,8 +72,9 @@ namespace Fanex.NAP.Framework.Data
             return this;
         }
 
-        public Orderable<T> Desc<TKey1, TKey2>(Expression<Func<T, TKey1>> keySelector1,
-                                               Expression<Func<T, TKey2>> keySelector2)
+        public Orderable<T> Desc<TKey1, TKey2>(
+            Expression<Func<T, TKey1>> keySelector1,
+            Expression<Func<T, TKey2>> keySelector2)
         {
             this._queryable = this._queryable
                 .AsQueryable<T>()
@@ -80,9 +83,10 @@ namespace Fanex.NAP.Framework.Data
             return this;
         }
 
-        public Orderable<T> Desc<TKey1, TKey2, TKey3>(Expression<Func<T, TKey1>> keySelector1,
-                                                      Expression<Func<T, TKey2>> keySelector2,
-                                                      Expression<Func<T, TKey3>> keySelector3)
+        public Orderable<T> Desc<TKey1, TKey2, TKey3>(
+            Expression<Func<T, TKey1>> keySelector1,
+            Expression<Func<T, TKey2>> keySelector2,
+            Expression<Func<T, TKey3>> keySelector3)
         {
             this._queryable = this._queryable
                 .AsQueryable<T>()

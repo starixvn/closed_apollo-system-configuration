@@ -157,7 +157,8 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
-        public Dictionary<ISite, IEnumerable<IFunction>> GetAllAndGroupBySite(string env = Constant.UAT,
+        public Dictionary<ISite, IEnumerable<IFunction>> GetAllAndGroupBySite(
+            string env = Constant.UAT,
             bool? isActive = null)
         {
             // check parameters
@@ -301,24 +302,6 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
-        private IEnumerable<IFunction> SortFunctionsInHierarchy(IEnumerable<IFunction> functionList, int parentId = 0)
-        {
-            var sortedFunctionList = new List<IFunction>();
-
-            foreach (var function in functionList)
-            {
-                // top functions || sub functions
-                if ((function.Parent == null && parentId == 0) 
-                    || (function.Parent != null && function.Parent.Id == parentId)) 
-                {
-                    sortedFunctionList.Add(function);
-                    sortedFunctionList.AddRange(SortFunctionsInHierarchy(functionList, function.Id));
-                }
-            }
-
-            return sortedFunctionList;
-        }
-
         public IEnumerable<IFunction> GetParentById(int id)
         {
             // check parameters
@@ -384,7 +367,8 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
-        public Dictionary<ISite, IEnumerable<FunctionPolicy>> GetByUserAndGroupBySite(int userId,
+        public Dictionary<ISite, IEnumerable<FunctionPolicy>> GetByUserAndGroupBySite(
+            int userId,
             string env = Constant.UAT)
         {
             // check parameters
@@ -486,7 +470,8 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
-        public Dictionary<ISite, IEnumerable<FunctionPolicy>> GetByGroupAndGroupBySite(int groupId,
+        public Dictionary<ISite, IEnumerable<FunctionPolicy>> GetByGroupAndGroupBySite(
+            int groupId,
             string env = Constant.UAT)
         {
             // check parameters
@@ -771,6 +756,24 @@ namespace Fanex.NAP.Core.Service.Impl
             }
 
             return null;
+        }
+
+        private IEnumerable<IFunction> SortFunctionsInHierarchy(IEnumerable<IFunction> functionList, int parentId = 0)
+        {
+            var sortedFunctionList = new List<IFunction>();
+
+            foreach (var function in functionList)
+            {
+                // top functions || sub functions
+                if ((function.Parent == null && parentId == 0)
+                    || (function.Parent != null && function.Parent.Id == parentId))
+                {
+                    sortedFunctionList.Add(function);
+                    sortedFunctionList.AddRange(SortFunctionsInHierarchy(functionList, function.Id));
+                }
+            }
+
+            return sortedFunctionList;
         }
     }
 }

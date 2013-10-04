@@ -11,6 +11,9 @@ namespace Fanex.NAP.Framework.Data
 {
     using System;
 
+    /// <summary>
+    /// Command result base
+    /// </summary>
     public class CommandResultBase : ICommandResult
     {
         private dynamic _code;

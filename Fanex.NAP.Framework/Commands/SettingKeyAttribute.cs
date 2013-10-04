@@ -11,6 +11,9 @@ namespace Fanex.NAP.Framework.Commands
 {
     using System;
 
+    /// <summary>
+    /// Setting key
+    /// </summary>
     public class SettingKeyAttribute : Attribute
     {
         public SettingKeyAttribute(string settingKey)

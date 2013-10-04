@@ -18,12 +18,13 @@ namespace Fanex.NAP.Core.Web.Auth
     public class AuthInfo
     {
         private int _userId;
+        private int _onuserId;
 
         public int UserId
         {
-            get 
-            { 
-                return this._userId; 
+            get
+            {
+                return this._userId;
             }
 
             set
@@ -36,8 +37,6 @@ namespace Fanex.NAP.Core.Web.Auth
                 this._userId = value;
             }
         }
-
-        private int _onuserId;
 
         public int OnUserId
         {

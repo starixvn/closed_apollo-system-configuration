@@ -48,7 +48,8 @@ namespace Fanex.NAP.Core.Service.Interface
 
         LogExecSp GetById(int logId);
 
-        ICommandResult InsertLogUserLogin(int userId,
+        ICommandResult InsertLogUserLogin(
+            int userId,
             int siteId,
             string ip,
             DateTime date,
@@ -59,7 +60,8 @@ namespace Fanex.NAP.Core.Service.Interface
             string doing,
             int duration);
 
-        ICommandResult InsertLogFunction(int functionId,
+        ICommandResult InsertLogFunction(
+            int functionId,
             int userId,
             int siteId,
             string param,
