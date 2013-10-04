@@ -52,7 +52,7 @@ namespace Fanex.NAP.Core.Service.Interface
 
         IEnumerable<IFunction> Search(string functionName, int siteId, string env = Constant.UAT, bool? isActive = null);
 
-        IEnumerable<IFunction> GetByParentKeyAndSite(int siteId, string parentKey, string environment = Constant.UAT, bool? isActive = null);
+        IEnumerable<IFunction> GetByParentKeyAndSite(GetByParentKeyAndSiteCriteria criteria);
 
         #endregion
 

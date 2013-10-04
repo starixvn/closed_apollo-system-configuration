@@ -24,6 +24,10 @@ namespace Fanex.NAP.Core.Criteria.Function
 
         public bool? IsActive { get; set; }
 
+        public int? RoleId { get; set; }
+
+        public int? UserId { get; set; }
+
         public override string GetSettingKey()
         {
             return "NAP_Function_GetByParentKeyAndSite";

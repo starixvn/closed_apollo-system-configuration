@@ -6,9 +6,13 @@
     bool success = ViewBag.Success != null && ViewBag.Success;
 
     var viewFlags = (ViewFlags)ViewBag.ViewFlags;
+    var classIsNotInternalView = string.Empty;
+    if (!(bool)ViewBag.IsITGroup)
+    {
+        classIsNotInternalView = "form-isnotinternal";
+    }
 }
 @section Head {
-    @*<link href="~/Areas/UserControl/themes/nap/style.less" rel="stylesheet" type="text/css" />*@
     <link href="~/Areas/UserControl/themes/nap/mailinglist/chosen.css" rel="stylesheet" type="text/css" />
     <link href="~/Areas/UserControl/themes/nap/mailinglist/mailinglist.less" rel="stylesheet" type="text/css" />
 }
@@ -23,7 +27,7 @@
 }
 @using (Html.BeginForm())
 {
-    <div class="form">
+    <div class="form @classIsNotInternalView">
         <div class="form-row summary">
             <div class="lbl-field">
             </div>
@@ -32,151 +36,95 @@
                 @Html.HiddenFor(m => m.ListId)
             </div>
         </div>
-        <div class="form-row required" style="margin-top: 10px;">
-            <div class="lbl-field">
-                @Html.LabelFor(m => m.ListName, ViewResources.MailingList_Name)
-            </div>
-            <div class="edit-field">
-                @Html.TextBoxFor(m => m.ListName, new { @maxlength = 50 })
-            </div>
-        </div>
-        <div class="form-row required">
-			<div class="lbl-field">
-				@Html.LabelFor(m => m.ListKey, ViewResources.List_Key)
-			</div>
-			<div class="edit-field">
-                @Html.HiddenFor(m => m.ListKey)
-				@Html.TextBox("txtListKey", Model.ListKey, new { disabled = "disabled" })
-                <a id="btn-regen" href="javascript:;"
-                    title="Generate from Name">generate</a>
-			</div>			
-		</div>
-        <div class="form-row">
-            <div class="lbl-field">
-                @Html.LabelFor(m => m.SiteId, ViewResources.Site)
-            </div>
-            <div class="edit-field">
-                @Html.Label((string)ViewBag.SiteName, new { @class = "site-label" })
-                @Html.HiddenFor(m => m.SiteId)
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="lbl-field">
-                @Html.LabelFor(m => m.Description)
-            </div>
-            <div class="edit-field">
-                @Html.TextBoxFor(m => m.Description, new { @maxlength = 200 })
-            </div>
-        </div>
-        @if (viewFlags.IsLive)
-        {
-            @Html.Hidden("Environment", "LIVE")
-        }
-        else
-        {
-            <div class="form-row">
-                <div class="lbl-field">
-                    @Html.LabelFor(m => m.Environment)
-                </div>
-                <div class="edit-field rdo-field">
-                    @Html.RadioButtonFor(m => m.Environment, "UAT", new { id = "Environment-UAT" })
-                    @Html.Label("Environment-UAT", ViewResources.UAT)
-                    @Html.RadioButtonFor(m => m.Environment, "LIVE", new { id = "Environment-LIVE" })
-                    @Html.Label("Environment-LIVE", ViewResources.LIVE)
-                </div>
-            </div>
-        }
-
-        <div class="form-row">
-            <div class="lbl-field">
-                @Html.LabelFor(m => m.ListFunctionId, ViewResources.MailFunction)
-            </div>
-            <div class="edit-field">
-                @if (ViewBag.MailFunctionList == null || !((List<SelectListItem>)ViewBag.MailFunctionList).Any())
-                {
-                    @Html.DropDownListFor(m => m.ListFunctionId, (List<SelectListItem>)ViewBag.MailFunctionList, new { @disabled = "disabled" })
-                }
-                else
-                {
-                    @Html.DropDownListFor(m => m.ListFunctionId, (List<SelectListItem>)ViewBag.MailFunctionList)
-                }
-                
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="lbl-field">
-                @Html.LabelFor(m => m.FunctionId, ViewResources.Function)
-            </div>
-            <div class="edit-field">
-                @if (ViewBag.FunctionList == null || !((List<SelectListItem>)ViewBag.FunctionList).Any())
-                {
-                    @Html.DropDownListFor(m => m.FunctionId, (List<SelectListItem>)ViewBag.FunctionList, new { @disabled = "disabled" })
-                }
-                else
-                {
-                    @Html.DropDownListFor(m => m.FunctionId, (List<SelectListItem>)ViewBag.FunctionList)
-                }
-            </div>
-        </div>
-        <div class="form-row" style="margin-top: 15px;">
-            <div class="lbl-field">
-                @ViewResources.To
-            </div>
-            <div class="edit-field">
-                <div id="to-list" class="chosen-container-multi to-mail-list">
-                    <ul class="chosen-choices list">
-                        @if (Model != null)
-                        {
-                            @RazorHelper.ShowMailingList(Model.ToList)
-                        }
-                        <li class="search-field">
-                            <input class="input-to item" type="text" />
-                        </li>
-                    </ul>
-                </div>
-                @Html.HiddenFor(m=>m.ToList)
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="lbl-field">
-                @ViewResources.Cc
-            </div>
-            <div class="edit-field">
-                <div id="cc-list" class="chosen-container-multi cc-mail-list">
-                    <ul class="chosen-choices list">
-                        @if (Model != null)
-                        {
-                            @RazorHelper.ShowMailingList(Model.CCList)
-                        }
-                        <li class="search-field">
-                            <input class="input-to item" type="text" />
-                        </li>
-                    </ul>
-                </div>
-                @Html.HiddenFor(m=>m.CCList)
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="lbl-field">
-                @ViewResources.Bcc
-            </div>
-            <div class="edit-field">
-                <div id="bcc-list" class="chosen-container-multi bcc-mail-list">
-                    <ul class="chosen-choices list">
-                        @if (Model != null)
-                        {
-                            @RazorHelper.ShowMailingList(Model.BCCList)
-                        }
-                        <li class="search-field">
-                            <input class="input-to item" type="text" />
-                        </li>
-                    </ul>
-                </div>
-                @Html.HiddenFor(m=>m.BCCList)
-            </div>
-        </div>
         @if ((bool)ViewBag.IsITGroup)
         { 
+            <div class="form-row required" style="margin-top: 10px;">
+                <div class="lbl-field">
+                    @Html.LabelFor(m => m.ListName, ViewResources.MailingList_Name)
+                </div>
+                <div class="edit-field">
+                    @Html.TextBoxFor(m => m.ListName, new { @maxlength = 50 })
+                </div>
+            </div>
+            <div class="form-row required">
+			    <div class="lbl-field">
+				    @Html.LabelFor(m => m.ListKey, ViewResources.List_Key)
+			    </div>
+			    <div class="edit-field">
+                    @Html.HiddenFor(m => m.ListKey)
+				    @Html.TextBox("txtListKey", Model.ListKey, new { disabled = "disabled" })
+                    <a id="btn-regen" href="javascript:;"
+                        title="Generate from Name">generate</a>
+			    </div>			
+		    </div>
+            <div class="form-row">
+                <div class="lbl-field">
+                    @Html.LabelFor(m => m.SiteId, ViewResources.Site)
+                </div>
+                <div class="edit-field">
+                    @Html.Label((string)ViewBag.SiteName, new { @class = "site-label" })
+                    @Html.HiddenFor(m => m.SiteId)
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="lbl-field">
+                    @Html.LabelFor(m => m.Description)
+                </div>
+                <div class="edit-field">
+                    @Html.TextBoxFor(m => m.Description, new { @maxlength = 200 })
+                </div>
+            </div>
+            if (viewFlags.IsLive)
+            {
+                @Html.Hidden("Environment", "LIVE")
+            }
+            else
+            {
+                <div class="form-row">
+                    <div class="lbl-field">
+                        @Html.LabelFor(m => m.Environment)
+                    </div>
+                    <div class="edit-field rdo-field">
+                        @Html.RadioButtonFor(m => m.Environment, "UAT", new { id = "Environment-UAT" })
+                        @Html.Label("Environment-UAT", ViewResources.UAT)
+                        @Html.RadioButtonFor(m => m.Environment, "LIVE", new { id = "Environment-LIVE" })
+                        @Html.Label("Environment-LIVE", ViewResources.LIVE)
+                    </div>
+                </div>
+            }
+
+            <div class="form-row">
+                <div class="lbl-field">
+                    @Html.LabelFor(m => m.ListFunctionId, ViewResources.MailFunction)
+                </div>
+                <div class="edit-field">
+                    @if (ViewBag.MailFunctionList == null || !((List<SelectListItem>)ViewBag.MailFunctionList).Any())
+                    {
+                        @Html.DropDownListFor(m => m.ListFunctionId, (List<SelectListItem>)ViewBag.MailFunctionList, new { @disabled = "disabled" })
+                    }
+                    else
+                    {
+                        @Html.DropDownListFor(m => m.ListFunctionId, (List<SelectListItem>)ViewBag.MailFunctionList)
+                    }
+                
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="lbl-field">
+                    @Html.LabelFor(m => m.FunctionId, ViewResources.Function)
+                </div>
+                <div class="edit-field">
+                    @if (ViewBag.FunctionList == null || !((List<SelectListItem>)ViewBag.FunctionList).Any())
+                    {
+                        @Html.DropDownListFor(m => m.FunctionId, (List<SelectListItem>)ViewBag.FunctionList, new { @disabled = "disabled" })
+                    }
+                    else
+                    {
+                        @Html.DropDownListFor(m => m.FunctionId, (List<SelectListItem>)ViewBag.FunctionList)
+                    }
+                </div>
+            </div>
+            @RenderMailingList()
             <div class="form-row">
                 <div class="lbl-field">
                     @Html.LabelFor(m => m.IsInternal, ViewResources.Internal_Only)
@@ -188,6 +136,15 @@
         }
         else
         {
+            <div class="form-row">
+                <div class="lbl-field">
+                </div>
+                <div class="edit-field">
+                    @Html.Label(Model.ListName, new { @class = "listname-label" })
+                    @Html.HiddenFor(m => m.ListName)
+                </div>
+            </div>
+            @RenderMailingList()
             @Html.HiddenFor(m => m.IsInternal)
         }
         
@@ -204,7 +161,7 @@
             <div class="lbl-field">
             </div>
             <div class="edit-field">
-                @if (1 == 1)
+                @if (!success)
                 {
                     <input id="btnSubmit" type="submit" value="@ViewResources.Save" />
                     <button class="cancel">@ViewResources.Back</button>
@@ -213,9 +170,69 @@
         </div>
     </div>
 }
+
+@helper RenderMailingList()
+{
+    <div class="form-row" style="margin-top: 15px;">
+        <div class="lbl-field">
+            @ViewResources.To
+        </div>
+        <div class="edit-field">
+            <div id="to-list" class="chosen-container-multi to-mail-list">
+                <ul class="chosen-choices list">
+                    @if (Model != null)
+                    {
+                        @RazorHelper.ShowMailingList(Model.ToList)
+                    }
+                    <li class="search-field">
+                        <input class="input-to item" type="text" />
+                    </li>
+                </ul>
+            </div>
+            @Html.HiddenFor(m => m.ToList)
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="lbl-field">
+            @ViewResources.Cc
+        </div>
+        <div class="edit-field">
+            <div id="cc-list" class="chosen-container-multi cc-mail-list">
+                <ul class="chosen-choices list">
+                    @if (Model != null)
+                    {
+                        @RazorHelper.ShowMailingList(Model.CCList)
+                    }
+                    <li class="search-field">
+                        <input class="input-to item" type="text" />
+                    </li>
+                </ul>
+            </div>
+            @Html.HiddenFor(m => m.CCList)
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="lbl-field">
+            @ViewResources.Bcc
+        </div>
+        <div class="edit-field">
+            <div id="bcc-list" class="chosen-container-multi bcc-mail-list">
+                <ul class="chosen-choices list">
+                    @if (Model != null)
+                    {
+                        @RazorHelper.ShowMailingList(Model.BCCList)
+                    }
+                    <li class="search-field">
+                        <input class="input-to item" type="text" />
+                    </li>
+                </ul>
+            </div>
+            @Html.HiddenFor(m => m.BCCList)
+        </div>
+    </div>
+}
 @section Foot {
     <script src="~/Areas/UserControl/scripts/MailingList/MailingList.js" type="text/javascript"></script>
-   @* <script src="~/Areas/UserControl/scripts/lib/jquery.numeric-1.3.js" type="text/javascript"></script>*@
     @if (success)
     {
         string dialogMsg = string.Format(ViewResources.EditSuccessMsg, ViewResources.MailingList + " '" + Model.ListName + "'", 3);

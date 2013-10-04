@@ -6,7 +6,7 @@
         Regenerate: null,
 
         init: function () {
-           // $('.summary').hide();
+            // $('.summary').hide();
 
             MailingList.ListFunctionId = $("#ListFunctionId")
             MailingList.FunctionId = $("#FunctionId");
@@ -43,6 +43,8 @@
                 var keyCode = e.which || e.keyCode;
                 var object = $(this);
 
+                console.log(keyCode);
+
                 if (keyCode == 8) {
                     if (object.val().length == 0) {
                         var objectRemove = object.parent().prev();
@@ -58,7 +60,7 @@
                     var objectRemove = object.parent().prev();
                     objectRemove.removeClass("search-choice-focus");
 
-                    if (keyCode == 13 || keyCode == 188) {
+                    if (keyCode == 13 || keyCode == 188 || keyCode == 32 || keyCode == 59) {
                         MailingList.autoCompleteEmail(object);
                         e.preventDefault();
                     }
@@ -93,7 +95,7 @@
                 var toList = "";
                 var ccList = "";
                 var bccList = "";
-                // Site.removeErrorMsg();
+                var mailError = "";
 
                 $('.input-to').each(function () {
                     var object = $(this);
@@ -105,12 +107,18 @@
                     if (!object.hasClass("invalid-email")) {
                         toList += $.trim(object.children("span").first().html()) + "; ";
                     }
+                    else {
+                        mailError += $.trim(object.children("span").first().html()) + "; "
+                    }
                 });
 
                 $("#cc-list > ul > .search-choice").each(function () {
                     var object = $(this);
                     if (!object.hasClass("invalid-email")) {
                         ccList += $.trim(object.children("span").first().html()) + "; ";
+                    }
+                    else {
+                        mailError += $.trim(object.children("span").first().html()) + "; "
                     }
                 });
 
@@ -119,11 +127,20 @@
                     if (!object.hasClass("invalid-email")) {
                         bccList += $.trim(object.children("span").first().html()) + "; ";
                     }
+                    else {
+                        mailError += $.trim(object.children("span").first().html()) + "; "
+                    }
                 });
 
                 toList = toList.length > 0 ? toList.substr(0, (toList.length - 2)) : "";
                 ccList = ccList.length > 0 ? ccList.substr(0, (ccList.length - 2)) : "";
                 bccList = bccList.length > 0 ? bccList.substr(0, (bccList.length - 2)) : "";
+                mailError = mailError.length > 0 ? mailError.substr(0, (mailError.length - 2)) : "";
+
+                if (mailError.length > 0) {
+                    //NAP.headlineMsgBox.showInfo(mailError);
+                    alert("Email is invalid: " + mailError);
+                }
 
                 $("#ToList").val(toList);
                 $("#CCList").val(ccList);

@@ -20,15 +20,23 @@ namespace Fanex.NAP.Core.Repository.Impl
     using Fanex.NAP.Core.Repository.Interface;
     using Fanex.NAP.Framework.Data;
 
+    /// <summary>
+    /// MailingList Repository.
+    /// </summary>
     public class MailingListRepository : RepositoryBase<IMailingList>, IMailingListRepository
     {
+        /// <summary>
+        /// Get Mailing List Object.
+        /// </summary>
+        /// <param name="criteria">Criteria to query DB.</param>
+        /// <returns>Mailing List Object.</returns>
         public override IMailingList Get(ICriteria criteria)
         {
             try
             {
                 using (var db = new ObjectDb(criteria.GetSettingKey()))
                 {
-                    return db.QueryEntity<MailingList, Site,Function, Function, MailingList>(
+                    return db.QueryEntity<MailingList, Site, Function, Function, MailingList>(
                          (m, si, mf, f) =>
                          {
                              m.Site = si;
@@ -46,6 +54,11 @@ namespace Fanex.NAP.Core.Repository.Impl
             }
         }
 
+        /// <summary>
+        /// Get list Mailing List Object.
+        /// </summary>
+        /// <param name="criteria">Criteria to query DB.</param>
+        /// <returns>List Mailing List Object.</returns>
         public override IEnumerable<IMailingList> Fetch(ICriteria criteria)
         {
             try
@@ -70,6 +83,12 @@ namespace Fanex.NAP.Core.Repository.Impl
             }
         }
 
+        /// <summary>
+        /// Insert Mailing List Object.
+        /// </summary>
+        /// <param name="criteria">Criteria contains value to insert DB.</param>
+        /// <param name="logCriteria">Criteria contains value to write log DB.</param>
+        /// <returns>ICommand Result.</returns>
         public ICommandResult Insert(ref InsertMailingListCriteria criteria, ICriteria logCriteria)
         {
             try
@@ -93,6 +112,12 @@ namespace Fanex.NAP.Core.Repository.Impl
             }
         }
 
+        /// <summary>
+        /// Update Mailing List Object.
+        /// </summary>
+        /// <param name="criteria">Criteria contains value to update DB.</param>
+        /// <param name="logCriteria">Criteria contains value to write log DB.</param>
+        /// <returns>ICommand Result.</returns>
         public ICommandResult Update(ICriteria criteria, ICriteria logCriteria)
         {
             try

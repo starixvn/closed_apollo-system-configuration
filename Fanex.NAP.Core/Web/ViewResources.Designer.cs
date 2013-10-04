@@ -1006,7 +1006,7 @@ namespace Fanex.NAP.Core.Web {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mail Function.
+        ///   Looks up a localized string similar to List Function.
         /// </summary>
         public static string MailFunction {
             get {
@@ -1164,6 +1164,15 @@ namespace Fanex.NAP.Core.Web {
         public static string Modifier {
             get {
                 return ResourceManager.GetString("Modifier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The {0} field is required..
+        /// </summary>
+        public static string Msg_Requried {
+            get {
+                return ResourceManager.GetString("Msg_Requried", resourceCulture);
             }
         }
         

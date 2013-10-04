@@ -16,6 +16,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
     using System.Web.Mvc;
     using Fanex.Logging;
     using Fanex.NAP.Core.Business;
+    using Fanex.NAP.Core.Criteria.Function;
     using Fanex.NAP.Core.Criteria.MailingList;
     using Fanex.NAP.Core.Service.Impl;
     using Fanex.NAP.Core.Service.Interface;
@@ -52,6 +53,13 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             _groupService = groupService ?? new GroupService { ServiceContext = ServiceContext };
         }
 
+        /// <summary>
+        /// Action to Activate and Deactivate Mailing List with mailing list id.
+        /// </summary>
+        /// <param name="id">Mailing List Id.</param>
+        /// <param name="active">Activate is true or false.</param>
+        /// <returns>JSON Result.</returns>
+        [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageMailingList, Policy = Constant.Policy.Host)]
         public ActionResult Activate(int id, bool active)
         {
@@ -82,6 +90,13 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return new EmptyResult();
         }
 
+        /// <summary>
+        /// Action to set internal and unset internal for Mailing List with mailing list id.
+        /// </summary>
+        /// <param name="id">Mailing List Id.</param>
+        /// <param name="isInternal">Internal is true or false.</param>
+        /// <returns>JSON Result.</returns>
+        [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageMailingList, Policy = Constant.Policy.Host)]
         public ActionResult Internal(int id, bool isInternal)
         {
@@ -112,6 +127,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return new EmptyResult();
         }
 
+        /// <summary>
+        /// Action to view list Mailing List in a site with get method.
+        /// </summary>
+        /// <param name="siteId">Site ID which mailing list is showed follow it.</param>
+        /// <returns>View Result.</returns>
         [HttpGet]
         [NapAuth(FunctionKey = FunctionKeys.ManageMailingList, Policy = Constant.Policy.Read)]
         public ActionResult Manage(int? siteId)
@@ -152,6 +172,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return View(criteria);
         }
 
+        /// <summary>
+        /// Action to view list Mailing List in a site with post method.
+        /// </summary>
+        /// <param name="criteria">Criteria to query to DB.</param>
+        /// <returns>View Result.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageMailingList, Policy = Constant.Policy.Read)]
         public ActionResult Manage(GetMailingListBySiteCriteria criteria)
@@ -185,6 +210,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return View(criteria);
         }
 
+        /// <summary>
+        /// Action to Add new Mailing List with get method.
+        /// </summary>
+        /// <param name="siteId">Site ID default.</param>
+        /// <returns>View Result.</returns>
         [HttpGet]
         [NapAuth(FunctionKey = FunctionKeys.ManageMailingList, Policy = Constant.Policy.Host)]
         public ActionResult AddNew(int? siteId = null)
@@ -218,6 +248,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return View(criteria);
         }
 
+        /// <summary>
+        /// Action to Add new Mailing List with post method.
+        /// </summary>
+        /// <param name="criteria">Criteria is contains value insert Mailing List.</param>
+        /// <returns>View Result.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageMailingList, Policy = Constant.Policy.Host)]
         public ActionResult AddNew(InsertMailingListCriteria criteria)
@@ -237,7 +272,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    if (CheckInvalidMailingListForAddNew(criteria))
+                    if (!CheckInvalidMailingListForAddNew(criteria))
                     {
                         return View(criteria);
                     }
@@ -261,6 +296,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return View(criteria);
         }
 
+        /// <summary>
+        /// Action to Edit Mailing List with get method.
+        /// </summary>
+        /// <param name="id">Mailing List Id.</param>
+        /// <returns>View Result.</returns>
         [HttpGet]
         [NapAuth(FunctionKey = FunctionKeys.ManageMailingList, Policy = Constant.Policy.Host)]
         public ActionResult Edit(int id)
@@ -269,6 +309,8 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
             try
             {
+                var siteName = string.Empty;
+                var isITGroup = CheckIsPortalAminOrITGroup();
                 IList<SelectListItem> functionItemList = new List<SelectListItem>();
                 IList<SelectListItem> mailFunctionItemList = new List<SelectListItem>();
 
@@ -292,13 +334,13 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 criteria.BCCList = mailingList.BCCList;
                 criteria.IsInternal = mailingList.IsInternal;
                 criteria.IsActive = mailingList.IsActive;
-                ViewBag.SiteName = mailingList.Site.Name;
 
-                GetFunctionForEdit(criteria, ref functionItemList, ref mailFunctionItemList);
+                GetFunctionForEdit(criteria, isITGroup, ref functionItemList, ref mailFunctionItemList, ref siteName);
 
                 ViewBag.MailFunctionList = mailFunctionItemList;
                 ViewBag.FunctionList = functionItemList;
-                ViewBag.IsITGroup = CheckIsPortalAminOrITGroup();
+                ViewBag.IsITGroup = isITGroup;
+                ViewBag.SiteName = siteName;
             }
             catch (Exception ex)
             {
@@ -309,24 +351,32 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return View(criteria);
         }
 
+        /// <summary>
+        /// Action to Edit Mailing List with post method.
+        /// </summary>
+        /// <param name="criteria">Criteria is contains value to update Mailing List.</param>
+        /// <returns>View Result.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageMailingList, Policy = Constant.Policy.Host)]
         public ActionResult Edit(UpdateMailingListCriteria criteria)
         {
             try
             {
+                var siteName = string.Empty;
+                var isITGroup = CheckIsPortalAminOrITGroup();
                 IList<SelectListItem> functionItemList = new List<SelectListItem>();
                 IList<SelectListItem> mailFunctionItemList = new List<SelectListItem>();
 
-                GetFunctionForEdit(criteria, ref functionItemList, ref mailFunctionItemList);
+                GetFunctionForEdit(criteria, isITGroup, ref functionItemList, ref mailFunctionItemList, ref siteName);
 
                 ViewBag.MailFunctionList = mailFunctionItemList;
                 ViewBag.FunctionList = functionItemList;
-                ViewBag.IsITGroup = CheckIsPortalAminOrITGroup();
+                ViewBag.IsITGroup = isITGroup;
+                ViewBag.SiteName = siteName;
 
                 if (ModelState.IsValid)
                 {
-                    if (CheckInvalidMailingListForEdit(criteria))
+                    if (!CheckInvalidMailingListForEdit(criteria))
                     {
                         return View(criteria);
                     }
@@ -351,6 +401,12 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return View(criteria);
         }
 
+        /// <summary>
+        /// Action to get function by site and environment.
+        /// </summary>
+        /// <param name="siteId">Site Id which function is in it.</param>
+        /// <param name="environment">Environment is UAT or LIVE.</param>
+        /// <returns>JSON Result.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageFunction, Policy = Constant.Policy.Read)]
         public JsonResult GetFunctionBySite(int siteId, string environment = Constant.UAT)
@@ -373,6 +429,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return Json(null);
         }
 
+        /// <summary>
+        /// Action to get mail function by environment.
+        /// </summary>
+        /// <param name="environment">Environment is UAT or LIVE.</param>
+        /// <returns>JSON Result.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageFunction, Policy = Constant.Policy.Read)]
         public JsonResult GetMailFunctionByEnvironment(string environment = Constant.UAT)
@@ -381,7 +442,17 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             {
                 try
                 {
-                    var functionList = _functionService.GetByParentKeyAndSite(this.SiteId, FunctionKeys.MailingList, environment, isActive: true).ToList();
+                    var criteria = new GetByParentKeyAndSiteCriteria
+                    {
+                        SiteId = this.SiteId,
+                        ParentKey = FunctionKeys.MailingList,
+                        Environment = environment,
+                        IsActive = true,
+                        RoleId = (byte)Constant.Policy.Host,
+                        UserId = this.CurrentSession.UserId
+                    };
+
+                    var functionList = _functionService.GetByParentKeyAndSite(criteria).ToList();
 
                     return Json(functionList);
                 }
@@ -395,6 +466,12 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return Json(null);
         }
 
+        /// <summary>
+        /// Action to get mail function by environment.
+        /// </summary>
+        /// <param name="listId">Id of current Mailing List.</param>
+        /// <param name="listName">Mailing List Name which key general from it.</param>
+        /// <returns>JSON Result (List key).</returns>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageMailingList, Policy = Constant.Policy.Host)]
         public JsonResult GetMailingListKey(int listId, string listName)
@@ -429,6 +506,10 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return Json(listKey);
         }
 
+        /// <summary>
+        /// Check User is portal admin or it group.
+        /// </summary>
+        /// <returns>Is True or False.</returns>
         [NonAction]
         private bool CheckIsPortalAminOrITGroup()
         {
@@ -498,7 +579,17 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 }
             }
 
-            var mailFunctionList = _functionService.GetByParentKeyAndSite(this.SiteId, FunctionKeys.MailingList, criteria.Environment, isActive: true);
+            var getByParentKeyAndSiteCriteria = new GetByParentKeyAndSiteCriteria
+            {
+                SiteId = this.SiteId,
+                ParentKey = FunctionKeys.MailingList,
+                Environment = criteria.Environment,
+                IsActive = true,
+                RoleId = (byte)Constant.Policy.Host,
+                UserId = this.CurrentSession.UserId
+            };
+
+            var mailFunctionList = _functionService.GetByParentKeyAndSite(getByParentKeyAndSiteCriteria);
 
             if (mailFunctionList != null)
             {
@@ -553,7 +644,19 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
             if (mailingList != null)
             {
-                ModelState.AddModelError("ListKey", string.Format(ViewResources.DuplicateMsg, listKey));
+                ModelState.AddModelError("ListName", string.Format(ViewResources.DuplicateMsg, listKey));
+                return false;
+            }
+
+            if (criteria.ListFunctionId == 0)
+            {
+                ModelState.AddModelError("ListFunctionId", string.Format(ViewResources.Msg_Requried, ViewResources.MailFunction));
+                return false;
+            }
+
+            if (criteria.FunctionId == 0)
+            {
+                ModelState.AddModelError("FunctionId", string.Format(ViewResources.Msg_Requried, ViewResources.Function));
                 return false;
             }
 
@@ -564,40 +667,75 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         private bool CheckInvalidMailingListForEdit(UpdateMailingListCriteria criteria)
         {
             var isValid = true;
-
             //// checks duplicate mailing list name
             string listName = criteria.ListName = criteria.ListName.Trim();
             var mailingList = _mailingListService.GetByName(listName);
+            var listKey = criteria.ListKey = GeneralKeyFromName(criteria.ListName);
 
             if (mailingList != null && mailingList.Id != criteria.ListId)
             {
                 ModelState.AddModelError("ListName", string.Format(ViewResources.DuplicateMsg, listName));
-
                 return false;
             }
 
             //// checks duplicate function key
-            var listKey = GeneralKeyFromName(criteria.ListName);
-            criteria.ListKey = listKey;
-
             mailingList = _mailingListService.GetByKey(listKey);
-
+            
             if (mailingList != null && mailingList.Id != criteria.ListId)
             {
                 ModelState.AddModelError("ListKey", string.Format(ViewResources.DuplicateMsg, listKey));
-
                 return false;
             }
 
-            ViewBag.SiteName = mailingList.Site.Name;
+            if (criteria.ListFunctionId == 0)
+            {
+                ModelState.AddModelError("ListFunctionId", string.Format(ViewResources.Msg_Requried, ViewResources.MailFunction));
+                return false;
+            }
+
+            if (criteria.FunctionId == 0)
+            {
+                ModelState.AddModelError("FunctionId", string.Format(ViewResources.Msg_Requried, ViewResources.Function));
+                return false;
+            }
 
             return isValid;
         }
 
         [NonAction]
-        private void GetFunctionForEdit(UpdateMailingListCriteria criteria, ref IList<SelectListItem> functionItemList, ref IList<SelectListItem> mailFunctionItemList)
+        private void GetFunctionForEdit(
+            UpdateMailingListCriteria criteria, 
+            bool isITGroup, 
+            ref IList<SelectListItem> functionItemList, 
+            ref IList<SelectListItem> mailFunctionItemList, 
+            ref string siteName)
         {
-            var mailFunctionList = _functionService.GetByParentKeyAndSite(criteria.SiteId, FunctionKeys.MailingList, criteria.Environment, isActive: true);
+            var mailingList = _mailingListService.GetById(criteria.ListId);
+            siteName = mailingList.Site.Name;
+
+            if (mailingList != null && !isITGroup)
+            {
+                criteria.ListKey = mailingList.Key;
+                criteria.ListName = mailingList.Name;
+                criteria.Description = mailingList.Description;
+                criteria.SiteId = mailingList.Site.Id;
+                criteria.Environment = mailingList.Environment;
+                criteria.ListFunctionId = mailingList.MailFunction.Id;
+                criteria.FunctionId = mailingList.Function.Id;
+                criteria.IsInternal = mailingList.IsInternal;
+            }
+
+            var getByParentKeyAndSiteCriteria = new GetByParentKeyAndSiteCriteria
+            {
+                SiteId = criteria.SiteId,
+                ParentKey = FunctionKeys.MailingList,
+                Environment = criteria.Environment,
+                IsActive = true,
+                RoleId = (byte)Constant.Policy.Host,
+                UserId = this.CurrentSession.UserId
+            };
+
+            var mailFunctionList = _functionService.GetByParentKeyAndSite(getByParentKeyAndSiteCriteria);
 
             if (mailFunctionList != null)
             {

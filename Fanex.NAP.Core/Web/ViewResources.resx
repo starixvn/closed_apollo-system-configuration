@@ -721,7 +721,7 @@
     <value>Internal-only</value>
   </data>
   <data name="MailFunction" xml:space="preserve">
-    <value>Mail Function</value>
+    <value>List Function</value>
   </data>
   <data name="MailingList" xml:space="preserve">
     <value>Mailing List</value>
@@ -743,5 +743,8 @@
   </data>
   <data name="Update_MailingList" xml:space="preserve">
     <value>Update Mailing List</value>
+  </data>
+  <data name="Msg_Requried" xml:space="preserve">
+    <value>The {0} field is required.</value>
   </data>
 </root>
