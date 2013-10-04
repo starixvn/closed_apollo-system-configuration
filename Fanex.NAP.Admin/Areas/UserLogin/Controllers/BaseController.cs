@@ -54,7 +54,7 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
 
         /// <summary>
         /// Indicates whether the current site allows users login directly.
-        /// If "0", users must login through NAP Hub
+        /// If "0", users must login through NAP Hub.
         /// </summary>
         public bool EnableDirectLogin
         {

@@ -21,6 +21,11 @@ namespace Fanex.NAP.Core.Criteria.Function
     /// </summary>
     public class InsertFunctionCriteria : CriteriaBase
     {
+        public InsertFunctionCriteria()
+        {
+            this.Environment = Constant.UAT;
+        }
+        
         public int FunctionId { get; set; }
 
         public int SiteId { get; set; }
@@ -75,11 +80,6 @@ namespace Fanex.NAP.Core.Criteria.Function
         [Required]
         [Display(Name = "Environment", ResourceType = typeof(ViewResources))]
         public string Environment { get; set; }
-
-        public InsertFunctionCriteria()
-        {
-            this.Environment = Constant.UAT;
-        }
 
         /// <summary>
         /// Get the reference SP's Name which is specified in Config file.

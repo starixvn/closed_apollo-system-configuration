@@ -12,7 +12,7 @@ namespace Fanex.NAP.Admin.App_Start
     using System.Web.Http;
 
     /// <summary>
-    /// Web API config
+    /// Web API config.
     /// </summary>
     public static class WebApiConfig
     {

@@ -18,7 +18,7 @@ namespace Fanex.NAP.Core.Criteria.Group
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
-    /// Assign permission
+    /// Assign permission.
     /// </summary>
     public class AssignFunctionGroupCriteria : CriteriaBase
     {

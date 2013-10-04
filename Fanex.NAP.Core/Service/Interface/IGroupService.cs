@@ -32,7 +32,7 @@ namespace Fanex.NAP.Core.Service.Interface
 
         /// <summary>
         /// Searches group by group name,site, but excludes ones who was assigned
-        /// the function (functionId) already
+        /// the function (functionId) already.
         /// </summary>
         IEnumerable<IGroup> SearchGroupExcludeFunction(string groupName, int siteId = 0, int functionId = 0);
 

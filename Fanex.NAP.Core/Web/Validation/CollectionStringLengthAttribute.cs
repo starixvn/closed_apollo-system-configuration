@@ -15,17 +15,13 @@ namespace Fanex.NAP.Core.Web.Validation
     using System.Diagnostics.CodeAnalysis;
         
     /// <summary>
-    /// Validates StringLength of a list of strings
+    /// Validates StringLength of a list of strings.
     /// </summary>
     [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = false)]
     public class CollectionStringLengthAttribute : ValidationAttribute
     {
         private StringLengthAttribute _stringLengthValidator;
-
-        public int MaximumLength { get; private set; }
-
-        public int MinimumLength { get; set; }
 
         public CollectionStringLengthAttribute(int maximumLength)
             : base((Func<string>)(() => "StringLengthAttribute_ValidationError"))
@@ -35,6 +31,10 @@ namespace Fanex.NAP.Core.Web.Validation
                 MinimumLength = this.MinimumLength
             };
         }
+
+        public int MaximumLength { get; private set; }
+
+        public int MinimumLength { get; set; }
 
         public override string FormatErrorMessage(string name)
         {

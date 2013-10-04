@@ -12,7 +12,7 @@ namespace Fanex.NAP.Framework.Data
     using System;
 
     /// <summary>
-    /// Command result base
+    /// Command result base.
     /// </summary>
     public class CommandResultBase : ICommandResult
     {

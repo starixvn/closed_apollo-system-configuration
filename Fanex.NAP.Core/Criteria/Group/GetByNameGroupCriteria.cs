@@ -12,7 +12,7 @@ namespace Fanex.NAP.Core.Criteria.Group
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
-    /// Get by name
+    /// Get by name.
     /// </summary>
     public class GetByNameGroupCriteria : CriteriaBase
     {

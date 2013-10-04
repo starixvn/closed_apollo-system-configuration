@@ -78,7 +78,7 @@ namespace Fanex.NAP.Core.Criteria.MenuItem
         /// <summary>
         /// Get the reference SP's Name which is specified in Config file.
         /// </summary>
-        /// <returns>NAP_MenuItem_Update.</returns>
+        /// <returns>Setting key.</returns>
         public override string GetSettingKey()
         {
             return "NAP_MenuItem_Update";

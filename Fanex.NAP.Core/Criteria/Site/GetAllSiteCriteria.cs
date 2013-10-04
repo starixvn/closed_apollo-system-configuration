@@ -13,7 +13,7 @@ namespace Fanex.NAP.Core.Criteria.Site
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
-    /// Get all
+    /// Get all.
     /// </summary>
     public class GetAllSiteCriteria : CriteriaBase
     {
@@ -36,7 +36,7 @@ namespace Fanex.NAP.Core.Criteria.Site
         }
 
         /// <summary>
-        /// Check data's constrains
+        /// Check data's constrains.
         /// </summary>
         /// <returns>True: valid; False: invalid.</returns>
         public override bool IsValid()

@@ -18,11 +18,11 @@ namespace Fanex.NAP.Framework.Mvc
     using Fanex.Common.Helper;
 
     /// <summary>
-    /// 
+    /// HTML helper
     /// </summary>
     public static class HtmlHelperExtensions
     {
-        #region Render Datetime Extension        
+        #region Render Datetime Extension
         private static readonly DateTimeFormatInfo _DateTimeFormat = 
             DateTimeFormatInfo.GetInstance(CultureInfo.CurrentCulture);
 
@@ -160,7 +160,7 @@ namespace Fanex.NAP.Framework.Mvc
         }
         
         /// <summary>
-        /// 
+        /// Month picker.
         /// </summary>
         /// <param name="htmlHelper"></param>
         /// <param name="name"></param>
