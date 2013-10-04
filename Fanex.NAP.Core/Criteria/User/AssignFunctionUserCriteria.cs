@@ -16,7 +16,6 @@ namespace Fanex.NAP.Core.Criteria.User
     using Fanex.NAP.Core.Web;
     using Fanex.NAP.Framework.Data;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
     public class AssignFunctionUserCriteria : CriteriaBase
     {
         protected readonly string AssignPermissionTpl = "<FunctionPolicy SiteId='{0}' FunctionId='{1}' Policy='{2}'></FunctionPolicy>";

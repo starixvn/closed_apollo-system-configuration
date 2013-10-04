@@ -12,11 +12,12 @@ namespace Fanex.NAP.Core.Criteria.MenuItem
 {
     using System;
     using System.ComponentModel.DataAnnotations;
-    using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.Core.Web;
     using Fanex.NAP.Framework.Data;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Update menu item
+    /// </summary>
     public class UpdateMenuItemCriteria : CriteriaBase
     {
         public int MenuItemId { get; set; }

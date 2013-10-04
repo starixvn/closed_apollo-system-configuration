@@ -11,7 +11,6 @@ namespace Fanex.NAP.Core.Criteria.Site
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.Diagnostics.CodeAnalysis;
     using System.Text;
 
     using Fanex.NAP.Core.Business;
@@ -19,8 +18,9 @@ namespace Fanex.NAP.Core.Criteria.Site
     using Fanex.NAP.Core.Web;
     using Fanex.NAP.Framework.Data;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
-    [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1027:TabsMustNotBeUsed", Justification = "Reviewed.")]
+    /// <summary>
+    /// Insert site
+    /// </summary>
     public class InsertSiteCriteria : CriteriaBase
     {
         protected readonly string UrlTpl = "<SiteURL URL='{0}' Environment='{1}' IsDefault='{2}' IsActive='{3}'></SiteURL>";
@@ -54,12 +54,12 @@ namespace Fanex.NAP.Core.Criteria.Site
 
         /// <summary>
         /// <ROOT>
-        ///	    <SiteURL
+        ///    <SiteURL
         ///         URL="http://www.example.com/"
-        ///		    Environment="LIVE"
-        ///		    IsDefault="1"
-        ///		    IsActive="1">
-        ///	    </SiteURL>
+        ///         Environment="LIVE"
+        ///         IsDefault="1"
+        ///         IsActive="1">
+        ///    </SiteURL>
         /// </ROOT>
         /// </summary>
         public string SiteUrls

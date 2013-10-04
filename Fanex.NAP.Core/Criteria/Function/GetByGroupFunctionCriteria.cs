@@ -9,10 +9,11 @@
 
 namespace Fanex.NAP.Core.Criteria.Function
 {
-    using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.Framework.Data;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Get by group
+    /// </summary>
     public class GetByGroupFunctionCriteria : CriteriaBase
     {
         public int GroupId { get; set; }

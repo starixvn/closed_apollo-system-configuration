@@ -10,10 +10,11 @@
 namespace Fanex.NAP.Core.Criteria.Group
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.Framework.Data;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Update group status
+    /// </summary>
     public class UpdateStatusGroupCriteria : CriteriaBase
     {
         public int GroupId { get; set; }

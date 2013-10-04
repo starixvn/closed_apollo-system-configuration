@@ -9,10 +9,11 @@
 
 namespace Fanex.NAP.Core.Criteria.MenuItem
 {
-    using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.Framework.Data;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Get by name and site
+    /// </summary>
     public class GetByNameAndSiteMenuItemCriteria : CriteriaBase
     {
         public string MenuItemName { get; set; }

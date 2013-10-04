@@ -10,10 +10,11 @@
 namespace Fanex.NAP.Core.Criteria.MenuItem
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.Framework.Data;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Update status
+    /// </summary>
     public class UpdateStatusMenuItemCriteria : CriteriaBase
     {
         public int MenuItemId { get; set; }

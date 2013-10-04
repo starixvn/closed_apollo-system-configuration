@@ -14,7 +14,6 @@ namespace Fanex.NAP.Core.Web.Auth
     using System.IO;
     using System.Xml.Serialization;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
     public class AuthInfo
     {
         private int _userId;

@@ -9,10 +9,11 @@
 
 namespace Fanex.NAP.Core.Criteria.MenuItem
 {
-    using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.Framework.Data;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Get by user include group
+    /// </summary>
     public class GetByUserIncludeGroupMenuItemCriteria : CriteriaBase
     {
         public int UserId { get; set; }

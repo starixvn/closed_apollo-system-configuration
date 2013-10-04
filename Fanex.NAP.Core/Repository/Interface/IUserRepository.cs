@@ -18,7 +18,6 @@ namespace Fanex.NAP.Core.Repository.Interface
     using Fanex.NAP.Core.Model.ValueObject;
     using Fanex.NAP.Framework.Data;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
     public interface IUserRepository : IRepository<IUser>
     {
         bool CheckUsernameExist(ICriteria criteria);

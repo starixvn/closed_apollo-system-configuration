@@ -9,10 +9,11 @@
 
 namespace Fanex.NAP.Core.Criteria.Function
 {
-    using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.Framework.Data;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Get by user and key
+    /// </summary>
     public class GetByUserAndFunctionKeyIncludeGroupFunctionCriteria : CriteriaBase
     {
         public int UserId { get; set; }

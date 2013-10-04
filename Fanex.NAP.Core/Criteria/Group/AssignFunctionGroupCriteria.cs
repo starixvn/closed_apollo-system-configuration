@@ -12,13 +12,14 @@ namespace Fanex.NAP.Core.Criteria.Group
 {
     using System;
     using System.ComponentModel.DataAnnotations;
-    using System.Diagnostics.CodeAnalysis;
     using System.Text;
 
     using Fanex.NAP.Core.Web;
     using Fanex.NAP.Framework.Data;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Assign permission
+    /// </summary>
     public class AssignFunctionGroupCriteria : CriteriaBase
     {
         protected readonly string AssignPermissionTpl = "<FunctionPolicy SiteId='{0}' FunctionId='{1}' Policy='{2}'></FunctionPolicy>";

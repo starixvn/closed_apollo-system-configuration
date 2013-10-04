@@ -9,10 +9,11 @@
 
 namespace Fanex.NAP.Core.Criteria.Group
 {
-    using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.Framework.Data;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Get by name
+    /// </summary>
     public class GetByNameGroupCriteria : CriteriaBase
     {
         public string GroupName { get; set; }

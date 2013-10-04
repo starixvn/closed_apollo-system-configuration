@@ -11,7 +11,6 @@
 // </history>
 using System.Diagnostics.CodeAnalysis;
 
-[SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")] 
 public static class FunctionKeys
 {
     public const string Administration = "Administration";

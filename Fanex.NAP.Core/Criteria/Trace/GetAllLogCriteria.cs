@@ -16,7 +16,6 @@ namespace Fanex.NAP.Core.Criteria.Trace
     using Fanex.NAP.Core.Web;
     using Fanex.NAP.Framework.Data;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
     public class GetAllLogCriteria : CriteriaBase
     {
         public string Username { get; set; }

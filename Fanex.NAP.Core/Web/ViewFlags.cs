@@ -12,7 +12,6 @@ namespace Fanex.NAP.Core.Web
     using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.Core.Business;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
     public class ViewFlags
     {
         public bool IsLive { get; set; }

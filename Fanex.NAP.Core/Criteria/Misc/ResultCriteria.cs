@@ -9,10 +9,11 @@
 
 namespace Fanex.NAP.Core.Criteria.Misc
 {
-    using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.Framework.Data;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Result
+    /// </summary>
     public class ResultCriteria : CriteriaBase
     {
         public int ErrCode { get; set; }

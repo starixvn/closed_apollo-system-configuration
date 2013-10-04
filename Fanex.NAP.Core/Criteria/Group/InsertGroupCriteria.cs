@@ -11,11 +11,12 @@ namespace Fanex.NAP.Core.Criteria.Group
 {
     using System;
     using System.ComponentModel.DataAnnotations;
-    using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.Core.Web;
     using Fanex.NAP.Framework.Data;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Insert group
+    /// </summary>
     public class InsertGroupCriteria : CriteriaBase
     {
         public int GroupId { get; set; }

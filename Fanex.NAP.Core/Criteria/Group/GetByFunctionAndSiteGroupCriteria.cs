@@ -12,7 +12,9 @@ namespace Fanex.NAP.Core.Criteria.Group
     using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.Framework.Data;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Get by function and site
+    /// </summary>
     public class GetByFunctionAndSiteGroupCriteria : CriteriaBase
     {
         public int FunctionId { get; set; }

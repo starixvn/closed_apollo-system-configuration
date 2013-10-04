@@ -11,7 +11,6 @@ namespace Fanex.NAP.Core.Model.ValueObject
 {
     using System.Diagnostics.CodeAnalysis;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
     public class Downtime
     {
         public string From { get; set; }

@@ -14,7 +14,6 @@ namespace Fanex.NAP.Core.Model
     using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.Core.Domain;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
     [Serializable]
     public class Site : ISite
     {

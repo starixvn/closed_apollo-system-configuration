@@ -10,11 +10,12 @@
 namespace Fanex.NAP.Core.Criteria.Group
 {
     using System.ComponentModel.DataAnnotations;
-    using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.Core.Web;
     using Fanex.NAP.Framework.Data;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Get all with number of user
+    /// </summary>
     public class GetAllWithNumOfUserGroupCriteria : CriteriaBase
     {
         public bool? IsActive { get; set; }

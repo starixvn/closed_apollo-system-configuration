@@ -25,7 +25,6 @@ namespace Fanex.NAP.Core.Service.Impl
     using Fanex.NAP.Core.Service.Interface;
     using Fanex.NAP.Framework.Data;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
     public class MenuItemService : BaseService, IMenuItemService
     {
         private readonly IMenuItemRepository _menuItemRepository;

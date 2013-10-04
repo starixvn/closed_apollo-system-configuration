@@ -10,11 +10,12 @@
 namespace Fanex.NAP.Core.Criteria.Site
 {
     using System.ComponentModel.DataAnnotations;
-    using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.Core.Web;
     using Fanex.NAP.Framework.Data;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Update site URL
+    /// </summary>
     public class UpdateSiteUrlCriteria : CriteriaBase
     {
         public int SiteUrlId { get; set; }

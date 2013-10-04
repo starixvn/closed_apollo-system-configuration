@@ -9,10 +9,11 @@
 
 namespace Fanex.NAP.Core.Criteria.Site
 {
-    using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.Framework.Data;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Get all site URL
+    /// </summary>
     public class GetAllSiteUrlCriteria : CriteriaBase
     {
         public string Environment { get; set; }

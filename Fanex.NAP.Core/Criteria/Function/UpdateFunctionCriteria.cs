@@ -11,13 +11,14 @@ namespace Fanex.NAP.Core.Criteria.Function
 {
     using System;
     using System.ComponentModel.DataAnnotations;
-    using System.Diagnostics.CodeAnalysis;
 
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web;
     using Fanex.NAP.Framework.Data;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Update function
+    /// </summary>
     public class UpdateFunctionCriteria : CriteriaBase
     {
         public int FunctionId { get; set; }
