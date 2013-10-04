@@ -15,13 +15,13 @@ namespace Fanex.NAP.Framework.Mvc
     using NPOI.HSSF.UserModel;
 
     /// <summary>
-    /// Excel action result implemented by NPOI
+    /// Excel action result implemented by NPOI.
     /// </summary>
     public class ExcelResult : SpreadSheetResult
     {
         public ExcelResult(HSSFWorkbook hssfWorkBook, string fileName) : base(hssfWorkBook, fileName) 
-        { 
-        }            
+        {
+        }
 
         protected override string ContentType
         {

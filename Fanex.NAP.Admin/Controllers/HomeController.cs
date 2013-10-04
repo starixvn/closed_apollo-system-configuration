@@ -9,13 +9,14 @@
 
 namespace Fanex.NAP.Admin.Controllers
 {
-    using System.Diagnostics.CodeAnalysis;
+    using System;
+    using System.Web;
     using System.Web.Mvc;
     using Fanex.NAP.Admin.Areas.UserControl.Controllers;
-    using System.Web;
-    using System;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Home controller.
+    /// </summary>
     public class HomeController : BaseController
     {
         public ActionResult Index()

@@ -16,7 +16,9 @@ namespace Fanex.NAP.Core.Web.Session
     using Fanex.NAP.Core.Configuration;
     using Fanex.NAP.Core.Model;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Current session.
+    /// </summary>
     public class CurrentSession : ICurrentSession
     {
         #region const

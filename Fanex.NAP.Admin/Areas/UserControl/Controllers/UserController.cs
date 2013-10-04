@@ -12,7 +12,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Web.Mvc;
 
@@ -30,7 +29,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
     using Fanex.NAP.Core.Web;
     using Fanex.NAP.Core.Web.Attribute;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// User controller.
+    /// </summary>
     [NapSuperAuth]
     public class UserController : BaseController
     {
@@ -59,50 +60,8 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             _userService = userService ?? new UserService { ServiceContext = ServiceContext };
             _groupService = groupService ?? new GroupService { ServiceContext = ServiceContext };
             _siteService = siteService ?? new SiteService { ServiceContext = ServiceContext };
-            _functionService = functionService ?? new FunctionService { ServiceContext = ServiceContext };
+            this._functionService = functionService ?? new FunctionService { ServiceContext = ServiceContext };
         }
-        #endregion
-
-        #region Private method
-
-        private void GetDataForAssignPermission(AssignFunctionUserCriteria criteria)
-        {
-            int policy = _userService.GetUserSiteFunctionKeyPolicy(
-                                            CurrentSession.UserId,
-                                            criteria.SiteId,
-                                            FunctionKeys.AssignFunctionToUser.ToString());
-
-            ViewFlags.HasAssignFunctionRight = policy >= (int)Constant.Policy.Host;
-
-            if (this.UserIsPortalAdmin)
-            {
-                ViewBag.Sites = _siteService.GetAllSelectListItem(
-                                                    this.Environment,
-                                                    isActive: true,
-                                                    selectedSiteId: criteria.SiteId);
-            }
-            else
-            {
-                ViewBag.Sites = _siteService.GetSelectListItemByUserAndFunctionKeyIncludeGroup(
-                                                    CurrentSession.UserId,
-                                                    FunctionKeys.AssignFunctionToUser.ToString(),
-                                                    this.Environment,
-                                                    policy: Constant.Policy.Read,
-                                                    selectedSiteId: criteria.SiteId);
-            }
-
-            ViewBag.FunctionList = _functionService
-                .GetBySiteInHierarchy(criteria.SiteId, Environment, true).ToList();
-
-            ViewBag.UserFuncPolicyList = _functionService.GetByUserAndSiteIncludeGroup(
-                                                                criteria.UserId,
-                                                                criteria.SiteId,
-                                                                this.Environment);
-
-            ViewBag.CurrentUserFuncPolicyList =
-                _functionService.GetByUserAndSiteIncludeGroup(CurrentSession.UserId, criteria.SiteId, Environment);
-        }
-
         #endregion
 
         #region Manage
@@ -445,7 +404,8 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         #region Add Existing User
 
         [NapAuth(FunctionKey = FunctionKeys.ManageUser, Policy = Constant.Policy.Host)]
-        public ActionResult AddExisting(int id = 1,
+        public ActionResult AddExisting(
+            int id = 1,
             int size = 20,
             string q = EmptyString,
             int? siteId = null,
@@ -808,7 +768,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
                 if (!ReferenceEquals(user.Group, null))
                 {
-                    ViewBag.GroupFuncPolicyList = _functionService.GetByGroupAndSite(
+                    ViewBag.GroupFuncPolicyList = this._functionService.GetByGroupAndSite(
                                                                         user.Group.Id,
                                                                         criteria.SiteId,
                                                                         this.Environment);
@@ -835,14 +795,14 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                                                         selectedSiteId: criteria.SiteId);
                 }
 
-                ViewBag.FunctionList = _functionService
+                ViewBag.FunctionList = this._functionService
                     .GetBySiteInHierarchy(criteria.SiteId, Environment, true).ToList();
-                ViewBag.UserFuncPolicyList = _functionService.GetByUserAndSite(
+                ViewBag.UserFuncPolicyList = this._functionService.GetByUserAndSite(
                                                                     criteria.UserId,
                                                                     criteria.SiteId,
                                                                     this.Environment);
                 ViewBag.CurrentUserFuncPolicyList =
-                    _functionService.GetByUserAndSiteIncludeGroup(CurrentSession.UserId, criteria.SiteId, Environment);
+                    this._functionService.GetByUserAndSiteIncludeGroup(CurrentSession.UserId, criteria.SiteId, Environment);
                 ViewBag.AdminLevel = CurrentSession.Level;
                 ViewBag.UserLevel = _userService.GetUserSiteLevel(user.Id, site.Id);
             }
@@ -894,13 +854,13 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 criteria.ModifiedDate = DateTime.Now;
 
                 // list function policy
-                List<IFunction> listFunc = _functionService.GetBySiteInHierarchy(
+                List<IFunction> listFunc = this._functionService.GetBySiteInHierarchy(
                                                                     criteria.SiteId,
                                                                     Environment,
                                                                     true).ToList().ToList();
 
                 // list user function policy
-                List<FunctionPolicy> listUserFuncPolicy = _functionService.GetByUserAndSite(
+                List<FunctionPolicy> listUserFuncPolicy = this._functionService.GetByUserAndSite(
                                                                    criteria.UserId,
                                                                    criteria.SiteId,
                                                                    this.Environment).ToList();
@@ -910,7 +870,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 listUserFuncRemove.AddRange(listUserFuncPolicy);
 
                 // list current user login function policy
-                List<FunctionPolicy> listCurrentUserFuncPolicy = _functionService.GetByUserAndSiteIncludeGroup(
+                List<FunctionPolicy> listCurrentUserFuncPolicy = this._functionService.GetByUserAndSiteIncludeGroup(
                                                                                         CurrentSession.UserId,
                                                                                         criteria.SiteId,
                                                                                         Environment).ToList();
@@ -964,7 +924,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 {
                     ViewBag.Success = true;
 
-                    listUserFuncPolicy = _functionService.GetByUserAndSite(
+                    listUserFuncPolicy = this._functionService.GetByUserAndSite(
                                                                    criteria.UserId,
                                                                    criteria.SiteId,
                                                                    this.Environment).ToList();
@@ -972,7 +932,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
                 if (!ReferenceEquals(user.Group, null))
                 {
-                    ViewBag.GroupFuncPolicyList = _functionService.GetByGroupAndSite(
+                    ViewBag.GroupFuncPolicyList = this._functionService.GetByGroupAndSite(
                                                                         user.Group.Id,
                                                                         criteria.SiteId,
                                                                         this.Environment);
@@ -1169,7 +1129,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             {
                 try
                 {
-                    IEnumerable<FunctionPolicy> listFunctionPolicy = _functionService.GetByUser(userId, this.Environment);
+                    IEnumerable<FunctionPolicy> listFunctionPolicy = this._functionService.GetByUser(userId, this.Environment);
 
                     return Json(listFunctionPolicy);
                 }
@@ -1192,7 +1152,8 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 {
                     try
                     {
-                        IEnumerable<FunctionPolicy> listFunctionPolicy = _functionService.GetByGroup(groupId,
+                        IEnumerable<FunctionPolicy> listFunctionPolicy = this._functionService.GetByGroup(
+                            groupId,
                             this.Environment);
 
                         return Json(listFunctionPolicy);
@@ -1267,6 +1228,48 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             }
 
             return Json(null);
+        }
+
+        #endregion
+
+        #region Private method
+
+        private void GetDataForAssignPermission(AssignFunctionUserCriteria criteria)
+        {
+            int policy = _userService.GetUserSiteFunctionKeyPolicy(
+                                            CurrentSession.UserId,
+                                            criteria.SiteId,
+                                            FunctionKeys.AssignFunctionToUser.ToString());
+
+            ViewFlags.HasAssignFunctionRight = policy >= (int)Constant.Policy.Host;
+
+            if (this.UserIsPortalAdmin)
+            {
+                ViewBag.Sites = _siteService.GetAllSelectListItem(
+                                                    this.Environment,
+                                                    isActive: true,
+                                                    selectedSiteId: criteria.SiteId);
+            }
+            else
+            {
+                ViewBag.Sites = _siteService.GetSelectListItemByUserAndFunctionKeyIncludeGroup(
+                                                    CurrentSession.UserId,
+                                                    FunctionKeys.AssignFunctionToUser.ToString(),
+                                                    this.Environment,
+                                                    policy: Constant.Policy.Read,
+                                                    selectedSiteId: criteria.SiteId);
+            }
+
+            ViewBag.FunctionList = this._functionService
+                .GetBySiteInHierarchy(criteria.SiteId, Environment, true).ToList();
+
+            ViewBag.UserFuncPolicyList = this._functionService.GetByUserAndSiteIncludeGroup(
+                                                                criteria.UserId,
+                                                                criteria.SiteId,
+                                                                this.Environment);
+
+            ViewBag.CurrentUserFuncPolicyList =
+                this._functionService.GetByUserAndSiteIncludeGroup(CurrentSession.UserId, criteria.SiteId, Environment);
         }
 
         #endregion

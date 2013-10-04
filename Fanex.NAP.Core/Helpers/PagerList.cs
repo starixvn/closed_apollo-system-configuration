@@ -10,10 +10,11 @@
 namespace Fanex.NAP.Core.Helpers
 {
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using Webdiyer.WebControls.Mvc;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Page list.
+    /// </summary>
     public class PagerList<T> : List<T>, IPagedList
     {
         public PagerList(int pageIndex, int pageSize, int totalItemCount, IEnumerable<T> items)

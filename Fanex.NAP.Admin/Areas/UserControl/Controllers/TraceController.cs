@@ -12,7 +12,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Web.Mvc;
     using System.Xml.Linq;
@@ -26,7 +25,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
     using Fanex.NAP.Core.Web;
     using Fanex.NAP.Core.Web.Attribute;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Trace controller.
+    /// </summary>
     public class TraceController : BaseController
     {
         private readonly ITraceService _traceService;
@@ -41,7 +42,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         public TraceController(ITraceService traceService, IFunctionService functionService, ISiteService siteService)
         {
             _traceService = traceService ?? new TraceService();
-            _functionService = functionService ?? new FunctionService();
+            this._functionService = functionService ?? new FunctionService();
             _siteService = siteService ?? new SiteService();
         }
 
@@ -1074,7 +1075,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
                 var site = _siteService.GetById(siteId);
 
-                ViewBag.FunctionList = _functionService.GetBySiteInHierarchy(siteId, Environment, true);
+                ViewBag.FunctionList = this._functionService.GetBySiteInHierarchy(siteId, Environment, true);
 
                 #endregion
 

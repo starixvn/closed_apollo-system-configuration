@@ -10,13 +10,14 @@
 namespace Fanex.NAP.Core.Service.Impl
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using Apollo.UMService;
     using Fanex.NAP.Core.Configuration;
     using Fanex.NAP.Core.Model.ValueObject;
     using Fanex.NAP.Core.Service.Interface;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Maintainance service.
+    /// </summary>
     public class MaintainanceService : BaseService, IMaintainanceService
     {
         public Downtime GetDowntimeInfo()

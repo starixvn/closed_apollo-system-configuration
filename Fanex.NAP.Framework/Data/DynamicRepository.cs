@@ -161,7 +161,7 @@ namespace Fanex.NAP.Framework.Data
         }
 
         /// <summary>
-        /// Check setting key whether exist in the parameter collection or not
+        /// Check setting key whether exist in the parameter collection or not.
         /// </summary>
         /// <param name="parameters"></param>
         protected void CheckSettingKeyExist(dynamic parameters)

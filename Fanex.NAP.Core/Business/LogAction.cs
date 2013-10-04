@@ -7,11 +7,12 @@
 // </summary>
 //
 // <history>
-// Lasted generated date: 1/16/2013 4:28:24 PM
+// Lasted generated date: 10/4/2013 4:11:07 PM
 // </history>
 using System.Diagnostics.CodeAnalysis;
 
 [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")] 
+[SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1602:EnumerationItemsMustBeDocumented")] 
 public enum LogAction
 {
       

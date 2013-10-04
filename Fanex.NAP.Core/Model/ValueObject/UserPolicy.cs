@@ -10,9 +10,10 @@
 namespace Fanex.NAP.Core.Model.ValueObject
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// User policy.
+    /// </summary>
     public class UserPolicy
     {
         public int Policy { get; set; }

@@ -23,15 +23,15 @@ namespace Fanex.NAP.Framework.Mvc
     /// </summary>
     public class DelegatingResult : ActionResult
     {
+        public DelegatingResult(Action<ControllerContext> command)
+        {
+            this.Command = command;
+        }
+
         public Action<ControllerContext> Command
         {
             get;
             private set;
-        }
-
-        public DelegatingResult(Action<ControllerContext> command)
-        {
-            this.Command = command;
         }
 
         public override void ExecuteResult(ControllerContext context)

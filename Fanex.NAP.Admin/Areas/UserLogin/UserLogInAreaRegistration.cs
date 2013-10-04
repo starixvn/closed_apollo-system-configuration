@@ -9,10 +9,11 @@
 
 namespace Fanex.NAP.Hub.Areas.UserLogin
 {
-    using System.Diagnostics.CodeAnalysis;
     using System.Web.Mvc;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// User login area registration.
+    /// </summary>
     public class UserLoginAreaRegistration : AreaRegistration
     {
         public override string AreaName

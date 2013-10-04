@@ -13,7 +13,6 @@ namespace Fanex.NAP.Core.Repository.Impl
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using Fanex.Data;
     using Fanex.NAP.Core.Criteria.Misc;
@@ -24,7 +23,9 @@ namespace Fanex.NAP.Core.Repository.Impl
     using Fanex.NAP.Core.Repository.Interface;
     using Fanex.NAP.Framework.Data;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Site repository.
+    /// </summary>
     public class SiteRepository : RepositoryBase<ISite>, ISiteRepository
     {
         public override ISite Get(ICriteria criteria)

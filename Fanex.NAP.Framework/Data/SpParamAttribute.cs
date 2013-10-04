@@ -18,12 +18,12 @@ namespace Fanex.NAP.Framework.Data
     public class SpParamAttribute : Attribute
     {
         /// <summary>
-        /// parameter name
+        /// Parameter name.
         /// </summary>
         public string SqlParamName { get; set; }
 
         /// <summary>
-        /// set true to indicate not use this property to create a parameter
+        /// Set true to indicate not use this property to create a parameter.
         /// </summary>
         public bool Ignored { get; set; }
     }

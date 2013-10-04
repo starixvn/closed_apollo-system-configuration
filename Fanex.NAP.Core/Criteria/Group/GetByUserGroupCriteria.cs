@@ -12,7 +12,7 @@ namespace Fanex.NAP.Core.Criteria.Group
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
-    /// Get by user
+    /// Get by user.
     /// </summary>
     public class GetByUserGroupCriteria : CriteriaBase
     {

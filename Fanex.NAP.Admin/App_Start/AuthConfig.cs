@@ -9,7 +9,6 @@
 
 namespace Fanex.NAP.Admin.App_Start
 {
-    using System.Diagnostics.CodeAnalysis;
     using System.Web;
     using System.Web.Security;
 
@@ -18,7 +17,9 @@ namespace Fanex.NAP.Admin.App_Start
     using Fanex.NAP.Core.Web.Auth;
     using Fanex.NAP.Core.Web.Session;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Authorize config.
+    /// </summary>
     public class AuthConfig
     {
         public static void RegisterAuth(HttpContext context)

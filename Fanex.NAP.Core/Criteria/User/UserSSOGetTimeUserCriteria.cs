@@ -10,9 +10,11 @@
 namespace Fanex.NAP.Core.Criteria.User
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.Framework.Data;
 
+    /// <summary>
+    /// SSO get time.
+    /// </summary>
     public class UserSSOGetTimeUserCriteria : CriteriaBase
     {
         public DateTime Time { get; set; }

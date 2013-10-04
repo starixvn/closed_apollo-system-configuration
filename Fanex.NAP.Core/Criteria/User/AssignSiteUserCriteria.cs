@@ -10,9 +10,11 @@
 namespace Fanex.NAP.Core.Criteria.User
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.Framework.Data;
 
+    /// <summary>
+    /// Assign site.
+    /// </summary>
     public class AssignSiteUserCriteria : CriteriaBase
     {
         public int UserId { get; set; }

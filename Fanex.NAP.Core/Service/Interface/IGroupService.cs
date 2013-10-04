@@ -10,7 +10,6 @@
 namespace Fanex.NAP.Core.Service.Interface
 {
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using System.Web.Mvc;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Criteria.Group;
@@ -18,7 +17,9 @@ namespace Fanex.NAP.Core.Service.Interface
     using Fanex.NAP.Core.Model.ValueObject;
     using Fanex.NAP.Framework.Data;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Group service interface.
+    /// </summary>
     public interface IGroupService : IBaseService
     {
         IGroup GetByUser(int userId);

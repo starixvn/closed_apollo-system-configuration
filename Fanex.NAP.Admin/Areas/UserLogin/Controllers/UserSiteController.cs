@@ -10,7 +10,6 @@
 namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using System.Web;
     using System.Web.Mvc;
     using Fanex.Common;
@@ -18,7 +17,9 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
     using Fanex.NAP.Core.Service.Interface;
     using Fanex.NAP.Core.Web.Session;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// User site controller.
+    /// </summary>
     public class UserSiteController : BaseController
     {
         #region members
@@ -75,7 +76,8 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
             string time = _userService.UserSSOGetTime();
 
             return new RedirectResult(
-                string.Format("{0}/userlogin/sso?userid={1}&onuserid={2}&time={3}",
+                string.Format(
+                    "{0}/userlogin/sso?userid={1}&onuserid={2}&time={3}",
                     siteUrl.Url.Trim(),
                     Cryptography.CfsEnCrypt(_currentSession.UserId.ToString()),
                     Cryptography.CfsEnCrypt(_currentSession.OnUserId.ToString()),

@@ -33,10 +33,10 @@ namespace Fanex.NAP.Framework.Mvc
         /// <param name="name">The name.</param>
         /// <param name="date">The date.</param>
         /// <param name="minDate">The min date.</param>
-        /// <param name="maxDate">The max date, default is now</param>
+        /// <param name="maxDate">The max date, default is now.</param>
         /// <param name="formatDate">The format date.</param>
-        /// <param name="clientFormateDate">Format date time of client side</param>
-        /// <param name="cssDatePicker">The CSS date picker</param>
+        /// <param name="clientFormateDate">Format date time of client side.</param>
+        /// <param name="cssDatePicker">The CSS date picker.</param>
         /// <returns></returns>
         public static MvcHtmlString DatePicker(
             this HtmlHelper htmlHelper, 
@@ -164,8 +164,8 @@ namespace Fanex.NAP.Framework.Mvc
         /// </summary>
         /// <param name="htmlHelper"></param>
         /// <param name="name"></param>
-        /// <param name="fromYear">default from month 2006</param>
-        /// <param name="currentYear">>default currentYear year 2006</param>
+        /// <param name="fromYear">default from month 2006.</param>
+        /// <param name="currentYear">>default currentYear year 2006.</param>
         /// <returns></returns>
         public static MvcHtmlString MonthPicker(
             this HtmlHelper htmlHelper, 

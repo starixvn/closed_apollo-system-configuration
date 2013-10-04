@@ -10,10 +10,11 @@
 namespace Fanex.NAP.Core.Domain
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.Framework.Domain;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Group interface.
+    /// </summary>
     public interface IGroup : IEntity<short, string>
     {
         string Description { get; set; }

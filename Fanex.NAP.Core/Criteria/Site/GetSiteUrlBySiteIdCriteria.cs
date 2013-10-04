@@ -23,7 +23,7 @@ namespace Fanex.NAP.Core.Criteria.Site
         /// <summary>
         /// Get the reference SP's Name which is specified in Config file.
         /// </summary>
-        /// <returns>NAP_Site_GetSiteURLByUser</returns>
+        /// <returns>NAP_Site_GetSiteURLByUser.</returns>
         public override string GetSettingKey()
         {
             return "NAP_Site_GetSiteURLBySiteId";
@@ -32,7 +32,7 @@ namespace Fanex.NAP.Core.Criteria.Site
         /// <summary>
         /// Check data's constrains
         /// </summary>
-        /// <returns>True: valid; False: invalid</returns>
+        /// <returns>True: valid; False: invalid.</returns>
         public override bool IsValid()
         {
             return true;

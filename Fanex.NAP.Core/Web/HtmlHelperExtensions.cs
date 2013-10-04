@@ -11,7 +11,6 @@ namespace Fanex.NAP.Core.Web
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using System.Linq.Expressions;
     using System.Text;
@@ -22,7 +21,9 @@ namespace Fanex.NAP.Core.Web
     using Fanex.Common.Helper;
     using Fanex.NAP.Core.Business;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Bundle helper.
+    /// </summary>
     public static class BundleHelper
     {
         public static IHtmlString RenderScript(string path)
@@ -37,12 +38,11 @@ namespace Fanex.NAP.Core.Web
     /// <summary>
     /// HTML Helpers.
     /// </summary>
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
     public static class HtmlHelperExtensions
     {
         #region Truncate
         /// <summary>
-        /// Truncates a string if it is longer than a given length
+        /// Truncates a string if it is longer than a given length.
         /// </summary>
         public static IHtmlString Truncate(this HtmlHelper htmlHelper, string value, int length)
         {
@@ -182,10 +182,10 @@ namespace Fanex.NAP.Core.Web
         #endregion
 
         /// <summary>
-        /// Converts the value of the user level to its equivalent string representation
+        /// Converts the value of the user level to its equivalent string representation.
         /// </summary>
-        /// <param name="value">User level value</param>
-        /// <returns>HTML string</returns>
+        /// <param name="value">User level value.</param>
+        /// <returns>HTML string.</returns>
         public static IHtmlString ToUserLevel(this int value)
         {
             string level;
@@ -213,10 +213,10 @@ namespace Fanex.NAP.Core.Web
         }
 
         /// <summary>
-        /// Convert the value of the policy to string
+        /// Convert the value of the policy to string.
         /// </summary>
-        /// <param name="value">Policy value</param>
-        /// <returns>HTML string</returns>
+        /// <param name="value">Policy value.</param>
+        /// <returns>HTML string.</returns>
         public static IHtmlString ToPolicy(this int value)
         {
             string policy = string.Empty;
@@ -240,7 +240,7 @@ namespace Fanex.NAP.Core.Web
         }
 
         /// <summary>
-        /// Decode xml of [f_EncodeXMLValue]
+        /// Decode xml of [f_EncodeXMLValue].
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
@@ -261,9 +261,9 @@ namespace Fanex.NAP.Core.Web
         }
 
         /// <summary>
-        /// get location name
+        /// Get location name.
         /// </summary>
-        /// <param name="geoId">Geo ID</param>
+        /// <param name="geoId">Geo ID.</param>
         /// <returns></returns>
         public static string GetGeoName(this string geoId)
         {
@@ -284,9 +284,9 @@ namespace Fanex.NAP.Core.Web
         }
 
         /// <summary>
-        /// get operating system form user agent string
+        /// get operating system form user agent string.
         /// </summary>
-        /// <param name="platform">Platform</param>
+        /// <param name="platform">Platform.</param>
         /// <returns></returns>
         public static string GetOperatingSystem(this string platform)
         {
@@ -296,9 +296,9 @@ namespace Fanex.NAP.Core.Web
     }
 
     /// <summary>
+    /// User agent tools.
     /// <see cref="http://nerds.palmdrive.net/useragent/index.html"/>
     /// </summary>
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
     public static class UserAgentTools
     {
         public static string[] GetArray(string a, string b)

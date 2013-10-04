@@ -12,7 +12,7 @@ namespace Fanex.NAP.Core.Criteria.Function
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
-    /// Get by key and site
+    /// Get by key and site.
     /// </summary>
     public class GetByKeyAndSiteFunctionCriteria : CriteriaBase
     {
@@ -23,16 +23,16 @@ namespace Fanex.NAP.Core.Criteria.Function
         /// <summary>
         /// Get the reference SP's Name which is specified in Config file.
         /// </summary>
-        /// <returns>NAP_Function_GetByKeyAndSite</returns>
+        /// <returns>NAP_Function_GetByKeyAndSite.</returns>
         public override string GetSettingKey()
         {
             return "NAP_Function_GetByKeyAndSite";
         }
 
         /// <summary>
-        /// Check data's constrains
+        /// Check data's constrains.
         /// </summary>
-        /// <returns>True: valid; False: invalid</returns>
+        /// <returns>True: valid; False: invalid.</returns>
         public override bool IsValid()
         {
             return true;

@@ -11,11 +11,12 @@ namespace Fanex.NAP.Core.Criteria.Trace
 {
     using System;
     using System.ComponentModel.DataAnnotations;
-    using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.Core.Web;
     using Fanex.NAP.Framework.Data;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Get all log function.
+    /// </summary>
     public class GetAllLogFunctionCriteria : CriteriaBase
     {
         public string Name { get; set; }

@@ -16,7 +16,7 @@ namespace Fanex.NAP.Core.Criteria.MenuItem
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
-    /// Update menu item
+    /// Update menu item.
     /// </summary>
     public class UpdateMenuItemCriteria : CriteriaBase
     {
@@ -78,16 +78,16 @@ namespace Fanex.NAP.Core.Criteria.MenuItem
         /// <summary>
         /// Get the reference SP's Name which is specified in Config file.
         /// </summary>
-        /// <returns>NAP_MenuItem_Update</returns>
+        /// <returns>NAP_MenuItem_Update.</returns>
         public override string GetSettingKey()
         {
             return "NAP_MenuItem_Update";
         }
 
         /// <summary>
-        /// Check data's constrains
+        /// Check data's constrains.
         /// </summary>
-        /// <returns>True: valid; False: invalid</returns>
+        /// <returns>True: valid; False: invalid.</returns>
         public override bool IsValid()
         {
             return true;

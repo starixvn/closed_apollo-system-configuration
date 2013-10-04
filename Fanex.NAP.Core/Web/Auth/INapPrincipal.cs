@@ -11,7 +11,9 @@ namespace Fanex.NAP.Core.Web.Auth
 {
     using System.Diagnostics.CodeAnalysis;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// NAP Principal.
+    /// </summary>
     public interface INapPrincipal
     {
         int UserId { get; set; }

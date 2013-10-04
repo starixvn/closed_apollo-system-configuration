@@ -82,15 +82,15 @@ namespace Fanex.NAP.Core.Service.Interface
         bool CheckUserFunctionPolicy(int userId, int functionId, int policy);
 
         /// <summary>
-        /// Duplicates function: inserts a new function and assign it to privileged groups/users of the function-to-duplicate
+        /// Duplicates function: inserts a new function and assign it to privileged groups/users of the function-to-duplicate.
         /// </summary>
-        /// <param name="criteria">Criteria</param>
+        /// <param name="criteria">Criteria.</param>
         ICommandResult Duplicate(DuplicateFunctionCriteria criteria);
 
         /// <summary>
-        /// Inserts function and assigns it to all site admin of the current site and all portal admin
+        /// Inserts function and assigns it to all site admin of the current site and all portal admin.
         /// </summary>
-        /// <param name="criteria">Criteria</param>
+        /// <param name="criteria">Criteria.</param>
         ICommandResult Insert(InsertFunctionCriteria criteria);
 
         ICommandResult Update(UpdateFunctionCriteria criteria);

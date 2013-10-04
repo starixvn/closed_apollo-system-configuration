@@ -23,6 +23,10 @@ namespace Fanex.NAP.Core.Web.Validation
     {
         private StringLengthAttribute _stringLengthValidator;
 
+        public int MaximumLength { get; private set; }
+
+        public int MinimumLength { get; set; }
+
         public CollectionStringLengthAttribute(int maximumLength)
             : base((Func<string>)(() => "StringLengthAttribute_ValidationError"))
         {
@@ -59,9 +63,5 @@ namespace Fanex.NAP.Core.Web.Validation
 
             throw new InvalidCastException("Invalid input! CollectionStringLengthAttribute requires a IEnumerable<string>.");
         }
-
-        public int MaximumLength { get; private set; }
-
-        public int MinimumLength { get; set; }
     }
 }

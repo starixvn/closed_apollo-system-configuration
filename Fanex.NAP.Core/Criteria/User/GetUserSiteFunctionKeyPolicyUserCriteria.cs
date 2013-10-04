@@ -9,9 +9,11 @@
 
 namespace Fanex.NAP.Core.Criteria.User
 {
-    using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.Framework.Data;
 
+    /// <summary>
+    /// Get user site function key policy.
+    /// </summary>
     public class GetUserSiteFunctionKeyPolicyUserCriteria : CriteriaBase
     {
         public int UserId { get; set; }

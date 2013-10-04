@@ -11,7 +11,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Web.Mvc;
     using Fanex.Common.Extensions;
@@ -25,7 +24,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
     using Fanex.NAP.Core.Web;
     using Fanex.NAP.Core.Web.Attribute;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Group controller.
+    /// </summary>
     [NapSuperAuth]
     public class GroupController : BaseController
     {
@@ -53,7 +54,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             _groupService = groupService ?? new GroupService { ServiceContext = ServiceContext };
             _siteService = siteService ?? new SiteService { ServiceContext = ServiceContext };
-            _functionService = functionService ?? new FunctionService { ServiceContext = ServiceContext };
+            this._functionService = functionService ?? new FunctionService { ServiceContext = ServiceContext };
             _userService = userService ?? new UserService { ServiceContext = ServiceContext };
         }
 
@@ -190,8 +191,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
                     if (!ReferenceEquals(group, null))
                     {
-                        ModelState.AddModelError("SiteName",
-                               string.Format(ViewResources.DuplicateMsg, criteria.GroupName));
+                        ModelState.AddModelError(
+                            "SiteName",
+                            string.Format(ViewResources.DuplicateMsg, criteria.GroupName));
 
                         return View(criteria);
                     }
@@ -273,7 +275,8 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                     {
                         if (group.Id != criteria.GroupId)
                         {
-                            ModelState.AddModelError("SiteName",
+                            ModelState.AddModelError(
+                                "SiteName",
                                 string.Format(ViewResources.DuplicateMsg, criteria.GroupName));
 
                             return View(criteria);
@@ -387,13 +390,13 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                                                         selectedSiteId: criteria.SiteId);
                 }
 
-                ViewBag.FunctionList = _functionService.GetBySiteInHierarchy(criteria.SiteId, Environment, true);
-                ViewBag.GroupFuncPolicyList = _functionService.GetByGroupAndSite(
+                ViewBag.FunctionList = this._functionService.GetBySiteInHierarchy(criteria.SiteId, Environment, true);
+                ViewBag.GroupFuncPolicyList = this._functionService.GetByGroupAndSite(
                                                         criteria.GroupId,
                                                         criteria.SiteId,
                                                         Environment);
                 ViewBag.UserFuncPolicyList =
-                    _functionService.GetByUserAndSiteIncludeGroup(CurrentSession.UserId, criteria.SiteId, Environment);
+                    this._functionService.GetByUserAndSiteIncludeGroup(CurrentSession.UserId, criteria.SiteId, Environment);
                 ViewBag.UserLevel = CurrentSession.Level;
             }
             catch (Exception ex)
@@ -443,13 +446,13 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 criteria.ModifiedDate = DateTime.Now;
 
                 // list function policy
-                List<IFunction> listFunc = _functionService.GetBySiteInHierarchy(
+                List<IFunction> listFunc = this._functionService.GetBySiteInHierarchy(
                                                                 criteria.SiteId,
                                                                 Environment,
                                                                 true).ToList();
 
                 // list group function policy
-                List<FunctionPolicy> listGroupFuncPolicy = _functionService.GetByGroupAndSite(
+                List<FunctionPolicy> listGroupFuncPolicy = this._functionService.GetByGroupAndSite(
                                                                     criteria.GroupId,
                                                                     criteria.SiteId,
                                                                     Environment).ToList();
@@ -459,7 +462,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 listGroupFuncRemove.AddRange(listGroupFuncPolicy);
 
                 // list function policy of current user login
-                List<FunctionPolicy> listCurrentUserFuncPolicy = _functionService.GetByUserAndSiteIncludeGroup(
+                List<FunctionPolicy> listCurrentUserFuncPolicy = this._functionService.GetByUserAndSiteIncludeGroup(
                                                                                         CurrentSession.UserId,
                                                                                         criteria.SiteId,
                                                                                         Environment).ToList();
@@ -513,7 +516,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 {
                     ViewBag.Success = true;
 
-                    listGroupFuncPolicy = _functionService.GetByGroupAndSite(
+                    listGroupFuncPolicy = this._functionService.GetByGroupAndSite(
                                                                     criteria.GroupId,
                                                                     criteria.SiteId,
                                                                     Environment).ToList();

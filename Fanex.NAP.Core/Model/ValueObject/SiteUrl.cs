@@ -10,10 +10,11 @@
 namespace Fanex.NAP.Core.Model.ValueObject
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
 
+    /// <summary>
+    /// Site URL.
+    /// </summary>
     [Serializable]
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
     public class SiteUrl
     {
         public int SiteUrlId { get; set; }

@@ -12,7 +12,7 @@ namespace Fanex.NAP.Framework.Commands
     using System;
 
     /// <summary>
-    /// Setting key
+    /// Setting key.
     /// </summary>
     public class SettingKeyAttribute : Attribute
     {

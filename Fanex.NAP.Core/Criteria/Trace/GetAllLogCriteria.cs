@@ -11,11 +11,13 @@ namespace Fanex.NAP.Core.Criteria.Trace
 {
     using System;
     using System.ComponentModel.DataAnnotations;
-    using System.Diagnostics.CodeAnalysis;
 
     using Fanex.NAP.Core.Web;
     using Fanex.NAP.Framework.Data;
 
+    /// <summary>
+    /// Get all log.
+    /// </summary>
     public class GetAllLogCriteria : CriteriaBase
     {
         public string Username { get; set; }

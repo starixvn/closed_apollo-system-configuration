@@ -9,10 +9,11 @@
 
 namespace Fanex.NAP.Core.Criteria.User
 {
-    using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.Framework.Data;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Get user function policy.
+    /// </summary>
     public class GetUserFunctionPolicyUserCriteria : CriteriaBase
     {
         public int UserId { get; set; }

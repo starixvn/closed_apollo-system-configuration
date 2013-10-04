@@ -11,10 +11,11 @@
 namespace Fanex.NAP.Core.Service.Interface
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.Core.Criteria.Misc;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Base service interface.
+    /// </summary>
     public interface IBaseService
     {
         IServiceContext ServiceContext { get; set; }

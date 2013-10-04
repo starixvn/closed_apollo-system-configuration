@@ -10,9 +10,10 @@
 namespace Fanex.NAP.Core.Model.ValueObject
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Log user login.
+    /// </summary>
     public class LogUserLogin
     {
         public long Id { get; set; }

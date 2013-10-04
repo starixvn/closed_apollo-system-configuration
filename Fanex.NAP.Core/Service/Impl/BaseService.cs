@@ -11,13 +11,14 @@
 namespace Fanex.NAP.Core.Service.Impl
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using Fanex.Common.Helper;
     using Fanex.Logging;
     using Fanex.NAP.Core.Criteria.Misc;
     using Fanex.NAP.Core.Service.Interface;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Base service.
+    /// </summary>
     public class BaseService : IBaseService
     {
         public IServiceContext ServiceContext { get; set; }

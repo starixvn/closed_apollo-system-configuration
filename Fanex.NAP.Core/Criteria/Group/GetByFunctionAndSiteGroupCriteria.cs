@@ -13,7 +13,7 @@ namespace Fanex.NAP.Core.Criteria.Group
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
-    /// Get by function and site
+    /// Get by function and site.
     /// </summary>
     public class GetByFunctionAndSiteGroupCriteria : CriteriaBase
     {

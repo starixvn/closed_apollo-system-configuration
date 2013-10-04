@@ -12,7 +12,6 @@ namespace Fanex.NAP.Core.Service.Impl
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Web.Mvc;
     using Fanex.Common.Helper;
@@ -26,7 +25,9 @@ namespace Fanex.NAP.Core.Service.Impl
     using Fanex.NAP.Core.Service.Interface;
     using Fanex.NAP.Framework.Data;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// User service.
+    /// </summary>
     public class UserService : BaseService, IUserService
     {
         private readonly IUserRepository _userRepository;
@@ -39,7 +40,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
         public UserService(IUserRepository repository = null, ITraceService traceService = null)
         {
-            _userRepository = repository ?? new UserRepository();
+            this._userRepository = repository ?? new UserRepository();
             _traceService = traceService ?? new TraceService();
         }
 
@@ -56,7 +57,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    return _userRepository.Get(criteria);
+                    return this._userRepository.Get(criteria);
                 }
             }
             catch (Exception ex)
@@ -80,7 +81,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    return _userRepository.Get(criteria);
+                    return this._userRepository.Get(criteria);
                 }
             }
             catch (Exception ex)
@@ -104,7 +105,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    return _userRepository.CheckUsernameExist(criteria);
+                    return this._userRepository.CheckUsernameExist(criteria);
                 }
             }
             catch (Exception ex)
@@ -123,7 +124,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    return _userRepository.Fetch(criteria).OrderBy(u => u.Username);
+                    return this._userRepository.Fetch(criteria).OrderBy(u => u.Username);
                 }
             }
             catch (Exception ex)
@@ -146,7 +147,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    return _userRepository.Fetch(criteria).OrderBy(u => u.Username);
+                    return this._userRepository.Fetch(criteria).OrderBy(u => u.Username);
                 }
             }
             catch (Exception ex)
@@ -170,7 +171,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    return _userRepository.Fetch(criteria).OrderBy(u => u.Username);
+                    return this._userRepository.Fetch(criteria).OrderBy(u => u.Username);
                 }
             }
             catch (Exception ex)
@@ -210,7 +211,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    userList = _userRepository.Search(criteria, out totalRows);
+                    userList = this._userRepository.Search(criteria, out totalRows);
                 }
             }
             catch (Exception ex)
@@ -245,7 +246,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    userList = _userRepository.Search(criteria, out totalRows);
+                    userList = this._userRepository.Search(criteria, out totalRows);
                 }
             }
             catch (Exception ex)
@@ -280,7 +281,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    userList = _userRepository.Search(criteria, out totalRows);
+                    userList = this._userRepository.Search(criteria, out totalRows);
                 }
             }
             catch (Exception ex)
@@ -317,7 +318,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    userList = _userRepository.Search(criteria, out totalRows);
+                    userList = this._userRepository.Search(criteria, out totalRows);
                 }
             }
             catch (Exception ex)
@@ -340,7 +341,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    return _userRepository.Count(criteria);
+                    return this._userRepository.Count(criteria);
                 }
             }
             catch (Exception ex)
@@ -371,7 +372,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid() && logCriteria.IsValid())
                 {
-                    return _userRepository.Insert(criteria, logCriteria);
+                    return this._userRepository.Insert(criteria, logCriteria);
                 }
             }
             catch (Exception ex)
@@ -411,7 +412,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid() && logCriteria.IsValid())
                 {
-                    return _userRepository.Update(criteria, logCriteria);
+                    return this._userRepository.Update(criteria, logCriteria);
                 }
             }
             catch (Exception ex)
@@ -432,7 +433,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid() && logCriteria.IsValid())
                 {
-                    return _userRepository.Update(criteria, logCriteria);
+                    return this._userRepository.Update(criteria, logCriteria);
                 }
             }
             catch (Exception ex)
@@ -453,7 +454,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid() && logCriteria.IsValid())
                 {
-                    return _userRepository.Update(criteria, logCriteria);
+                    return this._userRepository.Update(criteria, logCriteria);
                 }
             }
             catch (Exception ex)
@@ -484,7 +485,14 @@ namespace Fanex.NAP.Core.Service.Impl
             throw new NotImplementedException();
         }
 
-        public ICommandResult WriteLogUserLogin(string loginIp, string domainName, string logData, string browserName, string platform, string countryCode, int duration)
+        public ICommandResult WriteLogUserLogin(
+            string loginIp, 
+            string domainName, 
+            string logData, 
+            string browserName, 
+            string platform, 
+            string countryCode, 
+            int duration)
         {
             throw new NotImplementedException();
         }
@@ -497,7 +505,7 @@ namespace Fanex.NAP.Core.Service.Impl
             {
                 if (criteria.IsValid())
                 {
-                    _userRepository.UserCheckIn(ref criteria);
+                    this._userRepository.UserCheckIn(ref criteria);
 
                     _traceService.InsertLogUserLogin(
                         criteria.UserId,
@@ -526,7 +534,7 @@ namespace Fanex.NAP.Core.Service.Impl
             {
                 if (criteria.IsValid())
                 {
-                    _userRepository.UserReCheckIn(ref criteria);
+                    this._userRepository.UserReCheckIn(ref criteria);
                 }
             }
             catch (Exception ex)
@@ -543,7 +551,7 @@ namespace Fanex.NAP.Core.Service.Impl
             {
                 if (criteria.IsValid())
                 {
-                    _userRepository.UserLogOut(criteria);
+                    this._userRepository.UserLogOut(criteria);
                 }
             }
             catch (Exception ex)
@@ -560,7 +568,7 @@ namespace Fanex.NAP.Core.Service.Impl
             {
                 if (criteria.IsValid())
                 {
-                    _userRepository.UserSSOCheckIn(ref criteria);
+                    this._userRepository.UserSSOCheckIn(ref criteria);
 
                     _traceService.InsertLogUserLogin(
                         criteria.UserId,
@@ -593,7 +601,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    return _userRepository.Count(criteria);
+                    return this._userRepository.Count(criteria);
                 }
             }
             catch (Exception ex)
@@ -617,7 +625,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    return _userRepository.Count(criteria);
+                    return this._userRepository.Count(criteria);
                 }
             }
             catch (Exception ex)
@@ -644,7 +652,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    userList = _userRepository.Fetch(criteria, out totalRows);
+                    userList = this._userRepository.Fetch(criteria, out totalRows);
                 }
             }
             catch (Exception ex)
@@ -665,7 +673,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid() && logCriteria.IsValid())
                 {
-                    return _userRepository.Update(criteria, logCriteria);
+                    return this._userRepository.Update(criteria, logCriteria);
                 }
             }
             catch (Exception ex)
@@ -691,7 +699,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    return _userRepository.GetUserPolicy(criteria).OrderBy(u => u.User.Username);
+                    return this._userRepository.GetUserPolicy(criteria).OrderBy(u => u.User.Username);
                 }
             }
             catch (Exception ex)
@@ -715,7 +723,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    return _userRepository.GetUserListSiteFunctionKeyPolicy(criteria);
+                    return this._userRepository.GetUserListSiteFunctionKeyPolicy(criteria);
                 }
             }
             catch (Exception ex)
@@ -759,7 +767,7 @@ namespace Fanex.NAP.Core.Service.Impl
                     Time = DateTime.Now
                 };
 
-                return _userRepository.UserSSOGetTime(criteria);
+                return this._userRepository.UserSSOGetTime(criteria);
             }
             catch (Exception ex)
             {

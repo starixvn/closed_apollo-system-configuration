@@ -15,23 +15,23 @@ namespace Fanex.NAP.Framework.Data
     public interface ICriteria
     {
         /// <summary>
-        /// Gets store procedure parameters
+        /// Gets store procedure parameters.
         /// </summary>
         Hashtable GetSpParams();
 
         /// <summary>
-        /// Add store procedure parameters
+        /// Add store procedure parameters.
         /// </summary>
-        /// <param name="storeProcParamName">Store procedure parameter name</param>
+        /// <param name="storeProcParamName">Store procedure parameter name.</param>
         Hashtable AddSpParams(Hashtable storeProcParamName);
 
         /// <summary>
-        /// Gets setting key in order to get store procedure name and connection info
+        /// Gets setting key in order to get store procedure name and connection info.
         /// </summary>
         string GetSettingKey();
 
         /// <summary>
-        ///  Gets result from checking the criteria rule
+        ///  Gets result from checking the criteria rule.
         /// </summary>
         bool IsValid();
     }

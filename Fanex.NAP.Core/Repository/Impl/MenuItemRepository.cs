@@ -12,7 +12,6 @@ namespace Fanex.NAP.Core.Repository.Impl
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using Fanex.Common.Extensions;
     using Fanex.Data;
@@ -23,7 +22,9 @@ namespace Fanex.NAP.Core.Repository.Impl
     using Fanex.NAP.Core.Repository.Interface;
     using Fanex.NAP.Framework.Data;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Menu item repository.
+    /// </summary>
     public class MenuItemRepository : RepositoryBase<IMenuItem>, IMenuItemRepository
     {
         public override IMenuItem Get(ICriteria criteria)

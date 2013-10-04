@@ -9,10 +9,11 @@
 
 namespace Fanex.NAP.Admin.App_Start
 {
-    using System.Diagnostics.CodeAnalysis;
     using System.Web.Mvc;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Filter config.
+    /// </summary>
     public class FilterConfig
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)

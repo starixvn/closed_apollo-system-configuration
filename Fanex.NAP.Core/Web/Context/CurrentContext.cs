@@ -10,14 +10,15 @@
 namespace Fanex.NAP.Core.Web.Context
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using System.Net;
     using System.Web;
     using Fanex.Common.Extensions;
     using Fanex.NAP.Core.Configuration;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Current context.
+    /// </summary>
     public class CurrentContext : ICurrentContext
     {
         private const string _CONFIGNAPHUBSITEID = "SiteId";
@@ -109,18 +110,6 @@ namespace Fanex.NAP.Core.Web.Context
             }
         }
 
-        private RegionInfo ResolveCountry(HttpRequest request)
-        {
-            CultureInfo culture = this.ResolveCulture(request);
-
-            if (culture != null)
-            {
-                return new RegionInfo(culture.LCID);
-            }
-
-            return null;
-        }
-
         public DomainElement GetCurrentDomain()
         {
             var domainList = NapSettings.Settings.Domains;
@@ -141,6 +130,18 @@ namespace Fanex.NAP.Core.Web.Context
                 Name = currentDomain,
                 Path = currentPath
             };
+        }
+
+        private RegionInfo ResolveCountry(HttpRequest request)
+        {
+            CultureInfo culture = this.ResolveCulture(request);
+
+            if (culture != null)
+            {
+                return new RegionInfo(culture.LCID);
+            }
+
+            return null;
         }
     }
 }

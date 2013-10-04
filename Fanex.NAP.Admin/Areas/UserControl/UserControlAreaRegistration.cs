@@ -9,12 +9,13 @@
 
 namespace Fanex.NAP.Admin.Areas.UserControl
 {
-    using System.Diagnostics.CodeAnalysis;
     using System.Web.Mvc;
     using System.Web.Optimization;
     using Fanex.NAP.Admin.Areas.UserControl.Area_Start;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// User control area registration.
+    /// </summary>
     public class UserControlAreaRegistration : AreaRegistration
     {
         public override string AreaName

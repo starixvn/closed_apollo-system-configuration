@@ -11,7 +11,6 @@ namespace Fanex.NAP.Core.Service.Impl
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Web.Mvc;
     using Fanex.Common.Helper;
@@ -25,7 +24,9 @@ namespace Fanex.NAP.Core.Service.Impl
     using Fanex.NAP.Core.Service.Interface;
     using Fanex.NAP.Framework.Data;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Group service.
+    /// </summary>
     public class GroupService : BaseService, IGroupService
     {
         private IGroupRepository _groupRepository;
@@ -37,7 +38,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
         public GroupService(IGroupRepository groupRepository)
         {
-            _groupRepository = groupRepository ?? new GroupRepository();
+            this._groupRepository = groupRepository ?? new GroupRepository();
         }
 
         public IGroup GetByUser(int userId)
@@ -52,7 +53,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    return _groupRepository.Get(criteria);
+                    return this._groupRepository.Get(criteria);
                 }
             }
             catch (Exception ex)
@@ -75,7 +76,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    return _groupRepository.Get(criteria);
+                    return this._groupRepository.Get(criteria);
                 }
             }
             catch (Exception ex)
@@ -98,7 +99,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    return _groupRepository.Get(criteria);
+                    return this._groupRepository.Get(criteria);
                 }
             }
             catch (Exception ex)
@@ -120,7 +121,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    return _groupRepository.Fetch(criteria).OrderBy(g => g.Name);
+                    return this._groupRepository.Fetch(criteria).OrderBy(g => g.Name);
                 }
             }
             catch (Exception ex)
@@ -142,7 +143,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    IEnumerable<IGroup> groupList = _groupRepository.Fetch(criteria).OrderBy(g => g.Name);
+                    IEnumerable<IGroup> groupList = this._groupRepository.Fetch(criteria).OrderBy(g => g.Name);
 
                     if (groupList != null)
                     {
@@ -176,7 +177,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    return _groupRepository.Fetch(criteria).OrderBy(g => g.Name);
+                    return this._groupRepository.Fetch(criteria).OrderBy(g => g.Name);
                 }
             }
             catch (Exception ex)
@@ -197,7 +198,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid() && logCriteria.IsValid())
                 {
-                    return _groupRepository.Update(criteria, logCriteria);
+                    return this._groupRepository.Update(criteria, logCriteria);
                 }
             }
             catch (Exception ex)
@@ -218,7 +219,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid() && logCriteria.IsValid())
                 {
-                    return _groupRepository.Update(criteria, logCriteria);
+                    return this._groupRepository.Update(criteria, logCriteria);
                 }
             }
             catch (Exception ex)
@@ -239,7 +240,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid() && logCriteria.IsValid())
                 {
-                    return _groupRepository.Insert(ref criteria, logCriteria);
+                    return this._groupRepository.Insert(ref criteria, logCriteria);
                 }
             }
             catch (Exception ex)
@@ -260,7 +261,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid() && logCriteria.IsValid())
                 {
-                    return _groupRepository.Update(criteria, logCriteria);
+                    return this._groupRepository.Update(criteria, logCriteria);
                 }
             }
             catch (Exception ex)
@@ -286,7 +287,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    return _groupRepository.GetGroupPolicy(criteria).OrderBy(g => g.Group.Name);
+                    return this._groupRepository.GetGroupPolicy(criteria).OrderBy(g => g.Group.Name);
                 }
             }
             catch (Exception ex)
@@ -310,7 +311,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    return _groupRepository.Fetch(criteria).OrderBy(g => g.Name);
+                    return this._groupRepository.Fetch(criteria).OrderBy(g => g.Name);
                 }
             }
             catch (Exception ex)

@@ -9,11 +9,12 @@
 
 namespace Fanex.NAP.Core.Web.Attribute
 {
-    using System.Diagnostics.CodeAnalysis;
     using System.Web.Mvc;
     using Fanex.NAP.Core.Web.Session;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// NAP super authorize attribute.
+    /// </summary>
     public class NapSuperAuthAttribute : AuthorizeAttribute
     {
         public override void OnAuthorization(AuthorizationContext filterContext)

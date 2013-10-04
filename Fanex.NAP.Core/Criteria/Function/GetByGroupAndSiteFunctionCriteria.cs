@@ -12,7 +12,7 @@ namespace Fanex.NAP.Core.Criteria.Function
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
-    /// Get by group and site
+    /// Get by group and site.
     /// </summary>
     public class GetByGroupAndSiteFunctionCriteria : CriteriaBase
     {
@@ -25,14 +25,14 @@ namespace Fanex.NAP.Core.Criteria.Function
         /// <summary>
         /// Get the reference SP's Name which is specified in Config file.
         /// </summary>
-        /// <returns>NAP_Function_GetByGroupAndSite</returns>
+        /// <returns>NAP_Function_GetByGroupAndSite.</returns>
         public override string GetSettingKey()
         {
             return "NAP_Function_GetByGroupAndSite";
         }
 
         /// <summary>
-        /// Check data's constrains
+        /// Check data's constrains.
         /// </summary>
         /// <returns>True: valid; False: invalid</returns>
         public override bool IsValid()

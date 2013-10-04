@@ -15,7 +15,9 @@ namespace Fanex.NAP.Core.Criteria.User
     using System.Web.Mvc;
     using Fanex.NAP.Framework.Data;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Get all by username, group and site
+    /// </summary>
     public class GetAllByUsernameGroupSiteUserCriteria : CriteriaBase
     {
         private readonly string _siteTml = "<Site SiteId='{0}'></Site>";

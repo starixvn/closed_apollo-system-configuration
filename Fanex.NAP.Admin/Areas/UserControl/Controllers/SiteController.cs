@@ -11,7 +11,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Web.Mvc;
 
@@ -25,7 +24,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
     using Fanex.NAP.Core.Web;
     using Fanex.NAP.Core.Web.Attribute;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Site controller.
+    /// </summary>
     [NapSuperAuth]
     public class SiteController : BaseController
     {
@@ -307,20 +308,16 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
                     string result = Constant.OK;
 
-                    #region check url
-
+                    // Check URL
                     bool isuri = Uri.IsWellFormedUriString(url, UriKind.Absolute);
                     if (!isuri)
                     {
                         result = "invalid";
                     }
 
-                    #endregion
-
                     if (isuri)
                     {
-                        #region checks url duplication
-
+                        // Check URL duplication
                         var altUrls = _siteService.GetSiteUrlBySiteId(siteUrl.Site.Id, siteUrl.Environment);
 
                         if (altUrls.Where(x => x.SiteUrlId != id && x.Url == url).Any())
@@ -328,10 +325,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                             result = "duplicate";
                         }
 
-                        #endregion
-
-                        #region updates site url
-
+                        // Update
                         if (result == Constant.OK)
                         {
                             _siteService.UpdateSiteUrl(new UpdateSiteUrlCriteria
@@ -344,8 +338,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                                 IsDefault = siteUrl.IsDefault
                             });
                         }
-
-                        #endregion
                     }
 
                     return Json(result);

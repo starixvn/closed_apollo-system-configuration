@@ -9,10 +9,11 @@
 
 namespace Fanex.NAP.Core.Criteria.Trace
 {
-    using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.Framework.Data;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Get by ID.
+    /// </summary>
     public class GetByIdLogCriteria : CriteriaBase
     {       
         public int LogId { get; set; }

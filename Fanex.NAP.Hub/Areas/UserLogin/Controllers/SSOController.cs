@@ -102,15 +102,15 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
 
                     #region saves user session
 
-                    _currentSession.UserId = user.Id;
-                    _currentSession.Username = user.Username;
-                    _currentSession.OnUserId = criteria.OnUserId;
-                    _currentSession.SessionId = Session.SessionID.ToString();
-                    _currentSession.Level = _userService.GetUserSiteLevel(user.Id, this.SiteId);
+                    this._currentSession.UserId = user.Id;
+                    this._currentSession.Username = user.Username;
+                    this._currentSession.OnUserId = criteria.OnUserId;
+                    this._currentSession.SessionId = Session.SessionID.ToString();
+                    this._currentSession.Level = _userService.GetUserSiteLevel(user.Id, this.SiteId);
 
                     if (this.SiteId != 0)
                     {
-                        _currentSession.Menu = _menuItemService.GetByUserAndSiteIncludeGroup(
+                        this._currentSession.Menu = _menuItemService.GetByUserAndSiteIncludeGroup(
                                                     user.Id,
                                                     SiteId,
                                                     Environment,

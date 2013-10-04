@@ -11,9 +11,11 @@
 namespace Fanex.NAP.Core.Model
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.Core.Domain;
 
+    /// <summary>
+    /// Site.
+    /// </summary>
     [Serializable]
     public class Site : ISite
     {

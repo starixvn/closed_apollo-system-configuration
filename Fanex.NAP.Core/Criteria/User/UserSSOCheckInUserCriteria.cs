@@ -10,10 +10,11 @@
 namespace Fanex.NAP.Core.Criteria.User
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.Framework.Data;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// SSO check in.
+    /// </summary>
     public class UserSSOCheckInUserCriteria : CriteriaBase
     {
         public int UserId { get; set; }

@@ -11,7 +11,6 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Security;
@@ -23,7 +22,9 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
     using Fanex.NAP.Core.Web.Auth;
     using Fanex.NAP.Core.Web.Session;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// SSO controller.
+    /// </summary>
     public class SSOController : BaseController
     {
         #region members
@@ -67,8 +68,7 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
 
             if (expiration.TotalSeconds <= _timeExipration)
             {
-                #region do SSO check-in
-
+                // SSO check in
                 var criteria = new UserSSOCheckInUserCriteria
                 {
                     UserId = Convert.ToInt32(userId),
@@ -86,14 +86,11 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
 
                 _userService.UserSSOCheckIn(ref criteria);
 
-                #endregion
-
                 if (criteria.OnUserId != 0)
                 {
                     var user = _userService.GetById(criteria.UserId) as User;
 
-                    #region saves user session & auth info
-
+                    // Save user session and auth info
                     _currentSession.UserId = user.Id;
                     _currentSession.Username = user.Username;
                     _currentSession.OnUserId = criteria.OnUserId;
@@ -102,16 +99,11 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
 
                     if (this.SiteId != 0)
                     {
-                        _currentSession.Menu = _menuItemService.GetByUserAndSiteIncludeGroup(
-                                                                                user.Id,
-                                                                                SiteId,
-                                                                                Environment,
-                                                                                true) as IList<MenuItem>;
+                        _currentSession.Menu = 
+                            _menuItemService.GetByUserAndSiteIncludeGroup(user.Id, SiteId, Environment, true) as IList<MenuItem>;
                     }
 
                     CreateAuthInfo(user);
-
-                    #endregion
 
                     return Redirect(FormsAuthentication.DefaultUrl);
                 }

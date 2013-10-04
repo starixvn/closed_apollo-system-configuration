@@ -11,7 +11,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Web.Mvc;
 
@@ -26,7 +25,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
     using Fanex.NAP.Core.Web;
     using Fanex.NAP.Core.Web.Attribute;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Menu controller.
+    /// </summary>
     [NapSuperAuth]
     public class MenuController : BaseController
     {
@@ -54,7 +55,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             _menuItemService = menuitemService ?? new MenuItemService { ServiceContext = this.ServiceContext };
             _siteService = siteService ?? new SiteService { ServiceContext = this.ServiceContext };
-            _functionService = functionService ?? new FunctionService { ServiceContext = this.ServiceContext };
+            this._functionService = functionService ?? new FunctionService { ServiceContext = this.ServiceContext };
             _userService = userService ?? new UserService { ServiceContext = this.ServiceContext };
         }
 
@@ -178,7 +179,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             };
 
             ViewBag.Parent = _menuItemService.GetSelectListItemBySite(criteria.SiteId, this.Environment, isActive: true);
-            ViewBag.Function = _functionService.GetSelectListItemBySite(criteria.SiteId, this.Environment, isActive: true);
+            ViewBag.Function = this._functionService.GetSelectListItemBySite(criteria.SiteId, this.Environment, isActive: true);
             if (CurrentSession.Level == (int)Constant.Level.PortalAdmin)
             {
                 ViewBag.Site = _siteService.GetAllSelectListItem(criteria.Environment, true, criteria.SiteId);
@@ -204,7 +205,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             try
             {
                 ViewBag.Parent = _menuItemService.GetAllSelectListItem(this.Environment, isActive: true);
-                ViewBag.Function = _functionService.GetSelectListItemBySite(criteria.SiteId, this.Environment, isActive: true);
+                ViewBag.Function = this._functionService.GetSelectListItemBySite(criteria.SiteId, this.Environment, isActive: true);
                 if (CurrentSession.Level == (int)Constant.Level.PortalAdmin)
                 {
                     ViewBag.Site = _siteService.GetAllSelectListItem(criteria.Environment, true, criteria.SiteId);
@@ -288,7 +289,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 throw ex;
             }
 
-            ViewBag.Function = _functionService.GetSelectListItemBySite(
+            ViewBag.Function = this._functionService.GetSelectListItemBySite(
                                                         criteria.SiteId,
                                                         criteria.Environment,
                                                         isActive: true,
@@ -312,7 +313,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             try
             {
-                ViewBag.Function = _functionService.GetSelectListItemBySite(
+                ViewBag.Function = this._functionService.GetSelectListItemBySite(
                                                             criteria.SiteId,
                                                             criteria.Environment,
                                                             isActive: true,
@@ -360,11 +361,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         #region AjaxRequest
 
         /// <summary>
-        /// Get list menu item by site id
+        /// Get list menu item by site id.
         /// </summary>
-        /// <param name="siteId">Site ID</param>
-        /// <param name="menuItemId">Menu item ID</param>
-        /// <param name="environment">Environment</param>
+        /// <param name="siteId">Site ID.</param>
+        /// <param name="menuItemId">Menu item ID.</param>
+        /// <param name="environment">Environment.</param>
         /// <returns></returns>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageMenu, Policy = Constant.Policy.Host)]
@@ -403,9 +404,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         }
 
         /// <summary>
-        /// Get list function by site id
+        /// Get list function by site id.
         /// </summary>
-        /// <param name="siteId">Site ID</param>
+        /// <param name="siteId">Site ID.</param>
         /// <returns></returns>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageMenu, Policy = Constant.Policy.Host)]
@@ -415,7 +416,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             {
                 try
                 {
-                    return Json(_functionService.GetBySite(
+                    return Json(this._functionService.GetBySite(
                                         siteId,
                                         !string.IsNullOrEmpty(environment) ? environment : this.Environment,
                                         isActive: true));
@@ -431,10 +432,10 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         }
 
         /// <summary>
-        /// Update status menu 
+        /// Update status menu.
         /// </summary>
-        /// <param name="menuItemId">Menu item ID</param>
-        /// <param name="isActive">Is active or not</param>
+        /// <param name="menuItemId">Menu item ID.</param>
+        /// <param name="isActive">Is active or not.</param>
         /// <returns></returns>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageMenu, Policy = Constant.Policy.Host)]

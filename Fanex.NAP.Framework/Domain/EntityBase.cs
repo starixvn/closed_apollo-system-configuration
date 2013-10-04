@@ -12,7 +12,7 @@ namespace Fanex.NAP.Framework.Domain
     using System;
 
     /// <summary>
-    /// base entity
+    /// Base entity.
     /// </summary>
     /// <typeparam name="TId">The type of the id.</typeparam>
     /// <typeparam name="TName">The type of the name.</typeparam>

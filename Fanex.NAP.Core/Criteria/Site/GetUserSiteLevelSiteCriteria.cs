@@ -12,7 +12,7 @@ namespace Fanex.NAP.Core.Criteria.Site
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
-    /// Get user site level
+    /// Get user site level.
     /// </summary>
     public class GetUserSiteLevelSiteCriteria : CriteriaBase
     {

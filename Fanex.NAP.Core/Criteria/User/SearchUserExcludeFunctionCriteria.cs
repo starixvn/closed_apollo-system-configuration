@@ -9,9 +9,11 @@
 
 namespace Fanex.NAP.Core.Criteria.User
 {
-    using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.Framework.Data;
 
+    /// <summary>
+    /// Search user exclude function.
+    /// </summary>
     public class SearchUserExcludeFunctionCriteria : CriteriaBase
     {       
         public string Username { get; set; }

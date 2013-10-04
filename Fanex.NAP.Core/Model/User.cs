@@ -12,11 +12,12 @@ namespace Fanex.NAP.Core.Model
 {
     using System;
     using System.ComponentModel.DataAnnotations;
-    using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.Core.Domain;
     using Fanex.NAP.Core.Web;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// User.
+    /// </summary>
     [Serializable]
     public class User : IUser
     {

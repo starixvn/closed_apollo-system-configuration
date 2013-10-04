@@ -12,8 +12,25 @@ namespace Fanex.NAP.Core.Web
     using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.Core.Business;
 
+    /// <summary>
+    /// View flags.
+    /// </summary>
     public class ViewFlags
     {
+        public ViewFlags()
+        {
+            this.IsLive = false;
+            this.HasEditRight = false;
+            this.IsNapAdminSite = false;
+            this.HasAssignFunctionRight = false;
+            this.HasAssignFunctionToUserRight = false;
+            this.HasAssignFunctionToGroupRight = false;
+            this.HasAssignSiteRight = false;
+            this.IsShowLevelColumn = false;
+            this.IsShowActionColumn = false;
+            this.IsReCheckin = false;
+        }
+        
         public bool IsLive { get; set; }
 
         public bool HasEditRight { get; set; }
@@ -35,20 +52,6 @@ namespace Fanex.NAP.Core.Web
         public bool IsShowActionColumn { get; set; }
 
         public bool IsReCheckin { get; set; }
-
-        public ViewFlags()
-        {
-            this.IsLive = false;
-            this.HasEditRight = false;
-            this.IsNapAdminSite = false;
-            this.HasAssignFunctionRight = false;
-            this.HasAssignFunctionToUserRight = false;
-            this.HasAssignFunctionToGroupRight = false;
-            this.HasAssignSiteRight = false;
-            this.IsShowLevelColumn = false;
-            this.IsShowActionColumn = false;
-            this.IsReCheckin = false;
-        }
 
         /// <summary>
         /// Sets HasEditRight to true if policy is >= Host

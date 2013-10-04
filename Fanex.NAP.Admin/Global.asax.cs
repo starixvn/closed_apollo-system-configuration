@@ -10,7 +10,6 @@
 namespace Fanex.NAP.Admin
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Optimization;
@@ -18,7 +17,9 @@ namespace Fanex.NAP.Admin
     using Fanex.Data.Configuration;
     using Fanex.NAP.Admin.App_Start;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// MVC application.
+    /// </summary>
     public class MvcApplication : HttpApplication
     {
         protected void Application_Start()

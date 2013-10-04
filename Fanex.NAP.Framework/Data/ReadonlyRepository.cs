@@ -21,7 +21,7 @@ namespace Fanex.NAP.Framework.Data
     using Fanex.Data;
 
     /// <summary>
-    /// Readonly repository
+    /// Readonly repository.
     /// </summary>
     public class ReadonlyRepository<T> : DynamicRepository, IReadonlyRepository<T>
     {
@@ -31,7 +31,7 @@ namespace Fanex.NAP.Framework.Data
         }
 
         /// <summary>
-        /// Get single record set and map to data transfer object
+        /// Get single record set and map to data transfer object.
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <returns>object of T</returns>
@@ -41,10 +41,10 @@ namespace Fanex.NAP.Framework.Data
         }
 
         /// <summary>
-        /// Get total element matching the criteria
+        /// Get total element matching the criteria.
         /// </summary>
         /// <param name="criteria">The criteria.</param>
-        /// <returns>value of integer</returns>
+        /// <returns>value of integer.</returns>
         public override int Count(ICriteria criteria)
         {
             return base.Count(criteria);
@@ -59,7 +59,7 @@ namespace Fanex.NAP.Framework.Data
         /// Fetches the specified criteria.
         /// </summary>
         /// <param name="criteria">The criteria.</param>
-        /// <returns>IEnumerable of T</returns>
+        /// <returns>IEnumerable of T.</returns>
         public virtual IEnumerable<T> Fetch(ICriteria criteria)
         {
             return base.Fetch<T>(criteria);
@@ -70,7 +70,7 @@ namespace Fanex.NAP.Framework.Data
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <param name="order">The order.</param>
-        /// <returns>IEnumerable of T</returns>
+        /// <returns>IEnumerable of T.</returns>
         public virtual IEnumerable<T> Fetch(ICriteria criteria, Action<Orderable<T>> order)
         {
             return base.Fetch<T>(criteria, order);

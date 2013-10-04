@@ -9,19 +9,20 @@
 
 namespace Fanex.NAP.Core.Service.Impl
 {
-    using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.Core.Service.Interface;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Service context.
+    /// </summary>
     public class ServiceContext : IServiceContext
     {
         /// <summary>
-        /// who perform a business action
+        /// User ID
         /// </summary>
         public int UserId { get; set; }
 
         /// <summary>
-        /// which site user be in
+        /// Site ID
         /// </summary>
         public int SiteId { get; set; }
 

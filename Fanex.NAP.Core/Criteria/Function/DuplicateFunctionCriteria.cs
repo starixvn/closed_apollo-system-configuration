@@ -16,10 +16,18 @@ namespace Fanex.NAP.Core.Criteria.Function
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
-    /// Duplicate function
+    /// Duplicate function.
     /// </summary>
     public class DuplicateFunctionCriteria : CriteriaBase
     {
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        public DuplicateFunctionCriteria()
+        {
+            this.Environment = Constant.UAT;
+        }
+        
         public int DuplicateFunctionId { get; set; }
 
         public int FunctionId { get; set; }
@@ -84,27 +92,19 @@ namespace Fanex.NAP.Core.Criteria.Function
         public int ReturnSiteId { get; set; }
 
         /// <summary>
-        /// Constructor
-        /// </summary>
-        public DuplicateFunctionCriteria()
-        {
-            this.Environment = Constant.UAT;
-        }
-
-        /// <summary>
         /// Gets the setting key.
         /// </summary>
         /// <returns>Return setting key.</returns>
-        /// <value>Setting key : NAP_Function_Duplicate</value>
+        /// <value>Setting key : NAP_Function_Duplicate.</value>
         public override string GetSettingKey()
         {
             return "NAP_Function_Duplicate";
         }
 
         /// <summary>
-        /// Check data's constrains
+        /// Check data's constrains.
         /// </summary>
-        /// <returns>True: valid; False: invalid</returns>
+        /// <returns>True: valid; False: invalid.</returns>
         public override bool IsValid()
         {
             return true;

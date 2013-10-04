@@ -102,16 +102,16 @@ namespace Fanex.NAP.Core.Configuration
             get
             {
                 var result = false;
-                var check = bool.TryParse(_EnableCheckUM, out result);
+                var check = bool.TryParse(this._EnableCheckUM, out result);
 
-                result = check ? result : Equals(_EnableCheckUM, "1");
+                result = check ? result : Equals(this._EnableCheckUM, "1");
 
                 return result;
             }
 
             set
             {
-                _EnableCheckUM = value.ToString();
+                this._EnableCheckUM = value.ToString();
             }
         }        
 

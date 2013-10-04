@@ -11,11 +11,12 @@ namespace Fanex.NAP.Core.Domain
 {
     using System;
     using System.ComponentModel.DataAnnotations;
-    using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.Core.Web;
     using Fanex.NAP.Framework.Domain;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// User interface.
+    /// </summary>
     public interface IUser : IEntity<int, string>
     {
         [Display(Name = "Group", ResourceType = typeof(ViewResources))]

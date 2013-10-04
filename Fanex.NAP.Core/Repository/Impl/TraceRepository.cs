@@ -12,7 +12,6 @@ namespace Fanex.NAP.Core.Repository.Impl
 {
     using System;
     using System.Collections;
-    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using Fanex.Data;
     using Fanex.NAP.Core.Model;
@@ -20,7 +19,9 @@ namespace Fanex.NAP.Core.Repository.Impl
     using Fanex.NAP.Core.Repository.Interface;
     using Fanex.NAP.Framework.Data;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Trace repository.
+    /// </summary>
     public class TraceRepository : DynamicRepository, ITraceRepository
     {
         public IQueryable<LogExecSp> SearchLogExecSp(ICriteria criteria, out int totalRows)

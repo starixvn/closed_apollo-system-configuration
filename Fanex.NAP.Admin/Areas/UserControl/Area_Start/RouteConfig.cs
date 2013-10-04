@@ -9,10 +9,11 @@
 
 namespace Fanex.NAP.Admin.Areas.UserControl.Area_Start
 {
-    using System.Diagnostics.CodeAnalysis;
     using System.Web.Mvc;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Route config.
+    /// </summary>
     public class RouteConfig
     {
         public static void RegisterRoutes(string areaName, AreaRegistrationContext context)

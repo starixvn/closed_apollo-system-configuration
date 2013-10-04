@@ -11,11 +11,13 @@ namespace Fanex.NAP.Core.Criteria.User
 {
     using System;
     using System.ComponentModel.DataAnnotations;
-    using System.Diagnostics.CodeAnalysis;
     using System.Text;
     using Fanex.NAP.Core.Web;
     using Fanex.NAP.Framework.Data;
 
+    /// <summary>
+    /// Assign user permission.
+    /// </summary>
     public class AssignFunctionUserCriteria : CriteriaBase
     {
         protected readonly string AssignPermissionTpl = "<FunctionPolicy SiteId='{0}' FunctionId='{1}' Policy='{2}'></FunctionPolicy>";

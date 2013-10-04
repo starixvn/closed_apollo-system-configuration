@@ -9,14 +9,15 @@
 
 namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
 {
-    using System.Diagnostics.CodeAnalysis;
     using System.Web.Mvc;
     using System.Web.Security;
 
     using Fanex.NAP.Core.Service.Impl;
     using Fanex.NAP.Core.Service.Interface;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Common controller.
+    /// </summary>
     public class CommonController : Controller
     {
         private readonly IMaintainanceService _maintenanceService;

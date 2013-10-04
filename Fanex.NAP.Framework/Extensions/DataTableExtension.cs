@@ -13,30 +13,35 @@ namespace Fanex.NAP.Framework.Extensions
     using System;
     using System.Collections.Generic;
     using System.Data;
-    using System.Diagnostics.CodeAnalysis;
     using Fanex.Common.Extensions;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]  
+    /// <summary>
+    /// Data table extension.
+    /// </summary>
     public static class DataTableExtension
     {
         /// <summary>
-        /// List of type will be check for column is numeric or not
+        /// List of type will be check for column is numeric or not.
         /// </summary>
         public static readonly List<Type> NumericTypes = new List<Type> 
         { 
-            typeof(byte), typeof(decimal), 
-            typeof(double), typeof(short), 
-            typeof(int), typeof(long), 
-            typeof(sbyte), typeof(float), 
+            typeof(byte), 
+            typeof(decimal), 
+            typeof(double), 
+            typeof(short), 
+            typeof(int), 
+            typeof(long), 
+            typeof(sbyte), 
+            typeof(float), 
             typeof(uint),
             typeof(ulong)
         };
 
         /// <summary>
-        /// Check DataColum is Numeric
+        /// Check DataColum is Numeric.
         /// </summary>
-        /// <param name="col">DataColum object</param>
-        /// <returns>Is Numeric or Not</returns>
+        /// <param name="col">DataColum object.</param>
+        /// <returns>Is Numeric or Not.</returns>
         public static bool IsNumeric(this DataColumn col)
         {
             if (col == null)
@@ -48,9 +53,9 @@ namespace Fanex.NAP.Framework.Extensions
         }
 
         /// <summary>
-        /// This function will add a new row which contains the sum of column number
+        /// This function will add a new row which contains the sum of column number.
         /// </summary>
-        /// <param name="dataTable">Table is added new row</param>
+        /// <param name="dataTable">Table is added new row.</param>
         public static void AddSumRow(this DataTable dataTable)
         {
             DataRow newDataRow = dataTable.NewRow();
@@ -65,8 +70,6 @@ namespace Fanex.NAP.Framework.Extensions
                     foreach (DataRow row in dataTable.Rows)
                     {
                         valueOfCell = 0;
-                        /* Check if it has value add this, or not then set 0 value
-                         */
 
                         isdouble = double.TryParse(row[column].ToString(), out valueOfCell);
                         if (isdouble)
@@ -79,7 +82,7 @@ namespace Fanex.NAP.Framework.Extensions
                         }
                     }
 
-                    /* Add value to sum column*/
+                    // Add value to sum column
                     newDataRow[column] = sumOfColumn;
                     sumOfColumn = 0;
                 }

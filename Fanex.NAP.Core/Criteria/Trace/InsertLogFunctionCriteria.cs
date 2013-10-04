@@ -10,10 +10,11 @@
 namespace Fanex.NAP.Core.Criteria.Trace
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.Framework.Data;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Insert log.
+    /// </summary>
     public class InsertLogFunctionCriteria : CriteriaBase
     {
         public int FunctionId { get; set; }

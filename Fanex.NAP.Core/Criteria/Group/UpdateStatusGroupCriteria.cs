@@ -13,7 +13,7 @@ namespace Fanex.NAP.Core.Criteria.Group
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
-    /// Update group status
+    /// Update group status.
     /// </summary>
     public class UpdateStatusGroupCriteria : CriteriaBase
     {

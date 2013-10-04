@@ -7,10 +7,12 @@
 // </summary>
 //
 // <history>
-// Lasted generated date: 1/16/2013 2:20:21 PM
+// Lasted generated date: 10/4/2013 4:11:20 PM
 // </history>
 using System.Diagnostics.CodeAnalysis;
 
+[SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")] 
+[SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1602:EnumerationItemsMustBeDocumented")] 
 public static class FunctionKeys
 {
     public const string Administration = "Administration";
@@ -24,6 +26,10 @@ public static class FunctionKeys
     public const string Dashboard = "Dashboard";
 
     public const string ExecSpLog = "ExecSpLog";
+
+    public const string fnc_test = "fnc_test";
+
+    public const string fnc_testCopy = "fnc_testCopy";
 
     public const string FunctionLog = "FunctionLog";
 
@@ -51,10 +57,12 @@ public static class FunctionKeys
 
     public const string Taitest = "Taitest";
 
-    public const string TaitestCopy = "TaitestCopy";
+    public const string TaitestC = "TaitestC";
 
     public const string testtesttestttt123 = "testtesttestttt123";
 
     public const string UserLoginLog = "UserLoginLog";
+
+    public const string UserLoginLogCopy = "UserLoginLogCopy";
 
 }

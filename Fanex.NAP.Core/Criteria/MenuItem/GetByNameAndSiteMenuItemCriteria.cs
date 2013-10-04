@@ -12,7 +12,7 @@ namespace Fanex.NAP.Core.Criteria.MenuItem
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
-    /// Get by name and site
+    /// Get by name and site.
     /// </summary>
     public class GetByNameAndSiteMenuItemCriteria : CriteriaBase
     {
@@ -23,7 +23,7 @@ namespace Fanex.NAP.Core.Criteria.MenuItem
         /// <summary>
         /// Get the reference SP's Name which is specified in Config file.
         /// </summary>
-        /// <returns>NAP_MenuItem_GetByNameAndSite</returns>
+        /// <returns>NAP_MenuItem_GetByNameAndSite.</returns>
         public override string GetSettingKey()
         {
             return "NAP_MenuItem_GetByNameAndSite";
@@ -32,7 +32,7 @@ namespace Fanex.NAP.Core.Criteria.MenuItem
         /// <summary>
         /// Check data's constrains
         /// </summary>
-        /// <returns>True: valid; False: invalid</returns>
+        /// <returns>True: valid; False: invalid.</returns>
         public override bool IsValid()
         {
             return true;

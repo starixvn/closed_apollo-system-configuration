@@ -10,8 +10,10 @@
 namespace Fanex.NAP.Core.Model.ValueObject
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
 
+    /// <summary>
+    /// User level.
+    /// </summary>
     public class UserLevel
     {
         public int Level { get; set; }

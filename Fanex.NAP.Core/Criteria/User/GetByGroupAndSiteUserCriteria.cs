@@ -9,10 +9,11 @@
 
 namespace Fanex.NAP.Core.Criteria.User
 {
-    using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.Framework.Data;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Get by group and site.
+    /// </summary>
     public class GetByGroupAndSiteUserCriteria : CriteriaBase
     {
         public int GroupId { get; set; }

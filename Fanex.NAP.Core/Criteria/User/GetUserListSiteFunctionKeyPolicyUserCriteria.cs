@@ -10,12 +10,13 @@
 namespace Fanex.NAP.Core.Criteria.User
 {
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using System.Text;
     using System.Web.Mvc;
     using Fanex.NAP.Framework.Data;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Get user list site function key policy.
+    /// </summary>
     public class GetUserListSiteFunctionKeyPolicyUserCriteria : CriteriaBase
     {
         private readonly string _siteTml = "<Site SiteId='{0}'></Site>";

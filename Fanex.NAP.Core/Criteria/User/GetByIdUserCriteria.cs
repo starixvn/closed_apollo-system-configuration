@@ -9,9 +9,11 @@
 
 namespace Fanex.NAP.Core.Criteria.User
 {
-    using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.Framework.Data;
 
+    /// <summary>
+    /// Get by ID.
+    /// </summary>
     public class GetByIdUserCriteria : CriteriaBase
     {
         public int UserId { get; set; }

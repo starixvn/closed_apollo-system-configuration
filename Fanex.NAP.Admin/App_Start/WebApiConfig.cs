@@ -9,10 +9,11 @@
 
 namespace Fanex.NAP.Admin.App_Start
 {
-    using System.Diagnostics.CodeAnalysis;
     using System.Web.Http;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Web API config
+    /// </summary>
     public static class WebApiConfig
     {
         public static void Register(HttpConfiguration config)

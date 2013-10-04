@@ -13,7 +13,6 @@ namespace Fanex.NAP.Core.Repository.Impl
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using Fanex.Common.Extensions;
     using Fanex.Data;
@@ -25,7 +24,9 @@ namespace Fanex.NAP.Core.Repository.Impl
     using Fanex.NAP.Core.Repository.Interface;
     using Fanex.NAP.Framework.Data;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Function repository.
+    /// </summary>
     public class FunctionRepository : RepositoryBase<IFunction>, IFunctionRepository
     {
         public override IFunction Get(ICriteria criteria)
@@ -106,34 +107,34 @@ namespace Fanex.NAP.Core.Repository.Impl
                         while (reader.Read())
                         {
                             functionPolicyList.Add(new FunctionPolicy
-                            {
-                                Function = new Function
                                 {
-                                    Id = reader.ToShort("FunctionId"),
-                                    Name = reader.ToString("FunctionName"),
-                                    Key = reader.ToString("FunctionKey"),
-                                    Description = reader.ToString("Description"),
-                                    Crud = reader.ToByte("CRUD"),
-                                    DisplayOrder = reader.ToShort("DisplayOrder"),
-                                    IsActive = reader.ToBool("IsActive"),
+                                    Function = new Function
+                                    {
+                                        Id = reader.ToShort("FunctionId"),
+                                        Name = reader.ToString("FunctionName"),
+                                        Key = reader.ToString("FunctionKey"),
+                                        Description = reader.ToString("Description"),
+                                        Crud = reader.ToByte("CRUD"),
+                                        DisplayOrder = reader.ToShort("DisplayOrder"),
+                                        IsActive = reader.ToBool("IsActive"),
+                                        Site = new Site
+                                        {
+                                            Id = reader.ToByte("SiteId"),
+                                            Name = reader.ToString("SiteName")
+                                        },
+                                        Parent = reader.IsDBNull("ParentId") ? null : new Function
+                                        {
+                                            Id = reader.ToShort("ParentId"),
+                                            Name = reader.ToString("ParentName")
+                                        }
+                                    },
                                     Site = new Site
                                     {
                                         Id = reader.ToByte("SiteId"),
                                         Name = reader.ToString("SiteName")
                                     },
-                                    Parent = reader.IsDBNull("ParentId") ? null : new Function
-                                    {
-                                        Id = reader.ToShort("ParentId"),
-                                        Name = reader.ToString("ParentName")
-                                    }
-                                },
-                                Site = new Site
-                                {
-                                    Id = reader.ToByte("SiteId"),
-                                    Name = reader.ToString("SiteName")
-                                },
-                                Policy = reader.ToInt("Policy")
-                            });
+                                    Policy = reader.ToInt("Policy")
+                                });
                         }
 
                         return functionPolicyList.OrderBy(f => f.Function.Name).ToList<FunctionPolicy>();

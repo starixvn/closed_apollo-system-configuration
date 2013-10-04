@@ -16,7 +16,7 @@ namespace Fanex.NAP.Framework.Mvc
     using NPOI.HSSF.UserModel;
 
     /// <summary>
-    /// Spreadsheet result implemented by NPOI
+    /// Spreadsheet result implemented by NPOI.
     /// </summary>
     public abstract class SpreadSheetResult : ActionResult
     {

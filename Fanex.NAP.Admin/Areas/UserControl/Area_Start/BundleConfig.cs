@@ -9,10 +9,11 @@
 
 namespace Fanex.NAP.Admin.Areas.UserControl.Area_Start
 {
-    using System.Diagnostics.CodeAnalysis;
     using System.Web.Optimization;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Bundle config.
+    /// </summary>
     public class BundleConfig
     {
         public static void RegisterBundles(BundleCollection bundles)

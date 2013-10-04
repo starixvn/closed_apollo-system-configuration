@@ -12,7 +12,7 @@ namespace Fanex.NAP.Core.Criteria.Function
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
-    /// Get by site
+    /// Get by site.
     /// </summary>
     public class GetBySiteFunctionCriteria : CriteriaBase
     {
@@ -32,7 +32,7 @@ namespace Fanex.NAP.Core.Criteria.Function
         }
 
         /// <summary>
-        /// Check data's constrains
+        /// Check data's constrains.
         /// </summary>
         /// <returns>True: valid; False: invalid</returns>
         public override bool IsValid()

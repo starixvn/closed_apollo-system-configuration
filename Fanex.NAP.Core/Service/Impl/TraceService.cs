@@ -11,7 +11,6 @@ namespace Fanex.NAP.Core.Service.Impl
 {
     using System;
     using System.Collections;
-    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Xml.Linq;
     using Fanex.NAP.Core.Criteria.Trace;
@@ -21,7 +20,9 @@ namespace Fanex.NAP.Core.Service.Impl
     using Fanex.NAP.Core.Service.Interface;
     using Fanex.NAP.Framework.Data;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Trace service.
+    /// </summary>
     public class TraceService : BaseService, ITraceService
     {
         private readonly ITraceRepository _traceRepository;
@@ -33,10 +34,18 @@ namespace Fanex.NAP.Core.Service.Impl
 
         public TraceService(ITraceRepository traceRepository)
         {
-            _traceRepository = traceRepository ?? new TraceRepository();
+            this._traceRepository = traceRepository ?? new TraceRepository();
         }
 
-        public IQueryable<LogExecSp> SearchExecSp(int pageIndex, int pageSize, out int totalRows, string name, string username, DateTime from, DateTime to, int filterBy = 0)
+        public IQueryable<LogExecSp> SearchExecSp(
+            int pageIndex, 
+            int pageSize, 
+            out int totalRows, 
+            string name, 
+            string username, 
+            DateTime from, 
+            DateTime to, 
+            int filterBy = 0)
         {
             IQueryable<LogExecSp> logList = null;
             totalRows = 0;
@@ -56,7 +65,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    logList = _traceRepository.SearchLogExecSp(criteria, out totalRows).AsQueryable();
+                    logList = this._traceRepository.SearchLogExecSp(criteria, out totalRows).AsQueryable();
                 }
             }
             catch (Exception ex)
@@ -78,7 +87,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    var logExec = _traceRepository.GetById(criteria);
+                    var logExec = this._traceRepository.GetById(criteria);
                     if (!ReferenceEquals(logExec, null))
                     {
                         var hashItems = new Hashtable();
@@ -234,7 +243,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    return _traceRepository.InsertLog(criteria);
+                    return this._traceRepository.InsertLog(criteria);
                 }
             }
             catch (Exception ex)
@@ -264,7 +273,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    logList = _traceRepository.SearchLogUserLogin(criteria, out totalRows).AsQueryable();
+                    logList = this._traceRepository.SearchLogUserLogin(criteria, out totalRows).AsQueryable();
                 }
             }
             catch (Exception ex)
@@ -292,7 +301,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    return _traceRepository.InsertLog(criteria);
+                    return this._traceRepository.InsertLog(criteria);
                 }
             }
             catch (Exception ex)
@@ -322,7 +331,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    logList = _traceRepository.SearchLogFunction(criteria, out totalRows).AsQueryable();
+                    logList = this._traceRepository.SearchLogFunction(criteria, out totalRows).AsQueryable();
                 }
             }
             catch (Exception ex)
@@ -334,7 +343,7 @@ namespace Fanex.NAP.Core.Service.Impl
         }
 
         /// <summary>
-        /// Decode xml of [f_EncodeXMLValue]
+        /// Decode xml of [f_EncodeXMLValue].
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>

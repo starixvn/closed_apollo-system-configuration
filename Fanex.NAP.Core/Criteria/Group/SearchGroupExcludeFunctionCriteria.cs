@@ -12,7 +12,7 @@ namespace Fanex.NAP.Core.Criteria.Group
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
-    /// Search group
+    /// Search group.
     /// </summary>
     public class SearchGroupExcludeFunctionCriteria : CriteriaBase
     {       

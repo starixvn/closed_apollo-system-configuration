@@ -12,7 +12,6 @@ namespace Fanex.NAP.Core.Repository.Impl
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using Fanex.Common.Extensions;
     using Fanex.Data;
@@ -24,7 +23,9 @@ namespace Fanex.NAP.Core.Repository.Impl
     using Fanex.NAP.Core.Repository.Interface;
     using Fanex.NAP.Framework.Data;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// User repository.
+    /// </summary>
     public class UserRepository : RepositoryBase<IUser>, IUserRepository
     {
         public override IUser Get(ICriteria criteria)
@@ -295,8 +296,6 @@ namespace Fanex.NAP.Core.Repository.Impl
                     {
                         var userLevelList = new List<UserLevel>();
 
-                        #region reads data
-
                         while (reader.Read())
                         {
                             userLevelList.Add(new UserLevel
@@ -350,8 +349,6 @@ namespace Fanex.NAP.Core.Repository.Impl
                                 }
                             });
                         }
-
-                        #endregion reads data
 
                         reader.Close();
 

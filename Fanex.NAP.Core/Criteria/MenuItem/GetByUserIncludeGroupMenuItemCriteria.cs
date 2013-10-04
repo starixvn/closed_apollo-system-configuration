@@ -12,7 +12,7 @@ namespace Fanex.NAP.Core.Criteria.MenuItem
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
-    /// Get by user include group
+    /// Get by user include group.
     /// </summary>
     public class GetByUserIncludeGroupMenuItemCriteria : CriteriaBase
     {
@@ -23,16 +23,16 @@ namespace Fanex.NAP.Core.Criteria.MenuItem
         /// <summary>
         /// Get the reference SP's Name which is specified in Config file.
         /// </summary>
-        /// <returns>NAP_MenuItem_GetByUserAndSiteIncludeGroup</returns>
+        /// <returns>NAP_MenuItem_GetByUserAndSiteIncludeGroup.</returns>
         public override string GetSettingKey()
         {
             return "NAP_MenuItem_GetByUserIncludeGroup";
         }
 
         /// <summary>
-        /// Check data's constrains
+        /// Check data's constrains.
         /// </summary>
-        /// <returns>True: valid; False: invalid</returns>
+        /// <returns>True: valid; False: invalid.</returns>
         public override bool IsValid()
         {
             return true;

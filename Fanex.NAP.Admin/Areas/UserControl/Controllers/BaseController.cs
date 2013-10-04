@@ -9,7 +9,6 @@
 
 namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 {
-    using System.Diagnostics.CodeAnalysis;
     using System.Web.Mvc;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Configuration;
@@ -20,8 +19,10 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
     using Fanex.NAP.Core.Web.Context;
     using Fanex.NAP.Core.Web.Session;
 
+    /// <summary>
+    /// Base controller.
+    /// </summary>
     [NapSuperAuth]
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
     public class BaseController : Controller
     {
         #region Const
@@ -46,9 +47,27 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
         #endregion
 
-        #region Authorization
-        
         private ViewFlags _viewFlags;
+
+        public BaseController()
+        {
+            CurrentContext = new CurrentContext();
+            ViewBag.Session = CurrentSession = new CurrentSession();
+            ViewBag.ServiceContext = ServiceContext = new ServiceContext
+            {
+                UserId = this.CurrentSession.UserId,
+                SiteId = this.SiteId,
+                Ip = this.CurrentContext.IP
+            };
+
+            ViewFlags = new ViewFlags
+            {
+                IsLive = Environment.Equals(Constant.LIVE),
+                IsNapAdminSite = SiteId.Equals(NapAdminId),
+                HasEditRight = false,
+                IsReCheckin = NapSettings.Settings.EnableReCheckIn
+            };
+        }
 
         protected ViewFlags ViewFlags
         {
@@ -85,28 +104,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             {
                 return CurrentSession.Level.Equals((int)Constant.Level.SiteAdmin);
             }
-        }
-
-        #endregion
-
-        public BaseController()
-        {
-            CurrentContext = new CurrentContext();
-            ViewBag.Session = CurrentSession = new CurrentSession();
-            ViewBag.ServiceContext = ServiceContext = new ServiceContext
-            {
-                UserId = this.CurrentSession.UserId,
-                SiteId = this.SiteId,
-                Ip = this.CurrentContext.IP
-            };
-
-            ViewFlags = new ViewFlags
-            {
-                IsLive = Environment.Equals(Constant.LIVE),
-                IsNapAdminSite = SiteId.Equals(NapAdminId),
-                HasEditRight = false,
-                IsReCheckin = NapSettings.Settings.EnableReCheckIn
-            };
         }
 
         [ChildActionOnly]

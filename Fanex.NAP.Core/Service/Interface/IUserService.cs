@@ -11,7 +11,6 @@ namespace Fanex.NAP.Core.Service.Interface
 {
     using System.Collections;
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Web.Mvc;
     using Fanex.NAP.Core.Business;
@@ -20,7 +19,9 @@ namespace Fanex.NAP.Core.Service.Interface
     using Fanex.NAP.Core.Model.ValueObject;
     using Fanex.NAP.Framework.Data;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// User service interface.
+    /// </summary>
     public interface IUserService : IBaseService
     {
         IUser GetById(int id);
@@ -57,7 +58,7 @@ namespace Fanex.NAP.Core.Service.Interface
 
         /// <summary>
         /// Searches users by username, group, site, but excludes ones who was assigned
-        /// the function (functionId) already
+        /// the function (functionId) already.
         /// </summary>
         IQueryable<UserLevel> SearchUserExcludeFunction(
             int pageIndex,
@@ -79,12 +80,12 @@ namespace Fanex.NAP.Core.Service.Interface
         bool HasPermissionUserSiteFunctionKey(int userId, int siteId, string functionKey, Constant.Policy policy);
 
         /// <summary>
-        /// 
+        /// Get user list site function key policy.
         /// </summary>
-        /// <param name="userId">User ID</param>
-        /// <param name="functionKey">Function key</param>
-        /// <param name="listSite">List of site</param>
-        /// <returns>key is site id and value is policy is host</returns>
+        /// <param name="userId">User ID.</param>
+        /// <param name="functionKey">Function key.</param>
+        /// <param name="listSite">List of site.</param>
+        /// <returns>key is site id and value is policy is host.</returns>
         Hashtable GetUserListSiteFunctionKeyPolicy(int userId, string functionKey, List<SelectListItem> listSite = null);
 
         ICommandResult ResetPassword(IUser user);
@@ -100,17 +101,17 @@ namespace Fanex.NAP.Core.Service.Interface
         ICommandResult ChangeUserSiteStatus(int userId, int siteId, bool isActive);
 
         /// <summary>
-        /// Modify user site
+        /// Modify user site.
         /// </summary>
-        /// <param name="site">UserId and List(SiteLevel)</param>
+        /// <param name="site">UserId and List(SiteLevel).</param>
         /// <returns></returns>
         ICommandResult AssignSite(AssignSiteUserCriteria site);
 
         /// <summary>
-        /// Modify user function
+        /// Modify user function.
         /// </summary>
-        /// <param name="permision">UserId and List(FunctionPolicy)</param>
-        /// <returns>Result</returns>
+        /// <param name="permision">UserId and List(FunctionPolicy).</param>
+        /// <returns>Result.</returns>
         ICommandResult AssignFunction(AssignFunctionUserCriteria function);
 
         ICommandResult ChangePassword(ICriteria user);

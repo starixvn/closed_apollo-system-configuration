@@ -11,10 +11,11 @@ namespace Fanex.NAP.Core.Repository.Impl
 {
     using System;
     using System.Collections;
-    using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.Framework.Data;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Repository base.
+    /// </summary>
     public class RepositoryBase<T> : ReadonlyRepository<T>
     {
         public CommandResult GetCommandResult(Hashtable hash)

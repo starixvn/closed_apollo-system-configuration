@@ -12,7 +12,6 @@ namespace Fanex.NAP.Core.Service.Impl
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Web.Mvc;
     using Fanex.Common.Helper;
@@ -25,6 +24,9 @@ namespace Fanex.NAP.Core.Service.Impl
     using Fanex.NAP.Core.Service.Interface;
     using Fanex.NAP.Framework.Data;
 
+    /// <summary>
+    /// Menu item service.
+    /// </summary>
     public class MenuItemService : BaseService, IMenuItemService
     {
         private readonly IMenuItemRepository _menuItemRepository;
@@ -36,7 +38,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
         public MenuItemService(IMenuItemRepository menuItemRepository = null)
         {
-            _menuItemRepository = menuItemRepository ?? new MenuItemRepository();
+            this._menuItemRepository = menuItemRepository ?? new MenuItemRepository();
         }
 
         public IMenuItem GetById(int id)
@@ -53,7 +55,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    return _menuItemRepository.Get(criteria);
+                    return this._menuItemRepository.Get(criteria);
                 }
             }
             catch (Exception ex)
@@ -80,7 +82,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    return _menuItemRepository.Get(criteria);
+                    return this._menuItemRepository.Get(criteria);
                 }
             }
             catch (Exception ex)
@@ -106,7 +108,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    return _menuItemRepository.Fetch(criteria);
+                    return this._menuItemRepository.Fetch(criteria);
                 }
             }
             catch (Exception ex)
@@ -135,7 +137,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    IEnumerable<IMenuItem> menuItemList = _menuItemRepository.Fetch(criteria);
+                    IEnumerable<IMenuItem> menuItemList = this._menuItemRepository.Fetch(criteria);
 
                     if (menuItemList != null)
                     {
@@ -173,7 +175,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    return _menuItemRepository.Fetch(criteria);
+                    return this._menuItemRepository.Fetch(criteria);
                 }
             }
             catch (Exception ex)
@@ -205,7 +207,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    IEnumerable<IMenuItem> menuItemList = _menuItemRepository.Fetch(criteria);
+                    IEnumerable<IMenuItem> menuItemList = this._menuItemRepository.Fetch(criteria);
 
                     if (menuItemList != null)
                     {
@@ -243,7 +245,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    IEnumerable<IMenuItem> menuItemList = _menuItemRepository.Fetch(criteria).OrderBy(x => x.DisplayOrder);
+                    IEnumerable<IMenuItem> menuItemList = this._menuItemRepository.Fetch(criteria).OrderBy(x => x.DisplayOrder);
 
                     return SortMenuItemsInHierarchy(menuItemList);
                 }
@@ -270,7 +272,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    return _menuItemRepository.Fetch(criteria);
+                    return this._menuItemRepository.Fetch(criteria);
                 }
             }
             catch (Exception ex)
@@ -295,7 +297,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    IEnumerable<IMenuItem> menuItemList = _menuItemRepository.Fetch(criteria);
+                    IEnumerable<IMenuItem> menuItemList = this._menuItemRepository.Fetch(criteria);
 
                     if (menuItemList != null)
                     {
@@ -334,7 +336,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    return _menuItemRepository.Fetch(criteria);
+                    return this._menuItemRepository.Fetch(criteria);
                 }
             }
             catch (Exception ex)
@@ -367,7 +369,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    return _menuItemRepository.Fetch(criteria);
+                    return this._menuItemRepository.Fetch(criteria);
                 }
             }
             catch (Exception ex)
@@ -399,7 +401,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    return _menuItemRepository.Fetch(criteria);
+                    return this._menuItemRepository.Fetch(criteria);
                 }
             }
             catch (Exception ex)
@@ -421,7 +423,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid() && logCriteria.IsValid())
                 {
-                    return _menuItemRepository.Insert(ref criteria, logCriteria);
+                    return this._menuItemRepository.Insert(ref criteria, logCriteria);
                 }
             }
             catch (Exception ex)
@@ -443,7 +445,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid() && logCriteria.IsValid())
                 {
-                    return _menuItemRepository.Update(criteria, logCriteria);
+                    return this._menuItemRepository.Update(criteria, logCriteria);
                 }
             }
             catch (Exception ex)
@@ -465,7 +467,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid() && logCriteria.IsValid())
                 {
-                    return _menuItemRepository.Update(criteria, logCriteria);
+                    return this._menuItemRepository.Update(criteria, logCriteria);
                 }
             }
             catch (Exception ex)

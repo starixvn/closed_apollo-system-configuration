@@ -16,7 +16,6 @@ namespace Fanex.NAP.Core.Service.Impl
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Web.Mvc;
     using Fanex.Caching;
@@ -33,7 +32,9 @@ namespace Fanex.NAP.Core.Service.Impl
     using Fanex.NAP.Core.Service.Interface;
     using Fanex.NAP.Framework.Data;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Site service.
+    /// </summary>
     public class SiteService : BaseService, ISiteService
     {
         #region members
@@ -53,9 +54,9 @@ namespace Fanex.NAP.Core.Service.Impl
 
         public SiteService(ISiteRepository siteRepository, IFunctionRepository functionRepository, ICache cache)
         {
-            _siteRepository = siteRepository ?? new SiteRepository();
-            _functionRepository = functionRepository ?? new FunctionRepository();
-            _cache = cache ?? CacheService.CreateInstance(CacheType.MemoryCache);
+            this._siteRepository = siteRepository ?? new SiteRepository();
+            this._functionRepository = functionRepository ?? new FunctionRepository();
+            this._cache = cache ?? CacheService.CreateInstance(CacheType.MemoryCache);
         }
 
         #endregion
@@ -76,12 +77,12 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    return _siteRepository.Get(criteria);
+                    return this._siteRepository.Get(criteria);
                 }
             }
             catch (Exception ex)
             {
-                HandleException(ex);
+                this.HandleException(ex);
             }
 
             return null;
@@ -101,12 +102,12 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    return _siteRepository.Get(criteria);
+                    return this._siteRepository.Get(criteria);
                 }
             }
             catch (Exception ex)
             {
-                HandleException(ex);
+                this.HandleException(ex);
             }
 
             return null;
@@ -122,9 +123,9 @@ namespace Fanex.NAP.Core.Service.Impl
                 bool isActive = false;
                 string cacheKey = CacheKey.CacheSiteStatus + id.ToString();
 
-                if (_cache.Contains(cacheKey))
+                if (this._cache.Contains(cacheKey))
                 {
-                    isActive = _cache.Get<bool>(cacheKey);
+                    isActive = this._cache.Get<bool>(cacheKey);
                 }
                 else
                 {
@@ -135,11 +136,11 @@ namespace Fanex.NAP.Core.Service.Impl
 
                     if (criteria.IsValid())
                     {
-                        ISite site = _siteRepository.Get(criteria);
+                        ISite site = this._siteRepository.Get(criteria);
 
                         if (site != null)
                         {
-                            _cache.Set(CacheKey.CacheSiteStatus, site.IsActive, 3600);
+                            this._cache.Set(CacheKey.CacheSiteStatus, site.IsActive, 3600);
                             isActive = site.IsActive;
                         }
                     }
@@ -149,7 +150,7 @@ namespace Fanex.NAP.Core.Service.Impl
             }
             catch (Exception ex)
             {
-                HandleException(ex);
+                this.HandleException(ex);
             }
 
             return false;
@@ -172,12 +173,12 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    return _siteRepository.FetchSiteLevel(criteria).OrderBy(sl => sl.Site.Name);
+                    return this._siteRepository.FetchSiteLevel(criteria).OrderBy(sl => sl.Site.Name);
                 }
             }
             catch (Exception ex)
             {
-                HandleException(ex);
+                this.HandleException(ex);
             }
 
             return null;
@@ -197,12 +198,12 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    return _siteRepository.Fetch(criteria).OrderBy(s => s.Name);
+                    return this._siteRepository.Fetch(criteria).OrderBy(s => s.Name);
                 }
             }
             catch (Exception ex)
             {
-                HandleException(ex);
+                this.HandleException(ex);
             }
 
             return null;
@@ -225,7 +226,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    IEnumerable<ISite> siteList = _siteRepository.Fetch(criteria).OrderBy(s => s.Name);
+                    IEnumerable<ISite> siteList = this._siteRepository.Fetch(criteria).OrderBy(s => s.Name);
 
                     if (siteList != null)
                     {
@@ -240,7 +241,7 @@ namespace Fanex.NAP.Core.Service.Impl
             }
             catch (Exception ex)
             {
-                HandleException(ex);
+                this.HandleException(ex);
             }
 
             return null;
@@ -260,7 +261,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    return _siteRepository.Fetch(criteria).OrderBy(s => s.Name);
+                    return this._siteRepository.Fetch(criteria).OrderBy(s => s.Name);
                 }
             }
             catch (Exception ex)
@@ -293,7 +294,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    IEnumerable<FunctionPolicy> functionPolicyList = _functionRepository.FetchFunctionPolicy(criteria).OrderBy(s => s.Site.Name);
+                    IEnumerable<FunctionPolicy> functionPolicyList = this._functionRepository.FetchFunctionPolicy(criteria).OrderBy(s => s.Site.Name);
 
                     if (functionPolicyList != null)
                     {
@@ -337,7 +338,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    IEnumerable<FunctionPolicy> functionPolicyList = _functionRepository.FetchFunctionPolicy(criteria).OrderBy(s => s.Site.Name);
+                    IEnumerable<FunctionPolicy> functionPolicyList = this._functionRepository.FetchFunctionPolicy(criteria).OrderBy(s => s.Site.Name);
 
                     if (functionPolicyList != null)
                     {
@@ -374,7 +375,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid() && logCriteria.IsValid())
                 {
-                    return _siteRepository.Insert(ref criteria, logCriteria);
+                    return this._siteRepository.Insert(ref criteria, logCriteria);
                 }
             }
             catch (Exception ex)
@@ -396,7 +397,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid() && logCriteria.IsValid())
                 {
-                    return _siteRepository.Update(criteria, logCriteria);
+                    return this._siteRepository.Update(criteria, logCriteria);
                 }
             }
             catch (Exception ex)
@@ -418,7 +419,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid() && logCriteria.IsValid())
                 {
-                    return _siteRepository.Update(criteria, logCriteria);
+                    return this._siteRepository.Update(criteria, logCriteria);
                 }
             }
             catch (Exception ex)
@@ -448,7 +449,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    return _siteRepository.FetchSiteLevel(criteria).FirstOrDefault<SiteLevel>();
+                    return this._siteRepository.FetchSiteLevel(criteria).FirstOrDefault<SiteLevel>();
                 }
             }
             catch (Exception ex)
@@ -476,7 +477,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    return _siteRepository.FetchSiteUrl(criteria);
+                    return this._siteRepository.FetchSiteUrl(criteria);
                 }
             }
             catch (Exception ex)
@@ -504,7 +505,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    result = _siteRepository.FetchSiteUrl(criteria).OrderBy(su => su.Site.Name).ToList();
+                    result = this._siteRepository.FetchSiteUrl(criteria).OrderBy(su => su.Site.Name).ToList();
                 }
             }
             catch (Exception ex)
@@ -532,7 +533,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    result = _siteRepository.FetchSiteUrl(criteria).OrderBy(su => su.Site.Name).ToList();
+                    result = this._siteRepository.FetchSiteUrl(criteria).OrderBy(su => su.Site.Name).ToList();
                 }
             }
             catch (Exception ex)
@@ -544,9 +545,9 @@ namespace Fanex.NAP.Core.Service.Impl
         }
 
         /// <summary>
-        /// Gets a SiteUrl by its SiteUrlId
+        /// Gets a SiteUrl by its SiteUrlId.
         /// </summary>
-        /// <param name="siteUrlId">Site URL ID</param>
+        /// <param name="siteUrlId">Site URL ID.</param>
         /// <returns>Site URL</returns>
         public SiteUrl GetSiteUrlById(int siteUrlId)
         {
@@ -563,7 +564,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    result = _siteRepository.GetSiteUrl(criteria);
+                    result = this._siteRepository.GetSiteUrl(criteria);
                 }
             }
             catch (Exception ex)
@@ -584,7 +585,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid() && logCriteria.IsValid())
                 {
-                    return _siteRepository.Update(criteria, logCriteria);
+                    return this._siteRepository.Update(criteria, logCriteria);
                 }
             }
             catch (Exception ex)
@@ -605,12 +606,12 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid() && logCriteria.IsValid())
                 {
-                    return _siteRepository.Update(criteria, logCriteria);
+                    return this._siteRepository.Update(criteria, logCriteria);
                 }
             }
             catch (Exception ex)
             {
-                HandleException(ex);
+                this.HandleException(ex);
             }
 
             return null;
@@ -626,12 +627,12 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid() && logCriteria.IsValid())
                 {
-                    return _siteRepository.InsertSiteUrl(ref criteria, logCriteria);
+                    return this._siteRepository.InsertSiteUrl(ref criteria, logCriteria);
                 }
             }
             catch (Exception ex)
             {
-                HandleException(ex);
+                this.HandleException(ex);
             }
 
             return null;

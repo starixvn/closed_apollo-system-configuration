@@ -10,10 +10,11 @@
 namespace Fanex.NAP.Core.Model
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.Core.Domain;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Menu item.
+    /// </summary>
     [Serializable]
     public class MenuItem : IMenuItem
     {

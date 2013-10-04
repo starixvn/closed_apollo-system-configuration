@@ -16,7 +16,7 @@ namespace Fanex.NAP.Framework.Data
     using System.Reflection;
 
     /// <summary>
-    /// Criteria base
+    /// Criteria base.
     /// </summary>
     public abstract class CriteriaBase : ICriteria
     {

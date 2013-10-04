@@ -13,7 +13,6 @@ namespace Fanex.NAP.Core.Service.Impl
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Web.Mvc;
     using Fanex.Common.Helper;
@@ -28,7 +27,9 @@ namespace Fanex.NAP.Core.Service.Impl
     using Fanex.NAP.Core.Service.Interface;
     using Fanex.NAP.Framework.Data;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Function service.
+    /// </summary>
     public class FunctionService : BaseService, IFunctionService
     {
         private readonly IFunctionRepository _functionRepository;
@@ -41,7 +42,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
         public FunctionService(IFunctionRepository functionRepository = null)
         {
-            _functionRepository = functionRepository ?? new FunctionRepository();
+            this._functionRepository = functionRepository ?? new FunctionRepository();
         }
 
         #endregion
@@ -62,7 +63,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    return _functionRepository.Get(criteria);
+                    return this._functionRepository.Get(criteria);
                 }
             }
             catch (Exception ex)
@@ -89,7 +90,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    return _functionRepository.Get(criteria);
+                    return this._functionRepository.Get(criteria);
                 }
             }
             catch (Exception ex)
@@ -116,7 +117,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    return _functionRepository.Get(criteria);
+                    return this._functionRepository.Get(criteria);
                 }
             }
             catch (Exception ex)
@@ -146,7 +147,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    return _functionRepository.Fetch(criteria);
+                    return this._functionRepository.Fetch(criteria);
                 }
             }
             catch (Exception ex)
@@ -174,7 +175,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    IEnumerable<IFunction> functionList = _functionRepository.Fetch(criteria);
+                    IEnumerable<IFunction> functionList = this._functionRepository.Fetch(criteria);
 
                     var result = new Dictionary<ISite, IEnumerable<IFunction>>();
 
@@ -220,7 +221,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    return _functionRepository.Fetch(criteria);
+                    return this._functionRepository.Fetch(criteria);
                 }
             }
             catch (Exception ex)
@@ -252,7 +253,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    IEnumerable<IFunction> functionList = _functionRepository.Fetch(criteria);
+                    IEnumerable<IFunction> functionList = this._functionRepository.Fetch(criteria);
 
                     if (functionList != null)
                     {
@@ -289,7 +290,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    IEnumerable<IFunction> functionList = _functionRepository.Fetch(criteria).OrderBy(x => x.DisplayOrder);
+                    IEnumerable<IFunction> functionList = this._functionRepository.Fetch(criteria).OrderBy(x => x.DisplayOrder);
 
                     return SortFunctionsInHierarchy(functionList);
                 }
@@ -316,7 +317,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    return _functionRepository.Fetch(criteria);
+                    return this._functionRepository.Fetch(criteria);
                 }
             }
             catch (Exception ex)
@@ -356,7 +357,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    return _functionRepository.FetchFullFunctionPolicy(criteria);
+                    return this._functionRepository.FetchFullFunctionPolicy(criteria);
                 }
             }
             catch (Exception ex)
@@ -385,7 +386,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    IEnumerable<FunctionPolicy> functionPolicyList = _functionRepository.FetchFullFunctionPolicy(criteria);
+                    IEnumerable<FunctionPolicy> functionPolicyList = this._functionRepository.FetchFullFunctionPolicy(criteria);
 
                     var result = new Dictionary<ISite, IEnumerable<FunctionPolicy>>();
 
@@ -430,7 +431,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    return _functionRepository.FetchFullFunctionPolicy(criteria);
+                    return this._functionRepository.FetchFullFunctionPolicy(criteria);
                 }
             }
             catch (Exception ex)
@@ -459,7 +460,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    return _functionRepository.FetchFullFunctionPolicy(criteria);
+                    return this._functionRepository.FetchFullFunctionPolicy(criteria);
                 }
             }
             catch (Exception ex)
@@ -488,7 +489,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    IEnumerable<FunctionPolicy> functionPolicyList = _functionRepository.FetchFullFunctionPolicy(criteria);
+                    IEnumerable<FunctionPolicy> functionPolicyList = this._functionRepository.FetchFullFunctionPolicy(criteria);
 
                     var result = new Dictionary<ISite, IEnumerable<FunctionPolicy>>();
 
@@ -535,7 +536,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    return _functionRepository.FetchFullFunctionPolicy(criteria);
+                    return this._functionRepository.FetchFullFunctionPolicy(criteria);
                 }
             }
             catch (Exception ex)
@@ -567,7 +568,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    return _functionRepository.FetchFunctionPolicy(criteria);
+                    return this._functionRepository.FetchFunctionPolicy(criteria);
                 }
             }
             catch (Exception ex)
@@ -599,7 +600,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid())
                 {
-                    return _functionRepository.FetchFunctionPolicy(criteria);
+                    return this._functionRepository.FetchFunctionPolicy(criteria);
                 }
             }
             catch (Exception ex)
@@ -629,7 +630,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                     if (criteria.IsValid() && logCriteria.IsValid())
                     {
-                        return _functionRepository.Duplicate(ref criteria, logCriteria);
+                        return this._functionRepository.Duplicate(ref criteria, logCriteria);
                     }
                 }
             }
@@ -654,7 +655,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                     if (criteria.IsValid() && logCriteria.IsValid())
                     {
-                        return _functionRepository.Insert(ref criteria, logCriteria);
+                        return this._functionRepository.Insert(ref criteria, logCriteria);
                     }
                 }
             }
@@ -679,7 +680,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                     if (criteria.IsValid() && logCriteria.IsValid())
                     {
-                        return _functionRepository.Update(criteria, logCriteria);
+                        return this._functionRepository.Update(criteria, logCriteria);
                     }
                 }
             }
@@ -704,7 +705,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                     if (criteria.IsValid() && logCriteria.IsValid())
                     {
-                        return _functionRepository.Update(criteria, logCriteria);
+                        return this._functionRepository.Update(criteria, logCriteria);
                     }
                 }
             }
@@ -726,7 +727,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid() && logCriteria.IsValid())
                 {
-                    return _functionRepository.Update(criteria, logCriteria);
+                    return this._functionRepository.Update(criteria, logCriteria);
                 }
             }
             catch (Exception ex)
@@ -747,7 +748,7 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 if (criteria.IsValid() && logCriteria.IsValid())
                 {
-                    return _functionRepository.Update(criteria, logCriteria);
+                    return this._functionRepository.Update(criteria, logCriteria);
                 }
             }
             catch (Exception ex)
