@@ -74,6 +74,9 @@
     <Reference Include="MvcPager">
       <HintPath>..\_Dependencies\Others\MvcPager.dll</HintPath>
     </Reference>
+    <Reference Include="NPOI, Version=1.2.5.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\_Dependencies\NPOI\NPOI.dll</HintPath>
+    </Reference>
     <Reference Include="SPSRemoting">
       <HintPath>..\_Dependencies\Others\SPSRemoting.dll</HintPath>
     </Reference>
@@ -143,6 +146,7 @@
     <Compile Include="Criteria\Group\UpdateGroupCriteria.cs" />
     <Compile Include="Criteria\Group\UpdateStatusGroupCriteria.cs" />
     <Compile Include="Criteria\Group\InsertGroupCriteria.cs" />
+    <Compile Include="Criteria\MailingList\GetMailingListByFunctionKeyAndSiteCriteria.cs" />
     <Compile Include="Criteria\MailingList\GetMailingListByIdCriteria.cs" />
     <Compile Include="Criteria\MailingList\GetMailingListByKeyCriteria.cs" />
     <Compile Include="Criteria\MailingList\GetMailingListByNameCriteria.cs" />

@@ -99,5 +99,22 @@
         <Mapping DataField="FunctionId" ObjectProperty="Id" />
         <Mapping DataField="FunctionName" ObjectProperty="Name" />
       </Setting>
+      <Setting Key="NAP_MailingLists_GetByFunctionKeyAndSite" SpName="NAP_MailingLists_GetByFunctionKeyAndSite" DbName="Nap">
+        <Mapping DataField="ListId" ObjectProperty="Id" />
+        <Mapping DataField="ListName" ObjectProperty="Name" />
+        <Mapping DataField="ListKey" ObjectProperty="Key" />
+        <Mapping DataField="SiteId" ObjectProperty="Id" />
+        <Mapping DataField="SiteName" ObjectProperty="Name" />
+        <Mapping DataField="ListFunctionId" ObjectProperty="Id" />
+        <Mapping DataField="ListFunctionName" ObjectProperty="Name" />
+        <Mapping DataField="FunctionId" ObjectProperty="Id" />
+        <Mapping DataField="FunctionName" ObjectProperty="Name" />
+      </Setting>
     </Function>
+  <Function Name="ExchangeRate">
+    <Setting Key="Age_Exchange_GetAll" SpName="Acc_ExchangeSelAccount" DbName="SVRCSD.RepDB"></Setting>
+    <Setting Key="Age_Exchange_GetById" SpName="Acc_ExchangeSelByID" DbName="SVRCSD.RepDB"></Setting>
+    <Setting Key="Age_Exchange_InsertRate" SpName="Acc_ExchangeIns" DbName="SVRTXN.TransDB"></Setting>
+    <Setting Key="Age_Exchange_UpdateRate" SpName="Acc_ExchangeUpd" DbName="SVRTXN.TransDB"></Setting>
+  </Function>
 </Functions>

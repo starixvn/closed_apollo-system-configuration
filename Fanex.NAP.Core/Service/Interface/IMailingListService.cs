@@ -24,6 +24,8 @@ namespace Fanex.NAP.Core.Service.Interface
 
         IEnumerable<IMailingList> GetBySite(GetMailingListBySiteCriteria criteria);
 
+        IEnumerable<IMailingList> GetByFunctionKeyAndSite(GetMailingListByFunctionKeyAndSiteCriteria criteria);
+
         ICommandResult Insert(InsertMailingListCriteria criteria);
 
         ICommandResult Update(ICriteria criteria);

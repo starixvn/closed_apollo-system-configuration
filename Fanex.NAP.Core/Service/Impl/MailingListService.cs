@@ -142,6 +142,30 @@ namespace Fanex.NAP.Core.Service.Impl
         }
 
         /// <summary>
+        /// Get list Mailing List form site with grand.
+        /// </summary>
+        /// <param name="criteria">GetMailingListBySite Criteria to query database.</param>
+        /// <returns>List MailingList Object.</returns>
+        public IEnumerable<IMailingList> GetByFunctionKeyAndSite(GetMailingListByFunctionKeyAndSiteCriteria criteria)
+        {
+            Check.Argument.IsNotEmpty(criteria.FunctionKey, "FunctionKey");
+
+            try
+            {
+                if (criteria.IsValid())
+                {
+                    return _mailingListRepository.Fetch(criteria);
+                }
+            }
+            catch (Exception ex)
+            {
+                HandleException(ex);
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Insert a Mailing List to DB.
         /// </summary>
         /// <param name="criteria">InsertMailingList Criteria contains field to insert to DB.</param>

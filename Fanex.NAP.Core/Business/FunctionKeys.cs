@@ -7,7 +7,7 @@
 // </summary>
 //
 // <history>
-// Lasted generated date: 9/27/2013 11:37:53 AM
+// Lasted generated date: 10/4/2013 2:21:09 PM
 // </history>
 using System.Diagnostics.CodeAnalysis;
 
@@ -26,6 +26,8 @@ public static class FunctionKeys
 
     public const string Dashboard = "Dashboard";
 
+    public const string ExchangeRate = "ExchangeRate";
+
     public const string ExecSpLog = "ExecSpLog";
 
     public const string FunctionLog = "FunctionLog";
@@ -37,6 +39,8 @@ public static class FunctionKeys
     public const string MailingList = "MailingList";
 
     public const string MailingListExchangeRate = "MailingListExchangeRate";
+
+    public const string MailingListTest = "MailingListTest";
 
     public const string ManageFunction = "ManageFunction";
 
