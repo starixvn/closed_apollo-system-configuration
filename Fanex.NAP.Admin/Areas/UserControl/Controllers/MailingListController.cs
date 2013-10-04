@@ -523,6 +523,12 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return userIsPortalAdminOrIT;
         }
 
+        /// <summary>
+        /// Get list sites and policy for view Manage.
+        /// </summary>
+        /// <param name="criteria">GetMailingListBySiteCriteria input value to get.</param>
+        /// <param name="hasEditRight">Return role is edit or no.</param>
+        /// <param name="siteItemList">Return list sites.</param>
         [NonAction]
         private void GetSitesAndPolicyForManageAction(GetMailingListBySiteCriteria criteria, ref bool hasEditRight, ref IList<SelectListItem> siteItemList)
         {
@@ -552,6 +558,13 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             }
         }
 
+        /// <summary>
+        /// Get list Site, list Function, list Mailing List Function for Dropdown List in view.
+        /// </summary>
+        /// <param name="criteria">InsertMailingListCriteria input value to get.</param>
+        /// <param name="functionItemList">Return a list functions.</param>
+        /// <param name="siteItemList">Return a list sites.</param>
+        /// <param name="mailFunctionItemList">Return a list mailing list functions.</param>
         [NonAction]
         private void GetSiteAndFunctionForAddNew(
             InsertMailingListCriteria criteria, 
@@ -601,11 +614,16 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             }
         }
 
+        /// <summary>
+        /// Get a key from a name.
+        /// </summary>
+        /// <param name="listName">Mailing List Name.</param>
+        /// <returns>A Mailing List Key.</returns>
         [NonAction]
-        private string GeneralKeyFromName(string keyName)
+        private string GeneralKeyFromName(string listName)
         {
             var strListKeyModify = new StringBuilder();
-            var listKey = keyName.Replace(Constant.SPACE, string.Empty);
+            var listKey = listName.Replace(Constant.SPACE, string.Empty);
 
             for (int i = 0; i < listKey.Length; i++)
             {
@@ -623,6 +641,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return strListKeyModify.ToString();
         }
 
+        /// <summary>
+        /// Check Invalid MailingList Object in case Add New.
+        /// </summary>
+        /// <param name="criteria">InsertMailingListCriteria all values need check.</param>
+        /// <returns>Is Invalid or no.</returns>
         [NonAction]
         private bool CheckInvalidMailingListForAddNew(InsertMailingListCriteria criteria)
         {
@@ -663,6 +686,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return isValid;
         }
 
+        /// <summary>
+        /// Check Invalid MailingList Object in case Edit.
+        /// </summary>
+        /// <param name="criteria">UpdateMailingListCriteria all values need check.</param>
+        /// <returns>Is Invalid or no.</returns>
         [NonAction]
         private bool CheckInvalidMailingListForEdit(UpdateMailingListCriteria criteria)
         {
@@ -702,6 +730,14 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return isValid;
         }
 
+        /// <summary>
+        /// Get Function List and Function Mailing List for Dropdown list in View and set value for criteria in case is not IT group.
+        /// </summary>
+        /// <param name="criteria">UpdateMailingListCriteria to get and set value.</param>
+        /// <param name="isITGroup">Check to set criteria in case is not IT group.</param>
+        /// <param name="functionItemList">To return a list functions.</param>
+        /// <param name="mailFunctionItemList">To return a list Mailing List functions.</param>
+        /// <param name="siteName">To return site name.</param>
         [NonAction]
         private void GetFunctionForEdit(
             UpdateMailingListCriteria criteria, 
