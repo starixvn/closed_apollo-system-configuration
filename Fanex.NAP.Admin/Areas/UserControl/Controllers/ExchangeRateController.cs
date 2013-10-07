@@ -20,11 +20,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
     using Fanex.NAP.Admin.Core.Services.Impl;
     using Fanex.NAP.Admin.Core.Services.Interface;
     using Fanex.NAP.Core.Business;
+    using Fanex.NAP.Core.Criteria.MailingList;
     using Fanex.NAP.Core.Service.Impl;
     using Fanex.NAP.Core.Service.Interface;
     using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.Framework.Mvc;
-    using Fanex.NAP.Core.Criteria.MailingList;
 
     /// <summary>
     /// ExchangeRate Controller.
@@ -258,7 +258,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
             this._exchangeRateService.SendMailExchangeRate(
                 templatePath, 
-                (mailingLists != null ? mailingLists.ToList() : null), 
+                mailingLists != null ? mailingLists.ToList() : null, 
                 currency, 
                 oldBaseRate, 
                 newBaseRate, 

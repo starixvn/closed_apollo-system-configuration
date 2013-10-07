@@ -23,8 +23,8 @@ namespace Fanex.NAP.Admin.Core.Services.Impl
     using Fanex.NAP.Admin.Core.Repositories.Interface;
     using Fanex.NAP.Admin.Core.Services.Interface;
     using Fanex.NAP.Core.Domain;
-    using NPOI.HSSF.UserModel;
     using Fanex.NAP.Core.Web;
+    using NPOI.HSSF.UserModel;
 
     /// <summary>
     /// Exchange Rate Service.
