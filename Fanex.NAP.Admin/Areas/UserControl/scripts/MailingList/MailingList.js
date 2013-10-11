@@ -43,8 +43,6 @@
                 var keyCode = e.which || e.keyCode;
                 var object = $(this);
 
-                console.log(keyCode);
-
                 if (keyCode == 8) {
                     if (object.val().length == 0) {
                         var objectRemove = object.parent().prev();
@@ -60,7 +58,7 @@
                     var objectRemove = object.parent().prev();
                     objectRemove.removeClass("search-choice-focus");
 
-                    if (keyCode == 13 || keyCode == 188 || keyCode == 32 || keyCode == 59) {
+                    if (keyCode == 13 || keyCode == 188 || keyCode == 32 || keyCode == 59 || keyCode == 186) {
                         MailingList.autoCompleteEmail(object);
                         e.preventDefault();
                     }
@@ -74,6 +72,7 @@
                 var object = $(this);
                 var width = 25 + (object.val().length * 7); // 25: is width default input
                 object.width(width);
+                object.parent().parent().removeClass("input-validation-error");
             });
 
             $(".input-to").blur(function () {
@@ -108,7 +107,8 @@
                         toList += $.trim(object.children("span").first().html()) + "; ";
                     }
                     else {
-                        mailError += $.trim(object.children("span").first().html()) + "; "
+                        //mailError += $.trim(object.children("span").first().html()) + "; "
+                        toList += $.trim(object.children("span").first().html()) + "; "
                     }
                 });
 
@@ -119,6 +119,7 @@
                     }
                     else {
                         mailError += $.trim(object.children("span").first().html()) + "; "
+                        ccList += $.trim(object.children("span").first().html()) + "; "
                     }
                 });
 
@@ -129,6 +130,7 @@
                     }
                     else {
                         mailError += $.trim(object.children("span").first().html()) + "; "
+                        bccList += $.trim(object.children("span").first().html()) + "; "
                     }
                 });
 
@@ -138,15 +140,18 @@
                 mailError = mailError.length > 0 ? mailError.substr(0, (mailError.length - 2)) : "";
 
                 if (mailError.length > 0) {
-                    //NAP.headlineMsgBox.showInfo(mailError);
-                    alert("Email is invalid: " + mailError);
+                    //sNAP.headlineMsgBox.confirm("There are some email invalid: " + mailError);
+                    //alert("Email is invalid: " + mailError);
                 }
 
                 $("#ToList").val(toList);
                 $("#CCList").val(ccList);
                 $("#BCCList").val(bccList);
             });
+
+            MailingList.checkValidateMailTo();
         },
+
         validateEmail: function (email) {
             var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             return re.test(email);
@@ -291,6 +296,22 @@
                     NAP.handleAjaxError(xhr, status, err);
                 }
             });
+        },
+        checkValidateMailTo: function () {
+            var isValid = true;
+
+            if ($("#to-list").children().find(".search-choice").length == 0
+                && $("#to-list").children().find(".search-field").children().val().length == 0
+                && $("#ToList").hasClass("input-validation-error")) {
+                isValid = false;
+            }
+
+            if (!isValid) {
+                $("#ToList").parent().addClass("input-validation-error");
+            }
+            else {
+                $("#ToList").parent().removeClass("input-validation-error");
+            }
         }
     };
 } (jQuery);

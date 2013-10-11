@@ -126,9 +126,9 @@
                         <li class="search-field">
                             <input class="input-to item" type="text" />
                         </li>
+                        @Html.HiddenFor(m=>m.ToList)
                     </ul>
                 </div>
-                @Html.HiddenFor(m=>m.ToList)
             </div>
         </div>
         <div class="form-row">
@@ -145,9 +145,9 @@
                         <li class="search-field">
                             <input class="input-to item" type="text" />
                         </li>
+                        @Html.HiddenFor(m=>m.CCList)
                     </ul>
                 </div>
-                @Html.HiddenFor(m=>m.CCList)
             </div>
         </div>
         <div class="form-row">
@@ -164,9 +164,9 @@
                         <li class="search-field">
                             <input class="input-to item" type="text" />
                         </li>
+                        @Html.HiddenFor(m=>m.BCCList)
                     </ul>
                 </div>
-                @Html.HiddenFor(m=>m.BCCList)
             </div>
         </div>
         @if ((bool)ViewBag.IsITGroup)
@@ -198,10 +198,10 @@
             <div class="lbl-field">
             </div>
             <div class="edit-field">
-                @if (1 == 1)
+                @if (!success)
                 {
                     <input id="btnSubmit" type="submit" value="@ViewResources.Save" />
-                    <button class="cancel">@ViewResources.Back</button>
+                    <button class="cancel" onclick="NAP.redirect('MailingList/Manage?siteId=@Model.SiteId', 0); return false;">@ViewResources.Back</button>
                 }
             </div>
         </div>

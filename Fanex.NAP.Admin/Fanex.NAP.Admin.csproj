@@ -229,7 +229,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="EmailTemplates\ExchangeRate.cshtml" />
-    <None Include="ExcelTemplates\ExchangeRateTemplate.xls" />
+    <Content Include="ExcelTemplates\ExchangeRateTemplate.xls" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\NAPCommonSpNames.xml">

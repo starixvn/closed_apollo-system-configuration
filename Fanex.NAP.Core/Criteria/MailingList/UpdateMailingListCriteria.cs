@@ -28,7 +28,6 @@ namespace Fanex.NAP.Core.Criteria.MailingList
 
         public string ListKey { get; set; }
 
-        [Required]
         public string ListName { get; set; }
 
         public string Description { get; set; }
@@ -37,10 +36,8 @@ namespace Fanex.NAP.Core.Criteria.MailingList
 
         public string Environment { get; set; }
 
-        [Required]
         public int ListFunctionId { get; set; }
 
-        [Required]
         public int FunctionId { get; set; }
 
         public string ToList { get; set; }

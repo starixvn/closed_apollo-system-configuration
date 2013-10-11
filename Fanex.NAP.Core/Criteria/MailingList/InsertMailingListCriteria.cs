@@ -29,7 +29,6 @@ namespace Fanex.NAP.Core.Criteria.MailingList
 
         public string ListKey { get; set; }
 
-        [Required]
         [Display(Name = "MailingList_Name", ResourceType = typeof(ViewResources))]
         public string ListName { get; set; }
 
@@ -39,12 +38,11 @@ namespace Fanex.NAP.Core.Criteria.MailingList
 
         public string Environment { get; set; }
 
-        [Required]
         public int ListFunctionId { get; set; }
 
-        [Required]
         public int FunctionId { get; set; }
 
+        [Display(Name = "To", ResourceType = typeof(ViewResources))]
         public string ToList { get; set; }
 
         public string CCList { get; set; }

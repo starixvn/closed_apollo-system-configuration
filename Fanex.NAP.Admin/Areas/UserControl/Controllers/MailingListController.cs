@@ -15,6 +15,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
     using System.Text;
     using System.Web.Mvc;
     using Fanex.Logging;
+    using Fanex.NAP.Admin.Core.Services.Impl;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Criteria.Function;
     using Fanex.NAP.Core.Criteria.MailingList;
@@ -22,6 +23,8 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
     using Fanex.NAP.Core.Service.Interface;
     using Fanex.NAP.Core.Web;
     using Fanex.NAP.Core.Web.Attribute;
+    using Fanex.NAP.Core.Domain;
+    using Fanex.NAP.Core.Model;
 
     /// <summary>
     /// MailingList Controller.
@@ -279,6 +282,10 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
                     criteria.CreatedBy = this.CurrentSession.UserId;
                     criteria.CreatedDate = DateTime.Now;
+                    criteria.ToList = RemoveDuplicatedEmail(criteria.ToList);
+                    criteria.CCList = RemoveDuplicatedEmail(criteria.CCList);
+                    criteria.BCCList = RemoveDuplicatedEmail(criteria.BCCList);
+
                     var result = _mailingListService.Insert(criteria);
 
                     if (result != null && result.IsSuccessful)
@@ -383,6 +390,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
                     criteria.ModifiedBy = this.CurrentSession.UserId;
                     criteria.ModifiedDate = DateTime.Now;
+                    criteria.ToList = RemoveDuplicatedEmail(criteria.ToList);
+                    criteria.CCList = RemoveDuplicatedEmail(criteria.CCList);
+                    criteria.BCCList = RemoveDuplicatedEmail(criteria.BCCList);
 
                     var result = _mailingListService.Update(criteria);
 
@@ -415,7 +425,18 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             {
                 try
                 {
-                    var functionList = _functionService.GetBySite(siteId, environment, true).ToList();
+                    List<Function> functionList = null;
+
+                    if (this.UserIsPortalAdmin)
+                    {
+                        functionList = (List<Function>)_functionService.GetBySite(siteId, environment, true);
+                    }
+                    else
+                    {
+                        var functionPolicyList = _functionService.GetByUserAndSiteIncludeGroup(this.CurrentSession.UserId, siteId, environment);
+                        functionPolicyList = functionPolicyList.Where(t => t.Policy >= (byte)Constant.Policy.Host);
+                        functionList = functionPolicyList.Select(t => t.Function).ToList();
+                    }
 
                     return Json(functionList);
                 }
@@ -572,38 +593,45 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             ref IList<SelectListItem> siteItemList, 
             ref IList<SelectListItem> mailFunctionItemList)
         {
-            functionItemList = _functionService.GetSelectListItemBySite(criteria.SiteId, criteria.Environment, isActive: true);
-            //// portal admin
+            GetByParentKeyAndSiteCriteria getByParentKeyAndSiteCriteria = new GetByParentKeyAndSiteCriteria
+            {
+                SiteId = this.SiteId,
+                ParentKey = FunctionKeys.MailingList,
+                Environment = criteria.Environment,
+                IsActive = true
+            };
             if (this.UserIsPortalAdmin)
             {
+                functionItemList = _functionService.GetSelectListItemBySite(criteria.SiteId, criteria.Environment, isActive: true);
                 siteItemList = _siteService.GetAllSelectListItem(criteria.Environment, isActive: true, selectedSiteId: criteria.SiteId);
             }
             else
             {
+                getByParentKeyAndSiteCriteria.RoleId = (byte)Constant.Policy.Host;
+                getByParentKeyAndSiteCriteria.UserId = this.CurrentSession.UserId;
+                var functionList = _functionService.GetByUserAndSiteIncludeGroup(this.CurrentSession.UserId, criteria.SiteId, criteria.Environment);
+                if (functionList != null)
+                {
+                    functionList = functionList.Where(t => t.Policy >= (byte)Constant.Policy.Host);
+                    functionItemList = functionList.Select(s => new SelectListItem
+                    {
+                        Text = s.Function.Name,
+                        Value = s.Function.Id.ToString(),
+                        Selected = criteria.FunctionId == s.Function.Id
+                    }).ToList();
+                }
+
                 var sites = _siteService.GetSiteLevelByUser(this.CurrentSession.UserId, this.Environment);
                 if (sites != null)
                 {
                     siteItemList = sites.Select(s => new SelectListItem
                     {
-                        Text = s.Site.Name,
-                        Value = s.Site.Id.ToString(),
-                        Selected = criteria.SiteId == s.Site.Id
+                        Text = s.Site.Name, Value = s.Site.Id.ToString(), Selected = criteria.SiteId == s.Site.Id
                     }).ToList();
                 }
             }
 
-            var getByParentKeyAndSiteCriteria = new GetByParentKeyAndSiteCriteria
-            {
-                SiteId = this.SiteId,
-                ParentKey = FunctionKeys.MailingList,
-                Environment = criteria.Environment,
-                IsActive = true,
-                RoleId = (byte)Constant.Policy.Host,
-                UserId = this.CurrentSession.UserId
-            };
-
-            var mailFunctionList = _functionService.GetByParentKeyAndSite(getByParentKeyAndSiteCriteria);
-
+            var mailFunctionList = _functionService.GetByParentKeyAndSite(getByParentKeyAndSiteCriteria).ToList();
             if (mailFunctionList != null)
             {
                 mailFunctionItemList = mailFunctionList.Select(s => new SelectListItem
@@ -651,37 +679,48 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             var isValid = true;
             //// checks duplicate mailing list name
-            var listName = criteria.ListName = criteria.ListName.Trim();
+            string listName = criteria.ListName = criteria.ListName != null ? criteria.ListName.Trim() : string.Empty;
             var mailingList = _mailingListService.GetByName(listName);
-
-            if (mailingList != null)
+            if (string.IsNullOrWhiteSpace(criteria.ListName))
             {
-                ModelState.AddModelError("ListName", string.Format(ViewResources.DuplicateMsg, listName));
-                return false;
+                ModelState.AddModelError("ListName", string.Format(ViewResources.Msg_Requried, listName));
+                isValid = false;
             }
-
-            //// checks duplicate mailing list key
-            var listKey = GeneralKeyFromName(criteria.ListName);
-            criteria.ListKey = listKey;
-            mailingList = _mailingListService.GetByKey(listKey);
-
-            if (mailingList != null)
+            else
             {
-                ModelState.AddModelError("ListName", string.Format(ViewResources.DuplicateMsg, listKey));
-                return false;
-            }
+                if (mailingList != null)
+                {
+                    ModelState.AddModelError("ListName", string.Format(ViewResources.DuplicateMsg, listName));
+                    isValid = false;
+                }
+                else
+                {
+                    //// checks duplicate mailing list key
+                    var listKey = GeneralKeyFromName(criteria.ListName);
+                    criteria.ListKey = listKey;
+                    mailingList = _mailingListService.GetByKey(listKey);
 
+                    if (mailingList != null)
+                    {
+                        ModelState.AddModelError("ListName", string.Format(ViewResources.DuplicateMsg, listKey));
+                        isValid = false;
+                    }
+                }
+            }
+            
             if (criteria.ListFunctionId == 0)
             {
                 ModelState.AddModelError("ListFunctionId", string.Format(ViewResources.Msg_Requried, ViewResources.MailFunction));
-                return false;
+                isValid = false;
             }
 
             if (criteria.FunctionId == 0)
             {
                 ModelState.AddModelError("FunctionId", string.Format(ViewResources.Msg_Requried, ViewResources.Function));
-                return false;
+                isValid = false;
             }
+
+            isValid = CheckIsValidForAllEmails(criteria.ToList, criteria.CCList, criteria.BCCList) && isValid;
 
             return isValid;
         }
@@ -696,35 +735,83 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             var isValid = true;
             //// checks duplicate mailing list name
-            string listName = criteria.ListName = criteria.ListName.Trim();
-            var mailingList = _mailingListService.GetByName(listName);
-            var listKey = criteria.ListKey = GeneralKeyFromName(criteria.ListName);
+            string listName = criteria.ListName = criteria.ListName != null ? criteria.ListName.Trim() : string.Empty;
 
-            if (mailingList != null && mailingList.Id != criteria.ListId)
+            if (string.IsNullOrWhiteSpace(criteria.ListName))
             {
-                ModelState.AddModelError("ListName", string.Format(ViewResources.DuplicateMsg, listName));
-                return false;
+                ModelState.AddModelError("ListName", string.Format(ViewResources.Msg_Requried, listName));
+                isValid = false;
             }
-
-            //// checks duplicate function key
-            mailingList = _mailingListService.GetByKey(listKey);
-            
-            if (mailingList != null && mailingList.Id != criteria.ListId)
+            else
             {
-                ModelState.AddModelError("ListKey", string.Format(ViewResources.DuplicateMsg, listKey));
-                return false;
+                var mailingList = _mailingListService.GetByName(listName);
+                var listKey = criteria.ListKey = GeneralKeyFromName(criteria.ListName);
+                if (mailingList != null && mailingList.Id != criteria.ListId)
+                {
+                    ModelState.AddModelError("ListName", string.Format(ViewResources.DuplicateMsg, listName));
+                    isValid = false;
+                }
+
+                //// checks duplicate function key
+                mailingList = _mailingListService.GetByKey(listKey);
+
+                if (mailingList != null && mailingList.Id != criteria.ListId)
+                {
+                    ModelState.AddModelError("ListKey", string.Format(ViewResources.DuplicateMsg, listKey));
+                    isValid = false;
+                }
             }
 
             if (criteria.ListFunctionId == 0)
             {
                 ModelState.AddModelError("ListFunctionId", string.Format(ViewResources.Msg_Requried, ViewResources.MailFunction));
-                return false;
+                isValid = false;
             }
 
             if (criteria.FunctionId == 0)
             {
                 ModelState.AddModelError("FunctionId", string.Format(ViewResources.Msg_Requried, ViewResources.Function));
-                return false;
+                isValid = false;
+            }
+
+            isValid = CheckIsValidForAllEmails(criteria.ToList, criteria.CCList, criteria.BCCList) && isValid;
+
+            return isValid;
+        }
+
+        /// <summary>
+        /// Check IsValid For All Emails. 
+        /// </summary>
+        /// <param name="emailToList">To email list.</param>
+        /// <param name="emailCCList">CC email list.</param>
+        /// <param name="emailBCCList">BCC email list.</param>
+        /// <returns>Return IsValid or no.</returns>
+        private bool CheckIsValidForAllEmails(string emailToList, string emailCCList, string emailBCCList)
+        {
+            var isValid = true;
+
+            if (string.IsNullOrWhiteSpace(emailToList))
+            {
+                ModelState.AddModelError("ToList", string.Format(ViewResources.Msg_Requried, ViewResources.To));
+                isValid = false;
+            }
+
+            if (!EmailService.IsValidEmailList(emailToList))
+            {
+                ModelState.AddModelError("ToList", string.Format(ViewResources.EmailFormatValidationMsg, ViewResources.To));
+                isValid = false;
+            }
+
+            if (!EmailService.IsValidEmailList(emailCCList))
+            {
+                ModelState.AddModelError("CCList", string.Format(ViewResources.EmailFormatValidationMsg, ViewResources.Cc));
+                isValid = false;
+            }
+
+            if (!EmailService.IsValidEmailList(emailBCCList))
+            {
+                ModelState.AddModelError("BCCList", string.Format(ViewResources.EmailFormatValidationMsg, ViewResources.Bcc));
+                isValid = false;
             }
 
             return isValid;
@@ -746,9 +833,12 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             ref IList<SelectListItem> mailFunctionItemList, 
             ref string siteName)
         {
+            GetByParentKeyAndSiteCriteria getByParentKeyAndSiteCriteria = new GetByParentKeyAndSiteCriteria
+            {
+                SiteId = this.SiteId, ParentKey = FunctionKeys.MailingList, Environment = criteria.Environment, IsActive = true
+            };
             var mailingList = _mailingListService.GetById(criteria.ListId);
             siteName = mailingList.Site.Name;
-
             if (mailingList != null && !isITGroup)
             {
                 criteria.ListKey = mailingList.Key;
@@ -761,28 +851,58 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 criteria.IsInternal = mailingList.IsInternal;
             }
 
-            var getByParentKeyAndSiteCriteria = new GetByParentKeyAndSiteCriteria
+            if (this.UserIsPortalAdmin)
             {
-                SiteId = criteria.SiteId,
-                ParentKey = FunctionKeys.MailingList,
-                Environment = criteria.Environment,
-                IsActive = true,
-                RoleId = (byte)Constant.Policy.Host,
-                UserId = this.CurrentSession.UserId
-            };
+                functionItemList = _functionService.GetSelectListItemBySite(criteria.SiteId, criteria.Environment, isActive: true);
+            }
+            else
+            {
+                var functionList = _functionService.GetByUserAndSiteIncludeGroup(this.CurrentSession.UserId, criteria.SiteId, criteria.Environment);
+                if (functionList != null)
+                {
+                    functionList = functionList.Where(t => t.Policy >= (byte)Constant.Policy.Host);
+                    functionItemList = functionList.Select(s => new SelectListItem
+                    {
+                        Text = s.Function.Name, Value = s.Function.Id.ToString(), Selected = criteria.FunctionId == s.Function.Id
+                    }).ToList();
+                }
 
-            var mailFunctionList = _functionService.GetByParentKeyAndSite(getByParentKeyAndSiteCriteria);
+                getByParentKeyAndSiteCriteria.RoleId = (byte)Constant.Policy.Host;
+                getByParentKeyAndSiteCriteria.UserId = this.CurrentSession.UserId;
+            }
 
+            var mailFunctionList = _functionService.GetByParentKeyAndSite(getByParentKeyAndSiteCriteria).ToList();
             if (mailFunctionList != null)
             {
                 mailFunctionItemList = mailFunctionList.Select(s => new SelectListItem
                 {
-                    Text = s.Name,
-                    Value = s.Id.ToString(),
+                    Text = s.Name, Value = s.Id.ToString(),
                 }).ToList();
             }
+        }
 
-            functionItemList = _functionService.GetSelectListItemBySite(criteria.SiteId, criteria.Environment, isActive: true);
+        /// <summary>
+        /// Function to remove Duplicated email.
+        /// </summary>
+        /// <param name="emails">Input List emails.</param>
+        /// <returns>Return List emails.</returns>
+        private string RemoveDuplicatedEmail(string emails)
+        {
+            var emailList = new List<string>();
+            if (!string.IsNullOrWhiteSpace(emails))
+            {
+                var arrEmail = emails.Split(';');
+                foreach (var email in arrEmail)
+                {
+                    if (!emailList.Contains(email.Trim().ToLower()))
+                    {
+                        emailList.Add(email.Trim().ToLower());
+                    }
+                }
+            }
+
+            var temp = emailList.ToArray();
+            return string.Join(";", temp);
         }
     }
 }

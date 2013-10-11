@@ -58,7 +58,7 @@ namespace Fanex.NAP.Admin.Core.Services.Impl
         /// <param name="emailList">Email list.</param>
         /// <param name="hasCheckEmpty">Check empty or no.</param>
         /// <returns>True or False.</returns>
-        private static bool IsValidEmailList(string emailList, bool hasCheckEmpty = false)
+        public static bool IsValidEmailList(string emailList, bool hasCheckEmpty = false)
         {
             var isValid = true;
 
@@ -89,7 +89,7 @@ namespace Fanex.NAP.Admin.Core.Services.Impl
         /// </summary>
         /// <param name="email">Email need check.</param>
         /// <returns>True or False.</returns>
-        private static bool IsValidEmail(string email)
+        public static bool IsValidEmail(string email)
         {
             if (string.IsNullOrWhiteSpace(email))
             {

@@ -1,44 +1,44 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Functions>
     <Function Name="Site">        
-        <Setting Key="NAP_Site_InsertSiteURL" SpName="NAP_Site_InsertSiteURL" DbName="Nap"></Setting>
-        <Setting Key="NAP_Site_InsertWithSiteURL" SpName="NAP_Site_InsertWithSiteURL" DbName="Nap"></Setting>
-        <Setting Key="NAP_Site_Update" SpName="NAP_Site_Update" DbName="Nap"></Setting>
-        <Setting Key="NAP_Site_UpdateSiteURL" SpName="NAP_Site_UpdateSiteURL" DbName="Nap"></Setting>
-        <Setting Key="NAP_Site_UpdateStatus" SpName="NAP_Site_UpdateStatus" DbName="Nap"></Setting>
-        <Setting Key="NAP_Site_UpdateDefaultSiteURL" SpName="NAP_Site_UpdateDefaultSiteURL" DbName="Nap"></Setting>
+        <Setting Key="NAP_Site_InsertSiteURL" SpName="NAP_Site_InsertSiteURL" DbName="SVRNAP.bodb_NAP.bodbAdminNet"></Setting>
+        <Setting Key="NAP_Site_InsertWithSiteURL" SpName="NAP_Site_InsertWithSiteURL" DbName="SVRNAP.bodb_NAP.bodbAdminNet"></Setting>
+        <Setting Key="NAP_Site_Update" SpName="NAP_Site_Update" DbName="SVRNAP.bodb_NAP.bodbAdminNet"></Setting>
+        <Setting Key="NAP_Site_UpdateSiteURL" SpName="NAP_Site_UpdateSiteURL" DbName="SVRNAP.bodb_NAP.bodbAdminNet"></Setting>
+        <Setting Key="NAP_Site_UpdateStatus" SpName="NAP_Site_UpdateStatus" DbName="SVRNAP.bodb_NAP.bodbAdminNet"></Setting>
+        <Setting Key="NAP_Site_UpdateDefaultSiteURL" SpName="NAP_Site_UpdateDefaultSiteURL" DbName="SVRNAP.bodb_NAP.bodbAdminNet"></Setting>
     </Function>
     <Function Name="Function">        
-        <Setting Key="NAP_Function_Duplicate" SpName="NAP_Function_Duplicate" DbName="Nap"></Setting>
-        <Setting Key="NAP_Function_Insert" SpName="NAP_Function_Insert" DbName="Nap"></Setting>
-        <Setting Key="NAP_Function_Update" SpName="NAP_Function_Update" DbName="Nap"></Setting>
-        <Setting Key="NAP_Function_UpdateStatus" SpName="NAP_Function_UpdateStatus" DbName="Nap"></Setting>       
+        <Setting Key="NAP_Function_Duplicate" SpName="NAP_Function_Duplicate" DbName="SVRNAP.bodb_NAP.bodbAdminNet"></Setting>
+        <Setting Key="NAP_Function_Insert" SpName="NAP_Function_Insert" DbName="SVRNAP.bodb_NAP.bodbAdminNet"></Setting>
+        <Setting Key="NAP_Function_Update" SpName="NAP_Function_Update" DbName="SVRNAP.bodb_NAP.bodbAdminNet"></Setting>
+        <Setting Key="NAP_Function_UpdateStatus" SpName="NAP_Function_UpdateStatus" DbName="SVRNAP.bodb_NAP.bodbAdminNet"></Setting>       
     </Function>
     <Function Name="MenuItem">        
-        <Setting Key="NAP_MenuItem_Insert" SpName="NAP_MenuItem_Insert" DbName="Nap"></Setting>
-        <Setting Key="NAP_MenuItem_Update" SpName="NAP_MenuItem_Update" DbName="Nap"></Setting>
-        <Setting Key="NAP_MenuItem_UpdateStatus" SpName="NAP_MenuItem_UpdateStatus" DbName="Nap"></Setting>
-        <Setting Key="NAP_MenuItem_Search" SpName="NAP_MenuItem_Search" DbName="Nap"></Setting>
-        <Setting Key="NAP_MenuItem_GetParentById" SpName="NAP_MenuItem_GetParentById" DbName="Nap"></Setting>
+        <Setting Key="NAP_MenuItem_Insert" SpName="NAP_MenuItem_Insert" DbName="SVRNAP.bodb_NAP.bodbAdminNet"></Setting>
+        <Setting Key="NAP_MenuItem_Update" SpName="NAP_MenuItem_Update" DbName="SVRNAP.bodb_NAP.bodbAdminNet"></Setting>
+        <Setting Key="NAP_MenuItem_UpdateStatus" SpName="NAP_MenuItem_UpdateStatus" DbName="SVRNAP.bodb_NAP.bodbAdminNet"></Setting>
+        <Setting Key="NAP_MenuItem_Search" SpName="NAP_MenuItem_Search" DbName="SVRNAP.bodb_NAP.bodbAdminNet"></Setting>
+        <Setting Key="NAP_MenuItem_GetParentById" SpName="NAP_MenuItem_GetParentById" DbName="SVRNAP.bodb_NAP.bodbAdminNet"></Setting>
     </Function>
     <Function Name="Group">
-        <Setting Key="NAP_Group_AssignFunction" SpName="NAP_Group_AssignFunction" DbName="Nap"></Setting>
-        <Setting Key="NAP_Group_Insert" SpName="NAP_Group_Insert" DbName="Nap"></Setting>
-        <Setting Key="NAP_Group_Update" SpName="NAP_Group_Update" DbName="Nap"></Setting>
-        <Setting Key="NAP_Group_UpdateStatus" SpName="NAP_Group_UpdateStatus" DbName="Nap"></Setting>        
+        <Setting Key="NAP_Group_AssignFunction" SpName="NAP_Group_AssignFunction" DbName="SVRNAP.bodb_NAP.bodbAdminNet"></Setting>
+        <Setting Key="NAP_Group_Insert" SpName="NAP_Group_Insert" DbName="SVRNAP.bodb_NAP.bodbAdminNet"></Setting>
+        <Setting Key="NAP_Group_Update" SpName="NAP_Group_Update" DbName="SVRNAP.bodb_NAP.bodbAdminNet"></Setting>
+        <Setting Key="NAP_Group_UpdateStatus" SpName="NAP_Group_UpdateStatus" DbName="SVRNAP.bodb_NAP.bodbAdminNet"></Setting>        
     </Function>
     <Function Name="User">        
-        <Setting Key="NAP_User_AssignFunction" SpName="NAP_User_AssignFunction" DbName="Nap"  />
-        <Setting Key="NAP_User_AssignSite" SpName="NAP_User_AssignSite" DbName="Nap"  />                        
-        <Setting Key="NAP_User_Insert" SpName="NAP_User_Insert" DbName="Nap"  />        
+        <Setting Key="NAP_User_AssignFunction" SpName="NAP_User_AssignFunction" DbName="SVRNAP.bodb_NAP.bodbAdminNet"  />
+        <Setting Key="NAP_User_AssignSite" SpName="NAP_User_AssignSite" DbName="SVRNAP.bodb_NAP.bodbAdminNet"  />                        
+        <Setting Key="NAP_User_Insert" SpName="NAP_User_Insert" DbName="SVRNAP.bodb_NAP.bodbAdminNet"  />        
     </Function>
     <Function Name="Cust">
-        <Setting Key="NAP_Cust_Insert" SpName="NAP_Cust_Insert" DbName="Nap"  />
-        <Setting Key="NAP_Cust_Update" SpName="NAP_Cust_Update" DbName="Nap"  />
-        <Setting Key="NAP_Cust_UpdatePassword" SpName="NAP_Cust_UpdatePassword" DbName="CustDB"  />
+        <Setting Key="NAP_Cust_Insert" SpName="NAP_Cust_Insert" DbName="SVRNAP.bodb_NAP.bodbAdminNet"  />
+        <Setting Key="NAP_Cust_Update" SpName="NAP_Cust_Update" DbName="SVRNAP.bodb_NAP.bodbAdminNet"  />
+        <Setting Key="NAP_Cust_UpdatePassword" SpName="NAP_Cust_UpdatePassword" DbName="SVRCUST.CustDB.bodbAdminNet"  />
     </Function>
     <Function Name="MailingList">
-      <Setting Key="NAP_Function_GetByParentKeyAndSite" SpName="NAP_Function_GetByParentKeyAndSite" DbName="Nap">
+      <Setting Key="NAP_Function_GetByParentKeyAndSite" SpName="NAP_Function_GetByParentKeyAndSite" DbName="SVRNAP.bodb_NAP.bodbAdminNet">
         <Mapping DataField="FunctionId" ObjectProperty="Id" />
         <Mapping DataField="FunctionName" ObjectProperty="Name" />
         <Mapping DataField="FunctionKey" ObjectProperty="Key" />
@@ -51,11 +51,11 @@
         <Mapping DataField="ModifierId" ObjectProperty="Id" />
         <Mapping DataField="ModifierUsername" ObjectProperty="Username" />
       </Setting>
-      <Setting Key="NAP_MailingLists_Insert" SpName="NAP_MailingLists_Insert" DbName="Nap"/>
-      <Setting Key="NAP_MailingLists_Update" SpName="NAP_MailingLists_Update" DbName="Nap"/>
-      <Setting Key="NAP_MailingLists_UpdateStatus" SpName="NAP_MailingLists_UpdateStatus" DbName="Nap"/>
-      <Setting Key="NAP_MailingLists_UpdateIsInternal" SpName="NAP_MailingLists_UpdateIsInternal" DbName="Nap"/>
-      <Setting Key="NAP_MailingLists_GetById" SpName="NAP_MailingLists_GetById" DbName="Nap">
+      <Setting Key="NAP_MailingLists_Insert" SpName="NAP_MailingLists_Insert" DbName="SVRNAP.bodb_NAP.bodbAdminNet"/>
+      <Setting Key="NAP_MailingLists_Update" SpName="NAP_MailingLists_Update" DbName="SVRNAP.bodb_NAP.bodbAdminNet"/>
+      <Setting Key="NAP_MailingLists_UpdateStatus" SpName="NAP_MailingLists_UpdateStatus" DbName="SVRNAP.bodb_NAP.bodbAdminNet"/>
+      <Setting Key="NAP_MailingLists_UpdateIsInternal" SpName="NAP_MailingLists_UpdateIsInternal" DbName="SVRNAP.bodb_NAP.bodbAdminNet"/>
+      <Setting Key="NAP_MailingLists_GetById" SpName="NAP_MailingLists_GetById" DbName="SVRNAP.bodb_NAP.bodbAdminNet">
         <Mapping DataField="ListId" ObjectProperty="Id" />
         <Mapping DataField="ListName" ObjectProperty="Name" />
         <Mapping DataField="ListKey" ObjectProperty="Key" />
@@ -66,7 +66,7 @@
         <Mapping DataField="FunctionId" ObjectProperty="Id" />
         <Mapping DataField="FunctionName" ObjectProperty="Name" />
       </Setting>
-      <Setting Key="NAP_MailingLists_GetByKey" SpName="NAP_MailingLists_GetByKey" DbName="Nap">
+      <Setting Key="NAP_MailingLists_GetByKey" SpName="NAP_MailingLists_GetByKey" DbName="SVRNAP.bodb_NAP.bodbAdminNet">
         <Mapping DataField="ListId" ObjectProperty="Id" />
         <Mapping DataField="ListName" ObjectProperty="Name" />
         <Mapping DataField="ListKey" ObjectProperty="Key" />
@@ -77,7 +77,7 @@
         <Mapping DataField="FunctionId" ObjectProperty="Id" />
         <Mapping DataField="FunctionName" ObjectProperty="Name" />
       </Setting>
-      <Setting Key="NAP_MailingLists_GetByName" SpName="NAP_MailingLists_GetByName" DbName="Nap">
+      <Setting Key="NAP_MailingLists_GetByName" SpName="NAP_MailingLists_GetByName" DbName="SVRNAP.bodb_NAP.bodbAdminNet">
         <Mapping DataField="ListId" ObjectProperty="Id" />
         <Mapping DataField="ListName" ObjectProperty="Name" />
         <Mapping DataField="ListKey" ObjectProperty="Key" />
@@ -88,7 +88,7 @@
         <Mapping DataField="FunctionId" ObjectProperty="Id" />
         <Mapping DataField="FunctionName" ObjectProperty="Name" />
       </Setting>
-      <Setting Key="NAP_MailingLists_GetBySite" SpName="NAP_MailingLists_GetBySite" DbName="Nap">
+      <Setting Key="NAP_MailingLists_GetBySite" SpName="NAP_MailingLists_GetBySite" DbName="SVRNAP.bodb_NAP.bodbAdminNet">
         <Mapping DataField="ListId" ObjectProperty="Id" />
         <Mapping DataField="ListName" ObjectProperty="Name" />
         <Mapping DataField="ListKey" ObjectProperty="Key" />
@@ -99,7 +99,7 @@
         <Mapping DataField="FunctionId" ObjectProperty="Id" />
         <Mapping DataField="FunctionName" ObjectProperty="Name" />
       </Setting>
-      <Setting Key="NAP_MailingLists_GetByFunctionKeyAndSite" SpName="NAP_MailingLists_GetByFunctionKeyAndSite" DbName="Nap">
+      <Setting Key="NAP_MailingLists_GetByFunctionKeyAndSite" SpName="NAP_MailingLists_GetByFunctionKeyAndSite" DbName="SVRNAP.bodb_NAP.bodbAdminNet">
         <Mapping DataField="ListId" ObjectProperty="Id" />
         <Mapping DataField="ListName" ObjectProperty="Name" />
         <Mapping DataField="ListKey" ObjectProperty="Key" />
