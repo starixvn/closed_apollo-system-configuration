@@ -28,6 +28,11 @@ namespace Fanex.NAP.Core.Repository.Impl
     /// </summary>
     public class SiteRepository : RepositoryBase<ISite>, ISiteRepository
     {
+        /// <summary>
+        /// Gets site.
+        /// </summary>
+        /// <param name="criteria">The criteria get site.</param>
+        /// <returns>The site.</returns>
         public override ISite Get(ICriteria criteria)
         {
             try
@@ -43,6 +48,11 @@ namespace Fanex.NAP.Core.Repository.Impl
             }
         }
 
+        /// <summary>
+        /// Gets site URL.
+        /// </summary>
+        /// <param name="criteria">The criteria get site URL.</param>
+        /// <returns>The site URL.</returns>
         public SiteUrl GetSiteUrl(ICriteria criteria)
         {
             try
@@ -65,11 +75,21 @@ namespace Fanex.NAP.Core.Repository.Impl
             }
         }
 
+        /// <summary>
+        /// Count site.
+        /// </summary>
+        /// <param name="criteria">The criteria count site.</param>
+        /// <returns>Number of site.</returns>
         public override int Count(ICriteria criteria)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Fetch site.
+        /// </summary>
+        /// <param name="criteria">The criteria fetch site.</param>
+        /// <returns>List of site.</returns>
         public override IEnumerable<ISite> Fetch(ICriteria criteria)
         {
             try
@@ -85,6 +105,11 @@ namespace Fanex.NAP.Core.Repository.Impl
             }
         }
 
+        /// <summary>
+        /// Fetch site level.
+        /// </summary>
+        /// <param name="criteria">The criteria fetch site level.</param>
+        /// <returns>List of site level.</returns>
         public IEnumerable<SiteLevel> FetchSiteLevel(ICriteria criteria)
         {
             try
@@ -109,6 +134,11 @@ namespace Fanex.NAP.Core.Repository.Impl
             }
         }
 
+        /// <summary>
+        /// Fetch site URL.
+        /// </summary>
+        /// <param name="criteria">The criteria fetch site URL.</param>
+        /// <returns>List of site URL.</returns>
         public IEnumerable<SiteUrl> FetchSiteUrl(ICriteria criteria)
         {
             try
@@ -131,6 +161,12 @@ namespace Fanex.NAP.Core.Repository.Impl
             }
         }
 
+        /// <summary>
+        /// Insert site.
+        /// </summary>
+        /// <param name="criteria">The criteria insert site.</param>
+        /// <param name="logCriteria">The log criteria duplicate site.</param>
+        /// <returns>Command result.</returns>
         public ICommandResult Insert(ref InsertSiteCriteria criteria, ICriteria logCriteria)
         {
             try
@@ -156,6 +192,12 @@ namespace Fanex.NAP.Core.Repository.Impl
             }
         }
 
+        /// <summary>
+        /// Insert site URL.
+        /// </summary>
+        /// <param name="criteria">The criteria insert site URL.</param>
+        /// <param name="logCriteria">The log criteria duplicate site URL.</param>
+        /// <returns>Command result.</returns>
         public ICommandResult InsertSiteUrl(ref InsertSiteUrlCriteria criteria, ICriteria logCriteria)
         {
             try
@@ -180,6 +222,12 @@ namespace Fanex.NAP.Core.Repository.Impl
             }
         }
 
+        /// <summary>
+        /// Update site.
+        /// </summary>
+        /// <param name="criteria">The criteria update site.</param>
+        /// <param name="logCriteria">The log criteria update site.</param>
+        /// <returns>Command result.</returns>
         public ICommandResult Update(ICriteria criteria, ICriteria logCriteria)
         {
             try
@@ -203,21 +251,42 @@ namespace Fanex.NAP.Core.Repository.Impl
             }
         }
 
+        /// <summary>
+        /// Delete site.
+        /// </summary>
+        /// <param name="criteria">The criteria delete site.</param>
+        /// <param name="logCriteria">The log criteria delete site.</param>
+        /// <returns>Command result.</returns>
         public ICommandResult Delete(ICriteria criteria, ICriteria logCriteria)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Insert site.
+        /// </summary>
+        /// <param name="entity">The site entity.</param>
+        /// <returns>Command result.</returns>
         public ICommandResult Insert(ISite entity)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Update site.
+        /// </summary>
+        /// <param name="entity">The site entity.</param>
+        /// <returns>Command result.</returns>
         public ICommandResult Update(ISite entity)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Delete site.
+        /// </summary>
+        /// <param name="entity">The site entity.</param>
+        /// <returns>Command result.</returns>
         public ICommandResult Delete(ISite entity)
         {
             throw new NotImplementedException();

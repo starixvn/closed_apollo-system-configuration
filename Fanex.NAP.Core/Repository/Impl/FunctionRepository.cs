@@ -29,6 +29,11 @@ namespace Fanex.NAP.Core.Repository.Impl
     /// </summary>
     public class FunctionRepository : RepositoryBase<IFunction>, IFunctionRepository
     {
+        /// <summary>
+        /// Gets function.
+        /// </summary>
+        /// <param name="criteria">The criteria get function.</param>
+        /// <returns>The function.</returns>
         public override IFunction Get(ICriteria criteria)
         {
             try
@@ -54,6 +59,11 @@ namespace Fanex.NAP.Core.Repository.Impl
             }
         }
 
+        /// <summary>
+        /// Count function.
+        /// </summary>
+        /// <param name="criteria">The criteria count function.</param>
+        /// <returns>Number of function.</returns>
         public override int Count(ICriteria criteria)
         {
             try
@@ -69,6 +79,11 @@ namespace Fanex.NAP.Core.Repository.Impl
             }
         }
 
+        /// <summary>
+        /// Fetch function.
+        /// </summary>
+        /// <param name="criteria">The criteria fetch function.</param>
+        /// <returns>List of function.</returns>
         public override IEnumerable<IFunction> Fetch(ICriteria criteria)
         {
             try
@@ -94,6 +109,11 @@ namespace Fanex.NAP.Core.Repository.Impl
             }
         }
 
+        /// <summary>
+        /// Fetch function policy.
+        /// </summary>
+        /// <param name="criteria">The criteria fetch function policy.</param>
+        /// <returns>List of function policy.</returns>
         public IEnumerable<FunctionPolicy> FetchFunctionPolicy(ICriteria criteria)
         {
             try
@@ -147,6 +167,11 @@ namespace Fanex.NAP.Core.Repository.Impl
             }
         }
 
+        /// <summary>
+        /// Fetch full function policy.
+        /// </summary>
+        /// <param name="criteria">The criteria fetch full function policy.</param>
+        /// <returns>List of full function policy.</returns>
         public IEnumerable<FunctionPolicy> FetchFullFunctionPolicy(ICriteria criteria)
         {
             try
@@ -212,6 +237,12 @@ namespace Fanex.NAP.Core.Repository.Impl
             }
         }
 
+        /// <summary>
+        /// Duplicate function.
+        /// </summary>
+        /// <param name="criteria">The criteria duplicate function.</param>
+        /// <param name="logCriteria">The log criteria duplicate function.</param>
+        /// <returns>Command result.</returns>
         public ICommandResult Duplicate(ref DuplicateFunctionCriteria criteria, ICriteria logCriteria)
         {
             try
@@ -235,6 +266,12 @@ namespace Fanex.NAP.Core.Repository.Impl
             }
         }
 
+        /// <summary>
+        /// Insert function.
+        /// </summary>
+        /// <param name="criteria">The criteria insert function.</param>
+        /// <param name="logCriteria">The log criteria duplicate function.</param>
+        /// <returns>Command result.</returns>
         public ICommandResult Insert(ref InsertFunctionCriteria criteria, ICriteria logCriteria)
         {
             try
@@ -258,6 +295,12 @@ namespace Fanex.NAP.Core.Repository.Impl
             }
         }
 
+        /// <summary>
+        /// Update function.
+        /// </summary>
+        /// <param name="criteria">The criteria update function.</param>
+        /// <param name="logCriteria">The log criteria update function.</param>
+        /// <returns>Command result.</returns>
         public ICommandResult Update(ICriteria criteria, ICriteria logCriteria)
         {
             try
@@ -279,21 +322,42 @@ namespace Fanex.NAP.Core.Repository.Impl
             }
         }
 
+        /// <summary>
+        /// Delete function.
+        /// </summary>
+        /// <param name="criteria">The criteria delete function.</param>
+        /// <param name="logCriteria">The log criteria delete function.</param>
+        /// <returns>Command result.</returns>
         public ICommandResult Delete(ICriteria criteria, ICriteria logCriteria)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Insert function.
+        /// </summary>
+        /// <param name="entity">The function entity.</param>
+        /// <returns>Command result.</returns>
         public ICommandResult Insert(IFunction entity)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Update function.
+        /// </summary>
+        /// <param name="entity">The function entity.</param>
+        /// <returns>Command result.</returns>
         public ICommandResult Update(IFunction entity)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Delete function.
+        /// </summary>
+        /// <param name="entity">The function entity.</param>
+        /// <returns>Command result.</returns>
         public ICommandResult Delete(IFunction entity)
         {
             throw new NotImplementedException();
