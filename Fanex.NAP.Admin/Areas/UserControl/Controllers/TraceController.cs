@@ -264,8 +264,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             XElement elementNew = XElement.Parse(log.Data);
             XElement elementOld = XElement.Parse(log.OldData ?? "<ROOT/>");
 
-            #region NAP_Cust_Insert
-
             if (log.ActionId == (int)LogAction.NAP_User_Insert)
             {
                 var listLogData = new List<LogData>();
@@ -285,8 +283,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 ViewBag.LogData = listLogData;
             }
 
-            #endregion
-
             return PartialView("~/Areas/UserControl/Views/Trace/_NAPLogInsert.cshtml");
         }
 
@@ -294,8 +290,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             XElement elementNew = XElement.Parse(log.Data);
             XElement elementOld = XElement.Parse(log.OldData ?? "<ROOT/>");
-
-            #region NAP_Cust_Insert
 
             if (log.ActionId == (int)LogAction.NAP_Cust_Insert)
             {
@@ -334,8 +328,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 ViewBag.LogData = listLogData;
             }
 
-            #endregion
-
             return PartialView("~/Areas/UserControl/Views/Trace/_NAPLogInsert.cshtml");
         }
 
@@ -343,8 +335,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             XElement elementNew = XElement.Parse(log.Data);
             XElement elementOld = XElement.Parse(log.OldData ?? "<ROOT/>");
-
-            #region NAP_Function_Insert
 
             if (log.ActionId == (int)LogAction.NAP_Function_Insert)
             {
@@ -407,8 +397,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 ViewBag.LogData = listLogData;
             }
 
-            #endregion
-
             return PartialView("~/Areas/UserControl/Views/Trace/_NAPLogInsert.cshtml");
         }
 
@@ -416,8 +404,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             XElement elementNew = XElement.Parse(log.Data);
             XElement elementOld = XElement.Parse(log.OldData ?? "<ROOT/>");
-
-            #region NAP_Group_Insert
 
             if (log.ActionId == (int)LogAction.NAP_Group_Insert)
             {
@@ -444,8 +430,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 ViewBag.LogData = listLogData;
             }
 
-            #endregion
-
             return PartialView("~/Areas/UserControl/Views/Trace/_NAPLogInsert.cshtml");
         }
 
@@ -453,8 +437,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             XElement elementNew = XElement.Parse(log.Data);
             XElement elementOld = XElement.Parse(log.OldData ?? "<ROOT/>");
-
-            #region NAP_MenuItem_Insert
 
             if (log.ActionId == (int)LogAction.NAP_MenuItem_Insert)
             {
@@ -517,8 +499,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 ViewBag.LogData = listLogData;
             }
 
-            #endregion
-
             return PartialView("~/Areas/UserControl/Views/Trace/_NAPLogInsert.cshtml");
         }
 
@@ -526,8 +506,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             XElement elementNew = XElement.Parse(log.Data);
             XElement elementOld = XElement.Parse(log.OldData ?? "<ROOT/>");
-
-            #region NAP_Site_InsertWithSiteURL
 
             if (log.ActionId == (int)LogAction.NAP_Site_InsertWithSiteURL)
             {
@@ -579,8 +557,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 ViewBag.SiteUrl = listSiteUrl;
             }
 
-            #endregion
-
             return PartialView("~/Areas/UserControl/Views/Trace/_NAP_Site_InsertWithSiteURL.cshtml");
         }
 
@@ -588,8 +564,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             XElement elementNew = XElement.Parse(log.Data);
             XElement elementOld = XElement.Parse(log.OldData ?? "<ROOT/>");
-
-            #region NAP_MenuItem_Update
 
             if (log.ActionId == (int)LogAction.NAP_MenuItem_Update)
             {
@@ -661,8 +635,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 ViewBag.LogData = listLogData;
             }
 
-            #endregion
-
             return PartialView("~/Areas/UserControl/Views/Trace/_NAPLogUpdate.cshtml");
         }
 
@@ -670,8 +642,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             XElement elementNew = XElement.Parse(log.Data);
             XElement elementOld = XElement.Parse(log.OldData ?? "<ROOT/>");
-
-            #region NAP_MenuItem_UpdateStatus
 
             if (log.ActionId == (int)LogAction.NAP_MenuItem_UpdateStatus)
             {
@@ -688,8 +658,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 ViewBag.LogData = listLogData;
             }
 
-            #endregion
-
             return PartialView("~/Areas/UserControl/Views/Trace/_NAPLogUpdate.cshtml");
         }
 
@@ -697,8 +665,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             XElement elementNew = XElement.Parse(log.Data);
             XElement elementOld = XElement.Parse(log.OldData ?? "<ROOT/>");
-
-            #region NAP_Function_Update
 
             if (log.ActionId == (int)LogAction.NAP_Function_Update
                 || log.ActionId == (int)LogAction.NAP_Function_Duplicate)
@@ -771,8 +737,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 ViewBag.LogData = listLogData;
             }
 
-            #endregion
-
             return PartialView("~/Areas/UserControl/Views/Trace/_NAPLogUpdate.cshtml");
         }
 
@@ -780,8 +744,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             XElement elementNew = XElement.Parse(log.Data);
             XElement elementOld = XElement.Parse(log.OldData ?? "<ROOT/>");
-
-            #region NAP_Function_UpdateStatus
 
             if (log.ActionId == (int)LogAction.NAP_Function_UpdateStatus)
             {
@@ -798,8 +760,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 ViewBag.LogData = listLogData;
             }
 
-            #endregion
-
             return PartialView("~/Areas/UserControl/Views/Trace/_NAPLogUpdate.cshtml");
         }
 
@@ -807,8 +767,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             XElement elementNew = XElement.Parse(log.Data);
             XElement elementOld = XElement.Parse(log.OldData ?? "<ROOT/>");
-
-            #region NAP_Site_Update
 
             if (log.ActionId == (int)LogAction.NAP_Site_Update)
             {
@@ -845,8 +803,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 ViewBag.LogData = listLogData;
             }
 
-            #endregion
-
             return PartialView("~/Areas/UserControl/Views/Trace/_NAPLogUpdate.cshtml");
         }
 
@@ -854,8 +810,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             XElement elementNew = XElement.Parse(log.Data);
             XElement elementOld = XElement.Parse(log.OldData ?? "<ROOT/>");
-
-            #region NAP_Site_UpdateStatus
 
             if (log.ActionId == (int)LogAction.NAP_Site_UpdateStatus)
             {
@@ -872,8 +826,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 ViewBag.LogData = listLogData;
             }
 
-            #endregion
-
             return PartialView("~/Areas/UserControl/Views/Trace/_NAPLogUpdate.cshtml");
         }
 
@@ -881,8 +833,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             XElement elementNew = XElement.Parse(log.Data);
             XElement elementOld = XElement.Parse(log.OldData ?? "<ROOT/>");
-
-            #region NAP_Group_Update
 
             if (log.ActionId == (int)LogAction.NAP_Group_Update)
             {
@@ -912,8 +862,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 ViewBag.LogData = listLogData;
             }
 
-            #endregion
-
             return PartialView("~/Areas/UserControl/Views/Trace/_NAPLogUpdate.cshtml");
         }
 
@@ -921,8 +869,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             XElement elementNew = XElement.Parse(log.Data);
             XElement elementOld = XElement.Parse(log.OldData ?? "<ROOT/>");
-
-            #region NAP_Group_UpdateStatus
 
             if (log.ActionId == (int)LogAction.NAP_Group_UpdateStatus)
             {
@@ -939,8 +885,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 ViewBag.LogData = listLogData;
             }
 
-            #endregion
-
             return PartialView("~/Areas/UserControl/Views/Trace/_NAPLogUpdate.cshtml");
         }
 
@@ -948,8 +892,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             XElement elementNew = XElement.Parse(log.Data ?? "<ROOT/>");
             XElement elementOld = XElement.Parse(log.OldData ?? "<ROOT/>");
-
-            #region NAP_Cust_Update
 
             if (log.ActionId == (int)LogAction.NAP_Cust_Update)
             {
@@ -987,8 +929,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 ViewBag.LogData = listLogData;
             }
 
-            #endregion
-
             return PartialView("~/Areas/UserControl/Views/Trace/_NAPLogUpdate.cshtml");
         }
 
@@ -997,14 +937,12 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             XElement elementNew = XElement.Parse(log.Data);
             XElement elementOld = XElement.Parse(log.OldData ?? "<ROOT/>");
 
-            #region NAP_Site_UpdateSiteURL || NAP_Site_InsertSiteURL || NAP_Site_UpdateDefaultSiteURL
-
+            // NAP_Site_UpdateSiteURL || NAP_Site_InsertSiteURL || NAP_Site_UpdateDefaultSiteURL
             if (log.ActionId == (int)LogAction.NAP_Site_UpdateSiteURL
                 || log.ActionId == (int)LogAction.NAP_Site_InsertSiteURL
                 || log.ActionId == (int)LogAction.NAP_Site_UpdateDefaultSiteURL)
             {
-                #region Old data
-
+                // Old data
                 string strUrlOld = elementOld.Attribute("Value").Value.DecodeXMLValue();
 
                 var listSiteUrlOld = new List<SiteUrl>();
@@ -1025,10 +963,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
                 ViewBag.SiteUrlOld = listSiteUrlOld;
 
-                #endregion
-
-                #region New data
-
+                // New data
                 string strUrl = elementNew.Attribute("Value").Value.DecodeXMLValue();
 
                 var listSiteUrl = new List<SiteUrl>();
@@ -1048,13 +983,8 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 }
 
                 ViewBag.SiteUrl = listSiteUrl;
-
-                #endregion
-
                 ViewBag.IsSiteUpdate = true;
             }
-
-            #endregion
 
             return PartialView("~/Areas/UserControl/Views/Trace/_NAP_Site_Url.cshtml");
         }
@@ -1069,7 +999,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             if (log.ActionId == (int)LogAction.NAP_Group_AssignFunction
                 || log.ActionId == (int)LogAction.NAP_User_AssignFunction)
             {
-                #region Get function list
+                // Get function list
 
                 int siteId = Convert.ToInt32(elementNew.Attribute("SiteId").Value);
 
@@ -1077,10 +1007,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
                 ViewBag.FunctionList = this._functionService.GetBySiteInHierarchy(siteId, Environment, true);
 
-                #endregion
-
-                #region Old data
-
+                // Old data
                 var listFunctionPolicyOld = new List<FunctionPolicy>();
 
                 if (elementOld.Attribute("Value") != null)
@@ -1108,10 +1035,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                     }
                 }
 
-                #endregion
-
-                #region New data
-
+                // New data
                 if (elementNew.Attribute("Value") != null)
                 {
                     string strFunctionPolicy = elementNew.Attribute("Value").Value.DecodeXMLValue();
@@ -1136,7 +1060,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                         ViewBag.ListNewData = hashNewPolicy;
                     }
                 }
-                #endregion
 
                 ViewBag.IsSiteUpdate = true;
 
@@ -1153,12 +1076,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             XElement elementNew = XElement.Parse(log.Data);
             XElement elementOld = XElement.Parse(log.OldData ?? "<ROOT/>");
 
-            #region NAP_User_AssignSite
-
             if (log.ActionId == (int)LogAction.NAP_User_AssignSite)
             {
-                #region Old data
-
+                // Old data
                 if (elementOld.Attribute("Value") != null
                     && !string.IsNullOrWhiteSpace(elementOld.Attribute("Value").Value))
                 {
@@ -1185,10 +1105,8 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
                     ViewBag.SiteUrlOld = listSiteUrlOld;
                 }
-                #endregion
 
-                #region New data
-
+                // New data
                 if (elementNew.Attribute("Value") != null)
                 {
                     string strUrl = elementNew.Attribute("Value").Value.DecodeXMLValue();
@@ -1213,12 +1131,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
                     ViewBag.SiteUrl = listSiteUrl;
                 }
-                #endregion
 
                 ViewBag.IsSiteUpdate = true;
             }
-
-            #endregion
 
             return PartialView("~/Areas/UserControl/Views/Trace/_NAP_Assign_Site.cshtml");
         }
@@ -1230,8 +1145,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
             if (log.ActionId == (int)LogAction.NAP_Function_AssignFunctionToUsers)
             {
-                #region Old data
-
+                // Old data
                 string strUserPolicyOld = elementOld.Attribute("Value").Value.DecodeXMLValue();
 
                 var listUserPolicyOld = new List<UserPolicy>();
@@ -1253,10 +1167,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
                 ViewBag.UserPolicyOld = listUserPolicyOld;
 
-                #endregion
-
-                #region New data
-
+                // New data
                 string strUrl = elementNew.Attribute("Value").Value.DecodeXMLValue();
 
                 var listUserPolicy = new List<UserPolicy>();
@@ -1277,9 +1188,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 }
 
                 ViewBag.UserPolicyNew = listUserPolicy;
-
-                #endregion
-
                 ViewBag.IsSiteUpdate = true;
             }
 
@@ -1293,8 +1201,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
             if (log.ActionId == (int)LogAction.NAP_Function_AssignFunctionToGroups)
             {
-                #region Old data
-
+                // Old data
                 string strGroupPolicyOld = elementOld.Attribute("Value").Value.DecodeXMLValue();
 
                 var listGroupPolicyOld = new List<GroupPolicy>();
@@ -1316,10 +1223,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
                 ViewBag.GroupPolicyOld = listGroupPolicyOld;
 
-                #endregion
-
-                #region New data
-
+                // New data
                 string strUrl = elementNew.Attribute("Value").Value.DecodeXMLValue();
 
                 var listGroupPolicy = new List<GroupPolicy>();
@@ -1340,9 +1244,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 }
 
                 ViewBag.GroupPolicyNew = listGroupPolicy;
-
-                #endregion
-
                 ViewBag.IsSiteUpdate = true;
             }
 

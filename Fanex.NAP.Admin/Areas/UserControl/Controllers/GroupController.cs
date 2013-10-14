@@ -68,8 +68,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             try
             {
-                #region check edit right
-                
+                // check edit right                
                 int policy = _userService.GetUserSiteFunctionKeyPolicy(
                             CurrentSession.UserId,
                             this.SiteId,
@@ -77,10 +76,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
                 ViewFlags.HasEditRight = policy >= (int)Constant.Policy.Host;
 
-                #endregion
-
-                #region check assign-function right
-                
+                // check assign-function right                
                 int assignFunctionPolicy = _userService.GetUserSiteFunctionKeyPolicy(
                             CurrentSession.UserId,
                             this.SiteId,
@@ -88,18 +84,13 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
                 ViewFlags.HasAssignFunctionRight = assignFunctionPolicy >= (int)Constant.Policy.Read;
 
-                #endregion
-
-                #region check manage-user right
-
+                // check manage-user right
                 var hasManageUser = _userService.GetUserSiteFunctionKeyPolicy(
                    CurrentSession.UserId,
                    SiteId,
                    FunctionKeys.ManageUser.ToString()) >= 1 ? true : false;
 
                 ViewFlags.HasManageUserRight = hasManageUser;
-
-                #endregion
 
                 ViewBag.GroupList = _groupService.GetAllWithNumOfUser(string.Empty, Environment);
             }
@@ -120,8 +111,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             {
                 criteria.Environment = Environment;
 
-                #region check edit right
-
+                // check edit right
                 int policy = _userService.GetUserSiteFunctionKeyPolicy(
                                                 CurrentSession.UserId,
                                                 this.SiteId,
@@ -129,10 +119,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
                 ViewFlags.HasEditRight = policy >= (int)Constant.Policy.Host;
 
-                #endregion                
-
-                #region check assign-function right
-
+                // check assign-function right
                 int assignFunctionPolicy = _userService.GetUserSiteFunctionKeyPolicy(
                                                     CurrentSession.UserId,
                                                     this.SiteId,
@@ -140,18 +127,13 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
                 ViewFlags.HasAssignFunctionRight = assignFunctionPolicy >= (int)Constant.Policy.Read;
 
-                #endregion
-
-                #region check manage-user right
-
+                // check manage-user right
                 var hasManageUser = _userService.GetUserSiteFunctionKeyPolicy(
                            CurrentSession.UserId,
                            SiteId,
                            FunctionKeys.ManageUser.ToString()) >= 1 ? true : false;
 
                 ViewFlags.HasManageUserRight = hasManageUser;
-
-                #endregion
 
                 ViewBag.GroupList = _groupService.GetAllWithNumOfUser(criteria.GroupName);
             }
@@ -185,8 +167,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    #region Check name exist
-
+                    // Check name exist
                     var group = _groupService.GetByName(criteria.GroupName);
 
                     if (!ReferenceEquals(group, null))
@@ -198,10 +179,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                         return View(criteria);
                     }
 
-                    #endregion
-
-                    #region Add group
-
+                    // Add group
                     criteria.CreatedBy = CurrentSession.UserId;
                     criteria.CreatedDate = DateTime.Now;
 
@@ -211,8 +189,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                     {
                         ViewBag.Success = true;
                     }
-
-                    #endregion
                 }
             }
             catch (Exception ex)
@@ -267,8 +243,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    #region Check name exist
-
+                    // Check name exist
                     var group = _groupService.GetByName(criteria.GroupName);
 
                     if (!ReferenceEquals(group, null))
@@ -283,10 +258,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                         }
                     }
 
-                    #endregion
-
-                    #region update function
-
+                    // update function
                     criteria.ModifiedBy = CurrentSession.UserId;
                     criteria.ModifiedDate = DateTime.Now;
 
@@ -296,8 +268,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                     {
                         ViewBag.Success = true;
                     }
-
-                    #endregion
                 }
             }
             catch (Exception ex)
@@ -414,8 +384,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             try
             {
-                #region check group and site
-
+                // check group and site
                 var group = _groupService.GetById(criteria.GroupId);
                 var site = _siteService.GetById(criteria.SiteId);
 
@@ -424,9 +393,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                     return RedirectToAction("Manage");
                 }
 
-                #endregion
-
-                #region check policy
+                // check policy
 
                 int policy = _userService.GetUserSiteFunctionKeyPolicy(
                                                 CurrentSession.UserId,
@@ -439,8 +406,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 }
 
                 ViewBag.ViewFlags.HasAssignFunctionRight = policy >= (int)Constant.Policy.Host;
-
-                #endregion
 
                 criteria.ModifiedBy = CurrentSession.UserId;
                 criteria.ModifiedDate = DateTime.Now;

@@ -77,13 +77,10 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             try
             {
-                #region declares paging params
-
+                // declares paging params
                 int pageIndex = id;
                 int pageSize = size;
                 string username = ViewBag.Username = q.Trim();
-
-                #endregion
 
                 // if dont specify a given site
                 if (siteId < 0)
@@ -96,8 +93,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                     }
                 }
 
-                #region permission in current site
-
+                // permission in current site
                 int manageUserPolicyCurrentSite = _userService.GetUserSiteFunctionKeyPolicy(
                     CurrentSession.UserId,
                     this.SiteId,
@@ -108,10 +104,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                     this.SiteId,
                     FunctionKeys.AssignSiteToUser.ToString());
 
-                #endregion
-
-                #region detects user rights on page
-
+                // detects user rights on page
                 // permission function manage user
                 int assignFunctionPolicyCurrentSite = 0;
 
@@ -159,14 +152,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                                                         && assignSitePolicyCurrentSite >= (int)Constant.Policy.Read;
                 }
 
-                #endregion
-
                 var listSite = new List<SelectListItem>();
 
                 if (ThisSiteIsNapAdmin)
                 {
-                    #region gets data for dropdownlist of sites
-
+                    // gets data for dropdownlist of sites
                     var siteSelectList = new List<SelectListItem>();
 
                     listSite = UserIsPortalAdmin
@@ -185,14 +175,12 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                     siteSelectList.Add(new SelectListItem { Text = ViewResources.No_Site, Value = "0" });
 
                     ViewBag.SiteSelectList = siteSelectList;
-
-                    #endregion
                 }
 
                 // gets data for dropdownlist of groups
                 ViewBag.GroupSelectList = _groupService.GetAllSelectListItem(selectedGroupId: groupId);
 
-                #region gets ViewBag data
+                // gets ViewBag data
                 ViewBag.SiteId = siteId;
                 ViewBag.UserId = CurrentSession.UserId;
                 ViewBag.ReturnGroupId = groupId;
@@ -202,7 +190,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 {
                     ViewBag.Level = _userService.GetUserSiteLevel(CurrentSession.UserId, siteId);
                 }
-                #endregion
 
                 int totalUsers = 0;
 
@@ -211,12 +198,12 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 if (siteId == Constant.SearchAllSite)
                 {
                     users = _userService.GetAllByUsernameGroupSite(
-                                                    pageIndex,
-                                                    pageSize,
-                                                    out totalUsers,
-                                                    username,
-                                                    groupId,
-                                                    listSite);
+                        pageIndex,
+                        pageSize,
+                        out totalUsers,
+                        username,
+                        groupId,
+                        listSite);
 
                     var hashManageUserPolicy = _userService.GetUserListSiteFunctionKeyPolicy(
                                                                 CurrentSession.UserId,
@@ -441,13 +428,10 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 throw ex;
             }
 
-            #region return current state page manage user
-
+            // return current state page manage user
             ViewBag.GroupId = groupId;
             ViewBag.SiteId = siteId;
             ViewBag.PageIndex = returnPageIndex;
-
-            #endregion
 
             return View(userList);
         }
@@ -482,18 +466,14 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    #region validation
-
                     // check username duplication
                     if (_userService.CheckUsernameExist(criteria.Username))
                     {
                         ModelState.AddModelError("Username", string.Format(ViewResources.DuplicateMsg, criteria.Username));
                         return View(criteria);
                     }
-
-                    #endregion
-
-                    #region add new user
+                    
+                    // add new user
 
                     criteria.UserPwd = Cryptography.CfsEnCode(criteria.UserPwd);
                     criteria.FirstName = criteria.FirstName == null ? string.Empty : criteria.FirstName;
@@ -508,8 +488,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                         ViewBag.Success = true;
                         ViewBag.UserId = criteria.CustId;
                     }
-
-                    #endregion
                 }
             }
             catch (Exception ex)
@@ -821,8 +799,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             try
             {
-                #region check user and site
-
+                // check user and site
                 var user = _userService.GetById(criteria.UserId);
                 var site = _siteService.GetById(criteria.SiteId);
 
@@ -831,10 +808,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                     return RedirectToAction("Manage");
                 }
 
-                #endregion
-
-                #region check policy
-
+                // check policy
                 int policy = _userService.GetUserSiteFunctionKeyPolicy(
                                                 CurrentSession.UserId,
                                                 criteria.SiteId,
@@ -846,8 +820,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 }
 
                 ViewFlags.HasAssignFunctionRight = policy >= (int)Constant.Policy.Host;
-
-                #endregion
 
                 criteria.Username = user.Username;
                 criteria.ModifiedBy = CurrentSession.UserId;

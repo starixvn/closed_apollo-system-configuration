@@ -142,29 +142,20 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    #region checks duplicate function name
-
+                    // checks duplicate function name
                     string functionName = criteria.FunctionName = criteria.FunctionName.Trim();
                     var function = this._functionService.GetByNameAndSite(functionName, criteria.SiteId);
 
                     if (function != null)
                     {
-                        ModelState.AddModelError(
-                            "FunctionName",
-                            string.Format(ViewResources.DuplicateMsg, functionName));
-
+                        ModelState.AddModelError("FunctionName", string.Format(ViewResources.DuplicateMsg, functionName));
                         return View(criteria);
                     }
 
-                    #endregion
+                    // checks duplicate function key
+                    string functionKey = criteria.FunctionKey = criteria.FunctionName.Replace(Constant.SPACE, string.Empty);
 
-                    #region checks duplicate function key
-
-                    string functionKey = criteria.FunctionKey =
-                        criteria.FunctionName.Replace(Constant.SPACE, string.Empty);
-
-                    #region replace char not letter or digit of function key
-
+                    // replace char not letter or digit of function key
                     StringBuilder strFunctionKeyModify = new StringBuilder();
 
                     for (int i = 0; i < functionKey.Length; i++)
@@ -183,8 +174,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                     criteria.FunctionKey = strFunctionKeyModify.ToString();
                     functionKey = strFunctionKeyModify.ToString();
 
-                    #endregion
-
                     function = this._functionService.GetByKeyAndSite(functionKey, criteria.SiteId);
 
                     if (function != null)
@@ -196,10 +185,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                         return View(criteria);
                     }
 
-                    #endregion
-
-                    #region adds function
-
+                    // adds function
                     criteria.ParentId = criteria.ParentId == 0 ? null : criteria.ParentId;
                     criteria.ParentName = (criteria.ParentId == null || criteria.ParentId == 0) ? null : criteria.ParentName;
                     criteria.CreatedBy = CurrentSession.UserId;
@@ -212,8 +198,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                     {
                         ViewBag.Success = true;
                     }
-
-                    #endregion
                 }
             }
             catch (Exception ex)
@@ -244,7 +228,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
             ViewBag.OriginFunctionName = function.Name;
 
-            #region builds criteria
             var criteria = new DuplicateFunctionCriteria
                 {
                     FunctionId = function.Id,
@@ -259,7 +242,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                     Environment = function.Environment,
                     ReturnSiteId = siteId ?? function.Site.Id
                 };
-            #endregion
 
             try
             {
@@ -293,39 +275,26 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    #region checks duplicate function name
-
+                    // checks duplicate function name
                     string functionName = criteria.FunctionName = criteria.FunctionName.Trim();
 
                     if (this._functionService.GetByNameAndSite(functionName, criteria.SiteId) != null)
                     {
-                        ModelState.AddModelError(
-                            "FunctionName",
-                            string.Format(ViewResources.DuplicateMsg, functionName));
-
+                        ModelState.AddModelError("FunctionName", string.Format(ViewResources.DuplicateMsg, functionName));
                         return View(criteria);
                     }
 
-                    #endregion
-
-                    #region checks duplicate function key
-
+                    // checks duplicate function key
                     string functionKey = criteria.FunctionKey =
                         criteria.FunctionName.Replace(Constant.SPACE, string.Empty);
 
                     if (this._functionService.GetByKeyAndSite(functionKey, criteria.SiteId) != null)
                     {
-                        ModelState.AddModelError(
-                            "FunctionKey",
-                            string.Format(ViewResources.DuplicateMsg, functionKey));
-
+                        ModelState.AddModelError("FunctionKey", string.Format(ViewResources.DuplicateMsg, functionKey));
                         return View(criteria);
                     }
 
-                    #endregion
-
-                    #region duplicates function
-
+                    // duplicates function
                     criteria.DuplicateFunctionId = function.Id;
                     criteria.ParentId = criteria.ParentId == 0 ? null : criteria.ParentId;
                     criteria.ParentName = (criteria.ParentId == null || criteria.ParentId == 0) ? null : criteria.ParentName;
@@ -338,8 +307,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                     {
                         ViewBag.Success = true;
                     }
-
-                    #endregion
                 }
             }
             catch (Exception ex)
@@ -428,8 +395,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    #region checks Function Name duplication
-
+                    // checks Function Name duplication
                     string functionName = criteria.FunctionName = criteria.FunctionName.Trim();
                     var function = this._functionService.GetByNameAndSite(functionName, criteria.SiteId);
 
@@ -442,16 +408,12 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                         return View(criteria);
                     }
 
-                    #endregion
-
-                    #region checks Function Key duplication
-
+                    // checks Function Key duplication
                     string tempFunctionKey = criteria.FunctionKey != null ? criteria.FunctionKey : criteria.FunctionName;
 
                     string functionKey = criteria.FunctionKey = tempFunctionKey.Replace(Constant.SPACE, string.Empty);
 
-                    #region replace char not letter or digit of function key
-
+                    // replace char not letter or digit of function key
                     StringBuilder strFunctionKeyModify = new StringBuilder();
 
                     for (int i = 0; i < functionKey.Length; i++)
@@ -470,8 +432,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                     criteria.FunctionKey = strFunctionKeyModify.ToString();
                     functionKey = strFunctionKeyModify.ToString();
 
-                    #endregion
-
                     function = this._functionService.GetByKeyAndSite(functionKey, criteria.SiteId);
 
                     if (function != null && function.Id != criteria.FunctionId)
@@ -481,10 +441,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                         return View(criteria);
                     }
 
-                    #endregion
-
-                    #region check for all user,group has permission on this function when CRUD change
-
+                    // check for all user,group has permission on this function when CRUD change
                     function = this._functionService.GetById(criteria.FunctionId);
 
                     if (ReferenceEquals(function, null))
@@ -513,10 +470,8 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                             }
                         }
                     }
-                    #endregion
 
-                    #region update function
-
+                    // update function
                     criteria.ParentId = criteria.ParentId == 0 ? null : criteria.ParentId;
                     criteria.ParentName = criteria.ParentId == null || criteria.ParentId == 0 ? null :
                         criteria.ParentName;
@@ -529,8 +484,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                     {
                         ViewBag.Success = true;
                     }
-
-                    #endregion
                 }
             }
             catch (Exception ex)
@@ -601,8 +554,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 ViewBag.Users = _userService.GetByFunctionAndSite(functionId, siteId).ToList();
                 ViewBag.Groups = _groupService.GetByFunctionAndSite(functionId, siteId).ToList();
 
-                #region gets logged-in-user privileges
-
+                // gets logged-in-user privileges
                 ViewFlags.HasAssignFunctionToUserRight = _userService.GetUserSiteFunctionKeyPolicy(
                             CurrentSession.UserId,
                             function.Site.Id,
@@ -613,10 +565,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                     function.Site.Id,
                     FunctionKeys.AssignFunctionToGroup.ToString()) >= (int)Constant.Policy.Host;
 
-                #endregion
-
                 ViewBag.GroupSelectList = _groupService.GetAllSelectListItem();
-
                 ViewBag.SiteId = siteId.ToString();
             }
             catch (Exception ex)
@@ -994,7 +943,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
         private void GetSitesAndFunctionsForAddNew(dynamic criteria, bool getSiteList = true)
         {
-            #region gets site list
+            // gets site list
             if (getSiteList)
             {
                 // portal admin
@@ -1014,9 +963,8 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                                 selectedSiteId: criteria.SiteId);
                 }
             }
-            #endregion
 
-            #region gets function list
+            // gets function list
             if (criteria.ParentId == null)
             {
                 ViewBag.FunctionList = this._functionService.GetSelectListItemBySite(
@@ -1032,7 +980,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                                                 isActive: true,
                                                 selectedFunctionId: (int)criteria.ParentId);
             }
-            #endregion
         }
     }
 }

@@ -223,8 +223,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    #region Add new
-
+                    // Add new
                     criteria.CreatedBy = CurrentSession.UserId;
                     criteria.CreatedDate = DateTime.Now;
                     criteria.ParentId = criteria.ParentId == 0 ? null : criteria.ParentId;
@@ -237,8 +236,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                     {
                         ViewBag.Success = true;
                     }
-
-                    #endregion
                 }
             }
             catch (Exception ex)
@@ -330,8 +327,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    #region Update menu item
-
+                    // Update menu item
                     criteria.ModifierId = CurrentSession.UserId;
                     criteria.ModifiedDate = DateTime.Now;
                     criteria.ParentId = criteria.ParentId == 0 ? null : criteria.ParentId;
@@ -344,8 +340,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                     {
                         ViewBag.Success = true;
                     }
-
-                    #endregion
                 }
             }
             catch (Exception ex)

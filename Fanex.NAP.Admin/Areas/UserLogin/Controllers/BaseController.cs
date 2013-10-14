@@ -23,24 +23,11 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
 
         protected readonly int SiteId = NapSettings.Settings.SiteId;
 
-        private bool _enableDirectLogin = NapSettings.Settings.EnableDirectLogin;
-
         protected readonly CurrentContext CurrentContext;
 
+        private bool _enableDirectLogin = NapSettings.Settings.EnableDirectLogin;
+
         private ViewFlags _viewFlags;
-
-        protected ViewFlags ViewFlags
-        {
-            get
-            {
-                return ViewBag.ViewFlags;
-            }
-
-            set
-            {
-                ViewBag.ViewFlags = _viewFlags = value;
-            }
-        }
 
         public BaseController()
         {
@@ -61,6 +48,19 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
             get
             {
                 return _enableDirectLogin;
+            }
+        }
+
+        protected ViewFlags ViewFlags
+        {
+            get
+            {
+                return ViewBag.ViewFlags;
+            }
+
+            set
+            {
+                ViewBag.ViewFlags = _viewFlags = value;
             }
         }
     }

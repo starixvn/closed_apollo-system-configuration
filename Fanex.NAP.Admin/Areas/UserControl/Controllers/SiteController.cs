@@ -113,7 +113,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    #region check url
+                    // check url
                     if (!ReferenceEquals(criteria.Urls, null))
                     {
                         foreach (var itemUrl in criteria.Urls)
@@ -126,10 +126,8 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                             }
                         }
                     }
-                    #endregion
 
-                    #region checks SiteName duplication
-
+                    // checks SiteName duplication
                     string siteName = criteria.SiteName = criteria.SiteName.Trim();
                     var site = _siteService.GetByName(siteName);
 
@@ -140,10 +138,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                         return View(criteria);
                     }
 
-                    #endregion
-
-                    #region checks url duplication
-
+                    // checks url duplication
                     criteria.Urls = criteria.Urls.Where(x => !string.IsNullOrWhiteSpace(x.Url)).ToList();
 
                     if (criteria.Urls != null)
@@ -158,10 +153,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                         }
                     }
 
-                    #endregion
-
-                    #region add new site
-
+                    // add new site
                     criteria.Environment = this.Environment;
 
                     var result = _siteService.Insert(criteria);
@@ -170,8 +162,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                     {
                         ViewBag.Success = true;
                     }
-
-                    #endregion
                 }
             }
             catch (Exception ex)
@@ -225,8 +215,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    #region validation
-
                     // checks SiteName duplication
                     string siteName = criteria.SiteName = criteria.SiteName.Trim();
                     var site = _siteService.GetByName(siteName);
@@ -238,18 +226,13 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                         return View(criteria);
                     }
 
-                    #endregion
-
-                    #region updates site
-
+                    // updates site
                     var result = _siteService.Update(criteria);
 
                     if (result != null && result.IsSuccessful)
                     {
                         ViewBag.Success = true;
                     }
-
-                    #endregion
                 }
             }
             catch (Exception ex)
@@ -385,20 +368,16 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
                     string result = Constant.OK;
 
-                    #region check url
-
+                    // check url
                     bool isuri = Uri.IsWellFormedUriString(url, UriKind.Absolute);
                     if (!isuri)
                     {
                         result = "invalid";
                     }
 
-                    #endregion
-
                     if (isuri)
                     {
-                        #region checks url duplication
-
+                        // checks url duplication
                         var siteUrls = _siteService.GetSiteUrlBySiteId(site.Id, this.Environment);
 
                         if (siteUrls.Where(x => x.Url == url).Any())
@@ -406,10 +385,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                             result = "duplicate";
                         }
 
-                        #endregion
-
-                        #region add site url
-
+                        // add site url
                         if (result == Constant.OK)
                         {
                             var criteria = new InsertSiteUrlCriteria
@@ -432,8 +408,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                                 result = "error";
                             }
                         }
-
-                        #endregion
                     }
 
                     return Json(result);

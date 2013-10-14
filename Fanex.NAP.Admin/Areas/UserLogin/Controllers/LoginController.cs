@@ -107,9 +107,9 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
 
                             if ((group == null || group.IsActive) && siteLevelList.Where(x => x.IsActive).Any())
                             {
-                                #region allows user login
+                                // allows user login
 
-                                #region check-in user
+                                // check-in user
                                 var criteria = new UserCheckInUserCriteria
                                 {
                                     UserId = user.Id,
@@ -124,9 +124,8 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
                                 };
 
                                 _userService.UserCheckIn(ref criteria);
-                                #endregion
 
-                                #region saves user session
+                                // saves user session
                                 this._currentSession.Level = _userService.GetUserSiteLevel(user.Id, this.SiteId);
                                 this._currentSession.UserId = user.Id;
                                 this._currentSession.Username = username;
@@ -140,13 +139,12 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
                                 }
 
                                 CreateAuthInfo(user);
-                                #endregion
 
-                                #region redirects user
+                                // redirects user
                                 // if the user login directly, not through NAP Hub
                                 if (this.EnableDirectLogin)
                                 {
-                                    #region checks if logging-in user is active on this site
+                                    // checks if logging-in user is active on this site
                                     bool userIsActiveOnThisSite = false;
 
                                     foreach (var siteLevel in siteLevelList)
@@ -156,7 +154,6 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
                                             userIsActiveOnThisSite = true;
                                         }
                                     }
-                                    #endregion
 
                                     if (userIsActiveOnThisSite)
                                     {
@@ -176,8 +173,7 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
                                         return RedirectToAction("Site", "UserSite");
                                     }
 
-                                    #region user has acces to one site
-
+                                    // user has acces to one site
                                     var site = siteLevelList.Where(s => s.IsActive).First().Site;
 
                                     var listSiteUrl = _siteService.GetSiteUrlBySiteId(site.Id, this.Environment).Where(u => u.IsActive).ToList();
@@ -188,12 +184,7 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
                                     }
 
                                     return RedirectToAction("Forward", "UserSite", new { id = listSiteUrl.First().SiteUrlId });
-
-                                    #endregion
                                 }
-                                #endregion
-
-                                #endregion
                             }
                             else
                             {
@@ -237,18 +228,12 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
 
         #endregion
 
-        #region sign out
-
         public ActionResult LogOut()
         {
             DoSignOut();
 
             return Redirect(FormsAuthentication.LoginUrl);
         }
-
-        #endregion
-
-        #region re check in
 
         [HttpPost]
         public ActionResult ReCheckLogin()
@@ -277,8 +262,6 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
 
             return Json(criteria.IsKickedOut ? "1" : "0");
         }
-
-        #endregion
 
         #region helpers
 

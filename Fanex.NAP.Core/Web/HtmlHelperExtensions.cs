@@ -465,6 +465,7 @@ namespace Fanex.NAP.Core.Web
                     {
                         return GetArray("Win", "Window 3.1");
                     }
+
                     // If no version was found, rely on the following code to detect "WinXX"
                     // As some User-Agents include two references to Windows
                     // Ex: Mozilla/5.0 (Windows; U; Win98; en-US; rv:1.5)
