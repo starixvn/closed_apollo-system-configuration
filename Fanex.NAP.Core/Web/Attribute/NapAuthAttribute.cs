@@ -23,7 +23,6 @@ namespace Fanex.NAP.Core.Web.Attribute
     /// <summary>
     /// <see cref="http://www.hanselman.com/blog/SystemThreadingThreadCurrentPrincipalVsSystemWebHttpContextCurrentUserOrWhyFormsAuthenticationCanBeSubtle.aspx"/>
     /// </summary>
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
     public class NapAuthAttribute : AuthorizeAttribute
     {
         #region Member
@@ -38,11 +37,13 @@ namespace Fanex.NAP.Core.Web.Attribute
 
         private static readonly CurrentContext _CurrentContext = new CurrentContext();
 
+        private string _functionKey;
+
+        private Constant.Policy _policy;
+
         #endregion Member
 
         #region Properties
-
-        private string _functionKey;
 
         public string FunctionKey
         {
@@ -56,8 +57,6 @@ namespace Fanex.NAP.Core.Web.Attribute
                 _functionKey = value;
             }
         }
-
-        private Constant.Policy _policy;
 
         public Constant.Policy Policy
         {

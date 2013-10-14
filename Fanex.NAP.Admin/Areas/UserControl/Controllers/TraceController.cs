@@ -994,13 +994,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             XElement elementNew = XElement.Parse(log.Data);
             XElement elementOld = XElement.Parse(log.OldData ?? "<ROOT/>");
 
-            #region NAP_Group_AssignFunction || NAP_User_AssignFunction
-
+            // NAP_Group_AssignFunction || NAP_User_AssignFunction
             if (log.ActionId == (int)LogAction.NAP_Group_AssignFunction
                 || log.ActionId == (int)LogAction.NAP_User_AssignFunction)
             {
                 // Get function list
-
                 int siteId = Convert.ToInt32(elementNew.Attribute("SiteId").Value);
 
                 var site = _siteService.GetById(siteId);
@@ -1147,7 +1145,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             {
                 // Old data
                 string strUserPolicyOld = elementOld.Attribute("Value").Value.DecodeXMLValue();
-
                 var listUserPolicyOld = new List<UserPolicy>();
                 XDocument documentUserPolicyOld = XDocument.Parse(strUserPolicyOld);
                 var userPolicyOld = documentUserPolicyOld.Descendants("ITEM");
@@ -1169,7 +1166,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
                 // New data
                 string strUrl = elementNew.Attribute("Value").Value.DecodeXMLValue();
-
                 var listUserPolicy = new List<UserPolicy>();
                 XDocument documentUserPolicy = XDocument.Parse(strUrl);
                 var userPolicyNew = documentUserPolicy.Descendants("ITEM");
@@ -1249,6 +1245,5 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
             return PartialView("~/Areas/UserControl/Views/Trace/_NAP_Function_AssignToGroups.cshtml");
         }
-        #endregion
     }
 }

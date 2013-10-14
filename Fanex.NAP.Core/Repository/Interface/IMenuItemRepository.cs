@@ -14,7 +14,6 @@ namespace Fanex.NAP.Core.Repository.Interface
     using Fanex.NAP.Core.Domain;
     using Fanex.NAP.Framework.Data;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
     public interface IMenuItemRepository : IRepository<IMenuItem>
     {
         ICommandResult Insert(ref InsertMenuItemCriteria criteria, ICriteria logCriteria);

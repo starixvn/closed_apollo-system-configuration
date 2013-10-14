@@ -285,8 +285,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                     }
 
                     // checks duplicate function key
-                    string functionKey = criteria.FunctionKey =
-                        criteria.FunctionName.Replace(Constant.SPACE, string.Empty);
+                    string functionKey = criteria.FunctionKey = criteria.FunctionName.Replace(Constant.SPACE, string.Empty);
 
                     if (this._functionService.GetByKeyAndSite(functionKey, criteria.SiteId) != null)
                     {
@@ -840,8 +839,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 return Json(-1);
             }
 
-            #region checks Function Name duplication
-
+            // checks Function Name duplication
             var function = this._functionService.GetByNameAndSite(functionName, tempFunction.Site.Id);
 
             if (function != null && function.Id != tempFunction.Id)
@@ -849,16 +847,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 return Json(0);
             }
 
-            #endregion
-
-            #region checks Function Key duplication
-
+            // checks Function Key duplication
             string tempFunctionKey = functionName;
-
             string functionKey = tempFunctionKey.Replace(Constant.SPACE, string.Empty);
 
-            #region replace char not letter or digit of function key
-
+            // replace char not letter or digit of function key
             StringBuilder strFunctionKeyModify = new StringBuilder();
 
             for (int i = 0; i < functionKey.Length; i++)
@@ -876,16 +869,12 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
             functionKey = strFunctionKeyModify.ToString();
 
-            #endregion
-
             function = this._functionService.GetByKeyAndSite(functionKey, tempFunction.Site.Id);
 
             if (function != null && function.Id != tempFunction.Id)
             {
                 return Json(-2);
             }
-
-            #endregion
 
             return Json(strFunctionKeyModify.ToString());
         }
@@ -911,8 +900,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             ViewBag.FunctionList = this._functionService.GetBySiteInHierarchy(criteria.SiteId, criteria.Environment);
 
-            if (this.UserIsPortalAdmin) // portal admin
+            if (this.UserIsPortalAdmin) 
             {
+                // portal admin
                 ViewBag.SiteItemList = _siteService.GetAllSelectListItem(criteria.Environment, true, criteria.SiteId);
                 ViewBag.ViewFlags.HasEditRight = true;
             }

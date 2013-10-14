@@ -16,7 +16,7 @@ namespace Fanex.NAP.Framework.Mvc
     /// <see cref="http://haacked.com/archive/2008/05/11/delegating-action-result.aspx"/>
     /// <example>
     /// <para>public ActionResult Hello() {
-    /// <para> return new DelegatingResult(context => {</para>
+    /// <para> return new DelegatingResult(context => {
     /// <para> context.HttpContext.Response.AddHeader("something", "something");
     /// <para> context.HttpContext.Response.Write("Hello World!");});}    
     /// </example>

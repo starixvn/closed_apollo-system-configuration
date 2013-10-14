@@ -474,7 +474,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                     }
                     
                     // add new user
-
                     criteria.UserPwd = Cryptography.CfsEnCode(criteria.UserPwd);
                     criteria.FirstName = criteria.FirstName == null ? string.Empty : criteria.FirstName;
                     criteria.LastName = criteria.LastName == null ? string.Empty : criteria.LastName;
@@ -632,8 +631,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                         return RedirectToAction("Manage");
                     }
 
-                    #region validation
-
                     // check password confirmation
                     if (!criteria.UserPwd.Equals(criteria.ConfirmUserPwd))
                     {
@@ -641,8 +638,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
                         return View(criteria);
                     }
-
-                    #endregion
 
                     criteria.UserPwd = Cryptography.CfsEnCode(criteria.UserPwd);
 

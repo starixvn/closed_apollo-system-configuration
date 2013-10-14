@@ -23,7 +23,6 @@ namespace Fanex.NAP.Core.Service.Interface
     using Fanex.NAP.Core.Model.ValueObject;
     using Fanex.NAP.Framework.Data;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
     public interface ISiteService : IBaseService
     {
         ISite GetById(int id);

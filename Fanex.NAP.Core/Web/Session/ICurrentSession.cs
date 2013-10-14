@@ -13,7 +13,6 @@ namespace Fanex.NAP.Core.Web.Session
     using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.Core.Model;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
     public interface ICurrentSession
     {
         string Username { get; set; }

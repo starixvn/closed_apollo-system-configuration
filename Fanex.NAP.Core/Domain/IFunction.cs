@@ -13,7 +13,6 @@ namespace Fanex.NAP.Core.Domain
     using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.Framework.Domain;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
     public interface IFunction : IEntity<short, string>
     {
         string Key { get; set; }

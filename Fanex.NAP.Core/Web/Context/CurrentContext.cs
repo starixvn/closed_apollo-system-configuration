@@ -89,27 +89,6 @@ namespace Fanex.NAP.Core.Web.Context
             }
         }
 
-        private CultureInfo ResolveCulture(HttpRequest request)
-        {
-            string[] languages = request.UserLanguages;
-
-            if (languages == null || languages.Length == 0)
-            {
-                return null;
-            }
-
-            try
-            {
-                string language = languages[0].ToLowerInvariant().Trim();
-
-                return CultureInfo.CreateSpecificCulture(language);
-            }
-            catch (ArgumentException)
-            {
-                return null;
-            }
-        }
-
         public DomainElement GetCurrentDomain()
         {
             var domainList = NapSettings.Settings.Domains;
@@ -142,6 +121,27 @@ namespace Fanex.NAP.Core.Web.Context
             }
 
             return null;
+        }
+
+        private CultureInfo ResolveCulture(HttpRequest request)
+        {
+            string[] languages = request.UserLanguages;
+
+            if (languages == null || languages.Length == 0)
+            {
+                return null;
+            }
+
+            try
+            {
+                string language = languages[0].ToLowerInvariant().Trim();
+
+                return CultureInfo.CreateSpecificCulture(language);
+            }
+            catch (ArgumentException)
+            {
+                return null;
+            }
         }
     }
 }

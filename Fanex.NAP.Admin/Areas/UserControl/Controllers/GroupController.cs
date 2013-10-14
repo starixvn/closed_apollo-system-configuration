@@ -394,7 +394,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 }
 
                 // check policy
-
                 int policy = _userService.GetUserSiteFunctionKeyPolicy(
                                                 CurrentSession.UserId,
                                                 criteria.SiteId,
