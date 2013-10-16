@@ -263,7 +263,7 @@
                             $('#error').append("");
 
                             var template = '<div data-valmsg-summary="true" class="validation-summary-errors">'
-											+ '<ul><li>' + functionName + ' already exists. Please choose another!</li></ul>'
+											+ '<ul><li>' + listName + ' already exists. Please choose another!</li></ul>'
 											+ '</div>';
 
                             $('#error').append(template);

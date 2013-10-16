@@ -19,12 +19,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Criteria.Function;
     using Fanex.NAP.Core.Criteria.MailingList;
+    using Fanex.NAP.Core.Model;
     using Fanex.NAP.Core.Service.Impl;
     using Fanex.NAP.Core.Service.Interface;
     using Fanex.NAP.Core.Web;
     using Fanex.NAP.Core.Web.Attribute;
-    using Fanex.NAP.Core.Domain;
-    using Fanex.NAP.Core.Model;
 
     /// <summary>
     /// MailingList Controller.
@@ -161,6 +160,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
                 GetSitesAndPolicyForManageAction(criteria, ref hasEditRight, ref siteItemList);
 
+                ViewBag.IsPortalAdmin = this.UserIsPortalAdmin;
                 ViewBag.MailingList = mailingList;
                 ViewBag.IsITGroup = isITGroup;
                 ViewBag.ViewFlags.HasEditRight = hasEditRight;
@@ -199,6 +199,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
                 GetSitesAndPolicyForManageAction(criteria, ref hasEditRight, ref siteItemList);
 
+                ViewBag.IsPortalAdmin = this.UserIsPortalAdmin;
                 ViewBag.MailingList = mailingList;
                 ViewBag.IsITGroup = isITGroup;
                 ViewBag.ViewFlags.HasEditRight = hasEditRight;
@@ -702,7 +703,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
                     if (mailingList != null)
                     {
-                        ModelState.AddModelError("ListName", string.Format(ViewResources.DuplicateMsg, listKey));
+                        ModelState.AddModelError("ListKey", string.Format(ViewResources.DuplicateMsg, listKey));
                         isValid = false;
                     }
                 }
@@ -751,14 +752,16 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                     ModelState.AddModelError("ListName", string.Format(ViewResources.DuplicateMsg, listName));
                     isValid = false;
                 }
-
-                //// checks duplicate function key
-                mailingList = _mailingListService.GetByKey(listKey);
-
-                if (mailingList != null && mailingList.Id != criteria.ListId)
+                else
                 {
-                    ModelState.AddModelError("ListKey", string.Format(ViewResources.DuplicateMsg, listKey));
-                    isValid = false;
+                    //// checks duplicate function key
+                    mailingList = _mailingListService.GetByKey(listKey);
+
+                    if (mailingList != null && mailingList.Id != criteria.ListId)
+                    {
+                        ModelState.AddModelError("ListKey", string.Format(ViewResources.DuplicateMsg, listKey));
+                        isValid = false;
+                    }
                 }
             }
 

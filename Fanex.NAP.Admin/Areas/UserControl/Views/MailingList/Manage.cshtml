@@ -67,11 +67,10 @@
                         <th>
                             @ViewResources.MailFunction
                         </th>
-                        <th>
+                    }
+                    <th>
                             @ViewResources.Function
                         </th>
-                    }
-                    
                     <th>
                         @ViewResources.To
                     </th>
@@ -126,10 +125,10 @@
                             <td>
                                 @item.MailFunction.Name
                             </td>
-                            <td>
+                        }
+                        <td>
                                 @item.Function.Name
                             </td>
-                        }
                         <td>
                             @Html.Raw(string.IsNullOrEmpty(item.ToList) ? string.Empty : item.ToList.Replace(";", "<br/>"))
                         </td>
@@ -142,7 +141,7 @@
                         @if (isITGroup)
                         {
                             <td class="align-center">
-                            @if (viewFlags.HasEditRight && item.Policy >= (byte)Constant.Policy.Host)
+                            @if ((bool)ViewBag.IsPortalAdmin || (viewFlags.HasEditRight && item.Policy >= (byte)Constant.Policy.Host))
                             {
                                 string activateText = item.IsInternal ? "Set internal for" : "Unset internal for";
 
@@ -165,7 +164,7 @@
                         }
     
                         <td class="align-center">
-                            @if (viewFlags.HasEditRight && item.Policy >= (byte)Constant.Policy.Host)
+                            @if ((bool)ViewBag.IsPortalAdmin || (viewFlags.HasEditRight && item.Policy >= (byte)Constant.Policy.Host))
                             {
                                 string activateText = item.IsActive ? "Deactivate" : "Activate";
 
@@ -191,7 +190,7 @@
                         }
                         @if (viewFlags.HasEditRight)
                         {
-                            if (item.Policy >= (byte)Constant.Policy.Host)
+                            if ((bool)ViewBag.IsPortalAdmin || item.Policy >= (byte)Constant.Policy.Host)
                             {
                                 <td> 
                                 @Html.ActionLink("Edit", "Edit", new { id = item.Id },
