@@ -548,7 +548,7 @@ namespace Fanex.NAP.Core.Service.Impl
         /// Gets a SiteUrl by its SiteUrlId.
         /// </summary>
         /// <param name="siteUrlId">Site URL ID.</param>
-        /// <returns>Site URL</returns>
+        /// <returns>Site URL.</returns>
         public SiteUrl GetSiteUrlById(int siteUrlId)
         {
             Check.Argument.IsNotNegativeOrZero(siteUrlId, "siteUrlId");

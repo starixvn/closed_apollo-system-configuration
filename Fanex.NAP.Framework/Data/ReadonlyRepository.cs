@@ -34,7 +34,7 @@ namespace Fanex.NAP.Framework.Data
         /// Get single record set and map to data transfer object.
         /// </summary>
         /// <param name="criteria">The criteria.</param>
-        /// <returns>object of T</returns>
+        /// <returns>Object of T.</returns>
         public virtual T Get(ICriteria criteria)
         {
             return base.Get<T>(criteria);
@@ -44,7 +44,7 @@ namespace Fanex.NAP.Framework.Data
         /// Get total element matching the criteria.
         /// </summary>
         /// <param name="criteria">The criteria.</param>
-        /// <returns>value of integer.</returns>
+        /// <returns>Number of items.</returns>
         public override int Count(ICriteria criteria)
         {
             return base.Count(criteria);

@@ -37,7 +37,7 @@ namespace Fanex.NAP.Framework.Mvc
         /// <param name="formatDate">The format date.</param>
         /// <param name="clientFormateDate">Format date time of client side.</param>
         /// <param name="cssDatePicker">The CSS date picker.</param>
-        /// <returns></returns>
+        /// <returns>Date picker MVC HTML string.</returns>
         public static MvcHtmlString DatePicker(
             this HtmlHelper htmlHelper, 
             string name, 
@@ -81,7 +81,7 @@ namespace Fanex.NAP.Framework.Mvc
         /// <param name="minDate">The min date.</param>
         /// <param name="maxDate">The max date.</param>
         /// <param name="formatDate">The format date.</param>
-        /// <returns></returns>
+        /// <returns>Date picker MVC HTML string.</returns>
         public static MvcHtmlString DatePickerFor<TModel, TValue>(
             this HtmlHelper<TModel> html, 
             Expression<Func<TModel, TValue>> expression, 
@@ -111,7 +111,7 @@ namespace Fanex.NAP.Framework.Mvc
         /// <param name="fromYear">From year.</param>
         /// <param name="currentYear">The current year.</param>
         /// <param name="htmlAttributes">The HTML attributes.</param>
-        /// <returns></returns>
+        /// <returns>Year picker MVC HTML string.</returns>
         public static MvcHtmlString YearPicker(
             this HtmlHelper htmlHelper, 
             string name, 
@@ -146,7 +146,7 @@ namespace Fanex.NAP.Framework.Mvc
         /// <param name="expression">The expression.</param>
         /// <param name="fromYear">From year.</param>
         /// <param name="htmlAttributes">The HTML attributes.</param>
-        /// <returns></returns>
+        /// <returns>Year picker MVC HTML string.</returns>
         public static MvcHtmlString YearPickerFor<TModel, TValue>(
             this HtmlHelper<TModel> html, 
             Expression<Func<TModel, TValue>> expression, 
@@ -162,11 +162,11 @@ namespace Fanex.NAP.Framework.Mvc
         /// <summary>
         /// Month picker.
         /// </summary>
-        /// <param name="htmlHelper"></param>
-        /// <param name="name"></param>
-        /// <param name="fromYear">default from month 2006.</param>
-        /// <param name="currentYear">>default currentYear year 2006.</param>
-        /// <returns></returns>
+        /// <param name="htmlHelper">HTML helper.</param>
+        /// <param name="name">Month picker name.</param>
+        /// <param name="currentMonth">Current month.</param>
+        /// <param name="htmlAttributes">>HTML attributes.</param>
+        /// <returns>Month picker MVC HTML string.</returns>
         public static MvcHtmlString MonthPicker(
             this HtmlHelper htmlHelper, 
             string name, 
@@ -201,7 +201,7 @@ namespace Fanex.NAP.Framework.Mvc
         /// <param name="expression">The expression.</param>
         /// <param name="currentMonth">The current month.</param>
         /// <param name="htmlAttributes">The HTML attributes.</param>
-        /// <returns></returns>
+        /// <returns>Month picker MVC HTML string.</returns>
         public static MvcHtmlString MonthPickerFor<TModel, TValue>(
             this HtmlHelper<TModel> html,
             Expression<Func<TModel, TValue>> expression,

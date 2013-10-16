@@ -165,7 +165,7 @@ namespace Fanex.NAP.Core.Repository.Impl
         /// Insert site.
         /// </summary>
         /// <param name="criteria">The criteria insert site.</param>
-        /// <param name="logCriteria">The log criteria duplicate site.</param>
+        /// <param name="logCriteria">The log criteria insert site.</param>
         /// <returns>Command result.</returns>
         public ICommandResult Insert(ref InsertSiteCriteria criteria, ICriteria logCriteria)
         {
@@ -196,7 +196,7 @@ namespace Fanex.NAP.Core.Repository.Impl
         /// Insert site URL.
         /// </summary>
         /// <param name="criteria">The criteria insert site URL.</param>
-        /// <param name="logCriteria">The log criteria duplicate site URL.</param>
+        /// <param name="logCriteria">The log criteria insert site URL.</param>
         /// <returns>Command result.</returns>
         public ICommandResult InsertSiteUrl(ref InsertSiteUrlCriteria criteria, ICriteria logCriteria)
         {

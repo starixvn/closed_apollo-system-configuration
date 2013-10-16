@@ -17,22 +17,26 @@ namespace Fanex.NAP.Framework.Data
         /// <summary>
         /// Gets store procedure parameters.
         /// </summary>
+        /// <returns>Hashtable SP parameters.</return>
         Hashtable GetSpParams();
 
         /// <summary>
         /// Add store procedure parameters.
         /// </summary>
         /// <param name="storeProcParamName">Store procedure parameter name.</param>
+        /// <returns>Hashtable SP parameters.</returns>
         Hashtable AddSpParams(Hashtable storeProcParamName);
 
         /// <summary>
         /// Gets setting key in order to get store procedure name and connection info.
         /// </summary>
+        /// <returns>Setting key.</returns>
         string GetSettingKey();
 
         /// <summary>
         ///  Gets result from checking the criteria rule.
         /// </summary>
+        /// <returns>Check result.</returns>
         bool IsValid();
     }
 }

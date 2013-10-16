@@ -166,7 +166,9 @@ namespace Fanex.NAP.Core.Web
         /// Converts the value of the current System.DateTime object to its equivalent string
         /// representation using the specified format.
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">Date time value.</param>
+        /// <param name="dateFormat">Date format.</param>
+        /// <param name="timeFormat">Time format.</param>
         /// <returns></returns>
         public static IHtmlString ToFullDateString(
             this DateTime value, 
@@ -242,8 +244,8 @@ namespace Fanex.NAP.Core.Web
         /// <summary>
         /// Decode xml of [f_EncodeXMLValue].
         /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
+        /// <param name="value">Encoded XML value.</param>
+        /// <returns>XML value.</returns>
         public static string DecodeXMLValue(this string value)
         {
             if (!string.IsNullOrEmpty(value))
@@ -263,8 +265,8 @@ namespace Fanex.NAP.Core.Web
         /// <summary>
         /// Get location name.
         /// </summary>
-        /// <param name="geoId">Geo ID.</param>
-        /// <returns></returns>
+        /// <param name="geoId">Geographical ID.</param>
+        /// <returns>Geographical name.</returns>
         public static string GetGeoName(this string geoId)
         {
             string name = geoId.ToString();
@@ -284,10 +286,10 @@ namespace Fanex.NAP.Core.Web
         }
 
         /// <summary>
-        /// get operating system form user agent string.
+        /// Get operating system form user agent string.
         /// </summary>
-        /// <param name="platform">Platform.</param>
-        /// <returns></returns>
+        /// <param name="platform">The platform.</param>
+        /// <returns>Operating system.</returns>
         public static string GetOperatingSystem(this string platform)
         {
             string[] array = UserAgentTools.GetOS(platform);

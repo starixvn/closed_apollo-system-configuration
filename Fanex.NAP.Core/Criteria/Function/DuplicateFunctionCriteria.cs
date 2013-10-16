@@ -21,7 +21,7 @@ namespace Fanex.NAP.Core.Criteria.Function
     public class DuplicateFunctionCriteria : CriteriaBase
     {
         /// <summary>
-        /// Constructor.
+        /// The constructor.
         /// </summary>
         public DuplicateFunctionCriteria()
         {

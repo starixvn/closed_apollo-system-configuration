@@ -83,13 +83,15 @@ namespace Fanex.NAP.Core.Service.Interface
         /// <summary>
         /// Duplicates function: inserts a new function and assign it to privileged groups/users of the function-to-duplicate.
         /// </summary>
-        /// <param name="criteria">Criteria.</param>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>Command result.</returns>
         ICommandResult Duplicate(DuplicateFunctionCriteria criteria);
 
         /// <summary>
         /// Inserts function and assigns it to all site admin of the current site and all portal admin.
         /// </summary>
-        /// <param name="criteria">Criteria.</param>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>Command result.</returns>
         ICommandResult Insert(InsertFunctionCriteria criteria);
 
         ICommandResult Update(UpdateFunctionCriteria criteria);

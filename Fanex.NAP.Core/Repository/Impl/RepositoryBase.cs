@@ -18,6 +18,11 @@ namespace Fanex.NAP.Core.Repository.Impl
     /// </summary>
     public class RepositoryBase<T> : ReadonlyRepository<T>
     {
+        /// <summary>
+        /// Get command result.
+        /// </summary>
+        /// <param name="hash">Result data.</param>
+        /// <returns>Command result.</returns>
         public CommandResult GetCommandResult(Hashtable hash)
         {
             var errCode = hash["errcode"];

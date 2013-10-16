@@ -14,7 +14,7 @@ namespace Fanex.NAP.Core.Model
     using Fanex.NAP.Core.Domain;
 
     /// <summary>
-    /// Site.
+    /// Site model.
     /// </summary>
     [Serializable]
     public class Site : ISite

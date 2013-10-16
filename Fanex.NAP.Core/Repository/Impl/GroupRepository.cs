@@ -30,6 +30,11 @@ namespace Fanex.NAP.Core.Repository.Impl
     /// </summary>
     public class GroupRepository : RepositoryBase<IGroup>, IGroupRepository
     {
+        /// <summary>
+        /// Gets group.
+        /// </summary>
+        /// <param name="criteria">The criteria get group.</param>
+        /// <returns>The group.</returns>
         public override IGroup Get(ICriteria criteria)
         {
             try
@@ -49,6 +54,11 @@ namespace Fanex.NAP.Core.Repository.Impl
             }
         }
 
+        /// <summary>
+        /// Fetch group.
+        /// </summary>
+        /// <param name="criteria">The criteria fetch group.</param>
+        /// <returns>List of group.</returns>
         public override IEnumerable<IGroup> Fetch(ICriteria criteria)
         {
             try
@@ -69,6 +79,12 @@ namespace Fanex.NAP.Core.Repository.Impl
             }
         }
 
+        /// <summary>
+        /// Insert group.
+        /// </summary>
+        /// <param name="criteria">The criteria insert group.</param>
+        /// <param name="logCriteria">The log criteria insert group.</param>
+        /// <returns>Command result.</returns>
         public ICommandResult Insert(ref InsertGroupCriteria criteria, ICriteria logCriteria)
         {
             try
@@ -91,6 +107,12 @@ namespace Fanex.NAP.Core.Repository.Impl
             }
         }
 
+        /// <summary>
+        /// Update group.
+        /// </summary>
+        /// <param name="criteria">The criteria update group.</param>
+        /// <param name="logCriteria">The log criteria update group.</param>
+        /// <returns>Command result.</returns>
         public ICommandResult Update(ICriteria criteria, ICriteria logCriteria)
         {
             try
@@ -112,80 +134,99 @@ namespace Fanex.NAP.Core.Repository.Impl
             }
         }
 
+        /// <summary>
+        /// Delete group.
+        /// </summary>
+        /// <param name="criteria">The criteria delete group.</param>
+        /// <param name="logCriteria">The log criteria delete group.</param>
+        /// <returns>Command result.</returns>
         public ICommandResult Delete(ICriteria criteria, ICriteria logCriteria)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Insert group.
+        /// </summary>
+        /// <param name="entity">The group entity.</param>
+        /// <returns>Command result.</returns>
         public ICommandResult Insert(IGroup entity)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Update group.
+        /// </summary>
+        /// <param name="entity">The group entity.</param>
+        /// <returns>Command result.</returns>
         public ICommandResult Update(IGroup entity)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Delete group.
+        /// </summary>
+        /// <param name="entity">The group entity.</param>
+        /// <returns>Command result.</returns>
         public ICommandResult Delete(IGroup entity)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Gets group policy.
+        /// </summary>
+        /// <param name="criteria">The criteria get group policy.</param>
+        /// <returns>The group.</returns>
         public IEnumerable<GroupPolicy> GetGroupPolicy(ICriteria criteria)
         {
-            try
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                using (var db = new ObjectDb(criteria.GetSettingKey()))
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
                 {
-                    using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                    var userLevelList = new List<GroupPolicy>();
+
+                    while (reader.Read())
                     {
-                        var userLevelList = new List<GroupPolicy>();
-
-                        while (reader.Read())
+                        userLevelList.Add(new GroupPolicy
                         {
-                            userLevelList.Add(new GroupPolicy
+                            Policy = reader.ToInt("Policy"),
+                            Group = reader.IsDBNull("GroupId") ? null : new Group
                             {
-                                Policy = reader.ToInt("Policy"),
-                                Group = reader.IsDBNull("GroupId") ? null : new Group
+                                Id = reader.ToShort("GroupId"),
+                                Name = reader.ToString("GroupName"),
+                                CreatedDate = reader.ToDateTime("CreatedDate"),
+                                ModifiedDate = reader.ToDateTime("ModifiedDate"),
+                                Creator = reader.IsDBNull("CreatorId") ? null : new User
                                 {
-                                    Id = reader.ToShort("GroupId"),
-                                    Name = reader.ToString("GroupName"),
-                                    CreatedDate = reader.ToDateTime("CreatedDate"),
-                                    ModifiedDate = reader.ToDateTime("ModifiedDate"),
-                                    Creator = reader.IsDBNull("CreatorId") ? null : new User
-                                    {
-                                        Id = reader.ToInt("CreatorId"),
-                                        Username = reader.ToString("CreatorUsername")
-                                    },
-                                    Modifier = reader.IsDBNull("ModifierId") ? null : new User
-                                    {
-                                        Id = reader.ToInt("ModifierId"),
-                                        Username = reader.ToString("ModifierUsername")
-                                    }
+                                    Id = reader.ToInt("CreatorId"),
+                                    Username = reader.ToString("CreatorUsername")
                                 },
-                                CreatedDate = reader.ToDateTime("CreatedDateGroupFunction"),
-                                ModifiedDate = reader.ToDateTime("ModifiedDateGroupFunction"),
-                                Creator = reader.IsDBNull("CreatorIdGroupFunction") ? null : new User
+                                Modifier = reader.IsDBNull("ModifierId") ? null : new User
                                 {
-                                    Id = reader.ToInt("CreatorIdGroupFunction"),
-                                    Username = reader.ToString("CreatorUsernameGroupFunction")
-                                },
-                                Modifier = reader.IsDBNull("ModifierIdGroupFunction") ? null : new User
-                                {
-                                    Id = reader.ToInt("ModifierIdGroupFunction"),
-                                    Username = reader.ToString("ModifierUsernameGroupFunction")
+                                    Id = reader.ToInt("ModifierId"),
+                                    Username = reader.ToString("ModifierUsername")
                                 }
-                            });
-                        }
-
-                        return userLevelList.OrderBy(g => g.Group.Name).ToList<GroupPolicy>();
+                            },
+                            CreatedDate = reader.ToDateTime("CreatedDateGroupFunction"),
+                            ModifiedDate = reader.ToDateTime("ModifiedDateGroupFunction"),
+                            Creator = reader.IsDBNull("CreatorIdGroupFunction") ? null : new User
+                            {
+                                Id = reader.ToInt("CreatorIdGroupFunction"),
+                                Username = reader.ToString("CreatorUsernameGroupFunction")
+                            },
+                            Modifier = reader.IsDBNull("ModifierIdGroupFunction") ? null : new User
+                            {
+                                Id = reader.ToInt("ModifierIdGroupFunction"),
+                                Username = reader.ToString("ModifierUsernameGroupFunction")
+                            }
+                        });
                     }
+
+                    return userLevelList.OrderBy(g => g.Group.Name).ToList<GroupPolicy>();
                 }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
             }
         }
     }

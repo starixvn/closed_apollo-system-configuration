@@ -16,7 +16,7 @@ namespace Fanex.NAP.Core.Model
     using Fanex.NAP.Core.Web;
 
     /// <summary>
-    /// User.
+    /// User model.
     /// </summary>
     [Serializable]
     public class User : IUser

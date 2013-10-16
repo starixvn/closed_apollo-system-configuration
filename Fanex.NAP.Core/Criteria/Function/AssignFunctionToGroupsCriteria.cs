@@ -26,11 +26,9 @@ namespace Fanex.NAP.Core.Criteria.Function
         public int SiteId { get; set; }
 
         /// <summary>
+        ///   Get value.
         ///   <ROOT><User GroupId="1" Policy="2"></User></ROOT>
         /// </summary>
-        /// <value>
-        /// The value.
-        /// </value>
         public string Value
         {
             get
@@ -82,7 +80,7 @@ namespace Fanex.NAP.Core.Criteria.Function
         /// <summary>
         /// Determines whether this instance is valid.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>True: valid; False: invalid.</returns>
         public override bool IsValid()
         {
             return true;

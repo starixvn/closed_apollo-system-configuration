@@ -12,7 +12,7 @@ namespace Fanex.NAP.Core.Model.ValueObject
     using System.Diagnostics.CodeAnalysis;
 
     /// <summary>
-    /// Downtime.
+    /// Downtime value object.
     /// </summary>
     public class Downtime
     {

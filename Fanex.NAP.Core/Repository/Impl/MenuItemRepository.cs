@@ -27,6 +27,11 @@ namespace Fanex.NAP.Core.Repository.Impl
     /// </summary>
     public class MenuItemRepository : RepositoryBase<IMenuItem>, IMenuItemRepository
     {
+        /// <summary>
+        /// Gets menu item.
+        /// </summary>
+        /// <param name="criteria">The criteria get menu item.</param>
+        /// <returns>The menu item.</returns>
         public override IMenuItem Get(ICriteria criteria)
         {
             try
@@ -87,6 +92,11 @@ namespace Fanex.NAP.Core.Repository.Impl
             return null;
         }
 
+        /// <summary>
+        /// Gets menu item.
+        /// </summary>
+        /// <param name="criteria">The criteria count menu item.</param>
+        /// <returns>The menu item.</returns>
         public override int Count(ICriteria criteria)
         {
             try
@@ -102,68 +112,72 @@ namespace Fanex.NAP.Core.Repository.Impl
             }
         }
 
+        /// <summary>
+        /// Fetch menu item.
+        /// </summary>
+        /// <param name="criteria">The criteria fetch menu item.</param>
+        /// <returns>List of menu item.</returns>
         public override IEnumerable<IMenuItem> Fetch(ICriteria criteria)
         {
-            try
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                using (var db = new ObjectDb(criteria.GetSettingKey()))
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
                 {
-                    using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                    var menuItemList = new List<MenuItem>();
+
+                    while (reader.Read())
                     {
-                        var menuItemList = new List<MenuItem>();
-
-                        while (reader.Read())
+                        menuItemList.Add(new MenuItem
                         {
-                            menuItemList.Add(new MenuItem
+                            Id = reader.ToInt("MenuItemId"),
+                            Name = reader.ToString("MenuItemName"),
+                            Function = new Function
                             {
-                                Id = reader.ToInt("MenuItemId"),
-                                Name = reader.ToString("MenuItemName"),
-                                Function = new Function
-                                {
-                                    Id = reader.ToShort("FunctionId"),
-                                    Name = reader.ToString("FunctionName")
-                                },
-                                Site = new Site
-                                {
-                                    Id = reader.ToByte("SiteId"),
-                                    Name = reader.ToString("SiteName")
-                                },
-                                Description = reader.ToString("Description"),
-                                Parent = reader.IsDBNull("ParentId") ? null : new MenuItem
-                                {
-                                    Id = reader.ToInt("ParentId"),
-                                    Name = reader.ToString("ParentName")
-                                },
-                                Policy = reader.ToInt("Policy"),
-                                Url = reader.ToString("URL"),
-                                DisplayOrder = reader.ToShort("DisplayOrder"),
-                                IsActive = reader.ToBool("IsActive"),
-                                Creator = reader.IsDBNull("CreatorId") ? null : new User
-                                {
-                                    Id = reader.ToInt("CreatorId"),
-                                    Name = reader.ToString("CreatorUsername")
-                                },
-                                CreatedDate = reader.ToDateTime("CreatedDate"),
-                                Modifier = reader.IsDBNull("ModifierId") ? null : new User
-                                {
-                                    Id = reader.ToInt("ModifierId"),
-                                    Name = reader.ToString("ModifierUsername")
-                                },
-                                ModifiedDate = reader.ToDateTime("ModifiedDate"),
-                                Environment = reader.ToString("Environment")
-                            });
-                        }
-
-                        return menuItemList.OrderBy(m => m.Name).ToList<MenuItem>();
+                                Id = reader.ToShort("FunctionId"),
+                                Name = reader.ToString("FunctionName")
+                            },
+                            Site = new Site
+                            {
+                                Id = reader.ToByte("SiteId"),
+                                Name = reader.ToString("SiteName")
+                            },
+                            Description = reader.ToString("Description"),
+                            Parent = reader.IsDBNull("ParentId") ? null : new MenuItem
+                            {
+                                Id = reader.ToInt("ParentId"),
+                                Name = reader.ToString("ParentName")
+                            },
+                            Policy = reader.ToInt("Policy"),
+                            Url = reader.ToString("URL"),
+                            DisplayOrder = reader.ToShort("DisplayOrder"),
+                            IsActive = reader.ToBool("IsActive"),
+                            Creator = reader.IsDBNull("CreatorId") ? null : new User
+                            {
+                                Id = reader.ToInt("CreatorId"),
+                                Name = reader.ToString("CreatorUsername")
+                            },
+                            CreatedDate = reader.ToDateTime("CreatedDate"),
+                            Modifier = reader.IsDBNull("ModifierId") ? null : new User
+                            {
+                                Id = reader.ToInt("ModifierId"),
+                                Name = reader.ToString("ModifierUsername")
+                            },
+                            ModifiedDate = reader.ToDateTime("ModifiedDate"),
+                            Environment = reader.ToString("Environment")
+                        });
                     }
+
+                    return menuItemList.OrderBy(m => m.Name).ToList<MenuItem>();
                 }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
             }
         }
 
+        /// <summary>
+        /// Insert menu item.
+        /// </summary>
+        /// <param name="criteria">The criteria insert menu item.</param>
+        /// <param name="logCriteria">The log criteria insert menu item.</param>
+        /// <returns>Command result.</returns>
         public ICommandResult Insert(ref InsertMenuItemCriteria criteria, ICriteria logCriteria)
         {
             try
@@ -189,6 +203,12 @@ namespace Fanex.NAP.Core.Repository.Impl
             }
         }
 
+        /// <summary>
+        /// Update menu item.
+        /// </summary>
+        /// <param name="criteria">The criteria update menu item.</param>
+        /// <param name="logCriteria">The log criteria update menu item.</param>
+        /// <returns>Command result.</returns>
         public ICommandResult Update(ICriteria criteria, ICriteria logCriteria)
         {
             try
@@ -212,21 +232,42 @@ namespace Fanex.NAP.Core.Repository.Impl
             }
         }
 
+        /// <summary>
+        /// Delete menu item.
+        /// </summary>
+        /// <param name="criteria">The criteria delete menu item.</param>
+        /// <param name="logCriteria">The log criteria delete menu item.</param>
+        /// <returns>Command result.</returns>
         public ICommandResult Delete(ICriteria criteria, ICriteria logCriteria)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Insert menu item.
+        /// </summary>
+        /// <param name="entity">The menu item entity.</param>
+        /// <returns>Command result.</returns>
         public ICommandResult Insert(IMenuItem entity)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Update menu item.
+        /// </summary>
+        /// <param name="entity">The menu item entity.</param>
+        /// <returns>Command result.</returns>
         public ICommandResult Update(IMenuItem entity)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Delete menu item.
+        /// </summary>
+        /// <param name="entity">The menu item entity.</param>
+        /// <returns>Command result.</returns>
         public ICommandResult Delete(IMenuItem entity)
         {
             throw new NotImplementedException();

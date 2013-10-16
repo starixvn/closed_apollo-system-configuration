@@ -13,7 +13,7 @@ namespace Fanex.NAP.Core.Model
     using Fanex.NAP.Core.Domain;
 
     /// <summary>
-    /// Group.
+    /// Group model.
     /// </summary>
     [Serializable]
     public class Group : IGroup

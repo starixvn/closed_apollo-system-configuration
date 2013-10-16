@@ -255,7 +255,7 @@
     <Compile Include="Service\Interface\IFunctionService.cs" />
     <Compile Include="Service\Interface\IMaintainanceService.cs" />
     <Compile Include="Service\Interface\IMenuItemService.cs" />
-    <Compile Include="Service\Interface\IServiceBase.cs" />
+    <Compile Include="Service\Interface\IBaseService.cs" />
     <Compile Include="Service\Interface\IServiceContext.cs" />
     <Compile Include="Service\Interface\ISiteService.cs" />
     <Compile Include="Service\Interface\IUserService.cs" />

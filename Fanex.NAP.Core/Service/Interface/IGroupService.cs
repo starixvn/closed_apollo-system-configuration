@@ -34,6 +34,10 @@ namespace Fanex.NAP.Core.Service.Interface
         /// Searches group by group name,site, but excludes ones who was assigned
         /// the function (functionId) already.
         /// </summary>
+        /// <param name="groupName">Group name.</param>
+        /// <param name="siteId">Site ID.</param>
+        /// <param name="functionId">Function ID.</param>
+        /// <returns>List of group.</param>
         IEnumerable<IGroup> SearchGroupExcludeFunction(string groupName, int siteId = 0, int functionId = 0);
 
         IList<SelectListItem> GetAllSelectListItem(bool? isActive = null, int selectedGroupId = 0);

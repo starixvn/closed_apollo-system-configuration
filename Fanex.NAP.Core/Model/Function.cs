@@ -13,7 +13,7 @@ namespace Fanex.NAP.Core.Model
     using Fanex.NAP.Core.Domain;
 
     /// <summary>
-    /// Function.
+    /// Function model.
     /// </summary>
     [Serializable]
     public class Function : IFunction

@@ -116,75 +116,15 @@ namespace Fanex.NAP.Core.Repository.Impl
         /// <returns>List of function policy.</returns>
         public IEnumerable<FunctionPolicy> FetchFunctionPolicy(ICriteria criteria)
         {
-            try
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                using (var db = new ObjectDb(criteria.GetSettingKey()))
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
                 {
-                    using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                    var functionPolicyList = new List<FunctionPolicy>();
+
+                    while (reader.Read())
                     {
-                        var functionPolicyList = new List<FunctionPolicy>();
-
-                        while (reader.Read())
-                        {
-                            functionPolicyList.Add(new FunctionPolicy
-                                {
-                                    Function = new Function
-                                    {
-                                        Id = reader.ToShort("FunctionId"),
-                                        Name = reader.ToString("FunctionName"),
-                                        Key = reader.ToString("FunctionKey"),
-                                        Description = reader.ToString("Description"),
-                                        Crud = reader.ToByte("CRUD"),
-                                        DisplayOrder = reader.ToShort("DisplayOrder"),
-                                        IsActive = reader.ToBool("IsActive"),
-                                        Site = new Site
-                                        {
-                                            Id = reader.ToByte("SiteId"),
-                                            Name = reader.ToString("SiteName")
-                                        },
-                                        Parent = reader.IsDBNull("ParentId") ? null : new Function
-                                        {
-                                            Id = reader.ToShort("ParentId"),
-                                            Name = reader.ToString("ParentName")
-                                        }
-                                    },
-                                    Site = new Site
-                                    {
-                                        Id = reader.ToByte("SiteId"),
-                                        Name = reader.ToString("SiteName")
-                                    },
-                                    Policy = reader.ToInt("Policy")
-                                });
-                        }
-
-                        return functionPolicyList.OrderBy(f => f.Function.Name).ToList<FunctionPolicy>();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        /// <summary>
-        /// Fetch full function policy.
-        /// </summary>
-        /// <param name="criteria">The criteria fetch full function policy.</param>
-        /// <returns>List of full function policy.</returns>
-        public IEnumerable<FunctionPolicy> FetchFullFunctionPolicy(ICriteria criteria)
-        {
-            try
-            {
-                using (var db = new ObjectDb(criteria.GetSettingKey()))
-                {
-                    using (var reader = db.ExecuteReader(criteria.GetSpParams()))
-                    {
-                        var functionPolicyList = new List<FunctionPolicy>();
-
-                        while (reader.Read())
-                        {
-                            functionPolicyList.Add(new FunctionPolicy
+                        functionPolicyList.Add(new FunctionPolicy
                             {
                                 Function = new Function
                                 {
@@ -211,29 +151,75 @@ namespace Fanex.NAP.Core.Repository.Impl
                                     Id = reader.ToByte("SiteId"),
                                     Name = reader.ToString("SiteName")
                                 },
-                                Policy = reader.ToInt("Policy"),
-                                Creator = reader.IsDBNull("CreatorId") ? null : new User
-                                {
-                                    Id = reader.ToInt("CreatorId"),
-                                    Name = reader.ToString("CreatorUsername")
-                                },
-                                CreatedDate = reader.ToDateTime("CreatedDate"),
-                                Modifier = reader.IsDBNull("ModifierId") ? null : new User
-                                {
-                                    Id = reader.ToInt("ModifierId"),
-                                    Name = reader.ToString("ModifierUsername")
-                                },
-                                ModifiedDate = reader.ToDateTime("ModifiedDate")
+                                Policy = reader.ToInt("Policy")
                             });
-                        }
-
-                        return functionPolicyList.OrderBy(f => f.Function.Name).ToList<FunctionPolicy>();
                     }
+
+                    return functionPolicyList.OrderBy(f => f.Function.Name).ToList<FunctionPolicy>();
                 }
             }
-            catch (Exception ex)
+        }
+
+        /// <summary>
+        /// Fetch full function policy.
+        /// </summary>
+        /// <param name="criteria">The criteria fetch full function policy.</param>
+        /// <returns>List of full function policy.</returns>
+        public IEnumerable<FunctionPolicy> FetchFullFunctionPolicy(ICriteria criteria)
+        {
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                throw ex;
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                {
+                    var functionPolicyList = new List<FunctionPolicy>();
+
+                    while (reader.Read())
+                    {
+                        functionPolicyList.Add(new FunctionPolicy
+                        {
+                            Function = new Function
+                            {
+                                Id = reader.ToShort("FunctionId"),
+                                Name = reader.ToString("FunctionName"),
+                                Key = reader.ToString("FunctionKey"),
+                                Description = reader.ToString("Description"),
+                                Crud = reader.ToByte("CRUD"),
+                                DisplayOrder = reader.ToShort("DisplayOrder"),
+                                IsActive = reader.ToBool("IsActive"),
+                                Site = new Site
+                                {
+                                    Id = reader.ToByte("SiteId"),
+                                    Name = reader.ToString("SiteName")
+                                },
+                                Parent = reader.IsDBNull("ParentId") ? null : new Function
+                                {
+                                    Id = reader.ToShort("ParentId"),
+                                    Name = reader.ToString("ParentName")
+                                }
+                            },
+                            Site = new Site
+                            {
+                                Id = reader.ToByte("SiteId"),
+                                Name = reader.ToString("SiteName")
+                            },
+                            Policy = reader.ToInt("Policy"),
+                            Creator = reader.IsDBNull("CreatorId") ? null : new User
+                            {
+                                Id = reader.ToInt("CreatorId"),
+                                Name = reader.ToString("CreatorUsername")
+                            },
+                            CreatedDate = reader.ToDateTime("CreatedDate"),
+                            Modifier = reader.IsDBNull("ModifierId") ? null : new User
+                            {
+                                Id = reader.ToInt("ModifierId"),
+                                Name = reader.ToString("ModifierUsername")
+                            },
+                            ModifiedDate = reader.ToDateTime("ModifiedDate")
+                        });
+                    }
+
+                    return functionPolicyList.OrderBy(f => f.Function.Name).ToList<FunctionPolicy>();
+                }
             }
         }
 

@@ -345,8 +345,8 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Decode xml of [f_EncodeXMLValue].
         /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
+        /// <param name="value">XML value.</param>
+        /// <returns>Encoded XML value.</returns>
         private string EncodeXMLValue(string value)
         {
             if (!string.IsNullOrEmpty(value))

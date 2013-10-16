@@ -9,10 +9,8 @@
 
 namespace Fanex.NAP.Core.Web.Context
 {
-    using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.Core.Configuration;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
     public interface ICurrentContext
     {
         string IP { get; }

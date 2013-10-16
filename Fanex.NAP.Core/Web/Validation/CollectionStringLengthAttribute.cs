@@ -12,12 +12,10 @@ namespace Fanex.NAP.Core.Web.Validation
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.Diagnostics.CodeAnalysis;
         
     /// <summary>
     /// Validates StringLength of a list of strings.
     /// </summary>
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = false)]
     public class CollectionStringLengthAttribute : ValidationAttribute
     {

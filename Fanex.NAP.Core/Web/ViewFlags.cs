@@ -54,8 +54,9 @@ namespace Fanex.NAP.Core.Web
         public bool IsReCheckin { get; set; }
 
         /// <summary>
-        /// Sets HasEditRight to true if policy is >= Host
+        /// Sets HasEditRight to true if policy is >= Host.
         /// </summary>
+        /// <param name="policy">Function policy.</param>
         public void SetEditRight(int policy)
         {
             if (policy >= (int)Constant.Policy.Host)

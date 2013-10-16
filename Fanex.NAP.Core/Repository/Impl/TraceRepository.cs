@@ -24,6 +24,12 @@ namespace Fanex.NAP.Core.Repository.Impl
     /// </summary>
     public class TraceRepository : DynamicRepository, ITraceRepository
     {
+        /// <summary>
+        /// Search execute SP log.
+        /// </summary>
+        /// <param name="criteria">The criteria search execute SP log.</param>
+        /// <param name="totalRows">Total rows.</param>
+        /// <returns>List of execute SP log.</returns>
         public IQueryable<LogExecSp> SearchLogExecSp(ICriteria criteria, out int totalRows)
         {
             try
@@ -45,6 +51,11 @@ namespace Fanex.NAP.Core.Repository.Impl
             }
         }
 
+        /// <summary>
+        /// Gets execute SP log by ID.
+        /// </summary>
+        /// <param name="criteria">The criteria get execute SP log by ID.</param>
+        /// <returns>Execute SP log.</returns>
         public LogExecSp GetById(ICriteria criteria)
         {
             try
@@ -62,6 +73,11 @@ namespace Fanex.NAP.Core.Repository.Impl
             }
         }
 
+        /// <summary>
+        /// Insert log.
+        /// </summary>
+        /// <param name="criteria">The criteria insert log.</param>
+        /// <returns>Command result.</returns>
         public ICommandResult InsertLog(ICriteria criteria)
         {
             try
@@ -82,6 +98,12 @@ namespace Fanex.NAP.Core.Repository.Impl
             }
         }
 
+        /// <summary>
+        /// Search user login log.
+        /// </summary>
+        /// <param name="criteria">The criteria search user login log.</param>
+        /// <param name="totalRows">Total rows.</param>
+        /// <returns>List of user login log.</returns>
         public IQueryable<LogUserLogin> SearchLogUserLogin(ICriteria criteria, out int totalRows)
         {
             try
@@ -106,6 +128,12 @@ namespace Fanex.NAP.Core.Repository.Impl
             }
         }
 
+        /// <summary>
+        /// Search function log.
+        /// </summary>
+        /// <param name="criteria">The criteria search function log.</param>
+        /// <param name="totalRows">Total rows.</param>
+        /// <returns>List of function log.</returns>
         public IQueryable<LogFunction> SearchLogFunction(ICriteria criteria, out int totalRows)
         {
             try

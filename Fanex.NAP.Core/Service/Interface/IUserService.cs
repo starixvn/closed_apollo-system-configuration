@@ -85,7 +85,7 @@ namespace Fanex.NAP.Core.Service.Interface
         /// <param name="userId">User ID.</param>
         /// <param name="functionKey">Function key.</param>
         /// <param name="listSite">List of site.</param>
-        /// <returns>key is site id and value is policy is host.</returns>
+        /// <returns>Key is site id and value is policy is host.</returns>
         Hashtable GetUserListSiteFunctionKeyPolicy(int userId, string functionKey, List<SelectListItem> listSite = null);
 
         ICommandResult ResetPassword(IUser user);
@@ -104,15 +104,15 @@ namespace Fanex.NAP.Core.Service.Interface
         /// Modify user site.
         /// </summary>
         /// <param name="site">UserId and List(SiteLevel).</param>
-        /// <returns></returns>
+        /// <returns>Command result.</returns>
         ICommandResult AssignSite(AssignSiteUserCriteria site);
 
         /// <summary>
         /// Modify user function.
         /// </summary>
-        /// <param name="permision">UserId and List(FunctionPolicy).</param>
-        /// <returns>Result.</returns>
-        ICommandResult AssignFunction(AssignFunctionUserCriteria function);
+        /// <param name="criteria">The criteria modify user function.</param>
+        /// <returns>Command result.</returns>
+        ICommandResult AssignFunction(AssignFunctionUserCriteria criteria);
 
         ICommandResult ChangePassword(ICriteria user);
 

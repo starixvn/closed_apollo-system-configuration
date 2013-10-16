@@ -80,7 +80,7 @@ namespace Fanex.NAP.Core.Criteria.Function
         /// <summary>
         /// Determines whether this instance is valid.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>True: valid; False: invalid.</returns>
         public override bool IsValid()
         {
             return true;

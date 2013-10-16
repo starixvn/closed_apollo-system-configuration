@@ -34,7 +34,7 @@ namespace Fanex.NAP.Core.Criteria.MenuItem
         /// <summary>
         /// Check data's constrains.
         /// </summary>
-        /// <returns>True: valid; False: invalid</returns>
+        /// <returns>True: valid; False: invalid.</returns>
         public override bool IsValid()
         {
             return true;

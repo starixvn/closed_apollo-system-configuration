@@ -12,7 +12,7 @@ namespace Fanex.NAP.Core.Criteria.Misc
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
-    /// Result.
+    /// Result criteria.
     /// </summary>
     public class ResultCriteria : CriteriaBase
     {

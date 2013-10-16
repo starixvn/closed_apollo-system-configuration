@@ -359,7 +359,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// </summary>
         /// <param name="siteId">Site ID.</param>
         /// <param name="menuItemId">Menu item ID.</param>
-        /// <param name="environment">Environment.</param>
+        /// <param name="environment">The environment.</param>
         /// <returns></returns>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageMenu, Policy = Constant.Policy.Host)]
@@ -401,6 +401,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// Get list function by site id.
         /// </summary>
         /// <param name="siteId">Site ID.</param>
+        /// <param name="environment">The environment.</param>
         /// <returns></returns>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageMenu, Policy = Constant.Policy.Host)]
@@ -428,9 +429,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// <summary>
         /// Update status menu.
         /// </summary>
-        /// <param name="menuItemId">Menu item ID.</param>
+        /// <param name="id">Menu item ID.</param>
         /// <param name="isActive">Is active or not.</param>
-        /// <returns></returns>
+        /// <returns>Action result.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageMenu, Policy = Constant.Policy.Host)]
         public ActionResult Activate(int id, bool active)
