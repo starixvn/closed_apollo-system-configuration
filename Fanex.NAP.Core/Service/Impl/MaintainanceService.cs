@@ -16,6 +16,7 @@ namespace Fanex.NAP.Core.Service.Impl
     using Fanex.NAP.Core.Service.Interface;
     using Apollo.UMService.Model;
     using Apollo.UMService;
+    using Fanex.Logging;
 
     [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
     public class MaintainanceService : BaseService, IMaintainanceService
@@ -50,7 +51,7 @@ namespace Fanex.NAP.Core.Service.Impl
             }
             catch (Exception ex)
             {
-                HandleException(ex);
+                LogService.Error(ex.Message, ex);
             }
 
             if (isdowntime)
