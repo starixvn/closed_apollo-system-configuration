@@ -144,15 +144,12 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             {
                 var hasEditRight = false;
                 var isITGroup = CheckIsPortalAminOrITGroup();
+
                 criteria = new GetMailingListBySiteCriteria
                 {
                     SiteId = siteId ?? this.SiteId,
                     Environment = this.Environment,
-                    IsActive = null,
-                    IsInternal = isITGroup,
-                    SiteMailingList = this.SiteId,
-                    ParentFunctionKey = FunctionKeys.MailingList.ToString(),
-                    UserId = this.CurrentSession.UserId
+                    IsInternal = isITGroup
                 };
                 
                 var mailingList = _mailingListService.GetBySite(criteria);
@@ -188,11 +185,8 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             {
                 var hasEditRight = false;
                 var isITGroup = CheckIsPortalAminOrITGroup();
+
                 criteria.IsInternal = isITGroup;
-                criteria.Environment = this.Environment;
-                criteria.SiteMailingList = this.SiteId;
-                criteria.ParentFunctionKey = FunctionKeys.MailingList.ToString();
-                criteria.UserId = this.CurrentSession.UserId;
 
                 var mailingList = _mailingListService.GetBySite(criteria);
                 IList<SelectListItem> siteItemList = new List<SelectListItem>();

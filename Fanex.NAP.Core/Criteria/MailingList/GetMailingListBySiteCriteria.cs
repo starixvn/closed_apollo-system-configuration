@@ -22,13 +22,7 @@ namespace Fanex.NAP.Core.Criteria.MailingList
 
         public bool? IsActive { get; set; }
 
-        public bool IsInternal { get; set; }
-
-        public int SiteMailingList { get; set; }
-
-        public string ParentFunctionKey { get; set; }
-
-        public int UserId { get; set; }
+        public bool? IsInternal { get; set; }
 
         public override string GetSettingKey()
         {
