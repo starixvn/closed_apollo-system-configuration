@@ -27,7 +27,7 @@ namespace Fanex.NAP.Core.Criteria.MailingList
 
         public override string GetSettingKey()
         {
-            return "NAP_MailingLists_UpdateStatus";
+            return "NAP_MailingList_UpdateStatus";
         }
 
         public override bool IsValid()

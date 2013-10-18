@@ -51,11 +51,11 @@
         <Mapping DataField="ModifierId" ObjectProperty="Id" />
         <Mapping DataField="ModifierUsername" ObjectProperty="Username" />
       </Setting>
-      <Setting Key="NAP_MailingLists_Insert" SpName="NAP_MailingLists_Insert" DbName="SVRNAP.bodb_NAP.bodbAdminNet"/>
-      <Setting Key="NAP_MailingLists_Update" SpName="NAP_MailingLists_Update" DbName="SVRNAP.bodb_NAP.bodbAdminNet"/>
-      <Setting Key="NAP_MailingLists_UpdateStatus" SpName="NAP_MailingLists_UpdateStatus" DbName="SVRNAP.bodb_NAP.bodbAdminNet"/>
-      <Setting Key="NAP_MailingLists_UpdateIsInternal" SpName="NAP_MailingLists_UpdateIsInternal" DbName="SVRNAP.bodb_NAP.bodbAdminNet"/>
-      <Setting Key="NAP_MailingLists_GetById" SpName="NAP_MailingLists_GetById" DbName="SVRNAP.bodb_NAP.bodbAdminNet">
+      <Setting Key="NAP_MailingList_Insert" SpName="NAP_MailingList_Insert" DbName="SVRNAP.bodb_NAP.bodbAdminNet"/>
+      <Setting Key="NAP_MailingList_Update" SpName="NAP_MailingList_Update" DbName="SVRNAP.bodb_NAP.bodbAdminNet"/>
+      <Setting Key="NAP_MailingList_UpdateStatus" SpName="NAP_MailingList_UpdateStatus" DbName="SVRNAP.bodb_NAP.bodbAdminNet"/>
+      <Setting Key="NAP_MailingList_UpdateIsInternal" SpName="NAP_MailingList_UpdateIsInternal" DbName="SVRNAP.bodb_NAP.bodbAdminNet"/>
+      <Setting Key="NAP_MailingList_GetById" SpName="NAP_MailingList_GetById" DbName="SVRNAP.bodb_NAP.bodbAdminNet">
         <Mapping DataField="ListId" ObjectProperty="Id" />
         <Mapping DataField="ListName" ObjectProperty="Name" />
         <Mapping DataField="ListKey" ObjectProperty="Key" />
@@ -66,7 +66,7 @@
         <Mapping DataField="FunctionId" ObjectProperty="Id" />
         <Mapping DataField="FunctionName" ObjectProperty="Name" />
       </Setting>
-      <Setting Key="NAP_MailingLists_GetByKey" SpName="NAP_MailingLists_GetByKey" DbName="SVRNAP.bodb_NAP.bodbAdminNet">
+      <Setting Key="NAP_MailingList_GetByKey" SpName="NAP_MailingList_GetByKey" DbName="SVRNAP.bodb_NAP.bodbAdminNet">
         <Mapping DataField="ListId" ObjectProperty="Id" />
         <Mapping DataField="ListName" ObjectProperty="Name" />
         <Mapping DataField="ListKey" ObjectProperty="Key" />
@@ -77,7 +77,7 @@
         <Mapping DataField="FunctionId" ObjectProperty="Id" />
         <Mapping DataField="FunctionName" ObjectProperty="Name" />
       </Setting>
-      <Setting Key="NAP_MailingLists_GetByName" SpName="NAP_MailingLists_GetByName" DbName="SVRNAP.bodb_NAP.bodbAdminNet">
+      <Setting Key="NAP_MailingList_GetByName" SpName="NAP_MailingList_GetByName" DbName="SVRNAP.bodb_NAP.bodbAdminNet">
         <Mapping DataField="ListId" ObjectProperty="Id" />
         <Mapping DataField="ListName" ObjectProperty="Name" />
         <Mapping DataField="ListKey" ObjectProperty="Key" />
@@ -88,7 +88,7 @@
         <Mapping DataField="FunctionId" ObjectProperty="Id" />
         <Mapping DataField="FunctionName" ObjectProperty="Name" />
       </Setting>
-      <Setting Key="NAP_MailingLists_GetBySite" SpName="NAP_MailingLists_GetBySite" DbName="SVRNAP.bodb_NAP.bodbAdminNet">
+      <Setting Key="NAP_MailingList_GetBySite" SpName="NAP_MailingList_GetBySite" DbName="SVRNAP.bodb_NAP.bodbAdminNet">
         <Mapping DataField="ListId" ObjectProperty="Id" />
         <Mapping DataField="ListName" ObjectProperty="Name" />
         <Mapping DataField="ListKey" ObjectProperty="Key" />
@@ -99,7 +99,7 @@
         <Mapping DataField="FunctionId" ObjectProperty="Id" />
         <Mapping DataField="FunctionName" ObjectProperty="Name" />
       </Setting>
-      <Setting Key="NAP_MailingLists_GetByFunctionKeyAndSite" SpName="NAP_MailingLists_GetByFunctionKeyAndSite" DbName="SVRNAP.bodb_NAP.bodbAdminNet">
+      <Setting Key="NAP_MailingList_GetByFunctionKeyAndSite" SpName="NAP_MailingList_GetByFunctionKeyAndSite" DbName="SVRNAP.bodb_NAP.bodbAdminNet">
         <Mapping DataField="ListId" ObjectProperty="Id" />
         <Mapping DataField="ListName" ObjectProperty="Name" />
         <Mapping DataField="ListKey" ObjectProperty="Key" />
@@ -112,9 +112,9 @@
       </Setting>
     </Function>
   <Function Name="ExchangeRate">
-    <Setting Key="Age_Exchange_GetAll" SpName="Acc_ExchangeSelAccount" DbName="SVRCSD.RepDB"></Setting>
-    <Setting Key="Age_Exchange_GetById" SpName="Acc_ExchangeSelByID" DbName="SVRCSD.RepDB"></Setting>
-    <Setting Key="Age_Exchange_InsertRate" SpName="Acc_ExchangeIns" DbName="SVRTXN.TransDB"></Setting>
-    <Setting Key="Age_Exchange_UpdateRate" SpName="Acc_ExchangeUpd" DbName="SVRTXN.TransDB"></Setting>
+    <Setting Key="Age_Exchange_GetAll" SpName="Acc_ExchangeSelAccount" DbName="SVRCSD.RepDB.bodbAdminNet"></Setting>
+    <Setting Key="Age_Exchange_GetById" SpName="Acc_ExchangeSelByID" DbName="SVRCSD.RepDB.bodbAdminNet"></Setting>
+    <Setting Key="Age_Exchange_InsertRate" SpName="Acc_ExchangeIns" DbName="SVRTXN.TransDB.bodbAdminNet"></Setting>
+    <Setting Key="Age_Exchange_UpdateRate" SpName="Acc_ExchangeUpd" DbName="SVRTXN.TransDB.bodbAdminNet"></Setting>
   </Function>
 </Functions>

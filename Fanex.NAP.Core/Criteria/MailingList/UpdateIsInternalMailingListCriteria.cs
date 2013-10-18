@@ -27,7 +27,7 @@ namespace Fanex.NAP.Core.Criteria.MailingList
 
         public override string GetSettingKey()
         {
-            return "NAP_MailingLists_UpdateIsInternal";
+            return "NAP_MailingList_UpdateIsInternal";
         }
 
         public override bool IsValid()

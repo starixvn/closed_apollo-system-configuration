@@ -54,12 +54,15 @@
     <Reference Include="Fanex.Common">
       <HintPath>..\_Dependencies\Fanex\Release\Fanex.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Data, Version=0.5.404.55, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Fanex.Data, Version=0.5.404.59, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\_Dependencies\Fanex\Release\Fanex.Data.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Logging">
       <HintPath>..\_Dependencies\Fanex\Release\Fanex.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.MailDeliver.MailClient">
+      <HintPath>..\_Dependencies\MailService\Fanex.MailDeliver.MailClient.dll</HintPath>
     </Reference>
     <Reference Include="IBCFile">
       <HintPath>..\_Dependencies\Others\IBCFile.dll</HintPath>
@@ -258,6 +261,7 @@
     <Compile Include="Repository\Interface\IMenuItemRepository.cs" />
     <Compile Include="Repository\Interface\ISiteRepository.cs" />
     <Compile Include="Repository\Interface\IUserRepository.cs" />
+    <Compile Include="Service\Impl\EmailService.cs" />
     <Compile Include="Service\Impl\MailingListService.cs" />
     <Compile Include="Service\Impl\TraceService.cs" />
     <Compile Include="Service\Impl\MaintainanceService.cs" />

@@ -1,10 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <publishData>
   <publishProfile publishUrl="D:\Deploy\NAPAdmin" deleteExistingFiles="True" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="Profile1" publishMethod="FileSystem" replaceMatchingFiles="False" userName="" savePWD="False" userPWD="" SelectedForPublish="True">
+    <file relUrl="Areas/UserLogin/scripts/lib/msgbox/msgbox-0.0.1.css" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserLogin/Views/Web.config" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/scripts/lib/easyui/jquery.datagrid.js" publishTime="08/16/2013 16:56:55" />
     <file relUrl="Areas/UserControl/scripts/lib/jquery-ui-1.8.24.min.js" publishTime="08/16/2013 16:56:55" />
-    <file relUrl="Areas/UserControl/scripts/MailingList/MailingList.js" publishTime="10/09/2013 18:29:43" />
+    <file relUrl="Areas/UserControl/scripts/MailingList/MailingList.js" publishTime="10/16/2013 10:08:37" />
     <file relUrl="Areas/UserControl/themes/nap/user/assign-permission.less" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/scripts/lib/jquery-1.8.0.min.js" publishTime="08/16/2013 16:56:55" />
     <file relUrl="Areas/UserControl/scripts/MailingList/Manage.js" publishTime="10/02/2013 15:01:45" />
@@ -14,14 +15,15 @@
     <file relUrl="Areas/UserControl/scripts/ExchangeRate/Core.js" publishTime="10/04/2013 16:13:38" />
     <file relUrl="Areas/UserControl/Views/ExchangeRate/Index.cshtml" publishTime="10/04/2013 17:45:24" />
     <file relUrl="Areas/UserControl/themes/fonts/YanoneKaffeesatz.eot" publishTime="08/16/2013 16:56:56" />
-    <file relUrl="bin/Fanex.NAP.Admin.Core.pdb" publishTime="10/09/2013 17:22:50" />
+    <file relUrl="bin/Fanex.NAP.Admin.Core.pdb" publishTime="10/17/2013 17:18:29" />
     <file relUrl="Areas/UserControl/Views/User/AssignPermission.cshtml" publishTime="08/16/2013 16:56:55" />
     <file relUrl="Areas/UserControl/themes/nap/mailinglist/chosen-sprite.png" publishTime="09/26/2013 16:34:29" />
     <file relUrl="Areas/UserLogin/scripts/lib/msgbox/images/btn-close.png" publishTime="08/16/2013 16:56:56" />
+    <file relUrl="Areas/UserControl/themes/nap/img/mini-left.gif" publishTime="08/16/2013 16:56:56" />
     <file relUrl="bin/Microsoft.Practices.EnterpriseLibrary.Common.dll" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/themes/nap/img/actions/dd/site-ico.png" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/scripts/lib/jquery-ui-1.8.24.js" publishTime="08/16/2013 16:56:55" />
-    <file relUrl="bin/Fanex.NAP.Core.pdb" publishTime="10/09/2013 11:37:44" />
+    <file relUrl="bin/Fanex.NAP.Core.pdb" publishTime="10/17/2013 17:18:29" />
     <file relUrl="bin/System.Web.Razor.xml" publishTime="08/16/2013 16:56:56" />
     <file relUrl="bin/Newtonsoft.Json.xml" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/scripts/lib/jquery.cookie.min.js" publishTime="08/16/2013 16:56:55" />
@@ -31,12 +33,10 @@
     <file relUrl="Areas/UserControl/scripts/Group/AssignPermission.js" publishTime="08/16/2013 16:56:55" />
     <file relUrl="Areas/UserControl/themes/nap/img/red-triangle.png" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/themes/img/msgbox/confirm.png" publishTime="08/16/2013 16:56:56" />
-    <file relUrl="Areas/UserControl/Views/User/UserInfo.cshtml" publishTime="08/16/2013 16:56:55" />
     <file relUrl="Areas/UserControl/themes/nap/user/add-existing.less" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/scripts/lib/jPages/tabifier.js" publishTime="08/16/2013 16:56:55" />
     <file relUrl="Areas/UserControl/themes/jquery-ui/images/ui-bg_flat_90_466bb9_40x100.png" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/themes/nap/img/actions/dd/permission-ico.png" publishTime="08/16/2013 16:56:56" />
-    <file relUrl="Areas/UserControl/themes/nap/img/win8/editing/cllipboard.png" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/themes/nap/img/tool-sprites.gif" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/themes/fonts/YanoneKaffeesatz.woff" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/scripts/lib/easyui/jquery.resizable.js" publishTime="08/16/2013 16:56:55" />
@@ -49,7 +49,7 @@
     <file relUrl="Areas/UserControl/themes/nap/img/win8/editing/copy.png" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/Views/User/AddNew.cshtml" publishTime="08/16/2013 16:56:55" />
     <file relUrl="Areas/UserControl/scripts/lib/jPages/css/style.css" publishTime="08/16/2013 16:56:55" />
-    <file relUrl="Areas/UserControl/themes/nap/mailinglist/MailingList.less" publishTime="10/04/2013 09:59:41" />
+    <file relUrl="Areas/UserControl/themes/nap/mailinglist/MailingList.less" publishTime="10/11/2013 14:17:48" />
     <file relUrl="Areas/UserControl/themes/jquery-ui/images/ui-bg_glass_45_f4f3f1_1x400.png" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserLogin/scripts/lib/msgbox/images/info.png" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/themes/img/msgbox/error.png" publishTime="08/16/2013 16:56:56" />
@@ -57,8 +57,6 @@
     <file relUrl="bin/System.Web.Http.dll" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/themes/nap/img/page-next.gif" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/themes/img/smoothness/ui-bg_flat_75_ffffff_40x100.png" publishTime="08/16/2013 16:56:56" />
-    <file relUrl="Areas/UserControl/themes/img/smoothness/ui-bg_flat_0_aaaaaa_40x100.png" publishTime="08/16/2013 16:56:56" />
-    <file relUrl="Areas/UserControl/Views/Group/AssignPermission.cshtml" publishTime="08/16/2013 16:56:55" />
     <file relUrl="Areas/UserControl/themes/nap/mixins.less" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/scripts/lib/msgbox/images/question.png" publishTime="08/16/2013 16:56:55" />
     <file relUrl="Areas/UserLogin/scripts/ReCheckIn.js" publishTime="08/16/2013 16:56:56" />
@@ -69,19 +67,19 @@
     <file relUrl="Areas/UserControl/themes/jquery-ui/images/ui-icons_d0d9ec_256x240.png" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/scripts/lib/msgbox/images/confirm.png" publishTime="08/16/2013 16:56:55" />
     <file relUrl="Areas/UserControl/themes/nap/img/actions/user-info-ico.png" publishTime="08/16/2013 16:56:56" />
-    <file relUrl="bin/Microsoft.Practices.Unity.Interception.dll" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/Views/_ViewStart.cshtml" publishTime="08/16/2013 16:56:55" />
     <file relUrl="Areas/UserControl/Views/Trace/_NAP_Site_InsertWithSiteURL.cshtml" publishTime="08/16/2013 16:56:55" />
+    <file relUrl="Areas/UserControl/Views/Shared/NEW_Menu.cshtml" publishTime="08/16/2013 16:56:55" />
     <file relUrl="Areas/UserControl/themes/jquery-ui/images/ui-icons_cbd4e6_256x240.png" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/themes/nap/img/actions/permission-ico.png" publishTime="08/16/2013 16:56:56" />
-    <file relUrl="bin/Fanex.NAP.Framework.dll" publishTime="08/16/2013 17:14:16" />
+    <file relUrl="bin/Fanex.NAP.Framework.dll" publishTime="10/17/2013 16:55:39" />
     <file relUrl="Areas/UserControl/scripts/lib/jquery-1.8.2.min.js" publishTime="08/16/2013 16:56:55" />
     <file relUrl="bin/Microsoft.Web.Helpers.dll" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/themes/nap/ie.less" publishTime="08/16/2013 16:56:56" />
-    <file relUrl="Web.config" publishTime="10/07/2013 11:12:05" />
     <file relUrl="bin/System.Net.Http.dll" publishTime="08/16/2013 16:56:56" />
     <file relUrl="App_Data/NAPCommonSpNames.xml" publishTime="10/09/2013 15:16:49" />
     <file relUrl="bin/System.Net.Http.WebRequest.dll" publishTime="08/16/2013 16:56:56" />
+    <file relUrl="Areas/UserControl/themes/nap/img/textures/fabric.png" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/scripts/lib/jquery.validate.unobtrusive.js" publishTime="08/16/2013 16:56:55" />
     <file relUrl="Areas/UserControl/scripts/Function/AddNew.js" publishTime="08/16/2013 16:56:55" />
     <file relUrl="Areas/UserControl/scripts/lib/chosen/chosen.jquery.min.js" publishTime="08/16/2013 16:56:55" />
@@ -93,6 +91,7 @@
     <file relUrl="Areas/UserControl/Views/Trace/LogExecSp.cshtml" publishTime="10/02/2013 16:49:05" />
     <file relUrl="bin/Fanex.Common.dll" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/scripts/lib/msgbox/msgbox-0.0.1.min.js" publishTime="08/16/2013 16:56:55" />
+    <file relUrl="Areas/UserControl/scripts/lib/less-1.3.0.min.js" publishTime="08/16/2013 16:56:55" />
     <file relUrl="Areas/UserControl/themes/img/smoothness/ui-bg_glass_65_ffffff_1x400.png" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/themes/img/glyphicons-halflings-white.png" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/themes/jquery-ui/images/ui-icons_f7a50d_256x240.png" publishTime="08/16/2013 16:56:56" />
@@ -107,15 +106,14 @@
     <file relUrl="Areas/UserControl/scripts/lib/msgbox/images/btn-close.png" publishTime="08/16/2013 16:56:55" />
     <file relUrl="Areas/UserControl/scripts/lib/jquery.numeric-1.3.js" publishTime="08/16/2013 16:56:55" />
     <file relUrl="ExcelTemplates/ExchangeRateTemplate.xls" publishTime="10/04/2013 17:56:02" />
-    <file relUrl="Areas/UserLogin/scripts/lib/msgbox/msgbox-0.0.1.js" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/themes/nap/img/win8/editing/erase.png" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/themes/nap/img/sprites.png" publishTime="08/16/2013 16:56:56" />
+    <file relUrl="Areas/UserControl/themes/img/smoothness/calendar.gif" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserLogin/themes/img/bg_header.png" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/scripts/lib/jquery.validate.unobtrusive.min.js" publishTime="08/16/2013 16:56:55" />
-    <file relUrl="Areas/UserControl/scripts/User/AddExisting.js" publishTime="08/16/2013 16:56:55" />
     <file relUrl="Areas/UserControl/Views/Site/EditUrl.cshtml" publishTime="08/16/2013 16:56:55" />
     <file relUrl="Areas/UserControl/scripts/lib/jquery.validate-1.10.0.js" publishTime="08/16/2013 16:56:55" />
-    <file relUrl="Areas/UserControl/Views/MailingList/Manage.cshtml" publishTime="10/03/2013 17:36:40" />
+    <file relUrl="Areas/UserControl/Views/MailingList/Manage.cshtml" publishTime="10/14/2013 12:51:46" />
     <file relUrl="bin/Ionic.Zip.dll" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/scripts/lib/msgbox/msgbox-0.0.1.min.css" publishTime="08/16/2013 16:56:55" />
     <file relUrl="Areas/UserControl/themes/nap/img/win8/editing/copy_19.png" publishTime="08/16/2013 16:56:56" />
@@ -129,13 +127,13 @@
     <file relUrl="Areas/UserControl/Views/Trace/GetLogInsertDetail.cshtml" publishTime="10/02/2013 16:46:39" />
     <file relUrl="Areas/UserControl/themes/jquery-ui/images/ui-bg_flat_75_5476bb_40x100.png" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/Views/Function/AddNew.cshtml" publishTime="09/26/2013 15:43:56" />
-    <file relUrl="bin/Microsoft.Practices.EnterpriseLibrary.Caching.dll" publishTime="08/16/2013 16:56:56" />
     <file relUrl="bin/WebMatrix.WebData.xml" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/themes/nap/img/actions/dd/action-ico.png" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/themes/jquery-ui/images/ui-icons_4264ac_256x240.png" publishTime="08/16/2013 16:56:56" />
-    <file relUrl="bin/Fanex.NAP.Admin.Core.dll" publishTime="10/09/2013 17:22:50" />
+    <file relUrl="bin/Fanex.NAP.Admin.Core.dll" publishTime="10/17/2013 17:18:29" />
     <file relUrl="Areas/UserControl/Views/Web.config" publishTime="08/16/2013 16:56:55" />
     <file relUrl="Areas/UserControl/themes/jquery-ui/images/ui-icons_c6cddc_256x240.png" publishTime="08/16/2013 16:56:56" />
+    <file relUrl="Areas/UserControl/scripts/_Layout.js" publishTime="08/16/2013 16:56:55" />
     <file relUrl="Areas/UserControl/themes/nap/img/textures/grid.png" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/themes/img/smoothness/ui-bg_glass_95_fef1ec_1x400.png" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/themes/jquery-ui/images/ui-bg_gloss-wave_45_e14f1c_500x100.png" publishTime="08/16/2013 16:56:56" />
@@ -143,9 +141,9 @@
     <file relUrl="Areas/UserLogin/themes/img/username.png" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/themes/jquery-ui/images/ui-icons_fcd113_256x240.png" publishTime="08/16/2013 16:56:56" />
     <file relUrl="bin/System.Web.WebPages.Administration.dll" publishTime="08/16/2013 16:56:56" />
-    <file relUrl="bin/Fanex.NAP.Core.dll" publishTime="10/09/2013 11:37:44" />
+    <file relUrl="bin/Fanex.NAP.Core.dll" publishTime="10/17/2013 17:18:29" />
     <file relUrl="Areas/UserControl/themes/nap/img/mini-right.gif" publishTime="08/16/2013 16:56:56" />
-    <file relUrl="bin/Fanex.Data.dll" publishTime="08/16/2013 16:56:56" />
+    <file relUrl="bin/Fanex.Data.dll" publishTime="10/17/2013 09:30:10" />
     <file relUrl="bin/Microsoft.Web.Infrastructure.dll" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Views/Web.config" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/themes/nap/img/bg_tfoot_s.png" publishTime="08/16/2013 16:56:56" />
@@ -154,6 +152,7 @@
     <file relUrl="Areas/UserControl/scripts/User/Manage.js" publishTime="08/16/2013 16:56:55" />
     <file relUrl="Areas/UserControl/scripts/Menu/Manage.js" publishTime="08/16/2013 16:56:55" />
     <file relUrl="bin/System.Web.WebPages.Razor.xml" publishTime="08/16/2013 16:56:56" />
+    <file relUrl="bin/Fanex.Logging.dll" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/scripts/lib/easyui/jquery.panel.js" publishTime="08/16/2013 16:56:55" />
     <file relUrl="Areas/UserControl/themes/img/smoothness/ui-icons_cd0a0a_256x240.png" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/Views/Function/PrivilegedUsers.cshtml" publishTime="08/16/2013 16:56:55" />
@@ -169,22 +168,21 @@
     <file relUrl="bin/System.Web.WebPages.xml" publishTime="08/16/2013 16:56:56" />
     <file relUrl="bin/System.Web.Http.WebHost.dll" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/themes/img/glyphicons-halflings.png" publishTime="08/16/2013 16:56:56" />
-    <file relUrl="Areas/UserControl/scripts/lib/less-1.3.0.min.js" publishTime="08/16/2013 16:56:55" />
-    <file relUrl="Areas/UserControl/Views/MailingList/AddNew.cshtml" publishTime="10/09/2013 11:22:21" />
+    <file relUrl="bin/Microsoft.Practices.EnterpriseLibrary.Caching.dll" publishTime="08/16/2013 16:56:56" />
+    <file relUrl="Areas/UserControl/Views/MailingList/AddNew.cshtml" publishTime="10/11/2013 14:09:01" />
     <file relUrl="Areas/UserControl/scripts/ExchangeRate/ExchangeRate.js" publishTime="10/04/2013 16:11:13" />
     <file relUrl="Areas/UserControl/scripts/lib/chosen/chosen.jquery.js" publishTime="08/16/2013 16:56:55" />
     <file relUrl="Areas/UserControl/themes/nap/img/selected-tab.png" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/Views/Function/PrivilegedGroups.cshtml" publishTime="08/16/2013 16:56:55" />
     <file relUrl="Areas/UserControl/themes/nap/img/calendar.gif" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/Views/Trace/_NAP_Site_Url.cshtml" publishTime="08/16/2013 16:56:55" />
-    <file relUrl="App_Code/RazorHelper.cshtml" publishTime="10/09/2013 18:16:57" />
+    <file relUrl="App_Code/RazorHelper.cshtml" publishTime="10/16/2013 13:56:31" />
     <file relUrl="Areas/UserControl/themes/img/msgbox/question.png" publishTime="08/16/2013 16:56:56" />
-    <file relUrl="Areas/UserControl/themes/nap/img/delete.png" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/themes/nap/img/tree-view.png" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/themes/img/smoothness/ui-bg_glass_75_e6e6e6_1x400.png" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/themes/nap/img/actions/dd/edit-ico.png" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/themes/nap/img/user_add.png" publishTime="08/16/2013 16:56:56" />
-    <file relUrl="bin/Fanex.NAP.Admin.dll" publishTime="10/09/2013 18:33:26" />
+    <file relUrl="bin/Fanex.NAP.Admin.dll" publishTime="10/17/2013 17:28:07" />
     <file relUrl="Areas/UserControl/themes/nap/img/accept.png" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserLogin/scripts/lib/msgbox/images/error.png" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/scripts/lib/modernizr-2.6.2.min.js" publishTime="08/16/2013 16:56:55" />
@@ -198,7 +196,7 @@
     <file relUrl="bin/System.Web.WebPages.dll" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/scripts/Trace/LogExecSp.js" publishTime="08/16/2013 16:56:55" />
     <file relUrl="Areas/UserControl/themes/img/msgbox/btn-close.png" publishTime="08/16/2013 16:56:56" />
-    <file relUrl="Areas/UserControl/themes/nap/site/add-new.less" publishTime="08/16/2013 16:56:56" />
+    <file relUrl="Areas/UserControl/Views/Shared/_Layout.cshtml" publishTime="08/16/2013 16:56:55" />
     <file relUrl="Areas/UserControl/themes/nap/img/details.gif" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/themes/nap/img/cog.png" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/themes/nap/style.less" publishTime="10/07/2013 11:11:13" />
@@ -215,8 +213,7 @@
     <file relUrl="Areas/UserControl/Views/Group/AddNew.cshtml" publishTime="08/16/2013 16:56:55" />
     <file relUrl="Areas/UserControl/themes/nap/img/tick-ico-16.png" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/scripts/Function/PrivilegedGroupsAndUsers.js" publishTime="08/16/2013 16:56:55" />
-    <file relUrl="Areas/UserControl/themes/nap/img/win8/editing/attach.png" publishTime="08/16/2013 16:56:56" />
-    <file relUrl="Areas/UserControl/Views/MailingList/Edit.cshtml" publishTime="10/09/2013 11:23:16" />
+    <file relUrl="Areas/UserControl/Views/MailingList/Edit.cshtml" publishTime="10/11/2013 16:35:10" />
     <file relUrl="Areas/UserLogin/themes/img/tool-sprites.gif" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/scripts/lib/chosen/chosen.css" publishTime="09/26/2013 17:01:53" />
     <file relUrl="Areas/UserControl/scripts/lib/msgbox/images/error.png" publishTime="08/16/2013 16:56:55" />
@@ -239,6 +236,7 @@
     <file relUrl="Areas/UserControl/scripts/lib/jquery.unobtrusive-ajax.js" publishTime="08/16/2013 16:56:55" />
     <file relUrl="bin/MvcPager.dll" publishTime="08/16/2013 16:56:56" />
     <file relUrl="bin/WebMatrix.Data.dll" publishTime="08/16/2013 16:56:56" />
+    <file relUrl="Areas/UserControl/Views/Group/Edit.cshtml" publishTime="08/16/2013 16:56:55" />
     <file relUrl="Areas/UserControl/themes/fonts/YanoneKaffeesatz.ttf" publishTime="08/16/2013 16:56:56" />
     <file relUrl="bin/System.Net.Http.Formatting.dll" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/themes/nap/img/bg_header.png" publishTime="08/16/2013 16:56:56" />
@@ -248,13 +246,13 @@
     <file relUrl="Areas/UserControl/themes/nap/img/textures/scratches.png" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/Views/Trace/_NAPLogInsert.cshtml" publishTime="08/16/2013 16:56:55" />
     <file relUrl="Areas/UserControl/scripts/lib/tipsy/tipsy-1.0.0.js" publishTime="08/16/2013 16:56:55" />
+    <file relUrl="bin/System.Web.WebPages.Deployment.xml" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/themes/fonts/YanoneKaffeesatz.svg" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/Views/ExchangeRate/Insert.cshtml" publishTime="10/07/2013 10:54:34" />
     <file relUrl="Views/Home/Index.cshtml" publishTime="08/16/2013 16:56:56" />
-    <file relUrl="Areas/UserControl/scripts/lib/easyui/jquery.pagination.js" publishTime="08/16/2013 16:56:55" />
     <file relUrl="Areas/UserLogin/Views/UserSite/Site.cshtml" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/scripts/lib/jPages/js.js" publishTime="08/16/2013 16:56:55" />
-    <file relUrl="Areas/UserControl/themes/nap/img/actions/site-ico.png" publishTime="08/16/2013 16:56:56" />
+    <file relUrl="Areas/UserControl/scripts/lib/jPages/css/animate.css" publishTime="08/16/2013 16:56:55" />
     <file relUrl="Areas/UserControl/themes/jquery-ui/images/ui-bg_inset-hard_100_fcfdfd_1x100.png" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/Views/User/UserLevelList.cshtml" publishTime="08/16/2013 16:56:55" />
     <file relUrl="Areas/UserControl/themes/nap/function/edit.less" publishTime="08/16/2013 16:56:56" />
@@ -275,8 +273,8 @@
     <file relUrl="Areas/UserControl/themes/nap/img/bogus.png" publishTime="08/16/2013 16:56:56" />
     <file relUrl="bin/WebMatrix.WebData.dll" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserLogin/Views/Shared/_Layout.cshtml" publishTime="08/16/2013 16:56:56" />
-    <file relUrl="bin/Fanex.NAP.Framework.pdb" publishTime="08/16/2013 17:14:16" />
-    <file relUrl="Areas/UserControl/themes/nap/img/textures/fabric.png" publishTime="08/16/2013 16:56:56" />
+    <file relUrl="bin/Fanex.NAP.Framework.pdb" publishTime="10/17/2013 16:55:39" />
+    <file relUrl="Areas/UserControl/themes/nap/img/win8/editing/attach.png" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/Views/Menu/AddNewMenuItem.cshtml" publishTime="08/16/2013 16:56:55" />
     <file relUrl="Areas/UserControl/Views/Function/Edit.cshtml" publishTime="08/16/2013 16:56:55" />
     <file relUrl="bin/Apollo.UMService.dll" publishTime="09/26/2013 13:53:27" />
@@ -298,7 +296,7 @@
     <file relUrl="bin/WebGrease.dll" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/themes/jquery-ui/images/ui-bg_highlight-soft_90_999999_1x100.png" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/themes/jquery-ui-1.8.23.smoothness.css" publishTime="08/16/2013 16:56:56" />
-    <file relUrl="Areas/UserLogin/themes/img/welcome-napadmin.png" publishTime="08/16/2013 16:56:56" />
+    <file relUrl="Areas/UserControl/themes/nap/img/delete.png" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/Views/User/ChangePassword.cshtml" publishTime="08/16/2013 16:56:55" />
     <file relUrl="Areas/UserControl/themes/img/smoothness/ui-bg_highlight-soft_75_cccccc_1x100.png" publishTime="08/16/2013 16:56:56" />
     <file relUrl="bin/System.Web.WebPages.Deployment.dll" publishTime="08/16/2013 16:56:56" />
@@ -312,21 +310,22 @@
     <file relUrl="Areas/UserControl/themes/nap/img/grid.png" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/themes/img/smoothness/ui-icons_2e83ff_256x240.png" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/Views/Group/GroupInfo.cshtml" publishTime="08/16/2013 16:56:55" />
-    <file relUrl="Areas/UserControl/themes/img/smoothness/calendar.gif" publishTime="08/16/2013 16:56:56" />
+    <file relUrl="Areas/UserControl/themes/img/smoothness/ui-bg_flat_0_aaaaaa_40x100.png" publishTime="08/16/2013 16:56:56" />
+    <file relUrl="Areas/UserLogin/themes/img/auth-bg.png" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserLogin/themes/select-site.less" publishTime="08/16/2013 16:56:56" />
-    <file relUrl="Areas/UserControl/scripts/lib/tipsy/tipsy-1.0.0.css" publishTime="08/16/2013 16:56:55" />
     <file relUrl="Areas/UserControl/scripts/lib/jquery.easing.1.3.js" publishTime="08/16/2013 16:56:55" />
     <file relUrl="bin/System.Net.Http.xml" publishTime="08/16/2013 16:56:56" />
     <file relUrl="bin/dotless.Core.dll" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/Views/User/ResetPassword.cshtml" publishTime="08/16/2013 16:56:55" />
     <file relUrl="Areas/UserControl/scripts/Site/EditUrl.js" publishTime="08/16/2013 16:56:55" />
+    <file relUrl="App_Data/NAPAdminSpNames.xml" publishTime="10/17/2013 17:02:31" />
     <file relUrl="Areas/UserLogin/themes/img/lock.png" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserLogin/scripts/lib/msgbox/msgbox-0.0.1.min.js" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/themes/jquery-ui/images/ui-bg_glass_55_f8da4e_1x400.png" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/Views/Site/Manage.cshtml" publishTime="08/16/2013 16:56:55" />
     <file relUrl="Areas/UserControl/themes/nap/variables.less" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserLogin/Views/Login/Index.cshtml" publishTime="08/16/2013 16:56:56" />
-    <file relUrl="Areas/UserControl/Views/ExchangeRate/Update.cshtml" publishTime="10/07/2013 10:54:34" />
+    <file relUrl="Areas/UserControl/scripts/lib/tipsy/tipsy-1.0.0.css" publishTime="08/16/2013 16:56:55" />
     <file relUrl="Areas/UserLogin/themes/fonts/Abel.woff" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/scripts/lib/chosen/chosen.proto.js" publishTime="08/16/2013 16:56:55" />
     <file relUrl="Areas/UserControl/scripts/Function/Edit.js" publishTime="08/16/2013 16:56:55" />
@@ -335,55 +334,56 @@
     <file relUrl="Areas/UserControl/themes/nap/img/win8/editing/delete.png" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/scripts/Function/Duplicate.js" publishTime="08/16/2013 16:56:55" />
     <file relUrl="Areas/UserControl/themes/img/smoothness/phpThumb_generated_thumbnail.png" publishTime="08/16/2013 16:56:56" />
+    <file relUrl="Areas/UserControl/themes/nap/mailinglist/chosen.css" publishTime="09/26/2013 17:01:25" />
     <file relUrl="Views/_ViewStart.cshtml" publishTime="08/16/2013 16:56:56" />
-    <file relUrl="Areas/UserLogin/scripts/lib/msgbox/msgbox-0.0.1.css" publishTime="08/16/2013 16:56:56" />
+    <file relUrl="Areas/UserControl/themes/nap/img/win8/editing/cllipboard.png" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/scripts/lib/jquery.cookie.js" publishTime="08/16/2013 16:56:55" />
     <file relUrl="Areas/UserControl/scripts/lib/html5shiv.min.js" publishTime="08/16/2013 16:56:55" />
     <file relUrl="bin/System.Web.WebPages.Razor.dll" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/scripts/Menu/AddNewMenuItem.js" publishTime="08/16/2013 16:56:55" />
     <file relUrl="Areas/UserControl/themes/nap/img/grid-view.png" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserLogin/themes/img/welcome.png" publishTime="08/16/2013 16:56:56" />
-    <file relUrl="bin/System.Web.WebPages.Deployment.xml" publishTime="08/16/2013 16:56:56" />
-    <file relUrl="bin/Fanex.Logging.dll" publishTime="08/16/2013 16:56:56" />
+    <file relUrl="Areas/UserLogin/themes/img/welcome-napadmin.png" publishTime="08/16/2013 16:56:56" />
+    <file relUrl="Areas/UserControl/Views/User/UserInfo.cshtml" publishTime="08/16/2013 16:56:55" />
     <file relUrl="Areas/UserControl/themes/img/msgbox/alert.png" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/scripts/lib/modernizr-2.6.2.js" publishTime="08/16/2013 16:56:55" />
-    <file relUrl="Areas/UserControl/themes/nap/img/mini-left.gif" publishTime="08/16/2013 16:56:56" />
-    <file relUrl="Areas/UserControl/scripts/_Layout.js" publishTime="08/16/2013 16:56:55" />
+    <file relUrl="bin/Microsoft.Practices.Unity.Interception.dll" publishTime="08/16/2013 16:56:56" />
+    <file relUrl="Areas/UserControl/themes/nap/img/actions/site-ico.png" publishTime="08/16/2013 16:56:56" />
+    <file relUrl="Areas/UserControl/themes/nap/img/edit.png" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/themes/nap/user/manage.less" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/themes/nap/img/win8/editing/cut.png" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/scripts/lib/jquery.validate-1.10.0.min.js" publishTime="08/16/2013 16:56:55" />
     <file relUrl="Areas/UserControl/Views/User/AssignSite.cshtml" publishTime="08/16/2013 16:56:55" />
     <file relUrl="Areas/UserControl/themes/img/smoothness/ui-bg_glass_75_dadada_1x400.png" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserLogin/Views/Common/Offline.cshtml" publishTime="08/16/2013 16:56:56" />
-    <file relUrl="bin/Fanex.NAP.Admin.pdb" publishTime="10/09/2013 18:33:26" />
+    <file relUrl="bin/Fanex.NAP.Admin.pdb" publishTime="10/17/2013 17:28:07" />
     <file relUrl="EmailTemplates/ExchangeRate.cshtml" publishTime="10/04/2013 12:59:20" />
     <file relUrl="Areas/UserControl/Views/Common/Error.cshtml" publishTime="08/16/2013 16:56:55" />
     <file relUrl="Areas/UserControl/themes/nap/img/blank.png" publishTime="08/16/2013 16:56:56" />
-    <file relUrl="App_Data/NAPAdminSpNames.xml" publishTime="10/09/2013 15:16:50" />
+    <file relUrl="Web.config" publishTime="10/17/2013 18:19:50" />
     <file relUrl="Areas/UserControl/themes/nap/img/prev.png" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/scripts/lib/jquery-1.8.2.js" publishTime="08/16/2013 16:56:55" />
     <file relUrl="Areas/UserControl/scripts/lib/chosen/chosen.proto.min.js" publishTime="08/16/2013 16:56:55" />
     <file relUrl="Areas/UserControl/Views/Menu/EditMenuItem.cshtml" publishTime="08/16/2013 16:56:55" />
     <file relUrl="Areas/UserControl/Views/User/Edit.cshtml" publishTime="08/16/2013 16:56:55" />
     <file relUrl="bin/System.Net.Http.Formatting.xml" publishTime="08/16/2013 16:56:56" />
-    <file relUrl="Areas/UserControl/scripts/lib/jPages/css/animate.css" publishTime="08/16/2013 16:56:55" />
-    <file relUrl="Areas/UserControl/Views/Group/Edit.cshtml" publishTime="08/16/2013 16:56:55" />
+    <file relUrl="Areas/UserControl/scripts/User/AddExisting.js" publishTime="08/16/2013 16:56:55" />
     <file relUrl="Areas/UserControl/themes/nap/img/win8/editing/edit.png" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserLogin/themes/img/password.png" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/scripts/Menu/EditMenuItem.js" publishTime="08/16/2013 16:56:55" />
-    <file relUrl="Areas/UserControl/themes/nap/mailinglist/chosen.css" publishTime="09/26/2013 17:01:25" />
+    <file relUrl="Areas/UserControl/Views/ExchangeRate/Update.cshtml" publishTime="10/07/2013 10:54:34" />
     <file relUrl="bin/IBCUtils.dll" publishTime="08/16/2013 16:56:56" />
-    <file relUrl="Areas/UserLogin/themes/img/auth-bg.png" publishTime="08/16/2013 16:56:56" />
+    <file relUrl="Areas/UserLogin/scripts/lib/msgbox/msgbox-0.0.1.js" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/Views/Trace/_NAP_Assign_Site.cshtml" publishTime="08/16/2013 16:56:55" />
     <file relUrl="Areas/UserLogin/themes/img/title-bg.jpg" publishTime="08/16/2013 16:56:56" />
-    <file relUrl="Areas/UserControl/Views/Shared/NEW_Menu.cshtml" publishTime="08/16/2013 16:56:55" />
+    <file relUrl="Areas/UserControl/themes/nap/site/add-new.less" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/themes/nap/img/bg_footer.jpg" publishTime="08/16/2013 16:56:56" />
     <file relUrl="bin/NPOI.xml" publishTime="08/16/2013 16:56:56" />
-    <file relUrl="Areas/UserControl/Views/Shared/_Layout.cshtml" publishTime="08/16/2013 16:56:55" />
+    <file relUrl="Areas/UserControl/Views/Group/AssignPermission.cshtml" publishTime="08/16/2013 16:56:55" />
     <file relUrl="Areas/UserControl/themes/reset.css" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserLogin/themes/img/down.png" publishTime="08/16/2013 16:56:56" />
-    <file relUrl="Web.ConnectionString.config" publishTime="10/09/2013 15:16:50" />
-    <file relUrl="Areas/UserControl/themes/nap/img/edit.png" publishTime="08/16/2013 16:56:56" />
+    <file relUrl="Web.ConnectionString.config" publishTime="10/17/2013 17:02:35" />
+    <file relUrl="Areas/UserControl/scripts/lib/easyui/jquery.pagination.js" publishTime="08/16/2013 16:56:55" />
     <file relUrl="Areas/UserControl/themes/nap/function/PrivilegedGroupsAndUsers.less" publishTime="08/16/2013 16:56:56" />
     <file relUrl="Areas/UserControl/themes/nap/img/actions/url-ico.png" publishTime="08/16/2013 16:56:56" />
     <file relUrl="bin/System.Web.WebPages.Administration.xml" publishTime="08/16/2013 16:56:56" />

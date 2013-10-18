@@ -23,6 +23,7 @@ namespace Fanex.NAP.Admin.Core.Services.Impl
     using Fanex.NAP.Admin.Core.Repositories.Interface;
     using Fanex.NAP.Admin.Core.Services.Interface;
     using Fanex.NAP.Core.Domain;
+    using Fanex.NAP.Core.Services.Impl;
     using Fanex.NAP.Core.Web;
     using NPOI.HSSF.UserModel;
 
@@ -187,24 +188,23 @@ namespace Fanex.NAP.Admin.Core.Services.Impl
         /// <param name="templatePath">Path of template email file.</param>
         /// <param name="mailingLists">List MailingListModel need send mail.</param>
         /// <param name="currency">Currency code.</param>
-        /// <param name="oldBaseRate">Old base rate.</param>
-        /// <param name="newBaseRate">New base rate.</param>
+        /// <param name="oldActualRate">Old base rate.</param>
+        /// <param name="newActualRate">New base rate.</param>
         /// <param name="userName">Username of changer.</param>
         public void SendMailExchangeRate(
             string templatePath,
             List<IMailingList> mailingLists,
             string currency,
-            double oldBaseRate,
-            double newBaseRate,
+            double oldActualRate,
+            double newActualRate,
             string userName)
         {
-            var bodyTemplate = Utilities.ReadTextFile(templatePath);
-
-            var body = string.Format(bodyTemplate, currency, oldBaseRate, newBaseRate, userName);
-            var subject = string.Format(Lang.SubjectEmailExchangeRate, currency, Utilities.ShortDateFormat(DateTime.Now), userName);
-
             if (mailingLists != null && mailingLists.Any())
             {
+                var bodyTemplate = Utilities.ReadTextFile(templatePath);
+                var body = string.Format(bodyTemplate, currency, oldActualRate, newActualRate, userName);
+                var subject = string.Format(Lang.SubjectEmailExchangeRate, currency, Utilities.ShortDateFormat(DateTime.Now), userName);
+
                 foreach (var item in mailingLists)
                 {
                     EmailService.SendEmail(item.ToList, item.CCList, item.BCCList, subject, body);

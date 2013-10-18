@@ -15,13 +15,13 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
     using System.Text;
     using System.Web.Mvc;
     using Fanex.Logging;
-    using Fanex.NAP.Admin.Core.Services.Impl;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Criteria.Function;
     using Fanex.NAP.Core.Criteria.MailingList;
     using Fanex.NAP.Core.Model;
     using Fanex.NAP.Core.Service.Impl;
     using Fanex.NAP.Core.Service.Interface;
+    using Fanex.NAP.Core.Services.Impl;
     using Fanex.NAP.Core.Web;
     using Fanex.NAP.Core.Web.Attribute;
 

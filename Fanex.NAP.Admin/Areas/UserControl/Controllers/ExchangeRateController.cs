@@ -213,7 +213,10 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                     errorMsg.ErrorCode = criteria.ErrCode;
                     errorMsg.MsgCurrency = criteria.ErrMsg;
 
-                    this.SendMail(model, oldExchangeRate, criteria.ErrCode);
+                    if (criteria.ErrCode == 0 && oldExchangeRate.ActualRate.Value != model.ActualRate.Value)
+                    {
+                        this.SendMailExchangeRate(oldExchangeRate.Currency, oldExchangeRate.ActualRate.Value, model.ActualRate.Value);
+                    }
                 }
             }
 
@@ -238,55 +241,34 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         }
 
         /// <summary>
-        /// Function to send mail when change base rate of currency.
+        /// Function to send mail when change actual rate of currency.
         /// </summary>
-        /// <param name="templatePath">Path of template mail file.</param>
-        /// <param name="currency">Currency code.</param>
-        /// <param name="oldBaseRate">Old base rate value.</param>
-        /// <param name="newBaseRate">New base rate value.</param>
-        /// <param name="userName">Username of changer.</param>
+        /// <param name="currency">Currency name.</param>
+        /// <param name="oldActualRate">Old actual rate.</param>
+        /// <param name="newActualRate">New actual rate.</param>
         [NonAction]
-        private void SendMailExchangeRate(string templatePath, string currency, double oldBaseRate, double newBaseRate, string userName)
+        private void SendMailExchangeRate(string currency, double oldActualRate, double newActualRate)
         {
+            var templatePath = this._exchangeRateService.GetExchangeRateTemplateEmail();
+            var userName = this.CurrentSession.Username;
+
             var criteria = new GetMailingListByFunctionKeyAndSiteCriteria
             {
                 FunctionKey = FunctionKeys.ExchangeRate,
                 SiteId = this.SiteId
             };
-            
+
             var mailingLists = this._mailingListService.GetByFunctionKeyAndSite(criteria);
 
-            this._exchangeRateService.SendMailExchangeRate(
-                templatePath, 
-                mailingLists != null ? mailingLists.ToList() : null, 
-                currency, 
-                oldBaseRate, 
-                newBaseRate, 
-                userName);
-        }
-
-        /// <summary>
-        /// Function to send mail when change base rate of currency.
-        /// </summary>
-        /// <param name="newExchangeRate">New ExchangeRate Model.</param>
-        /// <param name="oldExchangeRate">Old ExchangeRate Model.</param>
-        /// <param name="errCode">Value is check update error or no.</param>
-        [NonAction]
-        private void SendMail(ExchangeRateModel newExchangeRate, ExchangeRateModel oldExchangeRate, int errCode)
-        {
-            if (errCode == 0 && oldExchangeRate.ActualRate.Value != newExchangeRate.ActualRate.Value)
-            {
-                var templatePath = this._exchangeRateService.GetExchangeRateTemplateEmail();
-                var userName = this.CurrentSession.Username;
-                //// send mail
-                Task taskSendMail = new Task(() => this.SendMailExchangeRate(
-                    templatePath,
-                    oldExchangeRate.Currency,
-                    oldExchangeRate.ActualRate.Value,
-                    newExchangeRate.ActualRate.Value,
-                    userName));
-                taskSendMail.Start();
-            }
+            //// send mail
+            Task taskSendMail = new Task(() => this._exchangeRateService.SendMailExchangeRate(
+                templatePath,
+                mailingLists != null ? mailingLists.ToList() : null,
+                currency,
+                oldActualRate,
+                newActualRate,
+                userName));
+            taskSendMail.Start();
         }
     }
 }

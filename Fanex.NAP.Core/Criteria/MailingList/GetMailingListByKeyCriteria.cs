@@ -20,7 +20,7 @@ namespace Fanex.NAP.Core.Criteria.MailingList
 
         public override string GetSettingKey()
         {
-            return "NAP_MailingLists_GetByKey";
+            return "NAP_MailingList_GetByKey";
         }
 
         public override bool IsValid()

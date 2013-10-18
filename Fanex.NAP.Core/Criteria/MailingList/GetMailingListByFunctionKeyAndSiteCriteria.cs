@@ -20,9 +20,11 @@ namespace Fanex.NAP.Core.Criteria.MailingList
 
         public int SiteId { get; set; }
 
+        public bool? IsInternal { get; set; }
+
         public override string GetSettingKey()
         {
-            return "NAP_MailingLists_GetByFunctionKeyAndSite";
+            return "NAP_MailingList_GetByFunctionKeyAndSite";
         }
 
         public override bool IsValid()

@@ -7,7 +7,7 @@
 //   <change who="Quinn.Vo" date="2013.8.29">Created</change>
 // </history>
 
-namespace Fanex.NAP.Admin.Core.Services.Impl
+namespace Fanex.NAP.Core.Services.Impl
 {
     using System.Configuration;
     using System.Text.RegularExpressions;

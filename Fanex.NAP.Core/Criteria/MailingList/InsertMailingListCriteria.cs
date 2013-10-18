@@ -59,7 +59,7 @@ namespace Fanex.NAP.Core.Criteria.MailingList
 
         public override string GetSettingKey()
         {
-            return "NAP_MailingLists_Insert";
+            return "NAP_MailingList_Insert";
         }
 
         public override bool IsValid()
