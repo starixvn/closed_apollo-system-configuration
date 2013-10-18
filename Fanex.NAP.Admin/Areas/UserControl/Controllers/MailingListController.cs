@@ -232,11 +232,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
             try
             {
-                IList<SelectListItem> functionItemList = new List<SelectListItem>();
-                IList<SelectListItem> mailFunctionItemList = new List<SelectListItem>();
-                IList<SelectListItem> siteItemList = new List<SelectListItem>();
-
-                GetSiteAndFunctionForAddNew(criteria, ref functionItemList, ref siteItemList, ref mailFunctionItemList);
+                var siteItemList = GetSiteList(criteria.SiteId, criteria.Environment);
+                var functionItemList = GetFunctionList(criteria.SiteId, criteria.Environment);
+                var mailFunctionItemList = GetMailFunctionList(criteria.Environment);
 
                 ViewBag.FunctionList = functionItemList;
                 ViewBag.MailFunctionList = mailFunctionItemList;
@@ -263,11 +261,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             try
             {
-                IList<SelectListItem> functionItemList = new List<SelectListItem>();
-                IList<SelectListItem> mailFunctionItemList = new List<SelectListItem>();
-                IList<SelectListItem> siteItemList = new List<SelectListItem>();
-
-                GetSiteAndFunctionForAddNew(criteria, ref functionItemList, ref siteItemList, ref mailFunctionItemList);
+                var siteItemList = GetSiteList(criteria.SiteId, criteria.Environment);
+                var functionItemList = GetFunctionList(criteria.SiteId, criteria.Environment);
+                var mailFunctionItemList = GetMailFunctionList(criteria.Environment);
 
                 ViewBag.FunctionList = functionItemList;
                 ViewBag.MailFunctionList = mailFunctionItemList;
@@ -319,9 +315,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             {
                 var siteName = string.Empty;
                 var isITGroup = CheckIsPortalAminOrITGroup();
-                IList<SelectListItem> functionItemList = new List<SelectListItem>();
-                IList<SelectListItem> mailFunctionItemList = new List<SelectListItem>();
-
                 var mailingList = _mailingListService.GetById(id);
 
                 if (ReferenceEquals(mailingList, null))
@@ -343,7 +336,8 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 criteria.IsInternal = mailingList.IsInternal;
                 criteria.IsActive = mailingList.IsActive;
 
-                GetFunctionForEdit(criteria, isITGroup, ref functionItemList, ref mailFunctionItemList, ref siteName);
+                var functionItemList = GetFunctionList(criteria.SiteId, criteria.Environment);
+                var mailFunctionItemList = GetMailFunctionList(criteria.Environment);
 
                 ViewBag.MailFunctionList = mailFunctionItemList;
                 ViewBag.FunctionList = functionItemList;
@@ -372,16 +366,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             {
                 var siteName = string.Empty;
                 var isITGroup = CheckIsPortalAminOrITGroup();
-                IList<SelectListItem> functionItemList = new List<SelectListItem>();
-                IList<SelectListItem> mailFunctionItemList = new List<SelectListItem>();
-
-                GetFunctionForEdit(criteria, isITGroup, ref functionItemList, ref mailFunctionItemList, ref siteName);
-
-                ViewBag.MailFunctionList = mailFunctionItemList;
-                ViewBag.FunctionList = functionItemList;
-                ViewBag.IsITGroup = isITGroup;
-                ViewBag.SiteName = siteName;
-
+                
                 if (ModelState.IsValid)
                 {
                     if (!CheckInvalidMailingListForEdit(criteria))
@@ -402,6 +387,14 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                         ViewBag.Success = true;
                     }
                 }
+
+                var functionItemList = GetFunctionList(criteria.SiteId, criteria.Environment);
+                var mailFunctionItemList = GetMailFunctionList(criteria.Environment);
+
+                ViewBag.MailFunctionList = mailFunctionItemList;
+                ViewBag.FunctionList = functionItemList;
+                ViewBag.IsITGroup = isITGroup;
+                ViewBag.SiteName = siteName;
             }
             catch (Exception ex)
             {
@@ -581,36 +574,56 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         }
 
         /// <summary>
-        /// Get list Site, list Function, list Mailing List Function for Dropdown List in view.
+        /// Get list Site for Dropdown List in view.
         /// </summary>
-        /// <param name="criteria">InsertMailingListCriteria input value to get.</param>
-        /// <param name="functionItemList">Return a list functions.</param>
-        /// <param name="siteItemList">Return a list sites.</param>
-        /// <param name="mailFunctionItemList">Return a list mailing list functions.</param>
+        /// <param name="siteId">Input siteId.</param>
+        /// <param name="environment">Input environment.</param>
+        /// <param name="selectedSiteId">Input Selected site.</param>
+        /// <returns>Return a site list.</returns>
         [NonAction]
-        private void GetSiteAndFunctionForAddNew(
-            InsertMailingListCriteria criteria, 
-            ref IList<SelectListItem> functionItemList, 
-            ref IList<SelectListItem> siteItemList, 
-            ref IList<SelectListItem> mailFunctionItemList)
+        private IList<SelectListItem> GetSiteList(int siteId, string environment, int selectedSiteId = 0)
         {
-            GetByParentKeyAndSiteCriteria getByParentKeyAndSiteCriteria = new GetByParentKeyAndSiteCriteria
-            {
-                SiteId = this.SiteId,
-                ParentKey = FunctionKeys.MailingList,
-                Environment = criteria.Environment,
-                IsActive = true
-            };
+            IList<SelectListItem> siteItemList = null;
+
             if (this.UserIsPortalAdmin)
             {
-                functionItemList = _functionService.GetSelectListItemBySite(criteria.SiteId, criteria.Environment, isActive: true);
-                siteItemList = _siteService.GetAllSelectListItem(criteria.Environment, isActive: true, selectedSiteId: criteria.SiteId);
+                siteItemList = _siteService.GetAllSelectListItem(environment, isActive: true, selectedSiteId: siteId);
             }
             else
             {
-                getByParentKeyAndSiteCriteria.RoleId = (byte)Constant.Policy.Host;
-                getByParentKeyAndSiteCriteria.UserId = this.CurrentSession.UserId;
-                var functionList = _functionService.GetByUserAndSiteIncludeGroup(this.CurrentSession.UserId, criteria.SiteId, criteria.Environment);
+                var sites = _siteService.GetSiteLevelByUser(this.CurrentSession.UserId, this.Environment);
+                if (sites != null)
+                {
+                    siteItemList = sites.Select(s => new SelectListItem
+                    {
+                        Text = s.Site.Name, 
+                        Value = s.Site.Id.ToString(),
+                        Selected = siteId == s.Site.Id
+                    }).ToList();
+                }
+            }
+
+            return siteItemList;
+        }
+
+        /// <summary>
+        /// Get list Function for Dropdown List in view.
+        /// </summary>
+        /// <param name="siteId">Input siteId.</param>
+        /// <param name="environment">Input environment.</param>
+        /// <param name="selectedFunctionId">Input Selected function.</param>
+        /// <returns>Return a function list.</returns>
+        private IList<SelectListItem> GetFunctionList(int siteId, string environment, int selectedFunctionId = 0)
+        {
+            IList<SelectListItem> functionItemList = null;
+
+            if (this.UserIsPortalAdmin)
+            {
+                functionItemList = _functionService.GetSelectListItemBySite(siteId, environment, isActive: true);
+            }
+            else
+            {
+                var functionList = _functionService.GetByUserAndSiteIncludeGroup(this.CurrentSession.UserId, siteId, environment);
                 if (functionList != null)
                 {
                     functionList = functionList.Where(t => t.Policy >= (byte)Constant.Policy.Host);
@@ -618,18 +631,35 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                     {
                         Text = s.Function.Name,
                         Value = s.Function.Id.ToString(),
-                        Selected = criteria.FunctionId == s.Function.Id
+                        Selected = selectedFunctionId == s.Function.Id
                     }).ToList();
                 }
+            }
 
-                var sites = _siteService.GetSiteLevelByUser(this.CurrentSession.UserId, this.Environment);
-                if (sites != null)
-                {
-                    siteItemList = sites.Select(s => new SelectListItem
-                    {
-                        Text = s.Site.Name, Value = s.Site.Id.ToString(), Selected = criteria.SiteId == s.Site.Id
-                    }).ToList();
-                }
+            return functionItemList;
+        }
+
+        /// <summary>
+        /// Get list Mailing List Function for Dropdown List in view.
+        /// </summary>
+        /// <param name="environment">Input environment.</param>
+        /// <returns>Return a mail function list.</returns>
+        private IList<SelectListItem> GetMailFunctionList(string environment)
+        {
+            IList<SelectListItem> mailFunctionItemList = null;
+
+            GetByParentKeyAndSiteCriteria getByParentKeyAndSiteCriteria = new GetByParentKeyAndSiteCriteria
+            {
+                SiteId = this.SiteId,
+                ParentKey = FunctionKeys.MailingList,
+                Environment = environment,
+                IsActive = true,
+            };
+
+            if (!this.UserIsPortalAdmin)
+            {
+                getByParentKeyAndSiteCriteria.RoleId = (byte)Constant.Policy.Host;
+                getByParentKeyAndSiteCriteria.UserId = this.CurrentSession.UserId;
             }
 
             var mailFunctionList = _functionService.GetByParentKeyAndSite(getByParentKeyAndSiteCriteria).ToList();
@@ -641,6 +671,8 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                     Value = s.Id.ToString(),
                 }).ToList();
             }
+
+            return mailFunctionItemList;
         }
 
         /// <summary>
@@ -818,70 +850,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             }
 
             return isValid;
-        }
-
-        /// <summary>
-        /// Get Function List and Function Mailing List for Dropdown list in View and set value for criteria in case is not IT group.
-        /// </summary>
-        /// <param name="criteria">UpdateMailingListCriteria to get and set value.</param>
-        /// <param name="isITGroup">Check to set criteria in case is not IT group.</param>
-        /// <param name="functionItemList">To return a list functions.</param>
-        /// <param name="mailFunctionItemList">To return a list Mailing List functions.</param>
-        /// <param name="siteName">To return site name.</param>
-        [NonAction]
-        private void GetFunctionForEdit(
-            UpdateMailingListCriteria criteria, 
-            bool isITGroup, 
-            ref IList<SelectListItem> functionItemList, 
-            ref IList<SelectListItem> mailFunctionItemList, 
-            ref string siteName)
-        {
-            GetByParentKeyAndSiteCriteria getByParentKeyAndSiteCriteria = new GetByParentKeyAndSiteCriteria
-            {
-                SiteId = this.SiteId, ParentKey = FunctionKeys.MailingList, Environment = criteria.Environment, IsActive = true
-            };
-            var mailingList = _mailingListService.GetById(criteria.ListId);
-            siteName = mailingList.Site.Name;
-            if (mailingList != null && !isITGroup)
-            {
-                criteria.ListKey = mailingList.Key;
-                criteria.ListName = mailingList.Name;
-                criteria.Description = mailingList.Description;
-                criteria.SiteId = mailingList.Site.Id;
-                criteria.Environment = mailingList.Environment;
-                criteria.ListFunctionId = mailingList.MailFunction.Id;
-                criteria.FunctionId = mailingList.Function.Id;
-                criteria.IsInternal = mailingList.IsInternal;
-            }
-
-            if (this.UserIsPortalAdmin)
-            {
-                functionItemList = _functionService.GetSelectListItemBySite(criteria.SiteId, criteria.Environment, isActive: true);
-            }
-            else
-            {
-                var functionList = _functionService.GetByUserAndSiteIncludeGroup(this.CurrentSession.UserId, criteria.SiteId, criteria.Environment);
-                if (functionList != null)
-                {
-                    functionList = functionList.Where(t => t.Policy >= (byte)Constant.Policy.Host);
-                    functionItemList = functionList.Select(s => new SelectListItem
-                    {
-                        Text = s.Function.Name, Value = s.Function.Id.ToString(), Selected = criteria.FunctionId == s.Function.Id
-                    }).ToList();
-                }
-
-                getByParentKeyAndSiteCriteria.RoleId = (byte)Constant.Policy.Host;
-                getByParentKeyAndSiteCriteria.UserId = this.CurrentSession.UserId;
-            }
-
-            var mailFunctionList = _functionService.GetByParentKeyAndSite(getByParentKeyAndSiteCriteria).ToList();
-            if (mailFunctionList != null)
-            {
-                mailFunctionItemList = mailFunctionList.Select(s => new SelectListItem
-                {
-                    Text = s.Name, Value = s.Id.ToString(),
-                }).ToList();
-            }
         }
 
         /// <summary>
