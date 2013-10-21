@@ -138,15 +138,16 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         [NapAuth(FunctionKey = FunctionKeys.ManageMailingList, Policy = Constant.Policy.Read)]
         public ActionResult Manage(int? siteId)
         {
-            GetMailingListBySiteCriteria criteria = null;
+            GetMailingListByUserAndSiteIncludeGroupCriteria criteria = null;
 
             try
             {
                 var hasEditRight = false;
                 var isITGroup = CheckIsPortalAminOrITGroup();
 
-                criteria = new GetMailingListBySiteCriteria
+                criteria = new GetMailingListByUserAndSiteIncludeGroupCriteria
                 {
+                    UserId = CurrentSession.UserId,
                     SiteId = siteId ?? this.SiteId,
                     Environment = this.Environment,
                     IsInternal = isITGroup
@@ -179,13 +180,14 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// <returns>View Result.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageMailingList, Policy = Constant.Policy.Read)]
-        public ActionResult Manage(GetMailingListBySiteCriteria criteria)
+        public ActionResult Manage(GetMailingListByUserAndSiteIncludeGroupCriteria criteria)
         {
             try
             {
                 var hasEditRight = false;
                 var isITGroup = CheckIsPortalAminOrITGroup();
 
+                criteria.UserId = CurrentSession.UserId;
                 criteria.IsInternal = isITGroup;
 
                 var mailingList = _mailingListService.GetBySite(criteria);
@@ -221,7 +223,8 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             {
                 SiteId = (!siteId.HasValue || siteId.Value == 0) ? this.SiteId : siteId.Value,
                 Environment = this.Environment,
-                IsInternal = false
+                IsInternal = false,
+                BCCList = string.Empty
             };
 
             try
@@ -321,6 +324,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 criteria.ListName = mailingList.Name;
                 criteria.Description = mailingList.Description;
                 criteria.SiteId = mailingList.Site.Id;
+                criteria.SiteName = mailingList.Site.Name;
                 criteria.Environment = mailingList.Environment;
                 criteria.ListFunctionId = mailingList.MailFunction.Id;
                 criteria.FunctionId = mailingList.Function.Id;
@@ -336,7 +340,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 ViewBag.MailFunctionList = mailFunctionItemList;
                 ViewBag.FunctionList = functionItemList;
                 ViewBag.IsITGroup = isITGroup;
-                ViewBag.SiteName = siteName;
             }
             catch (Exception ex)
             {
@@ -360,6 +363,15 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             {
                 var siteName = string.Empty;
                 var isITGroup = CheckIsPortalAminOrITGroup();
+
+                ViewBag.IsITGroup = isITGroup;
+
+                var functionItemList = GetFunctionList(criteria.SiteId, criteria.Environment);
+                var mailFunctionItemList = GetMailFunctionList(criteria.Environment);
+
+                ViewBag.MailFunctionList = mailFunctionItemList;
+                ViewBag.FunctionList = functionItemList;
+                ViewBag.IsITGroup = isITGroup;
                 
                 if (ModelState.IsValid)
                 {
@@ -381,14 +393,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                         ViewBag.Success = true;
                     }
                 }
-
-                var functionItemList = GetFunctionList(criteria.SiteId, criteria.Environment);
-                var mailFunctionItemList = GetMailFunctionList(criteria.Environment);
-
-                ViewBag.MailFunctionList = mailFunctionItemList;
-                ViewBag.FunctionList = functionItemList;
-                ViewBag.IsITGroup = isITGroup;
-                ViewBag.SiteName = siteName;
             }
             catch (Exception ex)
             {
@@ -539,7 +543,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// <param name="hasEditRight">Return role is edit or no.</param>
         /// <param name="siteItemList">Return list sites.</param>
         [NonAction]
-        private void GetSitesAndPolicyForManageAction(GetMailingListBySiteCriteria criteria, ref bool hasEditRight, ref IList<SelectListItem> siteItemList)
+        private void GetSitesAndPolicyForManageAction(GetMailingListByUserAndSiteIncludeGroupCriteria criteria, ref bool hasEditRight, ref IList<SelectListItem> siteItemList)
         {
             if (this.UserIsPortalAdmin)
             {

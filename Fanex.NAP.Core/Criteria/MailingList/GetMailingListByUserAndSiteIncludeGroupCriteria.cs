@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------
-// <copyright file="GetMailingListBySiteCriteria.cs" company="Nexcel Solutions Vietnam">
+// <copyright file="GetMailingListByUserAndSiteIncludeGroupCriteria.cs" company="Nexcel Solutions Vietnam">
 // Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------
@@ -14,8 +14,10 @@ namespace Fanex.NAP.Core.Criteria.MailingList
     /// <summary>
     /// GetMailingListBySite Criteria.
     /// </summary>
-    public class GetMailingListBySiteCriteria : CriteriaBase
+    public class GetMailingListByUserAndSiteIncludeGroupCriteria : CriteriaBase
     {
+        public int UserId { get; set; }
+
         public int SiteId { get; set; }
 
         public string Environment { get; set; }
@@ -26,7 +28,7 @@ namespace Fanex.NAP.Core.Criteria.MailingList
 
         public override string GetSettingKey()
         {
-            return "NAP_MailingList_GetBySite";
+            return "NAP_MailingList_GetByUserAndSiteIncludeGroup";
         }
 
         public override bool IsValid()

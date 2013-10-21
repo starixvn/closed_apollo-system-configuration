@@ -34,6 +34,9 @@ namespace Fanex.NAP.Core.Criteria.MailingList
 
         public int SiteId { get; set; }
 
+        [SpParam(Ignored = true)]
+        public string SiteName { get; set; }
+
         public string Environment { get; set; }
 
         public int ListFunctionId { get; set; }

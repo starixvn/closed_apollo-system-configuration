@@ -88,7 +88,7 @@
         <Mapping DataField="FunctionId" ObjectProperty="Id" />
         <Mapping DataField="FunctionName" ObjectProperty="Name" />
       </Setting>
-      <Setting Key="NAP_MailingList_GetBySite" SpName="NAP_MailingList_GetBySite" DbName="SVRNAP.bodb_NAP.bodbAdminNet">
+      <Setting Key="NAP_MailingList_GetByUserAndSiteIncludeGroup" SpName="NAP_MailingList_GetByUserAndSiteIncludeGroup" DbName="SVRNAP.bodb_NAP.bodbAdminNet">
         <Mapping DataField="ListId" ObjectProperty="Id" />
         <Mapping DataField="ListName" ObjectProperty="Name" />
         <Mapping DataField="ListKey" ObjectProperty="Key" />

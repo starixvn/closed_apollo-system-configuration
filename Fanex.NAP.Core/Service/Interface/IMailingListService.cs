@@ -22,7 +22,7 @@ namespace Fanex.NAP.Core.Service.Interface
 
         IMailingList GetByName(string listName);
 
-        IEnumerable<IMailingList> GetBySite(GetMailingListBySiteCriteria criteria);
+        IEnumerable<IMailingList> GetBySite(GetMailingListByUserAndSiteIncludeGroupCriteria criteria);
 
         IEnumerable<IMailingList> GetByFunctionKeyAndSite(GetMailingListByFunctionKeyAndSiteCriteria criteria);
 

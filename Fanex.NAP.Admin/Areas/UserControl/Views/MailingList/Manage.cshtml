@@ -1,6 +1,6 @@
 ﻿@using Fanex.NAP.Core.Criteria.MailingList
 @using Fanex.NAP.Core.Web
-@model GetMailingListBySiteCriteria
+@model GetMailingListByUserAndSiteIncludeGroupCriteria
 @{
     ViewBag.Title = ViewResources.Manage_MailingList;
     
@@ -62,31 +62,27 @@
                     <th class="first">
                         @ViewResources.MailingList_Name
                     </th>
-                    @if (isITGroup)
-                    {
-                        <th>
-                            @ViewResources.MailFunction
-                        </th>
-                    }
                     <th>
-                            @ViewResources.Function
-                        </th>
+                        @ViewResources.MailFunction
+                    </th>
+                    <th>
+                        @ViewResources.Function
+                    </th>
                     <th>
                         @ViewResources.To
                     </th>
                     <th>
                         @ViewResources.Cc
                     </th>
-                    <th>
-                        @ViewResources.Bcc
-                    </th>
-                    @if (isITGroup)
+					@if (isITGroup)
                     {
+						<th>
+							@ViewResources.Bcc
+						</th>
                         <th>
                             @ViewResources.Internal
                         </th>
                     }
-                    
                     <th>
                         @ViewResources.Active
                     </th>
@@ -120,12 +116,9 @@
                         <td>
                             @item.Name
                         </td>
-                        @if (isITGroup)
-                        {
-                            <td>
-                                @item.MailFunction.Name
-                            </td>
-                        }
+                        <td>
+                            @item.MailFunction.Name
+                        </td>
                         <td>
                                 @item.Function.Name
                             </td>
@@ -135,83 +128,82 @@
                         <td>
                             @Html.Raw(string.IsNullOrEmpty(item.CCList) ? string.Empty : item.CCList.Replace(";", "<br/>"))
                         </td>
-                        <td>
-                            @Html.Raw(string.IsNullOrEmpty(item.BCCList) ? string.Empty : item.BCCList.Replace(";", "<br/>"))
-                        </td>
                         @if (isITGroup)
                         {
+							<td>
+								@Html.Raw(string.IsNullOrEmpty(item.BCCList) ? string.Empty : item.BCCList.Replace(";", "<br/>"))
+							</td>
                             <td class="align-center">
                             @if ((bool)ViewBag.IsPortalAdmin || (viewFlags.HasEditRight && item.Policy >= (byte)Constant.Policy.Host))
-                            {
-                                string activateText = item.IsInternal ? "Set internal for" : "Unset internal for";
-
-                                
+							{
+								string activateText = item.IsInternal ? "Set internal for" : "Unset internal for";
+								
                                     @Html.CheckBox(string.Format("chk-internal-item-{0}", item.Id), item.IsInternal,
-                                    new
-                                    {
-                                        dataid = item.Id,
-                                        dataname = item.Name,
-                                        @class = "chk-internal-item",
-                                        title = string.Format("{0} '{1}'", activateText, item.Name)
-                                    })
+									new
+									{
+										dataid = item.Id,
+										dataname = item.Name,
+										@class = "chk-internal-item",
+										title = string.Format("{0} '{1}'", activateText, item.Name)
+									})
                                 
-                            }
-                            else if (item.IsInternal)
-                            {
+							}
+							else if (item.IsInternal)
+							{
                                     <img src="~/areas/usercontrol/themes/nap/img/blank.png" alt="" class="ico-tick" />
-                            }
+							}
                             </td>
-                        }
+						}
     
                         <td class="align-center">
                             @if ((bool)ViewBag.IsPortalAdmin || (viewFlags.HasEditRight && item.Policy >= (byte)Constant.Policy.Host))
-                            {
-                                string activateText = item.IsActive ? "Deactivate" : "Activate";
+							{
+								string activateText = item.IsActive ? "Deactivate" : "Activate";
 
                                 @Html.CheckBox(string.Format("chk-active-item-{0}", item.Id), item.IsActive,
-                            new
-                            {
-                                dataid = item.Id,
-                                dataname = item.Name,
-                                @class = "chk-active-item",
-                                title = string.Format("{0} '{1}'", activateText, item.Name)
-                            })
-                            }
-                            else if (item.IsActive)
-                            {
+							new
+							{
+								dataid = item.Id,
+								dataname = item.Name,
+								@class = "chk-active-item",
+								title = string.Format("{0} '{1}'", activateText, item.Name)
+							})
+							}
+							else if (item.IsActive)
+							{
                                 <img src="~/areas/usercontrol/themes/nap/img/blank.png" alt="" class="ico-tick" />
-                            }
+							}
                         </td>
                         @if (isITGroup && !viewFlags.IsLive)
-                        {
+						{
                             <td class="align-center">
                                 @item.Environment
                             </td>
-                        }
+						}
                         @if (viewFlags.HasEditRight)
-                        {
-                            if ((bool)ViewBag.IsPortalAdmin || item.Policy >= (byte)Constant.Policy.Host)
-                            {
+						{
+							if ((bool)ViewBag.IsPortalAdmin || item.Policy >= (byte)Constant.Policy.Host)
+							{
                                 <td> 
                                 @Html.ActionLink("Edit", "Edit", new { id = item.Id },
-                                new
-                                {
-                                    @class = "btn-edit tip",
-                                    title = string.Format("{0} '{1}'", ViewResources.Edit, item.Name)
-                                })
+								new
+								{
+									@class = "btn-edit tip",
+									title = string.Format("{0} '{1}'", ViewResources.Edit, item.Name)
+								})
                                 </td>
-                            }
-                            else
-                            {
+							}
+							else
+							{
                                 <td></td>
-                            }
-                        }
+							}
+						}
                     </tr>
-                        i++;
-                    }
+						i++;
+					}
 
-                    if (i == 0)
-                    {
+					if (i == 0)
+					{
                     <tr>
                         <td colspan="11" class="align-center">
                             @ViewResources.NoInformationAvailable

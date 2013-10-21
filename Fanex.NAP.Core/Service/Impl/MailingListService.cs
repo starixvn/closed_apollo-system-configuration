@@ -122,7 +122,7 @@ namespace Fanex.NAP.Core.Service.Impl
         /// </summary>
         /// <param name="criteria">GetMailingListBySite Criteria to query database.</param>
         /// <returns>List MailingList Object.</returns>
-        public IEnumerable<IMailingList> GetBySite(GetMailingListBySiteCriteria criteria)
+        public IEnumerable<IMailingList> GetBySite(GetMailingListByUserAndSiteIncludeGroupCriteria criteria)
         {
             Check.Argument.IsNotEmpty(criteria.Environment, "Environment");
 
