@@ -175,6 +175,11 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
                                 _currentSession.Username = username;
                                 _currentSession.OnUserId = criteria.OnUserId;
                                 _currentSession.SessionId = Session.SessionID.ToString();
+                                if (!ReferenceEquals(user.Group, null))
+                                {
+                                    _currentSession.GroupId = user.Group.Id;
+                                    _currentSession.GroupName = user.Group.Name;
+                                }
 
                                 // current site is not NAP Hub
                                 if (this.SiteId != 0)

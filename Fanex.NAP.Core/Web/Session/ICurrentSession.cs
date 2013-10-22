@@ -28,6 +28,10 @@ namespace Fanex.NAP.Core.Web.Session
 
         string SessionId { get; set; }
 
+        int GroupId { get; set; }
+
+        string GroupName { get; set; }
+
         IList<MenuItem> Menu { get; set; }
 
         //Dictionary<SiteUrl, List<IMenuItem>> MenuDic { get; set; }
