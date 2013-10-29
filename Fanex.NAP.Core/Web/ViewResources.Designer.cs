@@ -1609,7 +1609,7 @@ namespace Fanex.NAP.Core.Web {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to CSD.
+        ///   Looks up a localized string similar to System Configuration.
         /// </summary>
         public static string SiteTitle {
             get {

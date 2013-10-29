@@ -706,7 +706,7 @@
     <value>Maintenance</value>
   </data>
   <data name="SiteTitle" xml:space="preserve">
-    <value>CSD</value>
+    <value>System Configuration</value>
   </data>
   <data name="Create_New_MailingList" xml:space="preserve">
     <value>Create New Mailing List</value>

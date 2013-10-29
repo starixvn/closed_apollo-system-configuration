@@ -201,6 +201,7 @@
     <Content Include="Areas\UserLogin\scripts\ReCheckIn.js" />
     <Content Include="Areas\UserLogin\themes\fonts\YanoneKaffeesatz.svg" />
     <Content Include="Areas\UserLogin\themes\fonts\YanoneKaffeesatz.woff" />
+    <Content Include="Areas\UserLogin\themes\img\accounting_portal.png" />
     <Content Include="Areas\UserLogin\themes\img\auth-bg.png" />
     <Content Include="Areas\UserLogin\themes\img\bg.png" />
     <Content Include="Areas\UserLogin\themes\img\bg_header.png" />
