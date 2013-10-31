@@ -1357,7 +1357,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
             #region NAP_MailingLists_Insert
 
-            if (log.ActionId == (int)LogAction.NAP_MailingLists_Insert)
+            if (log.ActionId == (int)LogAction.NAP_MailingList_Insert)
             {
                 var listLogData = new List<LogData>();
                 listLogData.Add(new LogData
@@ -1437,7 +1437,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
             #region NAP_MailingLists_Update
 
-            if (log.ActionId == (int)LogAction.NAP_MailingLists_Update)
+            if (log.ActionId == (int)LogAction.NAP_MailingList_Update)
             {
                 var listLogData = new List<LogData>();
                 listLogData.Add(new LogData
@@ -1529,7 +1529,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
             #region NAP_MailingLists_UpdateStatus
 
-            if (log.ActionId == (int)LogAction.NAP_MailingLists_UpdateStatus)
+            if (log.ActionId == (int)LogAction.NAP_MailingList_UpdateStatus)
             {
                 var listLogData = new List<LogData>();
                 listLogData.Add(new LogData
@@ -1555,7 +1555,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
             #region NAP_Function_Insert
 
-            if (log.ActionId == (int)LogAction.NAP_MailingLists_UpdateIsInternal)
+            if (log.ActionId == (int)LogAction.NAP_MailingList_UpdateIsInternal)
             {
                 var listLogData = new List<LogData>();
                 listLogData.Add(new LogData

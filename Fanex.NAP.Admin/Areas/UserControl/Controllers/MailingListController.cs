@@ -410,7 +410,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// <param name="environment">Environment is UAT or LIVE.</param>
         /// <returns>JSON Result.</returns>
         [HttpPost]
-        [NapAuth(FunctionKey = FunctionKeys.ManageFunction, Policy = Constant.Policy.Read)]
         public JsonResult GetFunctionBySite(int siteId, string environment = Constant.UAT)
         {
             if (Request.IsAjaxRequest())
@@ -448,7 +447,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// <param name="environment">Environment is UAT or LIVE.</param>
         /// <returns>JSON Result.</returns>
         [HttpPost]
-        [NapAuth(FunctionKey = FunctionKeys.ManageFunction, Policy = Constant.Policy.Read)]
         public JsonResult GetMailFunctionByEnvironment(string environment = Constant.UAT)
         {
             if (Request.IsAjaxRequest())
@@ -486,7 +484,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// <param name="listName">Mailing List Name which key general from it.</param>
         /// <returns>JSON Result (List key).</returns>
         [HttpPost]
-        [NapAuth(FunctionKey = FunctionKeys.ManageMailingList, Policy = Constant.Policy.Host)]
         public JsonResult GetMailingListKey(int listId, string listName)
         {
             var tempMailingList = _mailingListService.GetById(listId);

@@ -20,7 +20,7 @@
             $('.btn-add').click(function () {
                 $.ajax({
                     type: 'GET',
-                    url: NAP.resolveClientUrl("ExchangeRate/insert"),
+                    url: NAP.resolveClientUrl("ExchangeRate/Insert"),
                     dataType: 'html',
                     success: function (data) {
                         if (data) {

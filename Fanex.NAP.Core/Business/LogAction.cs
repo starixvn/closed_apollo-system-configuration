@@ -7,7 +7,7 @@
 // </summary>
 //
 // <history>
-// Lasted generated date: 10/2/2013 4:24:27 PM
+// Lasted generated date: 10/29/2013 4:08:52 PM
 // </history>
 using System.Diagnostics.CodeAnalysis;
 
@@ -41,13 +41,13 @@ public enum LogAction
       
     NAP_Group_UpdateStatus = 204,
       
-    NAP_MailingLists_Insert = 108,
+    NAP_MailingList_Insert = 108,
       
-    NAP_MailingLists_Update = 213,
+    NAP_MailingList_Update = 213,
       
-    NAP_MailingLists_UpdateIsInternal = 402,
+    NAP_MailingList_UpdateIsInternal = 402,
       
-    NAP_MailingLists_UpdateStatus = 401,
+    NAP_MailingList_UpdateStatus = 401,
       
     NAP_MenuItem_Insert = 104,
       
