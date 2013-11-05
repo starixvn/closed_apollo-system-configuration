@@ -12,14 +12,11 @@ namespace Fanex.NAP.Framework.Data
     using System;
 
     /// <summary>
-    /// TODO: Update summary.
+    /// Store procedure parameter attribute.
     /// </summary>
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
     public class SpParamAttribute : Attribute
     {
-        /// <summary>
-        /// Parameter name.
-        /// </summary>
         public string SqlParamName { get; set; }
 
         /// <summary>

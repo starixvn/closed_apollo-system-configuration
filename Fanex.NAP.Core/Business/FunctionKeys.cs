@@ -7,11 +7,8 @@
 // </summary>
 //
 // <history>
-<<<<<<< HEAD
 // Lasted generated date: 10/14/2013 4:27:43 PM
-=======
 // Lasted generated date: 10/29/2013 4:09:01 PM
->>>>>>> ExchangeRate
 // </history>
 using System.Diagnostics.CodeAnalysis;
 
@@ -61,15 +58,12 @@ public static class FunctionKeys
 
     public const string SystemConfiguration = "SystemConfiguration";
 
-<<<<<<< HEAD
     public const string Taitest = "Taitest";
 
     public const string TaitestC = "TaitestC";
 
     public const string testtesttestttt123 = "testtesttestttt123";
 
-=======
->>>>>>> ExchangeRate
     public const string UserLoginLog = "UserLoginLog";
 
     public const string UserLoginLogCopy = "UserLoginLogCopy";

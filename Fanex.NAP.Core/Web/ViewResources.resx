@@ -707,8 +707,6 @@
   </data>
   <data name="SiteTitle" xml:space="preserve">
     <value>System Configuration</value>
-<<<<<<< HEAD
-=======
   </data>
   <data name="Create_New_MailingList" xml:space="preserve">
     <value>Create New Mailing List</value>
@@ -748,6 +746,5 @@
   </data>
   <data name="Msg_Requried" xml:space="preserve">
     <value>The {0} field is required.</value>
->>>>>>> ExchangeRate
   </data>
 </root>

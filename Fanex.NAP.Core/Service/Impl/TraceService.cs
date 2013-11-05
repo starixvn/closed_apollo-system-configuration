@@ -37,6 +37,9 @@ namespace Fanex.NAP.Core.Service.Impl
             this._traceRepository = traceRepository ?? new TraceRepository();
         }
 
+        /// <summary>
+        /// Search execute SP log.
+        /// </summary>
         public IQueryable<LogExecSp> SearchExecSp(
             int pageIndex, 
             int pageSize, 
@@ -76,6 +79,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return logList;
         }
 
+        /// <summary>
+        /// Get execute SP log by ID.
+        /// </summary>
         public LogExecSp GetById(int logId)
         {
             try
@@ -213,6 +219,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Insert user login log.
+        /// </summary>
         public ICommandResult InsertLogUserLogin(
             int userId,
             int siteId,
@@ -254,6 +263,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Search user login log.
+        /// </summary>
         public IQueryable<LogUserLogin> SearchUserLogin(int pageIndex, int pageSize, out int totalRows, string name, DateTime from, DateTime to, int siteId = 0)
         {
             IQueryable<LogUserLogin> logList = null;
@@ -284,6 +296,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return logList;
         }
 
+        /// <summary>
+        /// Insert function log.
+        /// </summary>
         public ICommandResult InsertLogFunction(int functionId, int userId, int siteId, string param, string ip, DateTime date, string broswser)
         {
             try
@@ -312,6 +327,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Search function log.
+        /// </summary>
         public IQueryable<LogFunction> SearcFunction(int pageIndex, int pageSize, out int totalRows, string name, DateTime from, DateTime to, int siteId = 0)
         {
             IQueryable<LogFunction> logList = null;

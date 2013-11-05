@@ -48,7 +48,10 @@ namespace Fanex.NAP.Core.Service.Impl
         #endregion
 
         #region Gets Function
-        
+
+        /// <summary>
+        /// Get function by ID.
+        /// </summary>
         public IFunction GetById(int id)
         {
             // check parameters
@@ -74,6 +77,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Get function by name and site.
+        /// </summary>
         public IFunction GetByNameAndSite(string name, int siteId)
         {
             // check parameters
@@ -101,6 +107,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Get function by key and site.
+        /// </summary>
         public IFunction GetByKeyAndSite(string key, int siteId)
         {
             // check parameters
@@ -131,7 +140,10 @@ namespace Fanex.NAP.Core.Service.Impl
         #endregion
 
         #region Get Functions
-        
+
+        /// <summary>
+        /// Get all function.
+        /// </summary>
         public IEnumerable<IFunction> GetAll(string env = Constant.UAT, bool? isActive = null)
         {
             // check parameters
@@ -158,6 +170,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Get all function and group by site.
+        /// </summary>
         public Dictionary<ISite, IEnumerable<IFunction>> GetAllAndGroupBySite(
             string env = Constant.UAT,
             bool? isActive = null)
@@ -204,6 +219,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Get function by site.
+        /// </summary>
         public IEnumerable<IFunction> GetBySite(int siteId, string env = Constant.UAT, bool? isActive = null)
         {
             // check parameters
@@ -232,6 +250,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Get select list item by site.
+        /// </summary>
         public IList<SelectListItem> GetSelectListItemBySite(
             int siteId,
             string env = Constant.UAT,
@@ -274,6 +295,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Get function by site in hierarchy.
+        /// </summary>
         public IEnumerable<IFunction> GetBySiteInHierarchy(int siteId, string env = Constant.UAT, bool? isActive = null)
         {
             Check.Argument.IsNotNegativeOrZero(siteId, "SiteId");
@@ -303,6 +327,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Get parent function by ID.
+        /// </summary>
         public IEnumerable<IFunction> GetParentById(int id)
         {
             // check parameters
@@ -328,6 +355,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Search function.
+        /// </summary>
         public IEnumerable<IFunction> Search(
             string functionName, 
             int siteId, 
@@ -363,6 +393,9 @@ namespace Fanex.NAP.Core.Service.Impl
 
         #region Gets Function Policy
 
+        /// <summary>
+        /// Get user function policy.
+        /// </summary>
         public IEnumerable<FunctionPolicy> GetByUser(int userId, string env = Constant.UAT)
         {
             // check parameters
@@ -390,6 +423,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Get function policy by user and group by site.
+        /// </summary>
         public Dictionary<ISite, IEnumerable<FunctionPolicy>> GetByUserAndGroupBySite(
             int userId,
             string env = Constant.UAT)
@@ -437,6 +473,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Get function policy by group.
+        /// </summary>
         public IEnumerable<FunctionPolicy> GetByGroup(int groupId, string env = Constant.UAT)
         {
             // check parameters
@@ -464,6 +503,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Get function policy by group and site.
+        /// </summary>
         public IEnumerable<FunctionPolicy> GetByGroupAndSite(int groupId, int siteId, string env = Constant.UAT)
         {
             // check parameters
@@ -492,7 +534,10 @@ namespace Fanex.NAP.Core.Service.Impl
 
             return null;
         }
-
+        
+        /// <summary>
+        /// Get function policy by group and group by site.
+        /// </summary>
         public Dictionary<ISite, IEnumerable<FunctionPolicy>> GetByGroupAndGroupBySite(
             int groupId,
             string env = Constant.UAT)
@@ -540,6 +585,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Get function policy by user site.
+        /// </summary>
         public IEnumerable<FunctionPolicy> GetByUserAndSite(int userId, int siteId, string env = Constant.UAT)
         {
             // check parameters
@@ -569,6 +617,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Get function policy by user and site include group.
+        /// </summary>
         public IEnumerable<FunctionPolicy> GetByUserAndSiteIncludeGroup(
             int userId,
             int siteId,
@@ -601,6 +652,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Get function policy by user and function key include group.
+        /// </summary>
         public IEnumerable<FunctionPolicy> GetByUserAndFunctionKeyIncludeGroup(
             int userId,
             string functionKey,
@@ -635,11 +689,17 @@ namespace Fanex.NAP.Core.Service.Impl
 
         #endregion
 
+        /// <summary>
+        /// Check user function policy.
+        /// </summary>
         public bool CheckUserFunctionPolicy(int userId, int functionId, int policy)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Duplicate function.
+        /// </summary>
         public ICommandResult Duplicate(DuplicateFunctionCriteria criteria)
         {
             Check.Argument.IsNotNull(criteria, "criteria");
@@ -664,6 +724,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Insert function.
+        /// </summary>
         public ICommandResult Insert(InsertFunctionCriteria criteria)
         {
             // check parameters
@@ -689,6 +752,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Update function.
+        /// </summary>
         public ICommandResult Update(UpdateFunctionCriteria criteria)
         {
             // check parameters
@@ -714,6 +780,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Update function status.
+        /// </summary>
         public ICommandResult UpdateStatus(UpdateStatusFunctionCriteria criteria)
         {
             // check parameters
@@ -739,6 +808,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Assign user permission.
+        /// </summary>
         public ICommandResult AssignFunctionToUsers(AssignFunctionToUsersCriteria criteria)
         {
             Check.Argument.IsNotNull(criteria, "criteria");
@@ -760,6 +832,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Assign group permission.
+        /// </summary>
         public ICommandResult AssignFunctionToGroups(AssignFunctionToGroupsCriteria criteria)
         {
             Check.Argument.IsNotNull(criteria, "criteria");
@@ -781,6 +856,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Sort function in hierarchy.
+        /// </summary>
         private IEnumerable<IFunction> SortFunctionsInHierarchy(IEnumerable<IFunction> functionList, int parentId = 0)
         {
             var sortedFunctionList = new List<IFunction>();

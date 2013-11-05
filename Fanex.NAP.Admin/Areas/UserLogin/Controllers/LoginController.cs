@@ -125,26 +125,18 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
 
                                 _userService.UserCheckIn(ref criteria);
 
-<<<<<<< HEAD
                                 // saves user session
                                 this._currentSession.Level = _userService.GetUserSiteLevel(user.Id, this.SiteId);
                                 this._currentSession.UserId = user.Id;
                                 this._currentSession.Username = username;
                                 this._currentSession.OnUserId = criteria.OnUserId;
                                 this._currentSession.SessionId = Session.SessionID.ToString();
-=======
-                                #region saves user session
-                                _currentSession.Level = _userService.GetUserSiteLevel(user.Id, this.SiteId);
-                                _currentSession.UserId = user.Id;
-                                _currentSession.Username = username;
-                                _currentSession.OnUserId = criteria.OnUserId;
-                                _currentSession.SessionId = Session.SessionID.ToString();
+
                                 if (!ReferenceEquals(user.Group, null))
                                 {
                                     _currentSession.GroupId = user.Group.Id;
                                     _currentSession.GroupName = user.Group.Name;
                                 }
->>>>>>> ExchangeRate
 
                                 // current site is not NAP Hub
                                 if (this.SiteId != 0)

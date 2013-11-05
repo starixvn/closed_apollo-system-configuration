@@ -44,6 +44,9 @@ namespace Fanex.NAP.Core.Service.Impl
             _traceService = traceService ?? new TraceService();
         }
 
+        /// <summary>
+        /// Get user by ID.
+        /// </summary>
         public IUser GetById(int id)
         {
             Check.Argument.IsNotNegativeOrZero(id, "id");
@@ -68,6 +71,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Get user by username.
+        /// </summary>
         public IUser GetByUsername(string username)
         {
             Check.Argument.IsNotEmpty(username, "username");
@@ -92,6 +98,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Check if username exist.
+        /// </summary>
         public bool CheckUsernameExist(string username)
         {
             Check.Argument.IsNotEmpty(username, "username");
@@ -116,6 +125,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return false;
         }
 
+        /// <summary>
+        /// Get all user.
+        /// </summary>
         public IEnumerable<IUser> GetAll()
         {
             try
@@ -135,6 +147,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Get user by site.
+        /// </summary>
         public IEnumerable<IUser> GetBySite(int siteId = 0, bool? isActive = null)
         {
             try
@@ -158,6 +173,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Get user by group and site.
+        /// </summary>
         public IEnumerable<IUser> GetByGroupAndSite(int groupId = 0, int siteId = 0, bool? isActive = null)
         {
             try
@@ -182,11 +200,17 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Search user.
+        /// </summary>
         public IEnumerable<UserLevel> SearchUser(string username, int groupId = 0, int siteId = 0)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Get user level by username group and site.
+        /// </summary>
         public IQueryable<UserLevel> GetAllByUsernameGroupSite(
             int pageIndex,
             int pageSize,
@@ -222,6 +246,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return userList;
         }
 
+        /// <summary>
+        /// Search user.
+        /// </summary>
         public IQueryable<UserLevel> SearchUser(
             int pageIndex,
             int pageSize,
@@ -257,6 +284,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return userList;
         }
 
+        /// <summary>
+        /// Search user exclude function.
+        /// </summary>
         public IQueryable<UserLevel> SearchUserExcludeFunction(
             int pageIndex,
             int pageSize,
@@ -292,6 +322,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return userList;
         }
 
+        /// <summary>
+        /// Search user exclude function.
+        /// </summary>
         public IQueryable<UserLevel> SearchUserExcludeFunction(
             int pageIndex,
             int pageSize,
@@ -329,6 +362,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return userList;
         }
 
+        /// <summary>
+        /// Get user site level.
+        /// </summary>
         public int GetUserSiteLevel(int userId, int siteId)
         {
             try
@@ -352,16 +388,25 @@ namespace Fanex.NAP.Core.Service.Impl
             return -1;
         }
 
+        /// <summary>
+        /// Reset password.
+        /// </summary>
         public ICommandResult ResetPassword(IUser user)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Insert user.
+        /// </summary>
         public ICommandResult Insert(IUser user)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Insert user.
+        /// </summary>
         public ICommandResult Insert(InsertCustCriteria criteria)
         {
             Check.Argument.IsNotNull(criteria, "criteria");
@@ -383,16 +428,25 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Update user.
+        /// </summary>
         public ICommandResult Update(int userId, string email, string displayName)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Update user.
+        /// </summary>
         public ICommandResult Update(IUser user)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Change user site status.
+        /// </summary>
         public ICommandResult ChangeUserSiteStatus(int userId, int siteId, bool isActive)
         {
             Check.Argument.IsNotNegativeOrZero(userId, "userId");
@@ -423,6 +477,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Assign site to user.
+        /// </summary>
         public ICommandResult AssignSite(AssignSiteUserCriteria criteria)
         {
             Check.Argument.IsNotNull(criteria, "criteria");
@@ -444,6 +501,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Assign permission to user.
+        /// </summary>
         public ICommandResult AssignFunction(AssignFunctionUserCriteria criteria)
         {
             Check.Argument.IsNotNull(criteria, "criteria");
@@ -465,26 +525,41 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Change user password.
+        /// </summary>
         public ICommandResult ChangePassword(ICriteria user)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Login on user.
+        /// </summary>
         public ICommandResult LoginOnUser(string netSessionId, int serverId)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Log out user.
+        /// </summary>
         public ICommandResult Logout()
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Re-login user.
+        /// </summary>
         public ICommandResult ReLogin()
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Write log user login.
+        /// </summary>
         public ICommandResult WriteLogUserLogin(
             string loginIp, 
             string domainName, 
@@ -497,6 +572,9 @@ namespace Fanex.NAP.Core.Service.Impl
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Check in user.
+        /// </summary>
         public void UserCheckIn(ref UserCheckInUserCriteria criteria)
         {
             Check.Argument.IsNotNull(criteria, "criteria");
@@ -526,6 +604,9 @@ namespace Fanex.NAP.Core.Service.Impl
             }
         }
 
+        /// <summary>
+        /// Re-check in user.
+        /// </summary>
         public void ReUserCheckIn(ref UserReCheckInUserCriteria criteria)
         {
             Check.Argument.IsNotNull(criteria, "criteria");
@@ -543,6 +624,9 @@ namespace Fanex.NAP.Core.Service.Impl
             }
         }
 
+        /// <summary>
+        /// Log out user.
+        /// </summary>
         public void UserLogOut(LogOutUserCriteria criteria)
         {
             Check.Argument.IsNotNull(criteria, "criteria");
@@ -560,6 +644,9 @@ namespace Fanex.NAP.Core.Service.Impl
             }
         }
 
+        /// <summary>
+        /// SSO check in user.
+        /// </summary>
         public void UserSSOCheckIn(ref UserSSOCheckInUserCriteria criteria)
         {
             Check.Argument.IsNotNull(criteria, "criteria");
@@ -589,6 +676,9 @@ namespace Fanex.NAP.Core.Service.Impl
             }
         }
 
+        /// <summary>
+        /// Get user function policy.
+        /// </summary>
         public int GetUserFunctionPolicy(int userId, int functionId)
         {
             try
@@ -612,6 +702,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return -1;
         }
 
+        /// <summary>
+        /// Get user function policy by site and function key.
+        /// </summary>
         public int GetUserSiteFunctionKeyPolicy(int userId, int siteId, string functionKey)
         {
             try
@@ -636,6 +729,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return -1;
         }
 
+        /// <summary>
+        /// Search user by username.
+        /// </summary>
         public IQueryable<IUser> SearchByUsername(string username, int pageIndex, int pageSize, out int totalRows)
         {
             IQueryable<IUser> userList = null;
@@ -663,6 +759,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return userList;
         }
 
+        /// <summary>
+        /// Insert or update user.
+        /// </summary>
         public ICommandResult InsertOrUpdate(ICriteria criteria)
         {
             Check.Argument.IsNotNull(criteria, "criteria");
@@ -684,6 +783,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Get user policy by function and site.
+        /// </summary>
         public IEnumerable<UserPolicy> GetByFunctionAndSite(int functionId, int siteId)
         {
             Check.Argument.IsNotNegativeOrZero(functionId, "functionid");
@@ -710,6 +812,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Get user list site function key policy.
+        /// </summary>
         public Hashtable GetUserListSiteFunctionKeyPolicy(int userId, string functionKey, List<SelectListItem> listSite = null)
         {
             try
@@ -734,6 +839,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Check if have permission user site function key.
+        /// </summary>
         public bool HasPermissionUserSiteFunctionKey(int userId, int siteId, string functionKey, Constant.Policy policy)
         {
             Check.Argument.IsNotNegativeOrZero(userId, "userId");
@@ -758,6 +866,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return false;
         }
 
+        /// <summary>
+        /// Get user SSO time.
+        /// </summary>
         public string UserSSOGetTime()
         {
             try

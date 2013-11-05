@@ -68,7 +68,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             try
             {
-                // check edit right                
+                // check edit right
                 int policy = _userService.GetUserSiteFunctionKeyPolicy(
                             CurrentSession.UserId,
                             this.SiteId,

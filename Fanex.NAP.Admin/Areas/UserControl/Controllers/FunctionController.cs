@@ -65,6 +65,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
         #region Manage
 
+        /// <summary>
+        /// Manage function.
+        /// </summary>
         [HttpGet]
         [NapAuth(FunctionKey = FunctionKeys.ManageFunction, Policy = Constant.Policy.Read)]
         public ActionResult Manage(int? siteId)
@@ -88,6 +91,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return View(criteria);
         }
 
+        /// <summary>
+        /// Manage function.
+        /// </summary>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageFunction, Policy = Constant.Policy.Read)]
         public ActionResult Manage(GetBySiteFunctionCriteria criteria)
@@ -109,6 +115,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
         #region Add new
 
+        /// <summary>
+        /// Add new function.
+        /// </summary>
         [HttpGet]
         [NapAuth(FunctionKey = FunctionKeys.ManageFunction, Policy = Constant.Policy.Host)]
         public ActionResult AddNew(int? siteId = null)
@@ -132,6 +141,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return View(criteria);
         }
 
+        /// <summary>
+        /// Add new function.
+        /// </summary>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageFunction, Policy = Constant.Policy.Host)]
         public ActionResult AddNew(InsertFunctionCriteria criteria)
@@ -213,6 +225,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
         #region Duplicate Function
 
+        /// <summary>
+        /// Duplicate function.
+        /// </summary>
         [HttpGet]
         [NapAuth(FunctionKey = FunctionKeys.ManageFunction, Policy = Constant.Policy.Host)]
         public ActionResult Duplicate(int id, int? siteId = null)
@@ -256,6 +271,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return View(criteria);
         }
 
+        /// <summary>
+        /// Duplicate function.
+        /// </summary>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageFunction, Policy = Constant.Policy.Host)]
         public ActionResult Duplicate(DuplicateFunctionCriteria criteria)
@@ -321,6 +339,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
         #region Update
 
+        /// <summary>
+        /// Update function.
+        /// </summary>
         [HttpGet]
         [NapAuth(FunctionKey = FunctionKeys.ManageFunction, Policy = Constant.Policy.Host)]
         public ActionResult Edit(int id)
@@ -370,6 +391,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return View(criteria);
         }
 
+        /// <summary>
+        /// Update function.
+        /// </summary>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageFunction, Policy = Constant.Policy.Host)]
         public ActionResult Edit(UpdateFunctionCriteria criteria)
@@ -498,6 +522,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
         #region Activation
 
+        /// <summary>
+        /// Update function status.
+        /// </summary>
         [NapAuth(FunctionKey = FunctionKeys.ManageFunction, Policy = Constant.Policy.Host)]
         public ActionResult Activate(int id, bool active)
         {
@@ -532,6 +559,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
         #region Privileged Groups And Users
 
+        /// <summary>
+        /// Get priviledged group and user.
+        /// </summary>
         [NapAuth(FunctionKey = FunctionKeys.ManageFunction, Policy = Constant.Policy.Read)]
         public ActionResult PrivilegedGroupsAndUsers(int id = 0)
         {
@@ -576,6 +606,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Manage priviledged user.
+        /// </summary>
         [NapAuth(FunctionKey = FunctionKeys.AssignFunctionToUser, Policy = Constant.Policy.Host)]
         public ActionResult PrivilegedUsers(
             int id = 1,
@@ -631,6 +664,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return new EmptyResult();
         }
 
+        /// <summary>
+        /// Add priviledged user.
+        /// </summary>
         [NapAuth(FunctionKey = FunctionKeys.AssignFunctionToUser, Policy = Constant.Policy.Host)]
         public string AddPrivilegedUsers(
             int id = 0,
@@ -678,6 +714,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             throw new Exception(ViewResources.Unexpected_Error);
         }
 
+        /// <summary>
+        /// Manage priviledged group.
+        /// </summary>
         [NapAuth(FunctionKey = FunctionKeys.AssignFunctionToGroup, Policy = Constant.Policy.Host)]
         public ActionResult PrivilegedGroups(int fid = 0, string q = EmptyString)
         {
@@ -713,6 +752,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return new EmptyResult();
         }
 
+        /// <summary>
+        /// Add priviledged group.
+        /// </summary>
         [NapAuth(FunctionKey = FunctionKeys.AssignFunctionToGroup, Policy = Constant.Policy.Host)]
         public string AddPrivilegedGroups(
             int id = 0,
@@ -764,6 +806,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
         #region Ajax Request
 
+        /// <summary>
+        /// Get function by site.
+        /// </summary>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageFunction, Policy = Constant.Policy.Read)]
         public JsonResult GetFunctionBySite(int siteId)
@@ -788,6 +833,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return Json(null);
         }
 
+        /// <summary>
+        /// Get parent function by environment.
+        /// </summary>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageFunction, Policy = Constant.Policy.Host)]
         public JsonResult GetFunctionParentByEnvironment(int siteId = 0, int functionId = 0, string environment = Constant.UAT)
@@ -828,6 +876,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return Json(null);
         }
 
+        /// <summary>
+        /// Get function key.
+        /// </summary>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageFunction, Policy = Constant.Policy.Host)]
         public JsonResult GetFunctionKey(int functionId, string functionName)
@@ -882,6 +933,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
         #region Helpers
 
+        /// <summary>
+        /// Insert child function.
+        /// </summary>
         private void InsertChildFunction(ref List<Function> orderedFunctionList, List<Function> functionList, Function parent)
         {
             var childFunctionList = functionList.Where(f => f.Parent != null && f.Parent.Id == parent.Id)
@@ -896,6 +950,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
         #endregion
 
+        /// <summary>
+        /// Prepare manage data.
+        /// </summary>
         private void PrepareManageData(GetBySiteFunctionCriteria criteria)
         {
             ViewBag.FunctionList = this._functionService.GetBySiteInHierarchy(criteria.SiteId, criteria.Environment);
@@ -931,6 +988,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             }
         }
 
+        /// <summary>
+        /// Get site and functions for add new.
+        /// </summary>
         private void GetSitesAndFunctionsForAddNew(dynamic criteria, bool getSiteList = true)
         {
             // gets site list

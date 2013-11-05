@@ -41,6 +41,9 @@ namespace Fanex.NAP.Core.Service.Impl
             this._groupRepository = groupRepository ?? new GroupRepository();
         }
 
+        /// <summary>
+        /// Get user group.
+        /// </summary>
         public IGroup GetByUser(int userId)
         {
             Check.Argument.IsNotNegativeOrZero(userId, "userId");
@@ -64,6 +67,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Get group by ID.
+        /// </summary>
         public IGroup GetById(int id)
         {
             Check.Argument.IsNotNegativeOrZero(id, "id");
@@ -87,6 +93,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Get group by name.
+        /// </summary>
         public IGroup GetByName(string name)
         {
             Check.Argument.IsNotEmpty(name, "name");
@@ -110,6 +119,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Get all group.
+        /// </summary>
         public IEnumerable<IGroup> GetAll(bool? isActive = null)
         {
             try
@@ -132,6 +144,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Get all group select list item.
+        /// </summary>
         public IList<SelectListItem> GetAllSelectListItem(bool? isActive = null, int selectedGroupId = 0)
         {
             try
@@ -164,6 +179,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Get all group with number of user.
+        /// </summary>
         public IEnumerable<IGroup> GetAllWithNumOfUser(string name, string env = Constant.UAT, bool? isActive = null)
         {
             try
@@ -188,6 +206,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Assign group permission.
+        /// </summary>
         public ICommandResult AssignFunction(AssignFunctionGroupCriteria criteria)
         {
             Check.Argument.IsNotNull(criteria, "criteria");
@@ -209,6 +230,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Update group status.
+        /// </summary>
         public ICommandResult UpdateStatus(UpdateStatusGroupCriteria criteria)
         {
             Check.Argument.IsNotNull(criteria, "criteria");
@@ -230,6 +254,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Insert group.
+        /// </summary>
         public ICommandResult Insert(InsertGroupCriteria criteria)
         {
             Check.Argument.IsNotNull(criteria, "criteria");
@@ -251,6 +278,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Update group.
+        /// </summary>
         public ICommandResult Update(UpdateGroupCriteria criteria)
         {
             Check.Argument.IsNotNull(criteria, "criteria");
@@ -272,6 +302,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Get group by function and site.
+        /// </summary>
         public IEnumerable<GroupPolicy> GetByFunctionAndSite(int functionId, int siteId)
         {
             Check.Argument.IsNotNegativeOrZero(functionId, "functionid");
@@ -298,6 +331,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Search group exclude function.
+        /// </summary>
         public IEnumerable<IGroup> SearchGroupExcludeFunction(string groupName, int siteId = 0, int functionId = 0)
         {
             try

@@ -41,6 +41,9 @@ namespace Fanex.NAP.Core.Service.Impl
             this._menuItemRepository = menuItemRepository ?? new MenuItemRepository();
         }
 
+        /// <summary>
+        /// Get menu item by ID.
+        /// </summary>
         public IMenuItem GetById(int id)
         {
             // check parameters
@@ -66,6 +69,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Get menu item by name and site.
+        /// </summary>
         public IMenuItem GetByNameAndSite(string name, int siteId)
         {
             // check parameters
@@ -93,6 +99,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Get all menu item.
+        /// </summary>
         public IEnumerable<IMenuItem> GetAll(string env = Constant.UAT, bool? isActive = null)
         {
             // check parameters
@@ -119,6 +128,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Get all menu item select list item.
+        /// </summary>
         public IList<SelectListItem> GetAllSelectListItem(
             string env = Constant.UAT,
             bool? isActive = null,
@@ -158,6 +170,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Get menu item by site.
+        /// </summary>
         public IEnumerable<IMenuItem> GetBySite(int siteId, string env = Constant.UAT, bool? isActive = null)
         {
             // check parameters
@@ -186,6 +201,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Get menu item select list item by site.
+        /// </summary>
         public IList<SelectListItem> GetSelectListItemBySite(
             int siteId,
             string env = Constant.UAT,
@@ -228,6 +246,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Get menu item by site in hierarchy.
+        /// </summary>
         public IEnumerable<IMenuItem> GetBySiteInHierarchy(int siteId, string env = Constant.UAT, bool? isActive = null)
         {
             // check parameters
@@ -258,6 +279,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Get parent menu item by ID.
+        /// </summary>
         public IEnumerable<IMenuItem> GetParentById(int id, string env = Constant.UAT)
         {
             // check parameters
@@ -283,6 +307,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Get parent menu item select list item by ID.
+        /// </summary>
         public IList<SelectListItem> GetParentSelectListItemById(int id, int selectedMenuItemId = 0, string env = Constant.UAT)
         {
             // check parameters
@@ -318,6 +345,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Get menu item by user include group.
+        /// </summary>
         public IEnumerable<IMenuItem> GetByUserIncludeGroup(
             int userId,
             string env = Constant.UAT,
@@ -347,6 +377,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Get menu item by user and site include group.
+        /// </summary>
         public IEnumerable<IMenuItem> GetByUserAndSiteIncludeGroup(
             int userId,
             int siteId,
@@ -380,6 +413,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Search menu item.
+        /// </summary>
         public IEnumerable<IMenuItem> Search(
             string menuItemName,
             int siteId,
@@ -412,6 +448,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Insert menu item.
+        /// </summary>
         public ICommandResult Insert(InsertMenuItemCriteria criteria)
         {
             // check parameters
@@ -434,6 +473,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Update menu item.
+        /// </summary>
         public ICommandResult Update(UpdateMenuItemCriteria criteria)
         {
             // check parameters
@@ -456,6 +498,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Update menu item status.
+        /// </summary>
         public ICommandResult UpdateStatus(UpdateStatusMenuItemCriteria criteria)
         {
             // check parameters
@@ -478,6 +523,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Sort menu item in hierarchy.
+        /// </summary>
         private IEnumerable<IMenuItem> SortMenuItemsInHierarchy(IEnumerable<IMenuItem> menuItemList, int parentId = 0)
         {
             var sortedMenuItemList = new List<IMenuItem>();

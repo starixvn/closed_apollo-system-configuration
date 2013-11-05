@@ -1244,9 +1244,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
             return PartialView("~/Areas/UserControl/Views/Trace/_NAP_Function_AssignToGroups.cshtml");
         }
-<<<<<<< HEAD
-=======
-        #endregion
 
         #region Mailing list log
 
@@ -1475,6 +1472,5 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         }
 
         #endregion
->>>>>>> ExchangeRate
     }
 }

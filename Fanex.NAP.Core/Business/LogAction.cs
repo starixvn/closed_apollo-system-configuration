@@ -7,11 +7,8 @@
 // </summary>
 //
 // <history>
-<<<<<<< HEAD
 // Lasted generated date: 10/14/2013 4:27:56 PM
-=======
 // Lasted generated date: 10/29/2013 4:08:52 PM
->>>>>>> ExchangeRate
 // </history>
 using System.Diagnostics.CodeAnalysis;
 

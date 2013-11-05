@@ -63,6 +63,9 @@ namespace Fanex.NAP.Core.Service.Impl
 
         #region get
 
+        /// <summary>
+        /// Get site by ID.
+        /// </summary>
         public ISite GetById(int id)
         {
             // check parammeters
@@ -88,6 +91,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Get site by name.
+        /// </summary>
         public ISite GetByName(string name)
         {
             // check parammeters
@@ -112,7 +118,10 @@ namespace Fanex.NAP.Core.Service.Impl
 
             return null;
         }
-
+        
+        /// <summary>
+        /// Get site status by ID.
+        /// </summary>
         public bool GetStatusById(int id)
         {
             // check parammeters
@@ -156,6 +165,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return false;
         }
 
+        /// <summary>
+        /// Get site level by user.
+        /// </summary>
         public IEnumerable<SiteLevel> GetSiteLevelByUser(int userId, string env = Constant.UAT, bool? isActive = null)
         {
             // check parammeters
@@ -184,6 +196,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Get all site.
+        /// </summary>
         public IEnumerable<ISite> GetAll(string env = Constant.UAT, bool? isActive = null)
         {
             Check.Argument.IsNotEmpty(env, "Environment");
@@ -209,6 +224,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Get all site select list item.
+        /// </summary>
         public IList<SelectListItem> GetAllSelectListItem(
             string env = Constant.UAT,
             bool? isActive = null,
@@ -247,6 +265,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Get all site with number of users.
+        /// </summary>
         public IEnumerable<ISite> GetAllWithNumOfUsers(string env = Constant.UAT, bool? isActive = null)
         {
             Check.Argument.IsNotEmpty(env, "Environment");
@@ -272,6 +293,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Get site by user and function key include group.
+        /// </summary>
         public IEnumerable<ISite> GetByUserAndFunctionKeyIncludeGroup(
             int userId,
             string functionKey,
@@ -315,6 +339,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Get site select list item by user and function key include group.
+        /// </summary>
         public IList<SelectListItem> GetSelectListItemByUserAndFunctionKeyIncludeGroup(
             int userId,
             string functionKey,
@@ -364,6 +391,9 @@ namespace Fanex.NAP.Core.Service.Impl
 
         #region insert/update
 
+        /// <summary>
+        /// Insert site.
+        /// </summary>
         public ICommandResult Insert(InsertSiteCriteria criteria)
         {
             // check parameters
@@ -386,6 +416,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Update site.
+        /// </summary>
         public ICommandResult Update(UpdateSiteCriteria criteria)
         {
             // check parameters
@@ -408,6 +441,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Update site status.
+        /// </summary>
         public ICommandResult UpdateStatus(UpdateStatusSiteCriteria criteria)
         {
             // check parameters
@@ -434,6 +470,9 @@ namespace Fanex.NAP.Core.Service.Impl
 
         #region SiteLevel services
 
+        /// <summary>
+        /// Get user site level.
+        /// </summary>
         public SiteLevel GetUserSiteLevel(int userId, int siteId)
         {
             Check.Argument.IsNotNegativeOrZero(userId, "userId");
@@ -464,6 +503,9 @@ namespace Fanex.NAP.Core.Service.Impl
 
         #region SiteUrl services
 
+        /// <summary>
+        /// Get all site URL.
+        /// </summary>
         public IEnumerable<SiteUrl> GetAllSiteUrl(string env)
         {
             Check.Argument.IsNotEmpty(env, "Environment");
@@ -488,6 +530,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Get site URL by user.
+        /// </summary>
         public IEnumerable<SiteUrl> GetSiteUrlByUser(int userId, string env)
         {
             Check.Argument.IsNotNegativeOrZero(userId, "userId");
@@ -516,6 +561,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return result;
         }
 
+        /// <summary>
+        /// Get site URL by site ID.
+        /// </summary>
         public IEnumerable<SiteUrl> GetSiteUrlBySiteId(int siteId, string env)
         {
             Check.Argument.IsNotNegativeOrZero(siteId, "siteId");
@@ -575,6 +623,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return result;
         }
 
+        /// <summary>
+        /// Update site URL.
+        /// </summary>
         public ICommandResult UpdateSiteUrl(UpdateSiteUrlCriteria criteria)
         {
             Check.Argument.IsNotNull(criteria, "criteria");
@@ -596,6 +647,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Update default site URL.
+        /// </summary>
         public ICommandResult UpdateDefaultSiteUrl(UpdateDefaultSiteUrlCriteria criteria)
         {
             Check.Argument.IsNotNull(criteria, "criteria");
@@ -617,6 +671,9 @@ namespace Fanex.NAP.Core.Service.Impl
             return null;
         }
 
+        /// <summary>
+        /// Insert site URL.
+        /// </summary>
         public ICommandResult InsertSiteUrl(InsertSiteUrlCriteria criteria)
         {
             Check.Argument.IsNotNull(criteria, "criteria");
