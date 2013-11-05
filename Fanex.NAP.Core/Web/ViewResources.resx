@@ -707,5 +707,47 @@
   </data>
   <data name="SiteTitle" xml:space="preserve">
     <value>System Configuration</value>
+<<<<<<< HEAD
+=======
+  </data>
+  <data name="Create_New_MailingList" xml:space="preserve">
+    <value>Create New Mailing List</value>
+  </data>
+  <data name="Bcc" xml:space="preserve">
+    <value>Bcc</value>
+  </data>
+  <data name="Cc" xml:space="preserve">
+    <value>Cc</value>
+  </data>
+  <data name="Internal_Only" xml:space="preserve">
+    <value>Internal-only</value>
+  </data>
+  <data name="MailFunction" xml:space="preserve">
+    <value>List Function</value>
+  </data>
+  <data name="MailingList" xml:space="preserve">
+    <value>Mailing List</value>
+  </data>
+  <data name="MailingList_Name" xml:space="preserve">
+    <value>List Name</value>
+  </data>
+  <data name="Manage_MailingList" xml:space="preserve">
+    <value>Manage Mailing List</value>
+  </data>
+  <data name="MailingList_Item" xml:space="preserve">
+    <value>Mailing List Item</value>
+  </data>
+  <data name="Internal" xml:space="preserve">
+    <value>Internal</value>
+  </data>
+  <data name="List_Key" xml:space="preserve">
+    <value>List Key</value>
+  </data>
+  <data name="Update_MailingList" xml:space="preserve">
+    <value>Update Mailing List</value>
+  </data>
+  <data name="Msg_Requried" xml:space="preserve">
+    <value>The {0} field is required.</value>
+>>>>>>> ExchangeRate
   </data>
 </root>

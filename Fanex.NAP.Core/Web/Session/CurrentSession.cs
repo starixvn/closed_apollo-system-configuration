@@ -37,6 +37,10 @@ namespace Fanex.NAP.Core.Web.Session
 
         public const string MENU_DIC = "MenuDic";
 
+        public const string INTERNALGROUPID = "InternalGroupId";
+
+        public const string INTERNALGROUPNAME = "InternalGroupName";
+
         #endregion Constants
 
         protected readonly int _SiteId = NapSettings.Settings.SiteId;
@@ -158,6 +162,38 @@ namespace Fanex.NAP.Core.Web.Session
             set
             {
                 HttpContext.Current.Session[INTERNALLEVEL] = value;
+            }
+        }
+
+        public int GroupId
+        {
+            get
+            {
+                return
+                (HttpContext.Current != null)
+                ? Convert.ToInt32(HttpContext.Current.Session[INTERNALGROUPID])
+                : 0;
+            }
+
+            set
+            {
+                HttpContext.Current.Session[INTERNALGROUPID] = value;
+            }
+        }
+
+        public string GroupName
+        {
+            get
+            {
+                return
+                (HttpContext.Current != null)
+                ? Convert.ToString(HttpContext.Current.Session[INTERNALGROUPNAME])
+                : string.Empty;
+            }
+
+            set
+            {
+                HttpContext.Current.Session[INTERNALGROUPNAME] = value;
             }
         }
 

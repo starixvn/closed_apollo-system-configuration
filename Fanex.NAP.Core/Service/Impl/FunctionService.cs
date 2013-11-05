@@ -337,6 +337,28 @@ namespace Fanex.NAP.Core.Service.Impl
             throw new NotImplementedException();
         }
 
+        public IEnumerable<IFunction> GetByParentKeyAndSite(GetByParentKeyAndSiteCriteria criteria)
+        {
+            // check parameters
+            Check.Argument.IsNotNegativeOrZero(criteria.SiteId, "SiteId");
+            Check.Argument.IsNotEmpty(criteria.ParentKey, "ParentKey");
+            Check.Argument.IsNotEmpty(criteria.Environment, "Environment");
+
+            try
+            {
+                if (criteria.IsValid())
+                {
+                    return _functionRepository.Fetch(criteria);
+                }
+            }
+            catch (Exception ex)
+            {
+                HandleException(ex);
+            }
+
+            return null;
+        }
+
         #endregion
 
         #region Gets Function Policy

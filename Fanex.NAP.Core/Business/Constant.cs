@@ -32,9 +32,14 @@ namespace Fanex.NAP.Core.Business
 
         public const int SearchAllSite = -9999;
 
+<<<<<<< HEAD
         /// <summary>
         /// The user policy.
         /// </summary>
+=======
+        public const string IT = "IT";
+
+>>>>>>> ExchangeRate
         public enum Policy
         {
             /// <summary>

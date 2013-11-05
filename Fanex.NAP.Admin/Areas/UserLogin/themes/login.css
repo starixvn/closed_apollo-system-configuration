@@ -52,7 +52,11 @@ body {
 
 #login-box .header .welcome {
 	background: url(img/system_configuration.png) no-repeat center left;
+<<<<<<< HEAD
 	width: 300px;
+=======
+	width: 178px;
+>>>>>>> ExchangeRate
 	height: 54px;
 	display: inline-block;
 }

@@ -147,6 +147,12 @@ a {
 	float: left;
 	clear: both;
 
+	&.no-bg {
+		background: none;
+		border: none;
+		.border-radius(0);
+	}
+
 	.form-row {
 		float: left;
 		clear: both;
@@ -168,6 +174,7 @@ a {
 
 		input[type=text], input[type=password], select {
 			background: @white url(img/text-bg.gif) repeat-x;
+			float: left;
 			border: 1px solid #B5B8C8;
 			width: 220px;
 			height: 22px;
@@ -183,7 +190,7 @@ a {
 		}
 		select { font-size: .95em }
 			
-		input[type=submit], input[type=reset], .submit, .cancel { .button() }
+		input[type=button], input[type=submit], input[type=reset], .submit, .cancel { .button() }
 
 		input, select {
 			&:active, &:focus { border: 1px solid #7EADD9 }
@@ -384,6 +391,7 @@ a {
 		width: 16px;
 		height: 16px;
 		font-size: 0;
+		cursor: pointer;
 	}
 
 	.btn-url {
@@ -564,6 +572,7 @@ header {
 	.logo {
 		float: left;
 		padding: 0 8px;
+		position: relative;
 
 		a {
 			position: relative; top: 4px; left: 4px;
@@ -580,12 +589,13 @@ header {
 		}
 
 		.uat {
-			position: absolute;
 			bottom: 0;
-			right: 10px;
-			color: @white;
+			color: #333;
+			font-size: @baseFontSize - 3;
 			font-weight: bold;
-			font-size: 1.2em;
+			position: absolute;
+			right: 5px;
+			top: 28px;
 		}
 	}
 
@@ -822,7 +832,7 @@ header {
 
 .filter-form {
 	.clearfix;
-	padding: 15px 0 0;
+	padding: 0;
 	margin-bottom: 10px;
 
 	.filter-row {

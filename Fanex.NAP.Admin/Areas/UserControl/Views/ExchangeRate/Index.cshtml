@@ -1,0 +1,109 @@
+﻿@using Fanex.NAP.Admin.Core
+@using Fanex.NAP.Admin.Core.Models
+@model List<ExchangeRateModel>
+@{
+    ViewBag.Title = Lang.ExchangeRate;
+}
+
+@section Head {
+    <link href="~/Areas/UserControl/themes/nap/style.less" rel="stylesheet" type="text/css" />
+    <link href="~/Areas/UserControl/themes/nap/exchangerate/ExchangeRate.less" rel="stylesheet" type="text/css" />
+}
+
+@section Headline {
+	<h1>
+        <span class="title">@ViewBag.Title</span>
+        @if ((bool)ViewBag.HasAllowEdit)
+        {
+            <span class="lnk btn-add">+ Create New</span>
+            <span class="lnk btn-export">-> Export</span>
+        }
+    </h1>
+}
+<div class="grid-wrp pnl-wrp">
+    <div class="pnl-header">
+        <div class="pnl-header-content">
+            &nbsp;</div>
+        <div class="pnl-header-toggle">
+        </div>
+    </div>
+    <div class="pnl-body">
+<table class="grid">
+    <thead>
+        <tr>
+            <th>
+                @Lang.Currency
+            </th>
+            <th>
+                @Lang.BaseRate
+            </th>
+            <th>
+                @Lang.MinBet
+            </th>
+            <th>
+                @Lang.MinBetLive
+            </th>
+            <th>
+                @ViewResources.Description
+            </th>
+            <th>
+                @Lang.MultipliedBy
+            </th>
+            @if ((bool)ViewBag.HasAllowEdit)
+            {
+                <th>
+                    @ViewResources.Edit
+                </th>
+            }
+        </tr>
+    </thead>
+
+    <tbody>
+    @if (Model != null && Model.Any())
+    {
+        int index = 0;
+        string rowClass = string.Empty;
+
+        foreach (var exchRate in Model)
+        {
+            rowClass = ++index % 2 == 0 ? "alt" : string.Empty;
+            
+        <tr class="tbl-data @rowClass">
+            <td class="align-center">@exchRate.Currency</td>
+            <td class="align-right">@Formater.FormatNumber5(exchRate.ActualRate, Formater.CULT_NAME_ENG)</td>
+            <td class="align-right">@Formater.FormatNumber2(exchRate.MinBet, Formater.CULT_NAME_ENG)</td>
+            <td class="align-right">@Formater.FormatNumber2(exchRate.MinBetLive, Formater.CULT_NAME_ENG)</td>
+            <td>@exchRate.Description</td>
+            <td class="align-right">@Formater.FormatNumber2(exchRate.MultipliedBy, Formater.CULT_NAME_ENG)</td>
+            @if ((bool)ViewBag.HasAllowEdit)
+            {
+                <td class="align-center">
+                    <span data-id="@exchRate.ExchangeId" title="Edit" class="btn-edit"></span>
+                </td>
+            }
+        </tr>
+        }
+    }
+    else
+    {
+         <tr>
+            <td colspan="7">
+                @ViewResources.NoInformationAvailable
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+</div>
+</div>
+<div id="dialog-form"></div>
+
+@section foot {
+    @*<script src="~/Areas/UserControl/scripts/ExchangeRate/Core.js" type="text/javascript"></script>*@
+    <script src="~/Areas/UserControl/scripts/ExchangeRate/ExchangeRate.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            ExchRate.initView();
+        });
+    </script>
+}

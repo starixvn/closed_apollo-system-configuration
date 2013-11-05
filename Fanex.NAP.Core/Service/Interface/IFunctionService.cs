@@ -51,6 +51,8 @@ namespace Fanex.NAP.Core.Service.Interface
 
         IEnumerable<IFunction> Search(string functionName, int siteId, string env = Constant.UAT, bool? isActive = null);
 
+        IEnumerable<IFunction> GetByParentKeyAndSite(GetByParentKeyAndSiteCriteria criteria);
+
         #endregion
 
         #region Gets Functions Policy

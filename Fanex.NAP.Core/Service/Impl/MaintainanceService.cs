@@ -14,6 +14,12 @@ namespace Fanex.NAP.Core.Service.Impl
     using Fanex.NAP.Core.Configuration;
     using Fanex.NAP.Core.Model.ValueObject;
     using Fanex.NAP.Core.Service.Interface;
+<<<<<<< HEAD
+=======
+    using Apollo.UMService.Model;
+    using Apollo.UMService;
+    using Fanex.Logging;
+>>>>>>> ExchangeRate
 
     /// <summary>
     /// Maintainance service.
@@ -44,6 +50,7 @@ namespace Fanex.NAP.Core.Service.Impl
                 // gets Agent Site UM Status.
                 var umInfo = umctrl.GetMaintenanceInfo(Sites.CSD, NapSettings.Settings.UMAddress);
 
+<<<<<<< HEAD
                 if (!ReferenceEquals(umInfo, null))
                 {
                     isdowntime = umInfo.Status;
@@ -54,10 +61,15 @@ namespace Fanex.NAP.Core.Service.Impl
                 {
                     return downTime;
                 }
+=======
+                isdowntime = umInfo.Status;
+                timeFrom = umInfo.Start_time;
+                timeTo = umInfo.End_time;
+>>>>>>> ExchangeRate
             }
             catch (Exception ex)
             {
-                HandleException(ex);
+                LogService.Error(ex.Message, ex);
             }
 
             if (isdowntime)

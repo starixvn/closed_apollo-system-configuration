@@ -97,12 +97,27 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
                 {
                     var user = _userService.GetById(criteria.UserId) as User;
 
+<<<<<<< HEAD
                     // saves user session
                     this._currentSession.UserId = user.Id;
                     this._currentSession.Username = user.Username;
                     this._currentSession.OnUserId = criteria.OnUserId;
                     this._currentSession.SessionId = Session.SessionID.ToString();
                     this._currentSession.Level = _userService.GetUserSiteLevel(user.Id, this.SiteId);
+=======
+                    #region saves user session
+
+                    _currentSession.UserId = user.Id;
+                    _currentSession.Username = user.Username;
+                    _currentSession.OnUserId = criteria.OnUserId;
+                    _currentSession.SessionId = Session.SessionID.ToString();
+                    _currentSession.Level = _userService.GetUserSiteLevel(user.Id, this.SiteId);
+                    if (!ReferenceEquals(user.Group, null))
+                    {
+                        _currentSession.GroupId = user.Group.Id;
+                        _currentSession.GroupName = user.Group.Name;
+                    }
+>>>>>>> ExchangeRate
 
                     if (this.SiteId != 0)
                     {

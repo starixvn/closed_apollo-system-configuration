@@ -1,0 +1,22 @@
+﻿@using Fanex.NAP.Core.Services.Impl;
+@helper ShowMailingList(string mailList)
+{
+    if (!string.IsNullOrWhiteSpace(mailList))
+    {
+        var arrMail = mailList.Split(';');
+        
+        foreach(var mail in arrMail)
+        {
+            var classObject = "search-choice";
+            if (!EmailService.IsValidEmail(mail))
+            {
+                classObject = "search-choice invalid-email";
+            }
+            <li class="@classObject"> 
+                <span>@mail</span>
+                <a class="search-choice-close"></a>
+            </li>
+        }
+    }
+}
+

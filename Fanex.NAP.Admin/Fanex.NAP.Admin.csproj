@@ -93,6 +93,9 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.4.5.9\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="NPOI, Version=1.2.5.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\_Dependencies\NPOI\NPOI.dll</HintPath>
+    </Reference>
     <Reference Include="NuGet.Core, Version=1.6.30117.9648, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\NuGet.Core.1.6.2\lib\net40\NuGet.Core.dll</HintPath>
@@ -178,6 +181,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Code\Formater.cs" />
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -187,8 +191,10 @@
     <Compile Include="Areas\UserControl\Area_Start\RouteConfig.cs" />
     <Compile Include="Areas\UserControl\Controllers\BaseController.cs" />
     <Compile Include="Areas\UserControl\Controllers\CommonController.cs" />
+    <Compile Include="Areas\UserControl\Controllers\ExchangeRateController.cs" />
     <Compile Include="Areas\UserControl\Controllers\FunctionController.cs" />
     <Compile Include="Areas\UserControl\Controllers\GroupController.cs" />
+    <Compile Include="Areas\UserControl\Controllers\MailingListController.cs" />
     <Compile Include="Areas\UserControl\Controllers\TraceController.cs" />
     <Compile Include="Areas\UserControl\Controllers\MenuController.cs" />
     <Compile Include="Areas\UserControl\Controllers\SiteController.cs" />
@@ -196,7 +202,20 @@
     <Compile Include="Areas\UserControl\UserControlAreaRegistration.cs" />
     <Compile Include="Areas\UserLogin\Controllers\BaseController.cs" />
     <Compile Include="Areas\UserLogin\Controllers\CommonController.cs" />
+    <Content Include="Areas\UserControl\scripts\ExchangeRate\Core.js" />
+    <Content Include="Areas\UserControl\scripts\ExchangeRate\ExchangeRate.js" />
+    <Content Include="Areas\UserControl\scripts\MailingList\MailingList.js" />
+    <Content Include="Areas\UserControl\scripts\MailingList\Manage.js" />
     <Content Include="Areas\UserControl\themes\nap\ie.less" />
+    <Content Include="App_Code\RazorHelper.cshtml" />
+    <Content Include="Areas\UserControl\themes\nap\mailinglist\MailingList.less" />
+    <Content Include="Areas\UserControl\Views\MailingList\AddNew.cshtml" />
+    <Content Include="Areas\UserControl\Views\MailingList\Manage.cshtml" />
+    <Content Include="Areas\UserControl\Views\MailingList\Edit.cshtml" />
+    <Content Include="Areas\UserControl\Views\ExchangeRate\Index.cshtml" />
+    <Content Include="Areas\UserControl\Views\ExchangeRate\Insert.cshtml" />
+    <Content Include="Areas\UserControl\Views\ExchangeRate\Update.cshtml" />
+    <Content Include="Areas\UserControl\themes\nap\exchangerate\ExchangeRate.less" />
     <None Include="Areas\UserLogin\Controllers\LoginController.cs.bk" />
     <Compile Include="Areas\UserLogin\Controllers\LoginController.cs" />
     <Compile Include="Areas\UserLogin\Controllers\SSOController.cs">
@@ -213,6 +232,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="Areas\UserLogin\themes\img\system_configuration.png" />
+    <Content Include="EmailTemplates\ExchangeRate.cshtml" />
+    <Content Include="ExcelTemplates\ExchangeRateTemplate.xls" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\NAPCommonSpNames.xml">
@@ -414,6 +436,8 @@
     <Content Include="Areas\UserControl\themes\nap\img\win8\editing\delete.png" />
     <Content Include="Areas\UserControl\themes\nap\img\win8\editing\edit.png" />
     <Content Include="Areas\UserControl\themes\nap\img\win8\editing\erase.png" />
+    <Content Include="Areas\UserControl\themes\nap\mailinglist\chosen-sprite.png" />
+    <Content Include="Areas\UserControl\themes\nap\mailinglist\chosen.css" />
     <Content Include="Areas\UserControl\themes\reset.css" />
     <Content Include="Areas\UserLogin\scripts\lib\jquery-1.8.0.min.js" />
     <Content Include="Areas\UserLogin\scripts\lib\msgbox\images\alert.png" />
@@ -510,6 +534,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Fanex.NAP.Admin.Core\Fanex.NAP.Admin.Core.csproj">
+      <Project>{4B55E86F-17AA-488B-A2EA-7F15ABB2E751}</Project>
+      <Name>Fanex.NAP.Admin.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fanex.NAP.Core\Fanex.NAP.Core.csproj">
       <Project>{2136E1D1-DB76-4365-9B4F-C1DDCFF376A8}</Project>
       <Name>Fanex.NAP.Core</Name>
@@ -622,6 +650,7 @@
   <ItemGroup>
     <Content Include="Areas\UserControl\Views\Shared\NEW_Menu.cshtml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

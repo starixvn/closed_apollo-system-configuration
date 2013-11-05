@@ -1,0 +1,85 @@
+﻿@using Fanex.NAP.Admin.Core
+@using Fanex.NAP.Admin.Core.Models
+
+@model ExchangeRateModel
+@{
+    Layout = null;
+}
+
+<link href="~/Areas/UserControl/themes/nap/exchangerate/ExchangeRate.less" rel="stylesheet" type="text/css" />
+
+@using (Html.BeginForm())
+{
+    <div class="form no-bg">
+        <div class="form-row summary">
+            <div class="lbl-field">
+            </div>
+            <div class="edit-field">
+                @Html.ValidationSummary()
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field">
+                @Html.LabelFor(m => m.Currency, Lang.Currency)
+            </div>
+            <div class="edit-field">
+                @Html.TextBoxFor(m => m.Currency, new { @maxlength = 3 })
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field">
+                @Html.LabelFor(m => m.ActualRate, Lang.BaseRate)
+            </div>
+            <div class="edit-field">
+                @Html.TextBoxFor(m => m.ActualRate, new { @maxlength = 19, @title = string.Format(Lang.ValueBetween, Lang.BaseRate , 0, "999,999,999,999,999") })
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field">
+                @Html.LabelFor(m => m.MinBet, Lang.MinBet)
+            </div>
+            <div class="edit-field">
+                @Html.TextBoxFor(m => m.MinBet, new { @maxlength = 19, @title = string.Format(Lang.ValueBetween, Lang.MinBet, 0, "999,999,999,999,999") })
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field">
+                @Html.LabelFor(m => m.MinBetLive, Lang.MinBetLive)
+            </div>
+            <div class="edit-field">
+                @Html.TextBoxFor(m => m.MinBetLive, new { @maxlength = 19, @title = string.Format(Lang.ValueBetween, Lang.MinBetLive, 0, "999,999,999,999,999") })
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field">
+                @Html.LabelFor(m => m.Description, ViewResources.Description)
+            </div>
+            <div class="edit-field">
+                @Html.TextBoxFor(m => m.Description, new { @maxlength = 100 })
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field">
+                @Html.LabelFor(m => m.MultipliedBy, Lang.MultipliedBy)
+            </div>
+            <div class="edit-field">
+                @Html.TextBoxFor(m => m.MultipliedBy, new { @maxlength = 11, @title = string.Format(Lang.ValueBetween, Lang.MultipliedBy, 0, "999,999,999") })
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field">
+            </div>
+            <div class="edit-field">
+                <input id="submit" type="button" value="@ViewResources.Submit" />
+            </div>
+        </div>
+    </div>
+}
+
+<script src="~/Areas/UserControl/scripts/ExchangeRate/Core.js" type="text/javascript"></script>
+<script src="~/Areas/UserControl/scripts/ExchangeRate/ExchangeRate.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        ExchRate.initInsert();
+    });
+</script>

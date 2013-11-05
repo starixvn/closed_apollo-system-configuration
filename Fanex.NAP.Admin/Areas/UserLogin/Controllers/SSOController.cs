@@ -96,6 +96,11 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
                     _currentSession.OnUserId = criteria.OnUserId;
                     _currentSession.SessionId = Session.SessionID.ToString();
                     _currentSession.Level = _userService.GetUserSiteLevel(user.Id, this.SiteId);
+                    if (!ReferenceEquals(user.Group, null))
+                    {
+                        _currentSession.GroupId = user.Group.Id;
+                        _currentSession.GroupName = user.Group.Name;
+                    }
 
                     if (this.SiteId != 0)
                     {

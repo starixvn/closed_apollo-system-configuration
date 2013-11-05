@@ -7,7 +7,11 @@
 // </summary>
 //
 // <history>
+<<<<<<< HEAD
 // Lasted generated date: 10/14/2013 4:27:43 PM
+=======
+// Lasted generated date: 10/29/2013 4:09:01 PM
+>>>>>>> ExchangeRate
 // </history>
 using System.Diagnostics.CodeAnalysis;
 
@@ -25,6 +29,8 @@ public static class FunctionKeys
 
     public const string Dashboard = "Dashboard";
 
+    public const string ExchangeRate = "ExchangeRate";
+
     public const string ExecSpLog = "ExecSpLog";
 
     public const string fnc_test = "fnc_test";
@@ -33,13 +39,19 @@ public static class FunctionKeys
 
     public const string FunctionLog = "FunctionLog";
 
-    public const string home1234566756756tinfgtuyrtu = "home1234566756756tinfgtuyrtu";
-
     public const string LogManagement = "LogManagement";
+
+    public const string MailingList = "MailingList";
+
+    public const string MailingListExchangeRate = "MailingListExchangeRate";
+
+    public const string MaillinglistSpecialDelete = "MaillinglistSpecialDelete";
 
     public const string ManageFunction = "ManageFunction";
 
     public const string ManageGroup = "ManageGroup";
+
+    public const string ManageMailingList = "ManageMailingList";
 
     public const string ManageMenu = "ManageMenu";
 
@@ -47,20 +59,17 @@ public static class FunctionKeys
 
     public const string ManageUser = "ManageUser";
 
-    public const string ManageUserCopy = "ManageUserCopy";
-
-    public const string RacingReports = "RacingReports";
-
-    public const string SpecialReports = "SpecialReports";
-
     public const string SystemConfiguration = "SystemConfiguration";
 
+<<<<<<< HEAD
     public const string Taitest = "Taitest";
 
     public const string TaitestC = "TaitestC";
 
     public const string testtesttestttt123 = "testtesttestttt123";
 
+=======
+>>>>>>> ExchangeRate
     public const string UserLoginLog = "UserLoginLog";
 
     public const string UserLoginLogCopy = "UserLoginLogCopy";

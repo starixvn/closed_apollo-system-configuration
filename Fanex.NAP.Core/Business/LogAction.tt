@@ -6,7 +6,7 @@
 <#@ import namespace="System.IO" #>
 <#@ import namespace="System.Text.RegularExpressions" #>
 <#    
-    string connectionString = "data source=10.18.200.206;initial catalog=bodb_NAPLog;User Id=olympus; pwd=@tiger#;";    
+    string connectionString = "data source=10.18.200.215\\sql2012;initial catalog=bodb_NAPLOG;User Id=apladmin; pwd=@pl@dm!n;";
 #>
 // <copyright file="LogAction.cs" company="Nexcel Solutions Vietnam">
 // Copyright (c) Nexcel Solutions Vietnam. All rights reserved. 

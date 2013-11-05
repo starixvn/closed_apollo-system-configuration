@@ -36,5 +36,89 @@
         <Setting Key="NAP_Cust_Insert" SpName="NAP_Cust_Insert" DbName="SVRNAP.bodb_NAP.bodbAdminNet"  />
         <Setting Key="NAP_Cust_Update" SpName="NAP_Cust_Update" DbName="SVRNAP.bodb_NAP.bodbAdminNet"  />
         <Setting Key="NAP_Cust_UpdatePassword" SpName="NAP_Cust_UpdatePassword" DbName="SVRCUST.CustDB.bodbAdminNet"  />
+<<<<<<< HEAD
     </Function>  
+=======
+    </Function>
+    <Function Name="MailingList">
+      <Setting Key="NAP_Function_GetByParentKeyAndSite" SpName="NAP_Function_GetByParentKeyAndSite" DbName="SVRNAP.bodb_NAP.bodbAdminNet">
+        <Mapping DataField="FunctionId" ObjectProperty="Id" />
+        <Mapping DataField="FunctionName" ObjectProperty="Name" />
+        <Mapping DataField="FunctionKey" ObjectProperty="Key" />
+        <Mapping DataField="ParentId" ObjectProperty="Id" />
+        <Mapping DataField="ParentName" ObjectProperty="Name" />
+        <Mapping DataField="SiteId" ObjectProperty="Id" />
+        <Mapping DataField="SiteName" ObjectProperty="Name" />
+        <Mapping DataField="CreatorId" ObjectProperty="Id" />
+        <Mapping DataField="CreatorUsername" ObjectProperty="Username" />
+        <Mapping DataField="ModifierId" ObjectProperty="Id" />
+        <Mapping DataField="ModifierUsername" ObjectProperty="Username" />
+      </Setting>
+      <Setting Key="NAP_MailingList_Insert" SpName="NAP_MailingList_Insert" DbName="SVRNAP.bodb_NAP.bodbAdminNet"/>
+      <Setting Key="NAP_MailingList_Update" SpName="NAP_MailingList_Update" DbName="SVRNAP.bodb_NAP.bodbAdminNet"/>
+      <Setting Key="NAP_MailingList_UpdateStatus" SpName="NAP_MailingList_UpdateStatus" DbName="SVRNAP.bodb_NAP.bodbAdminNet"/>
+      <Setting Key="NAP_MailingList_UpdateIsInternal" SpName="NAP_MailingList_UpdateIsInternal" DbName="SVRNAP.bodb_NAP.bodbAdminNet"/>
+      <Setting Key="NAP_MailingList_GetById" SpName="NAP_MailingList_GetById" DbName="SVRNAP.bodb_NAP.bodbAdminNet">
+        <Mapping DataField="ListId" ObjectProperty="Id" />
+        <Mapping DataField="ListName" ObjectProperty="Name" />
+        <Mapping DataField="ListKey" ObjectProperty="Key" />
+        <Mapping DataField="SiteId" ObjectProperty="Id" />
+        <Mapping DataField="SiteName" ObjectProperty="Name" />
+        <Mapping DataField="ListFunctionId" ObjectProperty="Id" />
+        <Mapping DataField="ListFunctionName" ObjectProperty="Name" />
+        <Mapping DataField="FunctionId" ObjectProperty="Id" />
+        <Mapping DataField="FunctionName" ObjectProperty="Name" />
+      </Setting>
+      <Setting Key="NAP_MailingList_GetByKey" SpName="NAP_MailingList_GetByKey" DbName="SVRNAP.bodb_NAP.bodbAdminNet">
+        <Mapping DataField="ListId" ObjectProperty="Id" />
+        <Mapping DataField="ListName" ObjectProperty="Name" />
+        <Mapping DataField="ListKey" ObjectProperty="Key" />
+        <Mapping DataField="SiteId" ObjectProperty="Id" />
+        <Mapping DataField="SiteName" ObjectProperty="Name" />
+        <Mapping DataField="ListFunctionId" ObjectProperty="Id" />
+        <Mapping DataField="ListFunctionName" ObjectProperty="Name" />
+        <Mapping DataField="FunctionId" ObjectProperty="Id" />
+        <Mapping DataField="FunctionName" ObjectProperty="Name" />
+      </Setting>
+      <Setting Key="NAP_MailingList_GetByName" SpName="NAP_MailingList_GetByName" DbName="SVRNAP.bodb_NAP.bodbAdminNet">
+        <Mapping DataField="ListId" ObjectProperty="Id" />
+        <Mapping DataField="ListName" ObjectProperty="Name" />
+        <Mapping DataField="ListKey" ObjectProperty="Key" />
+        <Mapping DataField="SiteId" ObjectProperty="Id" />
+        <Mapping DataField="SiteName" ObjectProperty="Name" />
+        <Mapping DataField="ListFunctionId" ObjectProperty="Id" />
+        <Mapping DataField="ListFunctionName" ObjectProperty="Name" />
+        <Mapping DataField="FunctionId" ObjectProperty="Id" />
+        <Mapping DataField="FunctionName" ObjectProperty="Name" />
+      </Setting>
+      <Setting Key="NAP_MailingList_GetByUserAndSiteIncludeGroup" SpName="NAP_MailingList_GetByUserAndSiteIncludeGroup" DbName="SVRNAP.bodb_NAP.bodbAdminNet">
+        <Mapping DataField="ListId" ObjectProperty="Id" />
+        <Mapping DataField="ListName" ObjectProperty="Name" />
+        <Mapping DataField="ListKey" ObjectProperty="Key" />
+        <Mapping DataField="SiteId" ObjectProperty="Id" />
+        <Mapping DataField="SiteName" ObjectProperty="Name" />
+        <Mapping DataField="ListFunctionId" ObjectProperty="Id" />
+        <Mapping DataField="ListFunctionName" ObjectProperty="Name" />
+        <Mapping DataField="FunctionId" ObjectProperty="Id" />
+        <Mapping DataField="FunctionName" ObjectProperty="Name" />
+      </Setting>
+      <Setting Key="NAP_MailingList_GetByFunctionKeyAndSite" SpName="NAP_MailingList_GetByFunctionKeyAndSite" DbName="SVRNAP.bodb_NAP.bodbAdminNet">
+        <Mapping DataField="ListId" ObjectProperty="Id" />
+        <Mapping DataField="ListName" ObjectProperty="Name" />
+        <Mapping DataField="ListKey" ObjectProperty="Key" />
+        <Mapping DataField="SiteId" ObjectProperty="Id" />
+        <Mapping DataField="SiteName" ObjectProperty="Name" />
+        <Mapping DataField="ListFunctionId" ObjectProperty="Id" />
+        <Mapping DataField="ListFunctionName" ObjectProperty="Name" />
+        <Mapping DataField="FunctionId" ObjectProperty="Id" />
+        <Mapping DataField="FunctionName" ObjectProperty="Name" />
+      </Setting>
+    </Function>
+  <Function Name="ExchangeRate">
+    <Setting Key="Age_Exchange_GetAll" SpName="Acc_ExchangeSelAccount" DbName="SVRCSD.RepDB.bodbAdminNet"></Setting>
+    <Setting Key="Age_Exchange_GetById" SpName="Acc_ExchangeSelByID" DbName="SVRCSD.RepDB.bodbAdminNet"></Setting>
+    <Setting Key="Age_Exchange_InsertRate" SpName="Acc_ExchangeIns" DbName="SVRTXN.TransDB.bodbAdminNet"></Setting>
+    <Setting Key="Age_Exchange_UpdateRate" SpName="Acc_ExchangeUpd" DbName="SVRTXN.TransDB.bodbAdminNet"></Setting>
+  </Function>
+>>>>>>> ExchangeRate
 </Functions>
