@@ -12,6 +12,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Web.Mvc;
     using System.Xml.Linq;
@@ -396,6 +397,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// </summary>
         /// <param name="log">Execute SP log.</param>
         /// <returns>Partial view result.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         public PartialViewResult _NAP_Function_Insert(LogExecSp log)
         {
             XElement elementNew = XElement.Parse(log.Data);
@@ -508,6 +510,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// </summary>
         /// <param name="log">Execute SP log.</param>
         /// <returns>Partial view result.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         public PartialViewResult _NAP_MenuItem_Insert(LogExecSp log)
         {
             XElement elementNew = XElement.Parse(log.Data);
@@ -582,6 +585,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// </summary>
         /// <param name="log">Execute SP log.</param>
         /// <returns>Partial view result.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         public PartialViewResult _NAP_Site_InsertWithSiteURL(LogExecSp log)
         {
             XElement elementNew = XElement.Parse(log.Data);
@@ -645,6 +649,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// </summary>
         /// <param name="log">Execute SP log.</param>
         /// <returns>Partial view result.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         public PartialViewResult _NAP_MenuItem_Update(LogExecSp log)
         {
             XElement elementNew = XElement.Parse(log.Data);
@@ -756,6 +761,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// </summary>
         /// <param name="log">Execute SP log.</param>
         /// <returns>Partial view result.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         public PartialViewResult _NAP_Function_Update(LogExecSp log)
         {
             XElement elementNew = XElement.Parse(log.Data);
@@ -1062,6 +1068,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// </summary>
         /// <param name="log">Execute SP log.</param>
         /// <returns>Partial view result.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         public PartialViewResult _NAP_Site_Url(LogExecSp log)
         {
             XElement elementNew = XElement.Parse(log.Data);
@@ -1124,6 +1131,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// </summary>
         /// <param name="log">Execute SP log.</param>
         /// <returns>Partial view result.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         public PartialViewResult _NAP_Assign_Permission(LogExecSp log)
         {
             XElement elementNew = XElement.Parse(log.Data);
@@ -1209,6 +1217,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// </summary>
         /// <param name="log">Execute SP log.</param>
         /// <returns>Partial view result.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         public PartialViewResult _NAP_Assign_Site(LogExecSp log)
         {
             XElement elementNew = XElement.Parse(log.Data);
@@ -1281,6 +1290,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// </summary>
         /// <param name="log">Execute SP log.</param>
         /// <returns>Partial view result.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         public PartialViewResult _NAP_Function_AssignToUsers(LogExecSp log)
         {
             XElement elementNew = XElement.Parse(log.Data);
@@ -1340,6 +1350,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// </summary>
         /// <param name="log">Execute SP log.</param>
         /// <returns>Partial view result.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         public PartialViewResult _NAP_Function_AssignFunctionToGroups(LogExecSp log)
         {
             XElement elementNew = XElement.Parse(log.Data);
@@ -1403,6 +1414,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// </summary>
         /// <param name="log">Execute SP log.</param>
         /// <returns>Partial view result.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         public PartialViewResult _NAP_MailingList_Insert(LogExecSp log)
         {
             XElement elementNew = XElement.Parse(log.Data);
@@ -1484,6 +1496,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// </summary>
         /// <param name="log">Execute SP log.</param>
         /// <returns>Partial view result.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         public PartialViewResult _NAP_MailingList_Update(LogExecSp log)
         {
             XElement elementNew = XElement.Parse(log.Data);

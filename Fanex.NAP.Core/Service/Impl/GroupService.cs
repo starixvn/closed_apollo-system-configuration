@@ -193,7 +193,7 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Get all group with number of user.
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="name">The group name.</param>
         /// <param name="env">The environment.</param>
         /// <param name="isActive">Is active or not.</param>
         /// <returns>The list of group object.</returns>

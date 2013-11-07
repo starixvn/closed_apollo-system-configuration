@@ -165,7 +165,7 @@ namespace Fanex.NAP.Framework.Mvc
         /// <param name="htmlHelper">HTML helper.</param>
         /// <param name="name">Month picker name.</param>
         /// <param name="currentMonth">Current month.</param>
-        /// <param name="htmlAttributes">>HTML attributes.</param>
+        /// <param name="htmlAttributes">HTML attributes.</param>
         /// <returns>Month picker MVC HTML string.</returns>
         public static MvcHtmlString MonthPicker(
             this HtmlHelper htmlHelper, 

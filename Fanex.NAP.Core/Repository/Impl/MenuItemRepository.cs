@@ -12,6 +12,7 @@ namespace Fanex.NAP.Core.Repository.Impl
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using Fanex.Common.Extensions;
     using Fanex.Data;
@@ -32,61 +33,55 @@ namespace Fanex.NAP.Core.Repository.Impl
         /// </summary>
         /// <param name="criteria">The criteria get menu item.</param>
         /// <returns>The menu item.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         public override IMenuItem Get(ICriteria criteria)
         {
-            try
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                using (var db = new ObjectDb(criteria.GetSettingKey()))
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
                 {
-                    using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                    if (reader.Read())
                     {
-                        if (reader.Read())
+                        return new MenuItem
                         {
-                            return new MenuItem
+                            Id = reader.ToInt("MenuItemId"),
+                            Name = reader.ToString("MenuItemName"),
+                            Function = new Function
                             {
-                                Id = reader.ToInt("MenuItemId"),
-                                Name = reader.ToString("MenuItemName"),
-                                Function = new Function
-                                {
-                                    Id = reader.ToShort("FunctionId"),
-                                    Name = reader.ToString("FunctionName")
-                                },
-                                Site = new Site
-                                {
-                                    Id = reader.ToByte("SiteId"),
-                                    Name = reader.ToString("SiteName")
-                                },
-                                Description = reader.ToString("Description"),
-                                Parent = reader.IsDBNull("ParentId") ? null : new MenuItem
-                                {
-                                    Id = reader.ToInt("ParentId"),
-                                    Name = reader.ToString("ParentName")
-                                },
-                                Policy = reader.ToInt("Policy"),
-                                Url = reader.ToString("URL"),
-                                DisplayOrder = reader.ToShort("DisplayOrder"),
-                                IsActive = reader.ToBool("IsActive"),
-                                Creator = reader.IsDBNull("CreatorId") ? null : new User
-                                {
-                                    Id = reader.ToInt("CreatorId"),
-                                    Name = reader.ToString("CreatorUsername")
-                                },
-                                CreatedDate = reader.ToDateTime("CreatedDate"),
-                                Modifier = reader.IsDBNull("ModifierId") ? null : new User
-                                {
-                                    Id = reader.ToInt("ModifierId"),
-                                    Name = reader.ToString("ModifierUsername")
-                                },
-                                ModifiedDate = reader.ToDateTime("ModifiedDate"),
-                                Environment = reader.ToString("Environment")
-                            };
-                        }
+                                Id = reader.ToShort("FunctionId"),
+                                Name = reader.ToString("FunctionName")
+                            },
+                            Site = new Site
+                            {
+                                Id = reader.ToByte("SiteId"),
+                                Name = reader.ToString("SiteName")
+                            },
+                            Description = reader.ToString("Description"),
+                            Parent = reader.IsDBNull("ParentId") ? null : new MenuItem
+                            {
+                                Id = reader.ToInt("ParentId"),
+                                Name = reader.ToString("ParentName")
+                            },
+                            Policy = reader.ToInt("Policy"),
+                            Url = reader.ToString("URL"),
+                            DisplayOrder = reader.ToShort("DisplayOrder"),
+                            IsActive = reader.ToBool("IsActive"),
+                            Creator = reader.IsDBNull("CreatorId") ? null : new User
+                            {
+                                Id = reader.ToInt("CreatorId"),
+                                Name = reader.ToString("CreatorUsername")
+                            },
+                            CreatedDate = reader.ToDateTime("CreatedDate"),
+                            Modifier = reader.IsDBNull("ModifierId") ? null : new User
+                            {
+                                Id = reader.ToInt("ModifierId"),
+                                Name = reader.ToString("ModifierUsername")
+                            },
+                            ModifiedDate = reader.ToDateTime("ModifiedDate"),
+                            Environment = reader.ToString("Environment")
+                        };
                     }
                 }
-            }
-            catch
-            {
-                throw;
             }
 
             return null;
@@ -117,6 +112,7 @@ namespace Fanex.NAP.Core.Repository.Impl
         /// </summary>
         /// <param name="criteria">The criteria fetch menu item.</param>
         /// <returns>List of menu item.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         public override IEnumerable<IMenuItem> Fetch(ICriteria criteria)
         {
             using (var db = new ObjectDb(criteria.GetSettingKey()))

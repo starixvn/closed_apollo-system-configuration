@@ -11,12 +11,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Text;
     using System.Web.Mvc;
-
     using Fanex.Logging;
-
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Criteria.Function;
     using Fanex.NAP.Core.Helpers;
@@ -152,78 +151,71 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <returns>Action result.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageFunction, Policy = Constant.Policy.Host)]
         public ActionResult AddNew(InsertFunctionCriteria criteria)
         {
-            try
+            GetSitesAndFunctionsForAddNew(criteria);
+
+            if (ModelState.IsValid)
             {
-                GetSitesAndFunctionsForAddNew(criteria);
+                // checks duplicate function name
+                string functionName = criteria.FunctionName = criteria.FunctionName.Trim();
+                var function = this._functionService.GetByNameAndSite(functionName, criteria.SiteId);
 
-                if (ModelState.IsValid)
+                if (function != null)
                 {
-                    // checks duplicate function name
-                    string functionName = criteria.FunctionName = criteria.FunctionName.Trim();
-                    var function = this._functionService.GetByNameAndSite(functionName, criteria.SiteId);
+                    ModelState.AddModelError("FunctionName", string.Format(ViewResources.DuplicateMsg, functionName));
+                    return View(criteria);
+                }
 
-                    if (function != null)
+                // checks duplicate function key
+                string functionKey = criteria.FunctionKey = criteria.FunctionName.Replace(Constant.SPACE, string.Empty);
+
+                // replace char not letter or digit of function key
+                StringBuilder strFunctionKeyModify = new StringBuilder();
+
+                for (int i = 0; i < functionKey.Length; i++)
+                {
+                    char item = functionKey[i];
+                    if (char.IsLetterOrDigit(item))
                     {
-                        ModelState.AddModelError("FunctionName", string.Format(ViewResources.DuplicateMsg, functionName));
-                        return View(criteria);
+                        strFunctionKeyModify.Append(item);
                     }
-
-                    // checks duplicate function key
-                    string functionKey = criteria.FunctionKey = criteria.FunctionName.Replace(Constant.SPACE, string.Empty);
-
-                    // replace char not letter or digit of function key
-                    StringBuilder strFunctionKeyModify = new StringBuilder();
-
-                    for (int i = 0; i < functionKey.Length; i++)
+                    else
                     {
-                        char item = functionKey[i];
-                        if (char.IsLetterOrDigit(item))
-                        {
-                            strFunctionKeyModify.Append(item);
-                        }
-                        else
-                        {
-                            strFunctionKeyModify.Append("_");
-                        }
-                    }
-
-                    criteria.FunctionKey = strFunctionKeyModify.ToString();
-                    functionKey = strFunctionKeyModify.ToString();
-
-                    function = this._functionService.GetByKeyAndSite(functionKey, criteria.SiteId);
-
-                    if (function != null)
-                    {
-                        ModelState.AddModelError(
-                            "FunctionKey",
-                            string.Format(ViewResources.DuplicateMsg, functionKey));
-
-                        return View(criteria);
-                    }
-
-                    // adds function
-                    criteria.ParentId = criteria.ParentId == 0 ? null : criteria.ParentId;
-                    criteria.ParentName = (criteria.ParentId == null || criteria.ParentId == 0) ? null : criteria.ParentName;
-                    criteria.CreatedBy = CurrentSession.UserId;
-                    criteria.CreatedDate = DateTime.Now;
-
-                    // inserts function and assigns it to all site-admins of the current site and all portal admins
-                    var result = this._functionService.Insert(criteria);
-
-                    if (result != null && result.IsSuccessful)
-                    {
-                        ViewBag.Success = true;
+                        strFunctionKeyModify.Append("_");
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                LogService.Error(ex.Message, ex);
-                throw ex;
+
+                criteria.FunctionKey = strFunctionKeyModify.ToString();
+                functionKey = strFunctionKeyModify.ToString();
+
+                function = this._functionService.GetByKeyAndSite(functionKey, criteria.SiteId);
+
+                if (function != null)
+                {
+                    ModelState.AddModelError(
+                        "FunctionKey",
+                        string.Format(ViewResources.DuplicateMsg, functionKey));
+
+                    return View(criteria);
+                }
+
+                // adds function
+                criteria.ParentId = criteria.ParentId == 0 ? null : criteria.ParentId;
+                criteria.ParentName = (criteria.ParentId == null || criteria.ParentId == 0) ? null : criteria.ParentName;
+                criteria.CreatedBy = CurrentSession.UserId;
+                criteria.CreatedDate = DateTime.Now;
+
+                // inserts function and assigns it to all site-admins of the current site and all portal admins
+                var result = this._functionService.Insert(criteria);
+
+                if (result != null && result.IsSuccessful)
+                {
+                    ViewBag.Success = true;
+                }
             }
 
             return View(criteria);
@@ -291,58 +283,50 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         [NapAuth(FunctionKey = FunctionKeys.ManageFunction, Policy = Constant.Policy.Host)]
         public ActionResult Duplicate(DuplicateFunctionCriteria criteria)
         {
-            try
+            var function = this._functionService.GetById(criteria.FunctionId);
+
+            if (function == null)
             {
-                var function = this._functionService.GetById(criteria.FunctionId);
-
-                if (function == null)
-                {
-                    return HttpNotFound();
-                }
-
-                ViewBag.OriginFunctionName = function.Name;
-                criteria.SiteId = function.Site.Id;
-                GetSitesAndFunctionsForAddNew(criteria, getSiteList: false);
-
-                if (ModelState.IsValid)
-                {
-                    // checks duplicate function name
-                    string functionName = criteria.FunctionName = criteria.FunctionName.Trim();
-
-                    if (this._functionService.GetByNameAndSite(functionName, criteria.SiteId) != null)
-                    {
-                        ModelState.AddModelError("FunctionName", string.Format(ViewResources.DuplicateMsg, functionName));
-                        return View(criteria);
-                    }
-
-                    // checks duplicate function key
-                    string functionKey = criteria.FunctionKey = criteria.FunctionName.Replace(Constant.SPACE, string.Empty);
-
-                    if (this._functionService.GetByKeyAndSite(functionKey, criteria.SiteId) != null)
-                    {
-                        ModelState.AddModelError("FunctionKey", string.Format(ViewResources.DuplicateMsg, functionKey));
-                        return View(criteria);
-                    }
-
-                    // duplicates function
-                    criteria.DuplicateFunctionId = function.Id;
-                    criteria.ParentId = criteria.ParentId == 0 ? null : criteria.ParentId;
-                    criteria.ParentName = (criteria.ParentId == null || criteria.ParentId == 0) ? null : criteria.ParentName;
-                    criteria.CreatedBy = CurrentSession.UserId;
-                    criteria.CreatedDate = DateTime.Now;
-
-                    var result = this._functionService.Duplicate(criteria);
-
-                    if (result != null && result.IsSuccessful)
-                    {
-                        ViewBag.Success = true;
-                    }
-                }
+                return HttpNotFound();
             }
-            catch (Exception ex)
+
+            ViewBag.OriginFunctionName = function.Name;
+            criteria.SiteId = function.Site.Id;
+            GetSitesAndFunctionsForAddNew(criteria, getSiteList: false);
+
+            if (ModelState.IsValid)
             {
-                LogService.Error(ex.Message, ex);
-                throw ex;
+                // checks duplicate function name
+                string functionName = criteria.FunctionName = criteria.FunctionName.Trim();
+
+                if (this._functionService.GetByNameAndSite(functionName, criteria.SiteId) != null)
+                {
+                    ModelState.AddModelError("FunctionName", string.Format(ViewResources.DuplicateMsg, functionName));
+                    return View(criteria);
+                }
+
+                // checks duplicate function key
+                string functionKey = criteria.FunctionKey = criteria.FunctionName.Replace(Constant.SPACE, string.Empty);
+
+                if (this._functionService.GetByKeyAndSite(functionKey, criteria.SiteId) != null)
+                {
+                    ModelState.AddModelError("FunctionKey", string.Format(ViewResources.DuplicateMsg, functionKey));
+                    return View(criteria);
+                }
+
+                // duplicates function
+                criteria.DuplicateFunctionId = function.Id;
+                criteria.ParentId = criteria.ParentId == 0 ? null : criteria.ParentId;
+                criteria.ParentName = (criteria.ParentId == null || criteria.ParentId == 0) ? null : criteria.ParentName;
+                criteria.CreatedBy = CurrentSession.UserId;
+                criteria.CreatedDate = DateTime.Now;
+
+                var result = this._functionService.Duplicate(criteria);
+
+                if (result != null && result.IsSuccessful)
+                {
+                    ViewBag.Success = true;
+                }
             }
 
             return View(criteria);
@@ -411,125 +395,118 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <returns>Action result.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         [HttpPost]
-        [NapAuth(FunctionKey = FunctionKeys.ManageFunction, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = FunctionKeys.ManageFunction, Policy = Constant.Policy.Host)]        
         public ActionResult Edit(UpdateFunctionCriteria criteria)
         {
-            try
-            {
-                var currentFunction = this._functionService.GetById(criteria.FunctionId);
+            var currentFunction = this._functionService.GetById(criteria.FunctionId);
 
-                if (ReferenceEquals(currentFunction, null))
+            if (ReferenceEquals(currentFunction, null))
+            {
+                return RedirectToAction("Manage");
+            }
+
+            var functionList = this._functionService.GetBySite(criteria.SiteId, criteria.Environment, true);
+
+            ViewBag.ParentFunctionItemList = functionList.Select(s => new SelectListItem
+            {
+                Text = s.Name,
+                Value = s.Id.ToString(),
+                Selected = criteria.ParentId != null && s.Id == criteria.ParentId
+            }).ToList();
+
+            if (ModelState.IsValid)
+            {
+                // checks Function Name duplication
+                string functionName = criteria.FunctionName = criteria.FunctionName.Trim();
+                var function = this._functionService.GetByNameAndSite(functionName, criteria.SiteId);
+
+                if (function != null && function.Id != criteria.FunctionId)
+                {
+                    criteria.FunctionKey = currentFunction.Key;
+
+                    ModelState.AddModelError("FunctionName", string.Format(ViewResources.DuplicateMsg, functionName));
+
+                    return View(criteria);
+                }
+
+                // checks Function Key duplication
+                string tempFunctionKey = criteria.FunctionKey != null ? criteria.FunctionKey : criteria.FunctionName;
+
+                string functionKey = criteria.FunctionKey = tempFunctionKey.Replace(Constant.SPACE, string.Empty);
+
+                // replace char not letter or digit of function key
+                StringBuilder strFunctionKeyModify = new StringBuilder();
+
+                for (int i = 0; i < functionKey.Length; i++)
+                {
+                    char item = functionKey[i];
+                    if (char.IsLetterOrDigit(item))
+                    {
+                        strFunctionKeyModify.Append(item);
+                    }
+                    else
+                    {
+                        strFunctionKeyModify.Append("_");
+                    }
+                }
+
+                criteria.FunctionKey = strFunctionKeyModify.ToString();
+                functionKey = strFunctionKeyModify.ToString();
+
+                function = this._functionService.GetByKeyAndSite(functionKey, criteria.SiteId);
+
+                if (function != null && function.Id != criteria.FunctionId)
+                {
+                    ModelState.AddModelError("FunctionKey", string.Format(ViewResources.DuplicateMsg, functionKey));
+
+                    return View(criteria);
+                }
+
+                // check for all user,group has permission on this function when CRUD change
+                function = this._functionService.GetById(criteria.FunctionId);
+
+                if (ReferenceEquals(function, null))
                 {
                     return RedirectToAction("Manage");
                 }
 
-                var functionList = this._functionService.GetBySite(criteria.SiteId, criteria.Environment, true);
-
-                ViewBag.ParentFunctionItemList = functionList.Select(s => new SelectListItem
+                if (criteria.Crud < function.Crud)
                 {
-                    Text = s.Name,
-                    Value = s.Id.ToString(),
-                    Selected = criteria.ParentId != null && s.Id == criteria.ParentId
-                }).ToList();
-
-                if (ModelState.IsValid)
-                {
-                    // checks Function Name duplication
-                    string functionName = criteria.FunctionName = criteria.FunctionName.Trim();
-                    var function = this._functionService.GetByNameAndSite(functionName, criteria.SiteId);
-
-                    if (function != null && function.Id != criteria.FunctionId)
+                    if (CurrentSession.Level != (int)Constant.Level.SiteAdmin
+                        && CurrentSession.Level != (int)Constant.Level.PortalAdmin)
                     {
-                        criteria.FunctionKey = currentFunction.Key;
+                        // list user has host permission in this function
+                        var listUsers = _userService.GetByFunctionAndSite(function.Id, function.Site.Id)
+                                                        .Where(u => u.Policy == (int)Constant.Policy.Host).ToList();
 
-                        ModelState.AddModelError("FunctionName", string.Format(ViewResources.DuplicateMsg, functionName));
+                        // list group has host permission in this function
+                        var listGroups = _groupService.GetByFunctionAndSite(function.Id, function.Site.Id)
+                                                        .Where(u => u.Policy == (int)Constant.Policy.Host).ToList();
 
-                        return View(criteria);
-                    }
-
-                    // checks Function Key duplication
-                    string tempFunctionKey = criteria.FunctionKey != null ? criteria.FunctionKey : criteria.FunctionName;
-
-                    string functionKey = criteria.FunctionKey = tempFunctionKey.Replace(Constant.SPACE, string.Empty);
-
-                    // replace char not letter or digit of function key
-                    StringBuilder strFunctionKeyModify = new StringBuilder();
-
-                    for (int i = 0; i < functionKey.Length; i++)
-                    {
-                        char item = functionKey[i];
-                        if (char.IsLetterOrDigit(item))
+                        if (listUsers.Count > 0 || listGroups.Count > 0)
                         {
-                            strFunctionKeyModify.Append(item);
+                            ModelState.AddModelError("Readonly", ViewResources.Privileged_User_Group_Message);
+
+                            return View(criteria);
                         }
-                        else
-                        {
-                            strFunctionKeyModify.Append("_");
-                        }
-                    }
-
-                    criteria.FunctionKey = strFunctionKeyModify.ToString();
-                    functionKey = strFunctionKeyModify.ToString();
-
-                    function = this._functionService.GetByKeyAndSite(functionKey, criteria.SiteId);
-
-                    if (function != null && function.Id != criteria.FunctionId)
-                    {
-                        ModelState.AddModelError("FunctionKey", string.Format(ViewResources.DuplicateMsg, functionKey));
-
-                        return View(criteria);
-                    }
-
-                    // check for all user,group has permission on this function when CRUD change
-                    function = this._functionService.GetById(criteria.FunctionId);
-
-                    if (ReferenceEquals(function, null))
-                    {
-                        return RedirectToAction("Manage");
-                    }
-
-                    if (criteria.Crud < function.Crud)
-                    {
-                        if (CurrentSession.Level != (int)Constant.Level.SiteAdmin
-                            && CurrentSession.Level != (int)Constant.Level.PortalAdmin)
-                        {
-                            // list user has host permission in this function
-                            var listUsers = _userService.GetByFunctionAndSite(function.Id, function.Site.Id)
-                                                            .Where(u => u.Policy == (int)Constant.Policy.Host).ToList();
-
-                            // list group has host permission in this function
-                            var listGroups = _groupService.GetByFunctionAndSite(function.Id, function.Site.Id)
-                                                            .Where(u => u.Policy == (int)Constant.Policy.Host).ToList();
-
-                            if (listUsers.Count > 0 || listGroups.Count > 0)
-                            {
-                                ModelState.AddModelError("Readonly", ViewResources.Privileged_User_Group_Message);
-
-                                return View(criteria);
-                            }
-                        }
-                    }
-
-                    // update function
-                    criteria.ParentId = criteria.ParentId == 0 ? null : criteria.ParentId;
-                    criteria.ParentName = criteria.ParentId == null || criteria.ParentId == 0 ? null :
-                        criteria.ParentName;
-                    criteria.ModifiedBy = CurrentSession.UserId;
-                    criteria.ModifiedDate = DateTime.Now;
-
-                    var result = this._functionService.Update(criteria);
-
-                    if (result != null && result.IsSuccessful)
-                    {
-                        ViewBag.Success = true;
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                LogService.Error(ex.Message, ex);
-                throw ex;
+
+                // update function
+                criteria.ParentId = criteria.ParentId == 0 ? null : criteria.ParentId;
+                criteria.ParentName = criteria.ParentId == null || criteria.ParentId == 0 ? null :
+                    criteria.ParentName;
+                criteria.ModifiedBy = CurrentSession.UserId;
+                criteria.ModifiedDate = DateTime.Now;
+
+                var result = this._functionService.Update(criteria);
+
+                if (result != null && result.IsSuccessful)
+                {
+                    ViewBag.Success = true;
+                }
             }
 
             return View(criteria);

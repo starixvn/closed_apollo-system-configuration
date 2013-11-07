@@ -74,7 +74,7 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Get menu item by name and site.
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="name">The menu item name.</param>
         /// <param name="siteId">The site ID.</param>
         /// <returns>The menu item object.</returns>
         public IMenuItem GetByNameAndSite(string name, int siteId)

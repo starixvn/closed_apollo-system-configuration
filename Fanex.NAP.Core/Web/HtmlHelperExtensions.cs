@@ -69,8 +69,8 @@ namespace Fanex.NAP.Core.Web
         /// Radio button list helper.
         /// </summary>
         /// <param name="helper">HTML helper.</param>
-        /// <param name="name"></param>
-        /// <param name="items"></param>
+        /// <param name="name">The element name.</param>
+        /// <param name="items">List of select list item.</param>
         /// <returns>HTML string.</returns>
         public static IHtmlString RadioButtonList(
             this HtmlHelper helper,
@@ -85,8 +85,8 @@ namespace Fanex.NAP.Core.Web
         /// Radio button list helper.
         /// </summary>
         /// <param name="helper">HTML helper.</param>
-        /// <param name="name"></param>
-        /// <param name="items"></param>
+        /// <param name="name">The element name.</param>
+        /// <param name="items">List of select list item.</param>
         /// <param name="htmlAttributes">HTML attributes.</param>
         /// <returns>HTML string.</returns>
         public static IHtmlString RadioButtonList(
@@ -102,8 +102,8 @@ namespace Fanex.NAP.Core.Web
         /// Radio button list helper.
         /// </summary>
         /// <param name="helper">HTML helper.</param>
-        /// <param name="name"></param>
-        /// <param name="items"></param>
+        /// <param name="name">The element name.</param>
+        /// <param name="items">List of select list item.</param>
         /// <param name="htmlAttributes">HTML attributes.</param>
         /// <returns>HTML string.</returns>
         public static IHtmlString RadioButtonList(
@@ -140,7 +140,7 @@ namespace Fanex.NAP.Core.Web
         /// </summary>
         /// <param name="helper">HTML helper.</param>
         /// <param name="expression"></param>
-        /// <param name="items"></param>
+        /// <param name="items">List of select list item.</param>
         /// <returns>HTML string.</returns>
         public static IHtmlString RadioButtonListFor<TModel, TProperty>(
             this HtmlHelper<TModel> helper,
@@ -156,7 +156,7 @@ namespace Fanex.NAP.Core.Web
         /// </summary>
         /// <param name="helper">HTML helper.</param>
         /// <param name="expression"></param>
-        /// <param name="items"></param>
+        /// <param name="items">List of select list item.</param>
         /// <param name="htmlAttributes">HTML attributes.</param>
         /// <returns>HTML string.</returns>
         public static IHtmlString RadioButtonListFor<TModel, TProperty>(
@@ -176,7 +176,7 @@ namespace Fanex.NAP.Core.Web
         /// </summary>
         /// <param name="helper">HTML helper.</param>
         /// <param name="expression"></param>
-        /// <param name="items"></param>
+        /// <param name="items">List of select list item.</param>
         /// <param name="htmlAttributes">HTML attributes.</param>
         /// <returns>HTML string.</returns>
         public static IHtmlString RadioButtonListFor<TModel, TProperty>(

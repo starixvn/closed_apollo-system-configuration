@@ -11,6 +11,7 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Security;
@@ -62,6 +63,7 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
         /// <param name="onuserId">The on user identifier.</param>
         /// <param name="time">The time expired.</param>
         /// <returns>Return to site.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         [AllowAnonymous]
         [HttpGet]
         public ActionResult Index(string userId, string onuserId, string time)

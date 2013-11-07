@@ -43,7 +43,7 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <param name="pageIndex">The page index.</param>
         /// <param name="pageSize">The page size.</param>
         /// <param name="totalRows">Total number of records.</param>
-        /// <param name="name"></param>
+        /// <param name="name">The item name.</param>
         /// <param name="username">The username.</param>
         /// <param name="from">From date value.</param>
         /// <param name="to">To date value.</param>
@@ -291,7 +291,7 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <param name="pageIndex">The page index.</param>
         /// <param name="pageSize">The page size.</param>
         /// <param name="totalRows">Total number of records.</param>
-        /// <param name="name"></param>
+        /// <param name="name">The username.</param>
         /// <param name="from">From date value.</param>
         /// <param name="to">To date value.</param>
         /// <param name="siteId">The site ID.</param>
@@ -385,7 +385,7 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <param name="pageIndex">The page index.</param>
         /// <param name="pageSize">The page size.</param>
         /// <param name="totalRows">Total number of records.</param>
-        /// <param name="name"></param>
+        /// <param name="name">The function name.</param>
         /// <param name="from">From date value.</param>
         /// <param name="to">To date value.</param>
         /// <param name="siteId">The site ID.</param>

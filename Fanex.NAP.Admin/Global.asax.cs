@@ -15,6 +15,7 @@ namespace Fanex.NAP.Admin
     using System.Web.Optimization;
     using System.Web.Routing;
     using Fanex.Data.Configuration;
+    using Fanex.Logging;
     using Fanex.NAP.Admin.App_Start;
 
     /// <summary>
@@ -31,6 +32,25 @@ namespace Fanex.NAP.Admin
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             DbSettingProviderManager.Current.Start();
+        }
+
+        protected void Application_Error(object sender, EventArgs e)
+        {
+            // Logging
+            Exception ex = Server.GetLastError().GetBaseException();
+
+            if (!Request.IsLocal)
+            {
+                string message = ex.Message +
+                    "\r\nSource: " + ex.Source +
+                    "\r\nDomain: " + HttpContext.Current.Request.Headers["Host"] +
+                    "\r\nForm: " + Request.Form.ToString() +
+                    "\r\nQueryString: " + Request.QueryString.ToString() +
+                    "\r\nTargetSite: " + ex.TargetSite +
+                    "\r\nStackTrace: " + ex.StackTrace;
+
+                LogService.Error(message);
+            }
         }
 
         protected void Session_End(object sender, EventArgs e)

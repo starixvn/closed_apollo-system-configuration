@@ -69,9 +69,6 @@ namespace Fanex.NAP.Core.Criteria.User
         [SpParam(Ignored = true)]
         public int[] FuncHost { get; set; }
 
-        /// <summary>
-        /// Site id for go to back page mange user with select return site id.
-        /// </summary>
         [SpParam(Ignored = true)]
         public int ReturnSiteId { get; set; }
 

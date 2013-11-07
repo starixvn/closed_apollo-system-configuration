@@ -119,69 +119,62 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <returns>Action result.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageSite, Policy = Constant.Policy.Host)]
         public ActionResult AddNew(InsertSiteCriteria criteria)
         {
-            try
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
+                // check url
+                if (!ReferenceEquals(criteria.Urls, null))
                 {
-                    // check url
-                    if (!ReferenceEquals(criteria.Urls, null))
+                    foreach (var itemUrl in criteria.Urls)
                     {
-                        foreach (var itemUrl in criteria.Urls)
+                        bool isuri = Uri.IsWellFormedUriString(itemUrl.Url, UriKind.Absolute);
+                        if (!isuri)
                         {
-                            bool isuri = Uri.IsWellFormedUriString(itemUrl.Url, UriKind.Absolute);
-                            if (!isuri)
-                            {
-                                ModelState.AddModelError("SiteUrls", string.Format(ViewResources.InvalidURLValidationMsg, criteria.SiteUrls));
-                                return View(criteria);
-                            }
-                        }
-                    }
-
-                    // checks SiteName duplication
-                    string siteName = criteria.SiteName = criteria.SiteName.Trim();
-                    var site = _siteService.GetByName(siteName);
-
-                    if (site != null)
-                    {
-                        ModelState.AddModelError("SiteName", string.Format(ViewResources.DuplicateMsg, siteName));
-
-                        return View(criteria);
-                    }
-
-                    // checks url duplication
-                    criteria.Urls = criteria.Urls.Where(x => !string.IsNullOrWhiteSpace(x.Url)).ToList();
-
-                    if (criteria.Urls != null)
-                    {
-                        int distinctCount = criteria.Urls.Select(x => x.Url).Distinct().Count();
-
-                        if (distinctCount != criteria.Urls.Count)
-                        {
-                            ModelState.AddModelError("Urls", ViewResources.The_Urls_must_be_unique);
-
+                            ModelState.AddModelError("SiteUrls", string.Format(ViewResources.InvalidURLValidationMsg, criteria.SiteUrls));
                             return View(criteria);
                         }
                     }
+                }
 
-                    // add new site
-                    criteria.Environment = this.Environment;
+                // checks SiteName duplication
+                string siteName = criteria.SiteName = criteria.SiteName.Trim();
+                var site = _siteService.GetByName(siteName);
 
-                    var result = _siteService.Insert(criteria);
+                if (site != null)
+                {
+                    ModelState.AddModelError("SiteName", string.Format(ViewResources.DuplicateMsg, siteName));
 
-                    if (result != null && result.IsSuccessful)
+                    return View(criteria);
+                }
+
+                // checks url duplication
+                criteria.Urls = criteria.Urls.Where(x => !string.IsNullOrWhiteSpace(x.Url)).ToList();
+
+                if (criteria.Urls != null)
+                {
+                    int distinctCount = criteria.Urls.Select(x => x.Url).Distinct().Count();
+
+                    if (distinctCount != criteria.Urls.Count)
                     {
-                        ViewBag.Success = true;
+                        ModelState.AddModelError("Urls", ViewResources.The_Urls_must_be_unique);
+
+                        return View(criteria);
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                LogService.Error(ex.Message, ex);
-                throw ex;
+
+                // add new site
+                criteria.Environment = this.Environment;
+
+                var result = _siteService.Insert(criteria);
+
+                if (result != null && result.IsSuccessful)
+                {
+                    ViewBag.Success = true;
+                }
             }
 
             return View(criteria);
@@ -402,6 +395,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// <param name="url">The site URL.</param>
         /// <param name="isActive">Is active or not.</param>
         /// <returns>Action result.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageSite, Policy = Constant.Policy.Host)]
         public ActionResult AddSiteUrl(int siteId, string url, bool isActive)

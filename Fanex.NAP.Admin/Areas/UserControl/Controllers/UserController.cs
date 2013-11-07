@@ -12,13 +12,12 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Web.Mvc;
-
     using Fanex.Common;
     using Fanex.Common.Extensions;
     using Fanex.Logging;
-
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Criteria.User;
     using Fanex.NAP.Core.Domain;
@@ -75,6 +74,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// <param name="groupId">The group ID.</param>
         /// <param name="siteId">The site ID.</param>
         /// <returns>Action result.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         [HttpGet]
         [NapAuth(FunctionKey = FunctionKeys.ManageUser, Policy = Constant.Policy.Read)]
         public ActionResult Manage(
@@ -84,206 +84,198 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             int groupId = 0,
             int siteId = -1)
         {
-            try
+            // declares paging params
+            int pageIndex = id;
+            int pageSize = size;
+            string username = ViewBag.Username = q.Trim();
+
+            // if dont specify a given site
+            if (siteId < 0)
             {
-                // declares paging params
-                int pageIndex = id;
-                int pageSize = size;
-                string username = ViewBag.Username = q.Trim();
-
-                // if dont specify a given site
-                if (siteId < 0)
+                // not specify all site 
+                if (siteId != Constant.SearchAllSite)
                 {
-                    // not specify all site 
-                    if (siteId != Constant.SearchAllSite)
-                    {
-                        // gets data of current site
-                        siteId = this.SiteId;
-                    }
+                    // gets data of current site
+                    siteId = this.SiteId;
                 }
+            }
 
-                // permission in current site
-                int manageUserPolicyCurrentSite = _userService.GetUserSiteFunctionKeyPolicy(
-                    CurrentSession.UserId,
-                    this.SiteId,
-                    FunctionKeys.ManageUser.ToString());
+            // permission in current site
+            int manageUserPolicyCurrentSite = _userService.GetUserSiteFunctionKeyPolicy(
+                CurrentSession.UserId,
+                this.SiteId,
+                FunctionKeys.ManageUser.ToString());
 
-                int assignSitePolicyCurrentSite = _userService.GetUserSiteFunctionKeyPolicy(
-                    CurrentSession.UserId,
-                    this.SiteId,
-                    FunctionKeys.AssignSiteToUser.ToString());
+            int assignSitePolicyCurrentSite = _userService.GetUserSiteFunctionKeyPolicy(
+                CurrentSession.UserId,
+                this.SiteId,
+                FunctionKeys.AssignSiteToUser.ToString());
 
-                // detects user rights on page
-                // permission function manage user
-                int assignFunctionPolicyCurrentSite = 0;
+            // detects user rights on page
+            // permission function manage user
+            int assignFunctionPolicyCurrentSite = 0;
 
-                int manageUserPolicy = _userService.GetUserSiteFunctionKeyPolicy(
-                    CurrentSession.UserId,
-                    siteId == 0 || siteId == Constant.SearchAllSite ? this.SiteId : siteId,
-                    FunctionKeys.ManageUser.ToString());
+            int manageUserPolicy = _userService.GetUserSiteFunctionKeyPolicy(
+                CurrentSession.UserId,
+                siteId == 0 || siteId == Constant.SearchAllSite ? this.SiteId : siteId,
+                FunctionKeys.ManageUser.ToString());
 
-                // permission function assign site to user
-                int assignSitePolicy = _userService.GetUserSiteFunctionKeyPolicy(
-                    CurrentSession.UserId,
-                    siteId == 0 || siteId == Constant.SearchAllSite ? this.SiteId : siteId,
-                    FunctionKeys.AssignSiteToUser.ToString());
+            // permission function assign site to user
+            int assignSitePolicy = _userService.GetUserSiteFunctionKeyPolicy(
+                CurrentSession.UserId,
+                siteId == 0 || siteId == Constant.SearchAllSite ? this.SiteId : siteId,
+                FunctionKeys.AssignSiteToUser.ToString());
 
-                ViewFlags.HasEditRight = manageUserPolicy >= (int)Constant.Policy.Host
-                                        && manageUserPolicyCurrentSite >= (int)Constant.Policy.Host;
+            ViewFlags.HasEditRight = manageUserPolicy >= (int)Constant.Policy.Host
+                                    && manageUserPolicyCurrentSite >= (int)Constant.Policy.Host;
 
-                ViewFlags.HasAssignSiteRight = assignSitePolicy >= (int)Constant.Policy.Read
-                                                && assignSitePolicyCurrentSite >= (int)Constant.Policy.Read;
+            ViewFlags.HasAssignSiteRight = assignSitePolicy >= (int)Constant.Policy.Read
+                                            && assignSitePolicyCurrentSite >= (int)Constant.Policy.Read;
 
-                // if users choose a specific site (siteId == 0 means users choose [No Site])
-                bool isspecificSiteChosen = siteId != 0;
+            // if users choose a specific site (siteId == 0 means users choose [No Site])
+            bool isspecificSiteChosen = siteId != 0;
 
-                // show level column
-                ViewFlags.IsShowLevelColumn = isspecificSiteChosen;
+            // show level column
+            ViewFlags.IsShowLevelColumn = isspecificSiteChosen;
 
-                // is portal admin in NAP
-                ViewBag.IsPortalAdmin = _userService.GetUserSiteLevel(CurrentSession.UserId, NapAdminId)
-                                                    == (int)Constant.Level.PortalAdmin;
+            // is portal admin in NAP
+            ViewBag.IsPortalAdmin = _userService.GetUserSiteLevel(CurrentSession.UserId, NapAdminId)
+                                                == (int)Constant.Level.PortalAdmin;
 
-                // detects "Assign Function" right
-                if (isspecificSiteChosen)
-                {
-                    assignFunctionPolicyCurrentSite = _userService.GetUserSiteFunctionKeyPolicy(
-                                                                     CurrentSession.UserId,
-                                                                     this.SiteId,
-                                                                     FunctionKeys.AssignFunctionToUser.ToString());
-
-                    int assignFunctionPolicy = _userService.GetUserSiteFunctionKeyPolicy(
+            // detects "Assign Function" right
+            if (isspecificSiteChosen)
+            {
+                assignFunctionPolicyCurrentSite = _userService.GetUserSiteFunctionKeyPolicy(
                                                                     CurrentSession.UserId,
-                                                                    siteId,
+                                                                    this.SiteId,
                                                                     FunctionKeys.AssignFunctionToUser.ToString());
 
-                    ViewFlags.HasAssignFunctionRight = assignFunctionPolicy >= (int)Constant.Policy.Read
-                                                        && assignSitePolicyCurrentSite >= (int)Constant.Policy.Read;
-                }
-
-                var listSite = new List<SelectListItem>();
-
-                if (ThisSiteIsNapAdmin)
-                {
-                    // gets data for dropdownlist of sites
-                    var siteSelectList = new List<SelectListItem>();
-
-                    listSite = UserIsPortalAdmin
-                    ? _siteService.GetAllSelectListItem(this.Environment, true, siteId).ToList()
-                    : _siteService.GetSelectListItemByUserAndFunctionKeyIncludeGroup(
-                                            CurrentSession.UserId,
-                                            FunctionKeys.ManageUser.ToString(),
-                                            this.Environment,
-                                            policy: Constant.Policy.Read,
-                                            selectedSiteId: siteId).ToList();
-
-                    siteSelectList.Add(new SelectListItem { Text = ViewResources.All_Site, Value = Constant.SearchAllSite.ToString() });
-
-                    siteSelectList.AddRange(listSite);
-
-                    siteSelectList.Add(new SelectListItem { Text = ViewResources.No_Site, Value = "0" });
-
-                    ViewBag.SiteSelectList = siteSelectList;
-                }
-
-                // gets data for dropdownlist of groups
-                ViewBag.GroupSelectList = _groupService.GetAllSelectListItem(selectedGroupId: groupId);
-
-                // gets ViewBag data
-                ViewBag.SiteId = siteId;
-                ViewBag.UserId = CurrentSession.UserId;
-                ViewBag.ReturnGroupId = groupId;
-
-                // gets level of currently-login-user
-                if (isspecificSiteChosen)
-                {
-                    ViewBag.Level = _userService.GetUserSiteLevel(CurrentSession.UserId, siteId);
-                }
-
-                int totalUsers = 0;
-
-                IQueryable<UserLevel> users = null;
-
-                if (siteId == Constant.SearchAllSite)
-                {
-                    users = _userService.GetAllByUsernameGroupSite(
-                        pageIndex,
-                        pageSize,
-                        out totalUsers,
-                        username,
-                        groupId,
-                        listSite);
-
-                    var hashManageUserPolicy = _userService.GetUserListSiteFunctionKeyPolicy(
+                int assignFunctionPolicy = _userService.GetUserSiteFunctionKeyPolicy(
                                                                 CurrentSession.UserId,
-                                                                FunctionKeys.ManageUser.ToString(),
+                                                                siteId,
+                                                                FunctionKeys.AssignFunctionToUser.ToString());
+
+                ViewFlags.HasAssignFunctionRight = assignFunctionPolicy >= (int)Constant.Policy.Read
+                                                    && assignSitePolicyCurrentSite >= (int)Constant.Policy.Read;
+            }
+
+            var listSite = new List<SelectListItem>();
+
+            if (ThisSiteIsNapAdmin)
+            {
+                // gets data for dropdownlist of sites
+                var siteSelectList = new List<SelectListItem>();
+
+                listSite = UserIsPortalAdmin
+                ? _siteService.GetAllSelectListItem(this.Environment, true, siteId).ToList()
+                : _siteService.GetSelectListItemByUserAndFunctionKeyIncludeGroup(
+                                        CurrentSession.UserId,
+                                        FunctionKeys.ManageUser.ToString(),
+                                        this.Environment,
+                                        policy: Constant.Policy.Read,
+                                        selectedSiteId: siteId).ToList();
+
+                siteSelectList.Add(new SelectListItem { Text = ViewResources.All_Site, Value = Constant.SearchAllSite.ToString() });
+
+                siteSelectList.AddRange(listSite);
+
+                siteSelectList.Add(new SelectListItem { Text = ViewResources.No_Site, Value = "0" });
+
+                ViewBag.SiteSelectList = siteSelectList;
+            }
+
+            // gets data for dropdownlist of groups
+            ViewBag.GroupSelectList = _groupService.GetAllSelectListItem(selectedGroupId: groupId);
+
+            // gets ViewBag data
+            ViewBag.SiteId = siteId;
+            ViewBag.UserId = CurrentSession.UserId;
+            ViewBag.ReturnGroupId = groupId;
+
+            // gets level of currently-login-user
+            if (isspecificSiteChosen)
+            {
+                ViewBag.Level = _userService.GetUserSiteLevel(CurrentSession.UserId, siteId);
+            }
+
+            int totalUsers = 0;
+
+            IQueryable<UserLevel> users = null;
+
+            if (siteId == Constant.SearchAllSite)
+            {
+                users = _userService.GetAllByUsernameGroupSite(
+                    pageIndex,
+                    pageSize,
+                    out totalUsers,
+                    username,
+                    groupId,
+                    listSite);
+
+                var hashManageUserPolicy = _userService.GetUserListSiteFunctionKeyPolicy(
+                                                            CurrentSession.UserId,
+                                                            FunctionKeys.ManageUser.ToString(),
+                                                            listSite);
+
+                var hashAssignFunctionPolicy = _userService.GetUserListSiteFunctionKeyPolicy(
+                                                                CurrentSession.UserId,
+                                                                FunctionKeys.AssignFunctionToUser.ToString(),
                                                                 listSite);
 
-                    var hashAssignFunctionPolicy = _userService.GetUserListSiteFunctionKeyPolicy(
-                                                                    CurrentSession.UserId,
-                                                                    FunctionKeys.AssignFunctionToUser.ToString(),
-                                                                    listSite);
+                var hashAssignSite = _userService.GetUserListSiteFunctionKeyPolicy(
+                                                                CurrentSession.UserId,
+                                                                FunctionKeys.AssignSiteToUser.ToString(),
+                                                                listSite);
 
-                    var hashAssignSite = _userService.GetUserListSiteFunctionKeyPolicy(
-                                                                   CurrentSession.UserId,
-                                                                   FunctionKeys.AssignSiteToUser.ToString(),
-                                                                   listSite);
+                var listSiteLevel = _siteService.GetSiteLevelByUser(CurrentSession.UserId, Environment, true).ToList();
 
-                    var listSiteLevel = _siteService.GetSiteLevelByUser(CurrentSession.UserId, Environment, true).ToList();
+                ViewBag.HashManageUser = hashManageUserPolicy;
+                ViewBag.HashAssignFunction = hashAssignFunctionPolicy;
+                ViewBag.HashAssignSite = hashAssignSite;
+                ViewBag.ListSiteLevel = listSiteLevel;
 
-                    ViewBag.HashManageUser = hashManageUserPolicy;
-                    ViewBag.HashAssignFunction = hashAssignFunctionPolicy;
-                    ViewBag.HashAssignSite = hashAssignSite;
-                    ViewBag.ListSiteLevel = listSiteLevel;
-
-                    ViewBag.ViewFlagsCurrentSite = new ViewFlags
-                    {
-                        HasManageUserRight = manageUserPolicyCurrentSite >= (int)Constant.Policy.Host,
-                        HasAssignFunctionRight = assignFunctionPolicyCurrentSite >= (int)Constant.Policy.Read,
-                        HasAssignSiteRight = assignSitePolicyCurrentSite >= (int)Constant.Policy.Read
-                    };
-
-                    foreach (DictionaryEntry item in hashAssignFunctionPolicy)
-                    {
-                        if ((int)item.Value >= (int)Constant.Policy.Read)
-                        {
-                            ViewFlags.IsShowActionColumn = true;
-                            break;
-                        }
-                    }
-
-                    foreach (DictionaryEntry item in hashAssignSite)
-                    {
-                        if ((int)item.Value >= (int)Constant.Policy.Read)
-                        {
-                            ViewFlags.IsShowActionColumn = true;
-                            break;
-                        }
-                    }
-
-                    foreach (DictionaryEntry item in hashManageUserPolicy)
-                    {
-                        if ((int)item.Value >= (int)Constant.Policy.Host)
-                        {
-                            ViewFlags.IsShowActionColumn = true;
-                            break;
-                        }
-                    }
-                }
-                else
+                ViewBag.ViewFlagsCurrentSite = new ViewFlags
                 {
-                    users = _userService.SearchUser(pageIndex, pageSize, out totalUsers, username, groupId, siteId);
-                    ViewFlags.IsShowActionColumn = ViewFlags.HasEditRight || ViewFlags.HasAssignSiteRight
-                        || ViewFlags.HasAssignFunctionRight;
+                    HasManageUserRight = manageUserPolicyCurrentSite >= (int)Constant.Policy.Host,
+                    HasAssignFunctionRight = assignFunctionPolicyCurrentSite >= (int)Constant.Policy.Read,
+                    HasAssignSiteRight = assignSitePolicyCurrentSite >= (int)Constant.Policy.Read
+                };
+
+                foreach (DictionaryEntry item in hashAssignFunctionPolicy)
+                {
+                    if ((int)item.Value >= (int)Constant.Policy.Read)
+                    {
+                        ViewFlags.IsShowActionColumn = true;
+                        break;
+                    }
                 }
 
-                return View(new PagerList<UserLevel>(pageIndex, pageSize, totalUsers, users));
+                foreach (DictionaryEntry item in hashAssignSite)
+                {
+                    if ((int)item.Value >= (int)Constant.Policy.Read)
+                    {
+                        ViewFlags.IsShowActionColumn = true;
+                        break;
+                    }
+                }
+
+                foreach (DictionaryEntry item in hashManageUserPolicy)
+                {
+                    if ((int)item.Value >= (int)Constant.Policy.Host)
+                    {
+                        ViewFlags.IsShowActionColumn = true;
+                        break;
+                    }
+                }
             }
-            catch (Exception ex)
+            else
             {
-                LogService.Error(ex.Message, ex);
-                throw ex;
+                users = _userService.SearchUser(pageIndex, pageSize, out totalUsers, username, groupId, siteId);
+                ViewFlags.IsShowActionColumn = ViewFlags.HasEditRight || ViewFlags.HasAssignSiteRight
+                    || ViewFlags.HasAssignFunctionRight;
             }
+
+            return View(new PagerList<UserLevel>(pageIndex, pageSize, totalUsers, users));
         }
 
         /// <summary>
@@ -326,6 +318,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// <param name="groupId">The group ID.</param>
         /// <param name="pageIndex">The page index.</param>
         /// <returns>Action result.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         [HttpGet]
         [NapAuth(FunctionKey = FunctionKeys.AssignSiteToUser, Policy = Constant.Policy.Read)]
         public ActionResult AssignSite(int id, int? siteId, int? groupId, int pageIndex = 1)
@@ -805,6 +798,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// <param name="returnSiteId">Return site ID.</param>
         /// <param name="groupId">The group ID.</param>
         /// <returns>Action result.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         [HttpGet]
         [NapAuth(FunctionKey = FunctionKeys.AssignFunctionToUser, Policy = Constant.Policy.Read)]
         public ActionResult AssignPermission(
@@ -821,70 +815,62 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 GroupId = groupId
             };
 
-            try
+            if (siteId == 0)
             {
-                if (siteId == 0)
-                {
-                    siteId = this.SiteId;
-                }
+                siteId = this.SiteId;
+            }
 
-                var user = _userService.GetById(id);
-                var site = _siteService.GetById(siteId);
+            var user = _userService.GetById(id);
+            var site = _siteService.GetById(siteId);
 
-                if (ReferenceEquals(user, null) || ReferenceEquals(site, null))
-                {
-                    return HttpNotFound();
-                }
+            if (ReferenceEquals(user, null) || ReferenceEquals(site, null))
+            {
+                return HttpNotFound();
+            }
 
-                criteria.UserId = id;
-                criteria.Username = user.Username;
-                criteria.SiteId = siteId;
+            criteria.UserId = id;
+            criteria.Username = user.Username;
+            criteria.SiteId = siteId;
 
-                if (!ReferenceEquals(user.Group, null))
-                {
-                    ViewBag.GroupFuncPolicyList = this._functionService.GetByGroupAndSite(
-                                                                        user.Group.Id,
-                                                                        criteria.SiteId,
-                                                                        this.Environment);
-                }
-
-                int policy = _userService.GetUserSiteFunctionKeyPolicy(
-                                                CurrentSession.UserId,
-                                                criteria.SiteId,
-                                               FunctionKeys.AssignFunctionToUser.ToString());
-
-                ViewFlags.HasAssignFunctionRight = policy >= (int)Constant.Policy.Host && id != CurrentSession.UserId;
-
-                if (CurrentSession.Level == (int)Constant.Level.PortalAdmin)
-                {
-                    ViewBag.Sites = _siteService.GetAllSelectListItem(this.Environment, true, criteria.SiteId);
-                }
-                else
-                {
-                    ViewBag.Sites = _siteService.GetSelectListItemByUserAndFunctionKeyIncludeGroup(
-                                                        CurrentSession.UserId,
-                                                        FunctionKeys.AssignFunctionToUser.ToString(),
-                                                        this.Environment,
-                                                        policy: Constant.Policy.Read,
-                                                        selectedSiteId: criteria.SiteId);
-                }
-
-                ViewBag.FunctionList = this._functionService
-                    .GetBySiteInHierarchy(criteria.SiteId, Environment, true).ToList();
-                ViewBag.UserFuncPolicyList = this._functionService.GetByUserAndSite(
-                                                                    criteria.UserId,
+            if (!ReferenceEquals(user.Group, null))
+            {
+                ViewBag.GroupFuncPolicyList = this._functionService.GetByGroupAndSite(
+                                                                    user.Group.Id,
                                                                     criteria.SiteId,
                                                                     this.Environment);
-                ViewBag.CurrentUserFuncPolicyList =
-                    this._functionService.GetByUserAndSiteIncludeGroup(CurrentSession.UserId, criteria.SiteId, Environment);
-                ViewBag.AdminLevel = CurrentSession.Level;
-                ViewBag.UserLevel = _userService.GetUserSiteLevel(user.Id, site.Id);
             }
-            catch (Exception ex)
+
+            int policy = _userService.GetUserSiteFunctionKeyPolicy(
+                                            CurrentSession.UserId,
+                                            criteria.SiteId,
+                                            FunctionKeys.AssignFunctionToUser.ToString());
+
+            ViewFlags.HasAssignFunctionRight = policy >= (int)Constant.Policy.Host && id != CurrentSession.UserId;
+
+            if (CurrentSession.Level == (int)Constant.Level.PortalAdmin)
             {
-                LogService.Error(ex.Message, ex);
-                throw ex;
+                ViewBag.Sites = _siteService.GetAllSelectListItem(this.Environment, true, criteria.SiteId);
             }
+            else
+            {
+                ViewBag.Sites = _siteService.GetSelectListItemByUserAndFunctionKeyIncludeGroup(
+                                                    CurrentSession.UserId,
+                                                    FunctionKeys.AssignFunctionToUser.ToString(),
+                                                    this.Environment,
+                                                    policy: Constant.Policy.Read,
+                                                    selectedSiteId: criteria.SiteId);
+            }
+
+            ViewBag.FunctionList = this._functionService
+                .GetBySiteInHierarchy(criteria.SiteId, Environment, true).ToList();
+            ViewBag.UserFuncPolicyList = this._functionService.GetByUserAndSite(
+                                                                criteria.UserId,
+                                                                criteria.SiteId,
+                                                                this.Environment);
+            ViewBag.CurrentUserFuncPolicyList =
+                this._functionService.GetByUserAndSiteIncludeGroup(CurrentSession.UserId, criteria.SiteId, Environment);
+            ViewBag.AdminLevel = CurrentSession.Level;
+            ViewBag.UserLevel = _userService.GetUserSiteLevel(user.Id, site.Id);
 
             return View(criteria);
         }
@@ -894,148 +880,133 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <returns>Action result.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.AssignFunctionToUser, Policy = Constant.Policy.Host)]
         public ActionResult AssignPermission(AssignFunctionUserCriteria criteria)
         {
-            try
+            // check user and site
+            var user = _userService.GetById(criteria.UserId);
+            var site = _siteService.GetById(criteria.SiteId);
+
+            if (user == null || site == null)
             {
-                // check user and site
-                var user = _userService.GetById(criteria.UserId);
-                var site = _siteService.GetById(criteria.SiteId);
+                return RedirectToAction("Manage");
+            }
 
-                if (user == null || site == null)
+            // check policy
+            int policy = _userService.GetUserSiteFunctionKeyPolicy(
+                                            CurrentSession.UserId,
+                                            criteria.SiteId,
+                                            FunctionKeys.AssignFunctionToUser.ToString());
+
+            if (policy < (int)Constant.Policy.Host)
+            {
+                return RedirectToAction("Unauthorize", "Common");
+            }
+
+            ViewFlags.HasAssignFunctionRight = policy >= (int)Constant.Policy.Host;
+
+            criteria.Username = user.Username;
+            criteria.ModifiedBy = CurrentSession.UserId;
+            criteria.ModifiedDate = DateTime.Now;
+
+            // list function policy
+            List<IFunction> listFunc = 
+                this._functionService.GetBySiteInHierarchy(criteria.SiteId, Environment, true).ToList().ToList();
+
+            // list user function policy
+            List<FunctionPolicy> listUserFuncPolicy = 
+                this._functionService.GetByUserAndSite(criteria.UserId, criteria.SiteId, this.Environment).ToList();
+
+            // list function will be remove by current user login
+            var listUserFuncRemove = new List<FunctionPolicy>();
+            listUserFuncRemove.AddRange(listUserFuncPolicy);
+
+            // list current user login function policy
+            List<FunctionPolicy> listCurrentUserFuncPolicy = this._functionService.GetByUserAndSiteIncludeGroup(
+                                                                                    CurrentSession.UserId,
+                                                                                    criteria.SiteId,
+                                                                                    Environment).ToList();
+
+            // check function host,contains in list function
+            if (!criteria.FuncHost.IsNullOrDBNull())
+            {
+                foreach (var itemFunc in criteria.FuncHost)
                 {
-                    return RedirectToAction("Manage");
-                }
+                    // function find from list function, policy is host
+                    var tempFuncHost = listFunc.Where(f => f.Id == itemFunc).FirstOrDefault();
 
-                // check policy
-                int policy = _userService.GetUserSiteFunctionKeyPolicy(
-                                                CurrentSession.UserId,
-                                                criteria.SiteId,
-                                                FunctionKeys.AssignFunctionToUser.ToString());
-
-                if (policy < (int)Constant.Policy.Host)
-                {
-                    return RedirectToAction("Unauthorize", "Common");
-                }
-
-                ViewFlags.HasAssignFunctionRight = policy >= (int)Constant.Policy.Host;
-
-                criteria.Username = user.Username;
-                criteria.ModifiedBy = CurrentSession.UserId;
-                criteria.ModifiedDate = DateTime.Now;
-
-                // list function policy
-                List<IFunction> listFunc = this._functionService.GetBySiteInHierarchy(
-                                                                    criteria.SiteId,
-                                                                    Environment,
-                                                                    true).ToList().ToList();
-
-                // list user function policy
-                List<FunctionPolicy> listUserFuncPolicy = this._functionService.GetByUserAndSite(
-                                                                   criteria.UserId,
-                                                                   criteria.SiteId,
-                                                                   this.Environment).ToList();
-
-                // list function will be remove by current user login
-                var listUserFuncRemove = new List<FunctionPolicy>();
-                listUserFuncRemove.AddRange(listUserFuncPolicy);
-
-                // list current user login function policy
-                List<FunctionPolicy> listCurrentUserFuncPolicy = this._functionService.GetByUserAndSiteIncludeGroup(
-                                                                                        CurrentSession.UserId,
-                                                                                        criteria.SiteId,
-                                                                                        Environment).ToList();
-
-                // check function host,contains in list function
-                if (!criteria.FuncHost.IsNullOrDBNull())
-                {
-                    foreach (var itemFunc in criteria.FuncHost)
-                    {
-                        // function find from list function, policy is host
-                        var tempFuncHost = listFunc.Where(f => f.Id == itemFunc).FirstOrDefault();
-
-                        if (tempFuncHost.IsNullOrDBNull())
-                        {
-                            throw new Exception();
-                        }
-
-                        // remove all function host
-                        listUserFuncRemove.Remove(f => f.Function.Id == itemFunc);
-                    }
-                }
-
-                // check function read, with current user login have permission
-                if (!criteria.FuncRead.IsNullOrDBNull())
-                {
-                    foreach (var itemFunc in criteria.FuncRead)
-                    {
-                        listUserFuncRemove.Remove(f => f.Function.Id == itemFunc);
-                    }
-                }
-
-                // check permission current user login with user be assign permission
-                // check for function policy will be remove ( set policy = 0 )
-                listUserFuncRemove = listUserFuncRemove.Where(f => f.Policy > 0).ToList();
-                foreach (var itemFunc in listUserFuncRemove)
-                {
-                    var tempFunc = listCurrentUserFuncPolicy
-                                        .Where(f =>
-                                            f.Function.Id == itemFunc.Function.Id
-                                            && f.Policy >= itemFunc.Policy).FirstOrDefault();
-
-                    if (tempFunc.IsNullOrDBNull())
+                    if (tempFuncHost.IsNullOrDBNull())
                     {
                         throw new Exception();
                     }
+
+                    // remove all function host
+                    listUserFuncRemove.Remove(f => f.Function.Id == itemFunc);
                 }
-
-                var result = _userService.AssignFunction(criteria);
-
-                if (result != null && result.IsSuccessful)
-                {
-                    ViewBag.Success = true;
-
-                    listUserFuncPolicy = this._functionService.GetByUserAndSite(
-                                                                   criteria.UserId,
-                                                                   criteria.SiteId,
-                                                                   this.Environment).ToList();
-                }
-
-                if (!ReferenceEquals(user.Group, null))
-                {
-                    ViewBag.GroupFuncPolicyList = this._functionService.GetByGroupAndSite(
-                                                                        user.Group.Id,
-                                                                        criteria.SiteId,
-                                                                        this.Environment);
-                }
-
-                if (CurrentSession.Level == (int)Constant.Level.PortalAdmin)
-                {
-                    ViewBag.Sites = _siteService.GetAllSelectListItem(this.Environment, true, criteria.SiteId);
-                }
-                else
-                {
-                    ViewBag.Sites = _siteService.GetSelectListItemByUserAndFunctionKeyIncludeGroup(
-                                                        CurrentSession.UserId,
-                                                        FunctionKeys.AssignFunctionToUser.ToString(),
-                                                        this.Environment,
-                                                        policy: Constant.Policy.Read,
-                                                        selectedSiteId: criteria.SiteId);
-                }
-
-                ViewBag.FunctionList = listFunc;
-                ViewBag.UserFuncPolicyList = listUserFuncPolicy;
-                ViewBag.CurrentUserFuncPolicyList = listCurrentUserFuncPolicy;
-                ViewBag.AdminLevel = CurrentSession.Level;
-                ViewBag.UserLevel = _userService.GetUserSiteLevel(user.Id, site.Id);
             }
-            catch (Exception ex)
+
+            // check function read, with current user login have permission
+            if (!criteria.FuncRead.IsNullOrDBNull())
             {
-                LogService.Error(ex.Message, ex);
-                throw ex;
+                foreach (var itemFunc in criteria.FuncRead)
+                {
+                    listUserFuncRemove.Remove(f => f.Function.Id == itemFunc);
+                }
             }
+
+            // check permission current user login with user be assign permission
+            // check for function policy will be remove ( set policy = 0 )
+            listUserFuncRemove = listUserFuncRemove.Where(f => f.Policy > 0).ToList();
+            foreach (var itemFunc in listUserFuncRemove)
+            {
+                var tempFunc = listCurrentUserFuncPolicy
+                                    .Where(f =>
+                                        f.Function.Id == itemFunc.Function.Id
+                                        && f.Policy >= itemFunc.Policy).FirstOrDefault();
+
+                if (tempFunc.IsNullOrDBNull())
+                {
+                    throw new Exception();
+                }
+            }
+
+            var result = _userService.AssignFunction(criteria);
+
+            if (result != null && result.IsSuccessful)
+            {
+                ViewBag.Success = true;
+
+                listUserFuncPolicy = 
+                    this._functionService.GetByUserAndSite(criteria.UserId, criteria.SiteId, this.Environment).ToList();
+            }
+
+            if (!ReferenceEquals(user.Group, null))
+            {
+                ViewBag.GroupFuncPolicyList = 
+                    this._functionService.GetByGroupAndSite(user.Group.Id, criteria.SiteId, this.Environment);
+            }
+
+            if (CurrentSession.Level == (int)Constant.Level.PortalAdmin)
+            {
+                ViewBag.Sites = _siteService.GetAllSelectListItem(this.Environment, true, criteria.SiteId);
+            }
+            else
+            {
+                ViewBag.Sites = _siteService.GetSelectListItemByUserAndFunctionKeyIncludeGroup(
+                                                    CurrentSession.UserId,
+                                                    FunctionKeys.AssignFunctionToUser.ToString(),
+                                                    this.Environment,
+                                                    policy: Constant.Policy.Read,
+                                                    selectedSiteId: criteria.SiteId);
+            }
+
+            ViewBag.FunctionList = listFunc;
+            ViewBag.UserFuncPolicyList = listUserFuncPolicy;
+            ViewBag.CurrentUserFuncPolicyList = listCurrentUserFuncPolicy;
+            ViewBag.AdminLevel = CurrentSession.Level;
+            ViewBag.UserLevel = _userService.GetUserSiteLevel(user.Id, site.Id);
 
             return View(criteria);
         }

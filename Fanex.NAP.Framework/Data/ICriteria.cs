@@ -24,7 +24,7 @@ namespace Fanex.NAP.Framework.Data
         /// Add store procedure parameters.
         /// </summary>
         /// <param name="storeProcParamName">Store procedure parameter name.</param>
-        /// <returns>Hashtable SP parameters.</returns>
+        /// <returns>SP parameters.</returns>
         Hashtable AddSpParams(Hashtable storeProcParamName);
 
         /// <summary>
