@@ -12,7 +12,7 @@ namespace Fanex.NAP.Core.Model.ValueObject
     using System;
 
     /// <summary>
-    /// Site URL.
+    /// The site URL.
     /// </summary>
     [Serializable]
     public class SiteUrl

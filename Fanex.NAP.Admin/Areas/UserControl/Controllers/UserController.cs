@@ -1044,7 +1044,8 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// Assign site to user.
         /// </summary>
         /// <param name="userId">The user ID.</param>
-        /// <param name="value"></param>
+        /// <param name="value">List of site.</param>
+        /// <returns>Result string.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.AssignSiteToUser, Policy = Constant.Policy.Host)]
         public string AssignSiteToUser(int userId, string value)
@@ -1282,6 +1283,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// </summary>
         /// <param name="userId">The user ID.</param>
         /// <param name="groupId">The group ID.</param>
+        /// <returns>Result string.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageUser, Policy = Constant.Policy.Host)]
         public string AddUserToGroup(int userId, int groupId)

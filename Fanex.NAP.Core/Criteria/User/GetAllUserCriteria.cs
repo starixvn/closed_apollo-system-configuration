@@ -12,7 +12,7 @@ namespace Fanex.NAP.Core.Criteria.User
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
-    /// Get all.
+    /// Get all user.
     /// </summary>
     public class GetAllUserCriteria : CriteriaBase
     {

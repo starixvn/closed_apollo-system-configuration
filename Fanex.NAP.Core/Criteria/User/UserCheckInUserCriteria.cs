@@ -13,7 +13,7 @@ namespace Fanex.NAP.Core.Criteria.User
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
-    /// Check in.
+    /// User check in criteria.
     /// </summary>
     public class UserCheckInUserCriteria : CriteriaBase
     {

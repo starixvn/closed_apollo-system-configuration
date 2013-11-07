@@ -698,6 +698,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// <param name="id">The function ID.</param>
         /// <param name="readList">List of function which has read permission.</param>
         /// <param name="hostList">List of function which has host permission.</param>
+        /// <returns>Result string.</returns>
         [NapAuth(FunctionKey = FunctionKeys.AssignFunctionToUser, Policy = Constant.Policy.Host)]
         public string AddPrivilegedUsers(
             int id = 0,
@@ -792,6 +793,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// <param name="id">The function ID.</param>
         /// <param name="readList">List of function which has read permission.</param>
         /// <param name="hostList">List of function which has host permission.</param>
+        /// <returns>Result string.</returns>
         [NapAuth(FunctionKey = FunctionKeys.AssignFunctionToGroup, Policy = Constant.Policy.Host)]
         public string AddPrivilegedGroups(
             int id = 0,

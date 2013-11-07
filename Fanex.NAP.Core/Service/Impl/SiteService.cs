@@ -127,6 +127,7 @@ namespace Fanex.NAP.Core.Service.Impl
         /// Get site status by ID.
         /// </summary>
         /// <param name="id">The site ID.</param>
+        /// <returns>True : active, false : inactive.</returns>
         public bool GetStatusById(int id)
         {
             // check parammeters
@@ -511,6 +512,7 @@ namespace Fanex.NAP.Core.Service.Impl
         /// </summary>
         /// <param name="userId">The user ID.</param>
         /// <param name="siteId">The site ID.</param>
+        /// <returns>User site level.</returns>
         public SiteLevel GetUserSiteLevel(int userId, int siteId)
         {
             Check.Argument.IsNotNegativeOrZero(userId, "userId");
@@ -642,7 +644,7 @@ namespace Fanex.NAP.Core.Service.Impl
         /// Gets a SiteUrl by its SiteUrlId.
         /// </summary>
         /// <param name="siteUrlId">Site URL ID.</param>
-        /// <returns>Site URL.</returns>
+        /// <returns>Site URL object.</returns>
         public SiteUrl GetSiteUrlById(int siteUrlId)
         {
             Check.Argument.IsNotNegativeOrZero(siteUrlId, "siteUrlId");

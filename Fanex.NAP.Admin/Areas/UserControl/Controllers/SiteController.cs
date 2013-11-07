@@ -310,7 +310,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// Update site URL.
         /// </summary>
         /// <param name="id">The site URL ID.</param>
-        /// <param name="url"></param>
+        /// <param name="url">The site URL.</param>
         /// <param name="isActive">Is active or not.</param>
         /// <returns>Action result.</returns>
         [HttpPost]
@@ -399,7 +399,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// Add site URL.
         /// </summary>
         /// <param name="siteId">The site ID.</param>
-        /// <param name="url"></param>
+        /// <param name="url">The site URL.</param>
         /// <param name="isActive">Is active or not.</param>
         /// <returns>Action result.</returns>
         [HttpPost]

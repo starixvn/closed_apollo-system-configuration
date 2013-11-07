@@ -30,8 +30,8 @@ namespace Fanex.NAP.Framework.Mvc
         /// Dates the picker.
         /// </summary>
         /// <param name="htmlHelper">The HTML helper.</param>
-        /// <param name="name">The name.</param>
-        /// <param name="date">The date.</param>
+        /// <param name="name">The element name.</param>
+        /// <param name="date">The selected date.</param>
         /// <param name="minDate">The min date.</param>
         /// <param name="maxDate">The max date, default is now.</param>
         /// <param name="formatDate">The format date.</param>
@@ -76,7 +76,7 @@ namespace Fanex.NAP.Framework.Mvc
         /// </summary>
         /// <typeparam name="TModel">The type of the model.</typeparam>
         /// <typeparam name="TValue">The type of the value.</typeparam>
-        /// <param name="html">The HTML.</param>
+        /// <param name="html">The HTML helper.</param>
         /// <param name="expression">The expression.</param>
         /// <param name="minDate">The min date.</param>
         /// <param name="maxDate">The max date.</param>
@@ -107,7 +107,7 @@ namespace Fanex.NAP.Framework.Mvc
         /// Years the picker.
         /// </summary>
         /// <param name="htmlHelper">The HTML helper.</param>
-        /// <param name="name">The name.</param>
+        /// <param name="name">The element name.</param>
         /// <param name="fromYear">From year.</param>
         /// <param name="currentYear">The current year.</param>
         /// <param name="htmlAttributes">The HTML attributes.</param>
@@ -142,7 +142,7 @@ namespace Fanex.NAP.Framework.Mvc
         /// </summary>
         /// <typeparam name="TModel">The type of the model.</typeparam>
         /// <typeparam name="TValue">The type of the value.</typeparam>
-        /// <param name="html">The HTML.</param>
+        /// <param name="html">The HTML helper.</param>
         /// <param name="expression">The expression.</param>
         /// <param name="fromYear">From year.</param>
         /// <param name="htmlAttributes">The HTML attributes.</param>
@@ -197,7 +197,7 @@ namespace Fanex.NAP.Framework.Mvc
         /// </summary>
         /// <typeparam name="TModel">The type of the model.</typeparam>
         /// <typeparam name="TValue">The type of the value.</typeparam>
-        /// <param name="html">The HTML.</param>
+        /// <param name="html">The HTML helper.</param>
         /// <param name="expression">The expression.</param>
         /// <param name="currentMonth">The current month.</param>
         /// <param name="htmlAttributes">The HTML attributes.</param>

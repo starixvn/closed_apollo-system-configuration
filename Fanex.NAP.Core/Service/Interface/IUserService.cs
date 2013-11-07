@@ -78,7 +78,7 @@ namespace Fanex.NAP.Core.Service.Interface
         /// <summary>
         /// Get user list site function key policy.
         /// </summary>
-        /// <param name="userId">User ID.</param>
+        /// <param name="userId">The user ID.</param>
         /// <param name="functionKey">Function key.</param>
         /// <param name="listSite">List of site.</param>
         /// <returns>Key is site id and value is policy is host.</returns>

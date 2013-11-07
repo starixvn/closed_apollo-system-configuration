@@ -32,7 +32,7 @@ namespace Fanex.NAP.Core.Repository.Impl
         /// Gets user.
         /// </summary>
         /// <param name="criteria">The criteria get user.</param>
-        /// <returns>The user.</returns>
+        /// <returns>The user object.</returns>
         public override IUser Get(ICriteria criteria)
         {
             using (ObjectDb objectDb = new ObjectDb(criteria.GetSettingKey()))
@@ -544,7 +544,7 @@ namespace Fanex.NAP.Core.Repository.Impl
         /// User SSO get time.
         /// </summary>
         /// <param name="criteria">The criteria user SSO get time.</param>
-        /// <returns>SSO time.</returns>
+        /// <returns>The SSO time.</returns>
         public string UserSSOGetTime(ICriteria criteria)
         {
             using (var db = new ObjectDb(criteria.GetSettingKey()))

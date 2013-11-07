@@ -581,7 +581,7 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Sort menu item in hierarchy.
         /// </summary>
-        /// <param name="menuItemList">List of </param>
+        /// <param name="menuItemList">List of menu item.</param>
         /// <param name="parentId">The parent ID.</param>
         /// <returns>The list of menu item object.</returns>
         private IEnumerable<IMenuItem> SortMenuItemsInHierarchy(IEnumerable<IMenuItem> menuItemList, int parentId = 0)

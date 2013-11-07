@@ -762,6 +762,7 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <param name="userId">The user ID.</param>
         /// <param name="functionId">The function ID.</param>
         /// <param name="policy">The function policy.</param>
+        /// <returns>True : has, false : not.</returns>
         public bool CheckUserFunctionPolicy(int userId, int functionId, int policy)
         {
             throw new NotImplementedException();

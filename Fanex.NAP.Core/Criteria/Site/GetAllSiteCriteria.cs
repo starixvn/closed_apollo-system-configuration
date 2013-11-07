@@ -13,7 +13,7 @@ namespace Fanex.NAP.Core.Criteria.Site
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
-    /// Get all.
+    /// Get all site.
     /// </summary>
     public class GetAllSiteCriteria : CriteriaBase
     {

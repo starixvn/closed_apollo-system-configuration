@@ -93,8 +93,8 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
         /// <summary>
         /// Index page.
         /// </summary>
-        /// <param name="username">The username.</param>
-        /// <param name="password"></param>
+        /// <param name="username">The login username.</param>
+        /// <param name="password">The login password.</param>
         /// <returns>Action result.</returns>
         [HttpPost]
         [ValidateInput(false)]

@@ -55,7 +55,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// Not found page.
         /// </summary>
         /// <param name="errorPath">The error path.</param>
-        /// <param name="url"></param>
+        /// <param name="url">The request URL.</param>
         /// <returns>Action result.</returns>
         public ActionResult NotFound(string errorPath, string url)
         {

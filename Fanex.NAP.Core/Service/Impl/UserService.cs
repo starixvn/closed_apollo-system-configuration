@@ -106,6 +106,7 @@ namespace Fanex.NAP.Core.Service.Impl
         /// Check if username exist.
         /// </summary>
         /// <param name="username">The username.</param>
+        /// <returns>True : exist, false : not.</returns>
         public bool CheckUsernameExist(string username)
         {
             Check.Argument.IsNotEmpty(username, "username");
@@ -413,6 +414,7 @@ namespace Fanex.NAP.Core.Service.Impl
         /// </summary>
         /// <param name="userId">The user ID.</param>
         /// <param name="siteId">The site ID.</param>
+        /// <returns>User site level.</returns>
         public int GetUserSiteLevel(int userId, int siteId)
         {
             try
@@ -768,6 +770,7 @@ namespace Fanex.NAP.Core.Service.Impl
         /// </summary>
         /// <param name="userId">The user ID.</param>
         /// <param name="functionId">The function ID.</param>
+        /// <returns>User function policy.</returns>
         public int GetUserFunctionPolicy(int userId, int functionId)
         {
             try
@@ -797,6 +800,7 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <param name="userId">The user ID.</param>
         /// <param name="siteId">The site ID.</param>
         /// <param name="functionKey">The function key.</param>
+        /// <returns>User site function key policy.</returns>
         public int GetUserSiteFunctionKeyPolicy(int userId, int siteId, string functionKey)
         {
             try
@@ -887,6 +891,7 @@ namespace Fanex.NAP.Core.Service.Impl
         /// </summary>
         /// <param name="functionId">The function ID.</param>
         /// <param name="siteId">The site ID.</param>
+        /// <returns>List of user policy.</returns>
         public IEnumerable<UserPolicy> GetByFunctionAndSite(int functionId, int siteId)
         {
             Check.Argument.IsNotNegativeOrZero(functionId, "functionid");

@@ -387,8 +387,8 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// <summary>
         /// Get list menu item by site id.
         /// </summary>
-        /// <param name="siteId">Site ID.</param>
-        /// <param name="menuItemId">Menu item ID.</param>
+        /// <param name="siteId">The site ID.</param>
+        /// <param name="menuItemId">The menu item ID.</param>
         /// <param name="environment">The environment.</param>
         /// <returns>Action result.</returns>
         [HttpPost]
@@ -430,7 +430,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// <summary>
         /// Get list function by site id.
         /// </summary>
-        /// <param name="siteId">Site ID.</param>
+        /// <param name="siteId">The site ID.</param>
         /// <param name="environment">The environment.</param>
         /// <returns>Action result.</returns>
         [HttpPost]

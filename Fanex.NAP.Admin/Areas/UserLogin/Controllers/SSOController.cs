@@ -59,8 +59,9 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
         /// Index page.
         /// </summary>
         /// <param name="userId">The user ID.</param>
-        /// <param name="onuserId"></param>
-        /// <param name="time"></param>
+        /// <param name="onuserId">The online user ID.</param>
+        /// <param name="time">The SSO time.</param>
+        /// <returns>Action result.</returns>
         [AllowAnonymous]
         [HttpGet]
         public ActionResult Index(string userId, string onuserId, string time)

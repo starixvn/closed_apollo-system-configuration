@@ -12,7 +12,7 @@ namespace Fanex.NAP.Core.Model.ValueObject
     using System.Diagnostics.CodeAnalysis;
 
     /// <summary>
-    /// Log data.
+    /// The log data.
     /// </summary>
     public class LogData
     {

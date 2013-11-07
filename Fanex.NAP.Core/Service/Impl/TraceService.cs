@@ -91,7 +91,8 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Get execute SP log by ID.
         /// </summary>
-        /// <param name="logId"></param>
+        /// <param name="logId">Execute SP log ID.</param>
+        /// <returns>Execute SP log.</returns>
         public LogExecSp GetById(int logId)
         {
             try

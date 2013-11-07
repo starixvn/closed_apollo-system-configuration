@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------
-// <copyright file="HtmlHelperExtension.cs" company="Nexcel Solutions Vietnam">
+// <copyright file="HtmlHelperExtensions.cs" company="Nexcel Solutions Vietnam">
 // Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------
@@ -362,8 +362,9 @@ namespace Fanex.NAP.Core.Web
         }
 
         /// <summary>
-        /// Get ot name.
+        /// Get bot name.
         /// </summary>
+        /// <param name="userAgent">The user agent information.</param>
         public static string[] GetBotName(string userAgent)
         {
             userAgent = userAgent.ToLower();
@@ -415,8 +416,9 @@ namespace Fanex.NAP.Core.Web
         }
 
         /// <summary>
-        /// Get opertion system name.
+        /// Get operation system name.
         /// </summary>
+        /// <param name="userAgent">The user agent information.</param>
         public static string[] GetOS(string userAgent)
         {
             string[] arrayBog = GetBotName(userAgent);

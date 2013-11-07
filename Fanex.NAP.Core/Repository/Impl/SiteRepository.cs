@@ -32,7 +32,7 @@ namespace Fanex.NAP.Core.Repository.Impl
         /// Gets site.
         /// </summary>
         /// <param name="criteria">The criteria get site.</param>
-        /// <returns>The site.</returns>
+        /// <returns>The site object.</returns>
         public override ISite Get(ICriteria criteria)
         {
             try

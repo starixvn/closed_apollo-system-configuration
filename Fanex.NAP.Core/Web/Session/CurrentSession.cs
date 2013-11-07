@@ -35,8 +35,6 @@ namespace Fanex.NAP.Core.Web.Session
 
         public const string INTERNALMENUITEMDIC = "InternalMenuItemList";
 
-        public const string MENU_DIC = "MenuDic";
-
         public const string INTERNALGROUPID = "InternalGroupId";
 
         public const string INTERNALGROUPNAME = "InternalGroupName";
