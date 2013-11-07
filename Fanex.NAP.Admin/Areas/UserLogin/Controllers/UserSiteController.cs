@@ -48,6 +48,10 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
 
         #region actions
 
+        /// <summary>
+        /// View user sites.
+        /// </summary>
+        /// <returns>Action result.</returns>
         public ActionResult Site()
         {
             if (HttpContext.User.Identity.IsAuthenticated && _currentSession.UserId > 0)
@@ -63,6 +67,11 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
             return RedirectToAction("logout", "login");
         }
 
+        /// <summary>
+        /// Forward user to a site to SSO.
+        /// </summary>
+        /// <param name="id">The site URL.</param>
+        /// <returns>Action result.</returns>
         [HttpGet]
         public ActionResult Forward(int id)
         {

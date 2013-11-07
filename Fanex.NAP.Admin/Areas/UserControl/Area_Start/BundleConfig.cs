@@ -16,6 +16,10 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Area_Start
     /// </summary>
     public class BundleConfig
     {
+        /// <summary>
+        /// Register bundle.
+        /// </summary>
+        /// <param name="bundles">Bundle collection.</param>
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new StyleBundle("~/Areas/UserControl/themes/styles").Include(

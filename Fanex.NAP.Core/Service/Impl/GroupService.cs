@@ -44,6 +44,8 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Get user group.
         /// </summary>
+        /// <param name="userId">The user ID.</param>
+        /// <returns>The group object.</returns>
         public IGroup GetByUser(int userId)
         {
             Check.Argument.IsNotNegativeOrZero(userId, "userId");
@@ -70,6 +72,8 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Get group by ID.
         /// </summary>
+        /// <param name="id">The group ID.</param>
+        /// <returns>The group object.</returns>
         public IGroup GetById(int id)
         {
             Check.Argument.IsNotNegativeOrZero(id, "id");
@@ -96,6 +100,8 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Get group by name.
         /// </summary>
+        /// <param name="name">The group name.</param>
+        /// <returns>The group object.</returns>
         public IGroup GetByName(string name)
         {
             Check.Argument.IsNotEmpty(name, "name");
@@ -122,6 +128,8 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Get all group.
         /// </summary>
+        /// <param name="isActive">Is active or not.</param>
+        /// <returns>The list of group object.</returns>
         public IEnumerable<IGroup> GetAll(bool? isActive = null)
         {
             try
@@ -147,6 +155,9 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Get all group select list item.
         /// </summary>
+        /// <param name="isActive">Is active or not.</param>
+        /// <param name="selectedGroupId">Selected group ID.</param>
+        /// <returns>The list of select list item.</returns>
         public IList<SelectListItem> GetAllSelectListItem(bool? isActive = null, int selectedGroupId = 0)
         {
             try
@@ -182,6 +193,10 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Get all group with number of user.
         /// </summary>
+        /// <param name="name"></param>
+        /// <param name="env">The environment.</param>
+        /// <param name="isActive">Is active or not.</param>
+        /// <returns>The list of group object.</returns>
         public IEnumerable<IGroup> GetAllWithNumOfUser(string name, string env = Constant.UAT, bool? isActive = null)
         {
             try
@@ -209,6 +224,8 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Assign group permission.
         /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>The command result.</returns>
         public ICommandResult AssignFunction(AssignFunctionGroupCriteria criteria)
         {
             Check.Argument.IsNotNull(criteria, "criteria");
@@ -233,6 +250,8 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Update group status.
         /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>The command result.</returns>
         public ICommandResult UpdateStatus(UpdateStatusGroupCriteria criteria)
         {
             Check.Argument.IsNotNull(criteria, "criteria");
@@ -257,6 +276,8 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Insert group.
         /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>The command result.</returns>
         public ICommandResult Insert(InsertGroupCriteria criteria)
         {
             Check.Argument.IsNotNull(criteria, "criteria");
@@ -281,6 +302,8 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Update group.
         /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>The command result.</returns>
         public ICommandResult Update(UpdateGroupCriteria criteria)
         {
             Check.Argument.IsNotNull(criteria, "criteria");
@@ -305,6 +328,9 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Get group by function and site.
         /// </summary>
+        /// <param name="functionId">The function ID.</param>
+        /// <param name="siteId">The site ID.</param>
+        /// <returns>List of group policy.</returns>
         public IEnumerable<GroupPolicy> GetByFunctionAndSite(int functionId, int siteId)
         {
             Check.Argument.IsNotNegativeOrZero(functionId, "functionid");
@@ -334,6 +360,10 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Search group exclude function.
         /// </summary>
+        /// <param name="groupName">The group name.</param>
+        /// <param name="siteId">The site ID.</param>
+        /// <param name="functionId">The function ID.</param>
+        /// <returns>The list of group object.</returns>
         public IEnumerable<IGroup> SearchGroupExcludeFunction(string groupName, int siteId = 0, int functionId = 0)
         {
             try

@@ -22,6 +22,10 @@ namespace Fanex.NAP.Admin.App_Start
     /// </summary>
     public class AuthConfig
     {
+        /// <summary>
+        /// Register authorize data.
+        /// </summary>
+        /// <param name="context">HTTP context.</param>
         public static void RegisterAuth(HttpContext context)
         {
             var user = HttpContext.Current.User;
@@ -57,6 +61,9 @@ namespace Fanex.NAP.Admin.App_Start
             }
         }
 
+        /// <summary>
+        /// User sign out.
+        /// </summary>
         public static void SignOut()
         {
             var _currentSession = new CurrentSession();

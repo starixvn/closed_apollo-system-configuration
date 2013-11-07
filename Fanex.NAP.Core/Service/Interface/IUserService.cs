@@ -56,10 +56,6 @@ namespace Fanex.NAP.Core.Service.Interface
             int groupId = 0,
             int siteId = 0);
 
-        /// <summary>
-        /// Searches users by username, group, site, but excludes ones who was assigned
-        /// the function (functionId) already.
-        /// </summary>
         IQueryable<UserLevel> SearchUserExcludeFunction(
             int pageIndex,
             int pageSize,

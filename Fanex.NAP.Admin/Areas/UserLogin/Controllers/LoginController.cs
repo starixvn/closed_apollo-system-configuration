@@ -68,6 +68,10 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
 
         #endregion
 
+        /// <summary>
+        /// Index page.
+        /// </summary>
+        /// <returns>Action result.</returns>
         #region sign in
         [HttpGet]
         public ActionResult Index()
@@ -86,6 +90,12 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Index page.
+        /// </summary>
+        /// <param name="username">The username.</param>
+        /// <param name="password"></param>
+        /// <returns>Action result.</returns>
         [HttpPost]
         [ValidateInput(false)]
         public ActionResult Index(string username, string password)
@@ -234,6 +244,10 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
 
         #endregion
 
+        /// <summary>
+        /// User log out.
+        /// </summary>
+        /// <returns>Action result.</returns>
         public ActionResult LogOut()
         {
             DoSignOut();
@@ -241,6 +255,10 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
             return Redirect(FormsAuthentication.LoginUrl);
         }
 
+        /// <summary>
+        /// User re-check login.
+        /// </summary>
+        /// <returns>Action result.</returns>
         [HttpPost]
         public ActionResult ReCheckLogin()
         {
@@ -271,12 +289,20 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
 
         #region helpers
 
+        /// <summary>
+        /// Create user menu.
+        /// </summary>
+        /// <param name="user">The login user.</param>
         private void CreateUserMenu(User user)
         {
             this._currentSession.Menu = 
                 (IList<MenuItem>)_menuItemService.GetByUserAndSiteIncludeGroup(user.Id, SiteId, Environment, true);
         }
 
+        /// <summary>
+        /// Create authorize information.
+        /// </summary>
+        /// <param name="user">The login user.</param>
         private void CreateAuthInfo(User user)
         {
             var currentDomain = CurrentContext.GetCurrentDomain();

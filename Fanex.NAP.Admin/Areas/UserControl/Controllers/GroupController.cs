@@ -62,6 +62,10 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
         #region Manage
 
+        /// <summary>
+        /// Manage group.
+        /// </summary>
+        /// <returns>Action result.</returns>
         [HttpGet]
         [NapAuth(FunctionKey = FunctionKeys.ManageGroup, Policy = Constant.Policy.Read)]
         public ActionResult Manage()
@@ -103,6 +107,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return View(new GetAllWithNumOfUserGroupCriteria());
         }
 
+        /// <summary>
+        /// Manage group.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>Action result.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageGroup, Policy = Constant.Policy.Read)]
         public ActionResult Manage(GetAllWithNumOfUserGroupCriteria criteria)
@@ -150,6 +159,10 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
         #region Add New Group
 
+        /// <summary>
+        /// Add new group.
+        /// </summary>
+        /// <returns>Action result.</returns>
         [HttpGet]
         [NapAuth(FunctionKey = FunctionKeys.ManageGroup, Policy = Constant.Policy.Host)]
         public ActionResult AddNew()
@@ -157,6 +170,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return View(new InsertGroupCriteria());
         }
 
+        /// <summary>
+        /// Add new group.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>Action result.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageGroup, Policy = Constant.Policy.Host)]
         public ActionResult AddNew(InsertGroupCriteria criteria)
@@ -204,6 +222,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
         #region Edit Group
 
+        /// <summary>
+        /// Update group.
+        /// </summary>
+        /// <param name="id">The group ID.</param>
+        /// <returns>Action result.</returns>
         [HttpGet]
         [NapAuth(FunctionKey = FunctionKeys.ManageGroup, Policy = Constant.Policy.Host)]
         public ActionResult Edit(int id)
@@ -233,6 +256,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return View(criteria);
         }
 
+        /// <summary>
+        /// Update group.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>Action result.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageGroup, Policy = Constant.Policy.Host)]
         public ActionResult Edit(UpdateGroupCriteria criteria)
@@ -283,8 +311,14 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
         #region Activation
 
+        /// <summary>
+        /// Update group status.
+        /// </summary>
+        /// <param name="id">The group ID.</param>
+        /// <param name="isActive">Is active or not.</param>
+        /// <returns>Action result.</returns>
         [NapAuth(FunctionKey = FunctionKeys.ManageGroup, Policy = Constant.Policy.Host)]
-        public ActionResult Activate(int id, bool active)
+        public ActionResult Activate(int id, bool isActive)
         {
             if (Request.IsAjaxRequest())
             {
@@ -293,7 +327,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                     var result = _groupService.UpdateStatus(new UpdateStatusGroupCriteria
                     {
                         GroupId = id,
-                        IsActive = active,
+                        IsActive = isActive,
                         ModifiedBy = CurrentSession.UserId,
                         ModifiedDate = DateTime.Now
                     });
@@ -317,6 +351,12 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
         #region Assign Permission
 
+        /// <summary>
+        /// Assign group permission.
+        /// </summary>
+        /// <param name="id">The group ID.</param>
+        /// <param name="siteId">The site ID.</param>
+        /// <returns>Action result.</returns>
         [HttpGet]
         [NapAuth(FunctionKey = FunctionKeys.AssignFunctionToGroup, Policy = Constant.Policy.Read)]
         public ActionResult AssignPermission(int id, int siteId = 0)
@@ -378,6 +418,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return View(criteria);
         }
 
+        /// <summary>
+        /// Assign group permission.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>Action result.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.AssignFunctionToGroup, Policy = Constant.Policy.Host)]
         public ActionResult AssignPermission(AssignFunctionGroupCriteria criteria)
@@ -521,6 +566,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
         #region Group Info
 
+        /// <summary>
+        /// Get group information.
+        /// </summary>
+        /// <param name="id">The group ID.</param>
+        /// <returns>Action result.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageGroup, Policy = Constant.Policy.Read)]
         public ActionResult GroupInfo(int id)

@@ -63,6 +63,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
         #region Manage Menu item
 
+        /// <summary>
+        /// Manage menu.
+        /// </summary>
+        /// <param name="siteId">The site ID.</param>
+        /// <returns>Action result.</returns>
         [HttpGet]
         [NapAuth(FunctionKey = FunctionKeys.ManageMenu, Policy = Constant.Policy.Read)]
         public ActionResult Manage(int? siteId)
@@ -116,6 +121,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return View(criteria);
         }
 
+        /// <summary>
+        /// Manage menu.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>Action result.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageMenu, Policy = Constant.Policy.Read)]
         public ActionResult Manage(GetBySiteMenuItemCriteria criteria)
@@ -167,6 +177,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
         #region Add New Menu
 
+        /// <summary>
+        /// Add new menu item.
+        /// </summary>
+        /// <param name="siteId">The site ID.</param>
+        /// <returns>Action result.</returns>
         [HttpGet]
         [NapAuth(FunctionKey = FunctionKeys.ManageMenu, Policy = Constant.Policy.Host)]
         public ActionResult AddNewMenuItem(int? siteId = null)
@@ -198,6 +213,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return View(criteria);
         }
 
+        /// <summary>
+        /// Add new menu item.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>Action result.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageMenu, Policy = Constant.Policy.Host)]
         public ActionResult AddNewMenuItem(InsertMenuItemCriteria criteria)
@@ -251,6 +271,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
         #region Edit Menu Item
 
+        /// <summary>
+        /// Update menu item.
+        /// </summary>
+        /// <param name="menuItemId">Menu item ID.</param>
+        /// <returns>Action result.</returns>
         [HttpGet]
         [NapAuth(FunctionKey = FunctionKeys.ManageMenu, Policy = Constant.Policy.Host)]
         public ActionResult EditMenuItem(int menuItemId)
@@ -304,6 +329,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return View(criteria);
         }
 
+        /// <summary>
+        /// Update menu item.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>Action result.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageMenu, Policy = Constant.Policy.Host)]
         public ActionResult EditMenuItem(UpdateMenuItemCriteria criteria)
@@ -360,7 +390,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// <param name="siteId">Site ID.</param>
         /// <param name="menuItemId">Menu item ID.</param>
         /// <param name="environment">The environment.</param>
-        /// <returns></returns>
+        /// <returns>Action result.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageMenu, Policy = Constant.Policy.Host)]
         public ActionResult ListMenuItemBySite(int? siteId, int? menuItemId, string environment = EmptyString)
@@ -402,7 +432,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// </summary>
         /// <param name="siteId">Site ID.</param>
         /// <param name="environment">The environment.</param>
-        /// <returns></returns>
+        /// <returns>Action result.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageMenu, Policy = Constant.Policy.Host)]
         public ActionResult ListFunctionBySite(int siteId, string environment = EmptyString)
@@ -434,7 +464,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// <returns>Action result.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageMenu, Policy = Constant.Policy.Host)]
-        public ActionResult Activate(int id, bool active)
+        public ActionResult Activate(int id, bool isActive)
         {
             if (Request.IsAjaxRequest())
             {
@@ -442,7 +472,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 {
                     var result = _menuItemService.UpdateStatus(new UpdateStatusMenuItemCriteria
                     {
-                        IsActive = active,
+                        IsActive = isActive,
                         MenuItemId = id,
                         ModifiedBy = CurrentSession.UserId,
                         ModifiedDate = DateTime.Now

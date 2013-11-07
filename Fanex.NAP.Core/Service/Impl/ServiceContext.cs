@@ -16,14 +16,8 @@ namespace Fanex.NAP.Core.Service.Impl
     /// </summary>
     public class ServiceContext : IServiceContext
     {
-        /// <summary>
-        /// User ID.
-        /// </summary>
         public int UserId { get; set; }
 
-        /// <summary>
-        /// Site ID.
-        /// </summary>
         public int SiteId { get; set; }
 
         public string Ip { get; set; }

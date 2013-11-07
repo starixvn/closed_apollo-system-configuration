@@ -66,6 +66,8 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Get site by ID.
         /// </summary>
+        /// <param name="id">The site ID.</param>
+        /// <returns>The site object.</returns>
         public ISite GetById(int id)
         {
             // check parammeters
@@ -94,6 +96,8 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Get site by name.
         /// </summary>
+        /// <param name="name">The site name.</param>
+        /// <returns>The site object.</returns>
         public ISite GetByName(string name)
         {
             // check parammeters
@@ -122,6 +126,7 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Get site status by ID.
         /// </summary>
+        /// <param name="id">The site ID.</param>
         public bool GetStatusById(int id)
         {
             // check parammeters
@@ -168,6 +173,10 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Get site level by user.
         /// </summary>
+        /// <param name="userId">The user ID.</param>
+        /// <param name="env">The environment.</param>
+        /// <param name="isActive">Is active or not.</param>
+        /// <returns>List of site level.</returns>
         public IEnumerable<SiteLevel> GetSiteLevelByUser(int userId, string env = Constant.UAT, bool? isActive = null)
         {
             // check parammeters
@@ -199,6 +208,9 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Get all site.
         /// </summary>
+        /// <param name="env">The environment.</param>
+        /// <param name="isActive">Is active or not.</param>
+        /// <returns>The list of site object.</returns>
         public IEnumerable<ISite> GetAll(string env = Constant.UAT, bool? isActive = null)
         {
             Check.Argument.IsNotEmpty(env, "Environment");
@@ -227,6 +239,10 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Get all site select list item.
         /// </summary>
+        /// <param name="env">The environment.</param>
+        /// <param name="isActive">Is active or not.</param>
+        /// <param name="selectedSiteId">Selected site ID.</param>
+        /// <returns>The list of select list item.</returns>
         public IList<SelectListItem> GetAllSelectListItem(
             string env = Constant.UAT,
             bool? isActive = null,
@@ -268,6 +284,9 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Get all site with number of users.
         /// </summary>
+        /// <param name="env">The environment.</param>
+        /// <param name="isActive">Is active or not.</param>
+        /// <returns>The list of site object.</returns>
         public IEnumerable<ISite> GetAllWithNumOfUsers(string env = Constant.UAT, bool? isActive = null)
         {
             Check.Argument.IsNotEmpty(env, "Environment");
@@ -296,6 +315,11 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Get site by user and function key include group.
         /// </summary>
+        /// <param name="userId">The user ID.</param>
+        /// <param name="functionKey">The function key.</param>
+        /// <param name="env">The environment.</param>
+        /// <param name="policy">The function policy.</param>
+        /// <returns>The list of site object.</returns>
         public IEnumerable<ISite> GetByUserAndFunctionKeyIncludeGroup(
             int userId,
             string functionKey,
@@ -342,6 +366,12 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Get site select list item by user and function key include group.
         /// </summary>
+        /// <param name="userId">The user ID.</param>
+        /// <param name="functionKey">The function key.</param>
+        /// <param name="env">The environment.</param>
+        /// <param name="policy">The function policy.</param>
+        /// <param name="selectedSiteId">Selected site ID.</param>
+        /// <returns>The list of select list item.</returns>
         public IList<SelectListItem> GetSelectListItemByUserAndFunctionKeyIncludeGroup(
             int userId,
             string functionKey,
@@ -394,6 +424,8 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Insert site.
         /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>The command result.</returns>
         public ICommandResult Insert(InsertSiteCriteria criteria)
         {
             // check parameters
@@ -419,6 +451,8 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Update site.
         /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>The command result.</returns>
         public ICommandResult Update(UpdateSiteCriteria criteria)
         {
             // check parameters
@@ -444,6 +478,8 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Update site status.
         /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>The command result.</returns>
         public ICommandResult UpdateStatus(UpdateStatusSiteCriteria criteria)
         {
             // check parameters
@@ -473,6 +509,8 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Get user site level.
         /// </summary>
+        /// <param name="userId">The user ID.</param>
+        /// <param name="siteId">The site ID.</param>
         public SiteLevel GetUserSiteLevel(int userId, int siteId)
         {
             Check.Argument.IsNotNegativeOrZero(userId, "userId");
@@ -506,6 +544,8 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Get all site URL.
         /// </summary>
+        /// <param name="env">The environment.</param>
+        /// <returns>List of site URL.</returns>
         public IEnumerable<SiteUrl> GetAllSiteUrl(string env)
         {
             Check.Argument.IsNotEmpty(env, "Environment");
@@ -533,6 +573,9 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Get site URL by user.
         /// </summary>
+        /// <param name="userId">The user ID.</param>
+        /// <param name="env">The environment.</param>
+        /// <returns>List of site URL.</returns>
         public IEnumerable<SiteUrl> GetSiteUrlByUser(int userId, string env)
         {
             Check.Argument.IsNotNegativeOrZero(userId, "userId");
@@ -564,6 +607,9 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Get site URL by site ID.
         /// </summary>
+        /// <param name="siteId">The site ID.</param>
+        /// <param name="env">The environment.</param>
+        /// <returns>List of site URL.</returns>
         public IEnumerable<SiteUrl> GetSiteUrlBySiteId(int siteId, string env)
         {
             Check.Argument.IsNotNegativeOrZero(siteId, "siteId");
@@ -626,6 +672,8 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Update site URL.
         /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>The command result.</returns>
         public ICommandResult UpdateSiteUrl(UpdateSiteUrlCriteria criteria)
         {
             Check.Argument.IsNotNull(criteria, "criteria");
@@ -650,6 +698,8 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Update default site URL.
         /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>The command result.</returns>
         public ICommandResult UpdateDefaultSiteUrl(UpdateDefaultSiteUrlCriteria criteria)
         {
             Check.Argument.IsNotNull(criteria, "criteria");
@@ -674,6 +724,8 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Insert site URL.
         /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>The command result.</returns>
         public ICommandResult InsertSiteUrl(InsertSiteUrlCriteria criteria)
         {
             Check.Argument.IsNotNull(criteria, "criteria");

@@ -7,13 +7,12 @@
 // </summary>
 //
 // <history>
-// Lasted generated date: 10/14/2013 4:27:43 PM
-// Lasted generated date: 10/29/2013 4:09:01 PM
+// Lasted generated date: 11/7/2013 4:08:44 PM
 // </history>
 using System.Diagnostics.CodeAnalysis;
 
-[SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented", Justification="Generated code")] 
-[SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1602:EnumerationItemsMustBeDocumented", Justification="Generated code")] 
+[SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented", Justification = "Generated code")] 
+[SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1602:EnumerationItemsMustBeDocumented", Justification = "Generated code")] 
 public static class FunctionKeys
 {
     public const string Administration = "Administration";
@@ -29,10 +28,6 @@ public static class FunctionKeys
     public const string ExchangeRate = "ExchangeRate";
 
     public const string ExecSpLog = "ExecSpLog";
-
-    public const string fnc_test = "fnc_test";
-
-    public const string fnc_testCopy = "fnc_testCopy";
 
     public const string FunctionLog = "FunctionLog";
 
@@ -58,14 +53,6 @@ public static class FunctionKeys
 
     public const string SystemConfiguration = "SystemConfiguration";
 
-    public const string Taitest = "Taitest";
-
-    public const string TaitestC = "TaitestC";
-
-    public const string testtesttestttt123 = "testtesttestttt123";
-
     public const string UserLoginLog = "UserLoginLog";
-
-    public const string UserLoginLogCopy = "UserLoginLogCopy";
 
 }

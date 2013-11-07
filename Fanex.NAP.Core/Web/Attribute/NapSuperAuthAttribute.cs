@@ -17,6 +17,10 @@ namespace Fanex.NAP.Core.Web.Attribute
     /// </summary>
     public class NapSuperAuthAttribute : AuthorizeAttribute
     {
+        /// <summary>
+        /// Authorize action handler.
+        /// </summary>
+        /// <param name="filterContext">Filter context.</param>
         public override void OnAuthorization(AuthorizationContext filterContext)
         {
             base.OnAuthorization(filterContext);

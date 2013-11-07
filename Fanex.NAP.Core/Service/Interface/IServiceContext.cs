@@ -16,14 +16,8 @@ namespace Fanex.NAP.Core.Service.Interface
     /// </summary>
     public interface IServiceContext
     {
-        /// <summary>
-        /// User ID.
-        /// </summary>
         int UserId { get; set; }
 
-        /// <summary>
-        /// Site ID.
-        /// </summary>
         int SiteId { get; set; }
 
         string Ip { get; set; }

@@ -73,6 +73,10 @@ namespace Fanex.NAP.Core.Web.Attribute
 
         #endregion Properties
 
+        /// <summary>
+        /// Authorize action handler.
+        /// </summary>
+        /// <param name="filterContext">Filter context.</param>
         public override void OnAuthorization(AuthorizationContext filterContext)
         {
             base.OnAuthorization(filterContext);
@@ -143,6 +147,10 @@ namespace Fanex.NAP.Core.Web.Attribute
             }
         }
 
+        /// <summary>
+        /// Check function authorization.
+        /// </summary>
+        /// <param name="userId">The user ID.</param>
         public bool CheckFunctionAuthorization(int userId)
         {
             if (userId <= 0)
@@ -155,6 +163,10 @@ namespace Fanex.NAP.Core.Web.Attribute
             return policy >= (int)Policy;
         }
 
+        /// <summary>
+        /// Close connection.
+        /// </summary>
+        /// <param name="filterContext">Filter context.</param>
         private void CloseConnection(AuthorizationContext filterContext)
         {
             try

@@ -66,6 +66,15 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
         #region Manage
 
+        /// <summary>
+        /// Manage user.
+        /// </summary>
+        /// <param name="id">The page index.</param>
+        /// <param name="size">The page size.</param>
+        /// <param name="q">The username.</param>
+        /// <param name="groupId">The group ID.</param>
+        /// <param name="siteId">The site ID.</param>
+        /// <returns>Action result.</returns>
         [HttpGet]
         [NapAuth(FunctionKey = FunctionKeys.ManageUser, Policy = Constant.Policy.Read)]
         public ActionResult Manage(
@@ -277,6 +286,14 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             }
         }
 
+        /// <summary>
+        /// Manage user.
+        /// </summary>
+        /// <param name="size">The page size.</param>
+        /// <param name="q">The username.</param>
+        /// <param name="groupId">The group ID.</param>
+        /// <param name="siteId">The site ID.</param>
+        /// <returns>Action result.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageUser, Policy = Constant.Policy.Read)]
         public ActionResult Manage(
@@ -301,6 +318,14 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
         #region Assign Site
 
+        /// <summary>
+        /// Assign site.
+        /// </summary>
+        /// <param name="id">The user ID.</param>
+        /// <param name="siteId">The site ID.</param>
+        /// <param name="groupId">The group ID.</param>
+        /// <param name="pageIndex">The page index.</param>
+        /// <returns>Action result.</returns>
         [HttpGet]
         [NapAuth(FunctionKey = FunctionKeys.AssignSiteToUser, Policy = Constant.Policy.Read)]
         public ActionResult AssignSite(int id, int? siteId, int? groupId, int pageIndex = 1)
@@ -371,6 +396,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
         #region User Info
 
+        /// <summary>
+        /// View user information.
+        /// </summary>
+        /// <param name="id">The user ID.</param>
+        /// <returns>Action result.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageUser, Policy = Constant.Policy.Read)]
         public ActionResult UserInfo(int id)
@@ -390,6 +420,16 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
         #region Add Existing User
 
+        /// <summary>
+        /// Add existing user.
+        /// </summary>
+        /// <param name="id">The page index.</param>
+        /// <param name="size">The page size.</param>
+        /// <param name="q">The username.</param>
+        /// <param name="siteId">The site ID.</param>
+        /// <param name="returnPageIndex">Return page index.</param>
+        /// <param name="groupId">The group ID.</param>
+        /// <returns>Action result.</returns>
         [NapAuth(FunctionKey = FunctionKeys.ManageUser, Policy = Constant.Policy.Host)]
         public ActionResult AddExisting(
             int id = 1,
@@ -440,6 +480,13 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
         #region Add New User
 
+        /// <summary>
+        /// Add new user.
+        /// </summary>
+        /// <param name="siteId">The site ID.</param>
+        /// <param name="pageIndex">The page index.</param>
+        /// <param name="groupId">The group ID.</param>
+        /// <returns>Action result.</returns>
         [HttpGet]
         [NapAuth(FunctionKey = FunctionKeys.ManageUser, Policy = Constant.Policy.Host)]
         public ActionResult AddNew(int? siteId = null, int pageIndex = 1, int groupId = 0)
@@ -456,6 +503,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return View(criteria);
         }
 
+        /// <summary>
+        /// Add new user.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>Action result.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageUser, Policy = Constant.Policy.Host)]
         public ActionResult AddNew(InsertCustCriteria criteria)
@@ -502,6 +554,14 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
         #region Edit User
 
+        /// <summary>
+        /// Update user.
+        /// </summary>
+        /// <param name="id">The user ID.</param>
+        /// <param name="siteId">The site ID.</param>
+        /// <param name="returnGroupId">Return group ID.</param>
+        /// <param name="pageIndex">The page index.</param>
+        /// <returns>Action result.</returns>
         [HttpGet]
         [NapAuth(FunctionKey = FunctionKeys.ManageUser, Policy = Constant.Policy.Host)]
         public ActionResult Edit(int id, int? siteId, int? returnGroupId, int pageIndex = 1)
@@ -547,6 +607,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return View(criteria);
         }
 
+        /// <summary>
+        /// Update user.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>Action result.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageUser, Policy = Constant.Policy.Host)]
         public ActionResult Edit(UpdateCustCriteria criteria)
@@ -582,6 +647,14 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
         #region Reset Password
 
+        /// <summary>
+        /// Reset user password.
+        /// </summary>
+        /// <param name="id">The user ID.</param>
+        /// <param name="siteId">The site ID.</param>
+        /// <param name="groupId">The group ID.</param>
+        /// <param name="pageIndex">The page index.</param>
+        /// <returns>Action result.</returns>
         [HttpGet]
         [NapAuth(FunctionKey = FunctionKeys.ManageUser, Policy = Constant.Policy.Host)]
         public ActionResult ResetPassword(int id, int? siteId, int? groupId, int pageIndex = 1)
@@ -616,6 +689,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return View(criteria);
         }
 
+        /// <summary>
+        /// Reset user password.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>Action result.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageUser, Policy = Constant.Policy.Host)]
         public ActionResult ResetPassword(ResetPasswordCustCriteria criteria)
@@ -662,12 +740,21 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
         #region Change Password
 
+        /// <summary>
+        /// Change user password.
+        /// </summary>
+        /// <returns>Action result.</returns>
         [HttpGet]
         public ActionResult ChangePassword()
         {
             return View(new UpdatePasswordCustCriteria { Username = CurrentSession.Username });
         }
 
+        /// <summary>
+        /// Change user password.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>Action result.</returns>
         [HttpPost]
         public ActionResult ChangePassword(UpdatePasswordCustCriteria criteria)
         {
@@ -709,9 +796,23 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
         #region Assign Permission
 
+        /// <summary>
+        /// Assign user permission.
+        /// </summary>
+        /// <param name="id">The user ID.</param>
+        /// <param name="siteId">The site ID.</param>
+        /// <param name="pageIndex">The page index.</param>
+        /// <param name="returnSiteId">Return site ID.</param>
+        /// <param name="groupId">The group ID.</param>
+        /// <returns>Action result.</returns>
         [HttpGet]
         [NapAuth(FunctionKey = FunctionKeys.AssignFunctionToUser, Policy = Constant.Policy.Read)]
-        public ActionResult AssignPermission(int id, int siteId = 0, int pageIndex = 1, int returnSiteId = 0, int groupId = 0)
+        public ActionResult AssignPermission(
+            int id, 
+            int siteId = 0, 
+            int pageIndex = 1, 
+            int returnSiteId = 0, 
+            int groupId = 0)
         {
             var criteria = new AssignFunctionUserCriteria
             {
@@ -788,6 +889,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return View(criteria);
         }
 
+        /// <summary>
+        /// Assign user permission.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>Action result.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.AssignFunctionToUser, Policy = Constant.Policy.Host)]
         public ActionResult AssignPermission(AssignFunctionUserCriteria criteria)
@@ -934,6 +1040,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return View(criteria);
         }
 
+        /// <summary>
+        /// Assign site to user.
+        /// </summary>
+        /// <param name="userId">The user ID.</param>
+        /// <param name="value"></param>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.AssignSiteToUser, Policy = Constant.Policy.Host)]
         public string AssignSiteToUser(int userId, string value)
@@ -986,6 +1097,10 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
         #region Profile
 
+        /// <summary>
+        /// View user profile.
+        /// </summary>
+        /// <returns>Action result.</returns>
         [HttpGet]
         public ActionResult UserProfile()
         {
@@ -1011,6 +1126,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return View(criteria);
         }
 
+        /// <summary>
+        /// View user profile.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>Action result.</returns>
         [HttpPost]
         public ActionResult UserProfile(UpdateCustCriteria criteria)
         {
@@ -1045,6 +1165,12 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
         #region Ajax
 
+        /// <summary>
+        /// View user list.
+        /// </summary>
+        /// <param name="groupId">The group ID.</param>
+        /// <param name="siteId">The site ID.</param>
+        /// <returns>Action result.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageUser, Policy = Constant.Policy.Read)]
         public ActionResult UserList(int groupId, int siteId = 0)
@@ -1067,6 +1193,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return new EmptyResult();
         }
 
+        /// <summary>
+        /// Get user site.
+        /// </summary>
+        /// <param name="userId">The user ID.</param>
+        /// <returns>Action result.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageUser, Policy = Constant.Policy.Read)]
         public ActionResult GetUserSite(int userId)
@@ -1089,6 +1220,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return Json(null);
         }
 
+        /// <summary>
+        /// Get user function policy.
+        /// </summary>
+        /// <param name="userId">The user ID.</param>
+        /// <returns>Action result.</returns>
         [HttpPost]
         public ActionResult GetUserFunctionPolicy(int userId)
         {
@@ -1110,6 +1246,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return Json(null);
         }
 
+        /// <summary>
+        /// Get group function policy.
+        /// </summary>
+        /// <param name="groupId">The group ID.</param>
+        /// <returns>Action result.</returns>
         [HttpPost]
         public ActionResult GetGroupFunctionPolicy(int groupId)
         {
@@ -1136,6 +1277,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return Json(null);
         }
 
+        /// <summary>
+        /// Add user to group.
+        /// </summary>
+        /// <param name="userId">The user ID.</param>
+        /// <param name="groupId">The group ID.</param>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageUser, Policy = Constant.Policy.Host)]
         public string AddUserToGroup(int userId, int groupId)
@@ -1175,6 +1321,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return Constant.ERROR;
         }
 
+        /// <summary>
+        /// Get user by group.
+        /// </summary>
+        /// <param name="groupId">The group ID.</param>
+        /// <returns>Action result.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageUser, Policy = Constant.Policy.Read)]
         public ActionResult GetUserByGroup(int groupId)
@@ -1201,6 +1352,10 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
         #region Private method
 
+        /// <summary>
+        /// Get data for assign permission.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
         private void GetDataForAssignPermission(AssignFunctionUserCriteria criteria)
         {
             int policy = _userService.GetUserSiteFunctionKeyPolicy(

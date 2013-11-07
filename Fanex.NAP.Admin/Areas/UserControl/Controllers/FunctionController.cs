@@ -68,6 +68,8 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// <summary>
         /// Manage function.
         /// </summary>
+        /// <param name="siteId">The site ID.</param>
+        /// <returns>Action result.</returns>
         [HttpGet]
         [NapAuth(FunctionKey = FunctionKeys.ManageFunction, Policy = Constant.Policy.Read)]
         public ActionResult Manage(int? siteId)
@@ -94,6 +96,8 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// <summary>
         /// Manage function.
         /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>Action result.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageFunction, Policy = Constant.Policy.Read)]
         public ActionResult Manage(GetBySiteFunctionCriteria criteria)
@@ -118,6 +122,8 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// <summary>
         /// Add new function.
         /// </summary>
+        /// <param name="siteId">The site ID.</param>
+        /// <returns>Action result.</returns>
         [HttpGet]
         [NapAuth(FunctionKey = FunctionKeys.ManageFunction, Policy = Constant.Policy.Host)]
         public ActionResult AddNew(int? siteId = null)
@@ -144,6 +150,8 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// <summary>
         /// Add new function.
         /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>Action result.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageFunction, Policy = Constant.Policy.Host)]
         public ActionResult AddNew(InsertFunctionCriteria criteria)
@@ -228,6 +236,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// <summary>
         /// Duplicate function.
         /// </summary>
+        /// <param name="id">The function ID.</param>
+        /// <param name="siteId">The site ID.</param>
+        /// <returns>Action result.</returns>
         [HttpGet]
         [NapAuth(FunctionKey = FunctionKeys.ManageFunction, Policy = Constant.Policy.Host)]
         public ActionResult Duplicate(int id, int? siteId = null)
@@ -274,6 +285,8 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// <summary>
         /// Duplicate function.
         /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>Action result.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageFunction, Policy = Constant.Policy.Host)]
         public ActionResult Duplicate(DuplicateFunctionCriteria criteria)
@@ -342,6 +355,8 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// <summary>
         /// Update function.
         /// </summary>
+        /// <param name="id">The function ID.</param>
+        /// <returns>Action result.</returns>
         [HttpGet]
         [NapAuth(FunctionKey = FunctionKeys.ManageFunction, Policy = Constant.Policy.Host)]
         public ActionResult Edit(int id)
@@ -394,6 +409,8 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// <summary>
         /// Update function.
         /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>Action result.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageFunction, Policy = Constant.Policy.Host)]
         public ActionResult Edit(UpdateFunctionCriteria criteria)
@@ -525,8 +542,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// <summary>
         /// Update function status.
         /// </summary>
+        /// <param name="id">The function ID.</param>
+        /// <param name="isActive">Is active or not.</param>
+        /// <returns>Action result.</returns>
         [NapAuth(FunctionKey = FunctionKeys.ManageFunction, Policy = Constant.Policy.Host)]
-        public ActionResult Activate(int id, bool active)
+        public ActionResult Activate(int id, bool isActive)
         {
             if (Request.IsAjaxRequest())
             {
@@ -535,7 +555,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                     var result = this._functionService.UpdateStatus(new UpdateStatusFunctionCriteria
                     {
                         FunctionId = id,
-                        IsActive = active,
+                        IsActive = isActive,
                         ModifiedBy = CurrentSession.UserId,
                         ModifiedDate = DateTime.Now
                     });
@@ -560,8 +580,10 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         #region Privileged Groups And Users
 
         /// <summary>
-        /// Get priviledged group and user.
+        /// Get privileged group and user.
         /// </summary>
+        /// <param name="id">The function ID.</param>
+        /// <returns>Action result.</returns>
         [NapAuth(FunctionKey = FunctionKeys.ManageFunction, Policy = Constant.Policy.Read)]
         public ActionResult PrivilegedGroupsAndUsers(int id = 0)
         {
@@ -607,8 +629,14 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         }
 
         /// <summary>
-        /// Manage priviledged user.
+        /// Manage privileged user.
         /// </summary>
+        /// <param name="id">The page index.</param>
+        /// <param name="size">The page size.</param>
+        /// <param name="fid">The function ID.</param>
+        /// <param name="gid">The group ID.</param>
+        /// <param name="q">The username.</param>
+        /// <returns>Action result.</returns>
         [NapAuth(FunctionKey = FunctionKeys.AssignFunctionToUser, Policy = Constant.Policy.Host)]
         public ActionResult PrivilegedUsers(
             int id = 1,
@@ -665,8 +693,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         }
 
         /// <summary>
-        /// Add priviledged user.
+        /// Add privileged user.
         /// </summary>
+        /// <param name="id">The function ID.</param>
+        /// <param name="readList">List of function which has read permission.</param>
+        /// <param name="hostList">List of function which has host permission.</param>
         [NapAuth(FunctionKey = FunctionKeys.AssignFunctionToUser, Policy = Constant.Policy.Host)]
         public string AddPrivilegedUsers(
             int id = 0,
@@ -715,8 +746,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         }
 
         /// <summary>
-        /// Manage priviledged group.
+        /// Manage privileged group.
         /// </summary>
+        /// <param name="fid">The function ID.</param>
+        /// <param name="q">The group name.</param>
+        /// <returns>Action result.</returns>
         [NapAuth(FunctionKey = FunctionKeys.AssignFunctionToGroup, Policy = Constant.Policy.Host)]
         public ActionResult PrivilegedGroups(int fid = 0, string q = EmptyString)
         {
@@ -753,8 +787,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         }
 
         /// <summary>
-        /// Add priviledged group.
+        /// Add privileged group.
         /// </summary>
+        /// <param name="id">The function ID.</param>
+        /// <param name="readList">List of function which has read permission.</param>
+        /// <param name="hostList">List of function which has host permission.</param>
         [NapAuth(FunctionKey = FunctionKeys.AssignFunctionToGroup, Policy = Constant.Policy.Host)]
         public string AddPrivilegedGroups(
             int id = 0,
@@ -809,6 +846,8 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// <summary>
         /// Get function by site.
         /// </summary>
+        /// <param name="siteId">The site ID.</param>
+        /// <returns>JSON result.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageFunction, Policy = Constant.Policy.Read)]
         public JsonResult GetFunctionBySite(int siteId)
@@ -836,9 +875,13 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// <summary>
         /// Get parent function by environment.
         /// </summary>
+        /// <param name="siteId">The site ID.</param>
+        /// <param name="functionId">The function ID.</param>
+        /// <param name="env">The environment.</param>
+        /// <returns>JSON result.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageFunction, Policy = Constant.Policy.Host)]
-        public JsonResult GetFunctionParentByEnvironment(int siteId = 0, int functionId = 0, string environment = Constant.UAT)
+        public JsonResult GetFunctionParentByEnvironment(int siteId = 0, int functionId = 0, string env = Constant.UAT)
         {
             if (Request.IsAjaxRequest())
             {
@@ -848,7 +891,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                     {
                         var function = this._functionService.GetById(functionId);
 
-                        var functionList = this._functionService.GetBySite(function.Site.Id, environment, true).ToList();
+                        var functionList = this._functionService.GetBySite(function.Site.Id, env, true).ToList();
 
                         functionList = functionList.Where(f => f.Id != functionId && (f.Parent == null
                                                     || f.Parent.Id != functionId)).ToList();
@@ -859,7 +902,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                     }
                     else
                     {
-                        var functionList = this._functionService.GetBySite(siteId, environment, true).ToList();
+                        var functionList = this._functionService.GetBySite(siteId, env, true).ToList();
 
                         functionList.Insert(0, new Function { Id = 0, Name = ViewResources.None });
 
@@ -879,6 +922,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// <summary>
         /// Get function key.
         /// </summary>
+        /// <param name="functionId">The function ID.</param>
+        /// <param name="functionName">The function name.</param>
+        /// <returns>JSON result.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageFunction, Policy = Constant.Policy.Host)]
         public JsonResult GetFunctionKey(int functionId, string functionName)
@@ -936,7 +982,13 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// <summary>
         /// Insert child function.
         /// </summary>
-        private void InsertChildFunction(ref List<Function> orderedFunctionList, List<Function> functionList, Function parent)
+        /// <param name="orderedFunctionList"></param>
+        /// <param name="functionList">List of function.</param>
+        /// <param name="parent"></param>
+        private void InsertChildFunction(
+            ref List<Function> orderedFunctionList, 
+            List<Function> functionList, 
+            Function parent)
         {
             var childFunctionList = functionList.Where(f => f.Parent != null && f.Parent.Id == parent.Id)
                 .OrderBy(f => f.DisplayOrder).ToList();
@@ -953,6 +1005,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// <summary>
         /// Prepare manage data.
         /// </summary>
+        /// <param name="criteria">The criteria.</param>
         private void PrepareManageData(GetBySiteFunctionCriteria criteria)
         {
             ViewBag.FunctionList = this._functionService.GetBySiteInHierarchy(criteria.SiteId, criteria.Environment);
@@ -991,6 +1044,8 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// <summary>
         /// Get site and functions for add new.
         /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <param name="getSiteList">Get site list or not.</param>
         private void GetSitesAndFunctionsForAddNew(dynamic criteria, bool getSiteList = true)
         {
             // gets site list

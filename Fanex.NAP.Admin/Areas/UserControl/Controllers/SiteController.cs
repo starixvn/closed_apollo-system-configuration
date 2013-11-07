@@ -54,6 +54,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
         #region Manage
 
+        /// <summary>
+        /// Manage site.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>Action result.</returns>
         [NapAuth(FunctionKey = FunctionKeys.ManageSite, Policy = Constant.Policy.Read)]
         public ActionResult Manage(GetAllSiteCriteria criteria)
         {
@@ -94,6 +99,10 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
         #region Add New
 
+        /// <summary>
+        /// Add new site.
+        /// </summary>
+        /// <returns>Action result.</returns>
         [HttpGet]
         [NapAuth(FunctionKey = FunctionKeys.ManageSite, Policy = Constant.Policy.Host)]
         public ActionResult AddNew()
@@ -105,6 +114,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             });
         }
 
+        /// <summary>
+        /// Add new site.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>Action result.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageSite, Policy = Constant.Policy.Host)]
         public ActionResult AddNew(InsertSiteCriteria criteria)
@@ -177,6 +191,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
         #region Edit
 
+        /// <summary>
+        /// Update site.
+        /// </summary>
+        /// <param name="id">The site ID.</param>
+        /// <returns>Action result.</returns>
         [HttpGet]
         [NapAuth(FunctionKey = FunctionKeys.ManageSite, Policy = Constant.Policy.Host)]
         public ActionResult Edit(int id)
@@ -207,6 +226,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return View(criteria);
         }
 
+        /// <summary>
+        /// Update site.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>Action result.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageSite, Policy = Constant.Policy.Host)]
         public ActionResult Edit(UpdateSiteCriteria criteria)
@@ -246,6 +270,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
         #endregion
 
+        /// <summary>
+        /// Update site URL.
+        /// </summary>
+        /// <param name="id">The site URL ID.</param>
+        /// <returns>Action result.</returns>
         #region SiteUrl
         [HttpGet]
         [NapAuth(FunctionKey = FunctionKeys.ManageSite, Policy = Constant.Policy.Read)]
@@ -277,9 +306,16 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Update site URL.
+        /// </summary>
+        /// <param name="id">The site URL ID.</param>
+        /// <param name="url"></param>
+        /// <param name="isActive">Is active or not.</param>
+        /// <returns>Action result.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageSite, Policy = Constant.Policy.Host)]
-        public ActionResult UpdateSiteUrl(int id, string url, bool active)
+        public ActionResult UpdateSiteUrl(int id, string url, bool isActive)
         {
             if (Request.IsAjaxRequest())
             {
@@ -317,7 +353,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                                 SiteId = siteUrl.Site.Id,
                                 Url = url,
                                 Environment = siteUrl.Environment,
-                                IsActive = active,
+                                IsActive = isActive,
                                 IsDefault = siteUrl.IsDefault
                             });
                         }
@@ -330,6 +366,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return HttpNotFound();
         }
 
+        /// <summary>
+        /// Set default site URL.
+        /// </summary>
+        /// <param name="id">The site ID.</param>
+        /// <returns>Action result.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageSite, Policy = Constant.Policy.Host)]
         public ActionResult SetDefaultSiteUrl(int id)
@@ -354,9 +395,16 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return HttpNotFound();
         }
 
+        /// <summary>
+        /// Add site URL.
+        /// </summary>
+        /// <param name="siteId">The site ID.</param>
+        /// <param name="url"></param>
+        /// <param name="isActive">Is active or not.</param>
+        /// <returns>Action result.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageSite, Policy = Constant.Policy.Host)]
-        public ActionResult AddSiteUrl(int siteId, string url, bool active)
+        public ActionResult AddSiteUrl(int siteId, string url, bool isActive)
         {
             if (Request.IsAjaxRequest())
             {
@@ -393,7 +441,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                                 SiteId = siteId,
                                 Url = url,
                                 Environment = this.Environment,
-                                IsActive = active,
+                                IsActive = isActive,
                                 IsDefault = false
                             };
 
@@ -421,8 +469,14 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
         #region Activation
 
+        /// <summary>
+        /// Update site status.
+        /// </summary>
+        /// <param name="id">The site ID.</param>
+        /// <param name="isActive">Is active or not.</param>
+        /// <returns>Action result.</returns>
         [NapAuth(FunctionKey = FunctionKeys.ManageSite, Policy = Constant.Policy.Host)]
-        public ActionResult Activate(int id, bool active)
+        public ActionResult Activate(int id, bool isActive)
         {
             if (Request.IsAjaxRequest())
             {
@@ -431,7 +485,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                     var result = _siteService.UpdateStatus(new UpdateStatusSiteCriteria
                     {
                         SiteId = id,
-                        IsActive = active
+                        IsActive = isActive
                     });
 
                     if (result != null && result.IsSuccessful)

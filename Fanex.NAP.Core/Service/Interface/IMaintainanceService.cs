@@ -12,7 +12,7 @@ namespace Fanex.NAP.Core.Service.Interface
     using Fanex.NAP.Core.Model.ValueObject;
 
     /// <summary>
-    /// Maintainance repository interface.
+    /// Maintenance repository interface.
     /// </summary>
     public interface IMaintainanceService : IBaseService
     {

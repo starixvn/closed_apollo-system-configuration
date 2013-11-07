@@ -55,6 +55,12 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
 
         #endregion
 
+        /// <summary>
+        /// Index page.
+        /// </summary>
+        /// <param name="userId">The user ID.</param>
+        /// <param name="onuserId"></param>
+        /// <param name="time"></param>
         [AllowAnonymous]
         [HttpGet]
         public ActionResult Index(string userId, string onuserId, string time)
@@ -119,6 +125,10 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
 
         #region utilities
 
+        /// <summary>
+        /// Create authorize information.
+        /// </summary>
+        /// <param name="user"></param>
         private void CreateAuthInfo(User user)
         {
             var currentDomain = CurrentContext.GetCurrentDomain();

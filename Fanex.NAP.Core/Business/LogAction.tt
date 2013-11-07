@@ -21,8 +21,8 @@
 // </history>
 using System.Diagnostics.CodeAnalysis;
 
-[SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented", Justification="Generated code")] 
-[SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1602:EnumerationItemsMustBeDocumented", Justification="Generated code")] 
+[SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented", Justification = "Generated code")] 
+[SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1602:EnumerationItemsMustBeDocumented", Justification = "Generated code")] 
 public enum LogAction
 {
 <#
@@ -41,8 +41,7 @@ public enum LogAction
     while(loop)
     {#>      
     <#= reader["SpName"].ToString() #> = <#= reader["ActionId"].ToString() #><# loop = reader.Read(); #><#= loop ? "," : string.Empty #>
-<#    
-    }#> 
+<#}#> 
 }
 <#  
     reader.Close();

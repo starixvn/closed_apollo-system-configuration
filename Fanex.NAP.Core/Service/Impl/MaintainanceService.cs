@@ -17,10 +17,13 @@ namespace Fanex.NAP.Core.Service.Impl
     using Fanex.NAP.Core.Service.Interface;
 
     /// <summary>
-    /// Maintainance service.
+    /// Maintenance service.
     /// </summary>
     public class MaintainanceService : BaseService, IMaintainanceService
     {
+        /// <summary>
+        /// Get down time information.
+        /// </summary>
         public Downtime GetDowntimeInfo()
         {
             bool isdowntime = false;

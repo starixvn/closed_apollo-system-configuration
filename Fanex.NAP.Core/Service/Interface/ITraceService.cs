@@ -36,7 +36,7 @@ namespace Fanex.NAP.Core.Service.Interface
            DateTime to,
            int siteId = 0);
 
-        IQueryable<LogFunction> SearcFunction(
+        IQueryable<LogFunction> SearchFunction(
            int pageIndex,
            int pageSize,
            out int totalRows,

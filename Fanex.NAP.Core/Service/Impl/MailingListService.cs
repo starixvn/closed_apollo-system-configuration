@@ -169,7 +169,7 @@ namespace Fanex.NAP.Core.Service.Impl
         /// Insert a Mailing List to DB.
         /// </summary>
         /// <param name="criteria">InsertMailingList Criteria contains field to insert to DB.</param>
-        /// <returns>ICommand Result.</returns>
+        /// <returns>The command result.</returns>
         public ICommandResult Insert(InsertMailingListCriteria criteria)
         {
             Check.Argument.IsNotNull(criteria, "criteria");
@@ -198,7 +198,7 @@ namespace Fanex.NAP.Core.Service.Impl
         /// Update a Mailing List to DB.
         /// </summary>
         /// <param name="criteria">Criteria contains field to update to DB.</param>
-        /// <returns>ICommand Result.</returns>
+        /// <returns>The command result.</returns>
         public ICommandResult Update(ICriteria criteria)
         {
             Check.Argument.IsNotNull(criteria, "criteria");

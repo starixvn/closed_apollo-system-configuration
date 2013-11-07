@@ -44,6 +44,10 @@ namespace Fanex.NAP.Core.Web.Validation
             return _stringLengthValidator.FormatErrorMessage(name);
         }
 
+        /// <summary>
+        /// Check if value is valid.
+        /// </summary>
+        /// <param name="values"></param>
         public override bool IsValid(object values)
         {
             if (values is IEnumerable<string>)

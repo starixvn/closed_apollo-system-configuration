@@ -40,6 +40,15 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Search execute SP log.
         /// </summary>
+        /// <param name="pageIndex">The page index.</param>
+        /// <param name="pageSize">The page size.</param>
+        /// <param name="totalRows">Total number of records.</param>
+        /// <param name="name"></param>
+        /// <param name="username">The username.</param>
+        /// <param name="from">From date value.</param>
+        /// <param name="to">To date value.</param>
+        /// <param name="filterBy">Filter by option.</param>
+        /// <returns>List of execute SP log.</returns>
         public IQueryable<LogExecSp> SearchExecSp(
             int pageIndex, 
             int pageSize, 
@@ -82,6 +91,7 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Get execute SP log by ID.
         /// </summary>
+        /// <param name="logId"></param>
         public LogExecSp GetById(int logId)
         {
             try
@@ -222,6 +232,17 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Insert user login log.
         /// </summary>
+        /// <param name="userId">The user ID.</param>
+        /// <param name="siteId">The site ID.</param>
+        /// <param name="ip">IP address.</param>
+        /// <param name="date">Log date value.</param>
+        /// <param name="domain">Domain name.</param>
+        /// <param name="broswser">Browser name.</param>
+        /// <param name="platform">Platform name.</param>
+        /// <param name="countryCode">Country code.</param>
+        /// <param name="doing"></param>
+        /// <param name="duration">Log duration.</param>
+        /// <returns>The command result.</returns>
         public ICommandResult InsertLogUserLogin(
             int userId,
             int siteId,
@@ -266,7 +287,22 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Search user login log.
         /// </summary>
-        public IQueryable<LogUserLogin> SearchUserLogin(int pageIndex, int pageSize, out int totalRows, string name, DateTime from, DateTime to, int siteId = 0)
+        /// <param name="pageIndex">The page index.</param>
+        /// <param name="pageSize">The page size.</param>
+        /// <param name="totalRows">Total number of records.</param>
+        /// <param name="name"></param>
+        /// <param name="from">From date value.</param>
+        /// <param name="to">To date value.</param>
+        /// <param name="siteId">The site ID.</param>
+        /// <returns>List of user login log.</returns>
+        public IQueryable<LogUserLogin> SearchUserLogin(
+            int pageIndex, 
+            int pageSize, 
+            out int totalRows, 
+            string name, 
+            DateTime from, 
+            DateTime to, 
+            int siteId = 0)
         {
             IQueryable<LogUserLogin> logList = null;
             totalRows = 0;
@@ -299,7 +335,22 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Insert function log.
         /// </summary>
-        public ICommandResult InsertLogFunction(int functionId, int userId, int siteId, string param, string ip, DateTime date, string broswser)
+        /// <param name="functionId">The function ID.</param>
+        /// <param name="userId">The user ID.</param>
+        /// <param name="siteId">The site ID.</param>
+        /// <param name="param"></param>
+        /// <param name="ip">IP address.</param>
+        /// <param name="date">Log date value.</param>
+        /// <param name="browser">Browser name.</param>
+        /// <returns>The command result.</returns>
+        public ICommandResult InsertLogFunction(
+            int functionId, 
+            int userId, 
+            int siteId, 
+            string param, 
+            string ip, 
+            DateTime date, 
+            string browser)
         {
             try
             {
@@ -310,7 +361,7 @@ namespace Fanex.NAP.Core.Service.Impl
                     SiteId = siteId,
                     LogDate = date,
                     Param = param,
-                    BrowserName = broswser,
+                    BrowserName = browser,
                     IP = ip
                 };
 
@@ -330,7 +381,22 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Search function log.
         /// </summary>
-        public IQueryable<LogFunction> SearcFunction(int pageIndex, int pageSize, out int totalRows, string name, DateTime from, DateTime to, int siteId = 0)
+        /// <param name="pageIndex">The page index.</param>
+        /// <param name="pageSize">The page size.</param>
+        /// <param name="totalRows">Total number of records.</param>
+        /// <param name="name"></param>
+        /// <param name="from">From date value.</param>
+        /// <param name="to">To date value.</param>
+        /// <param name="siteId">The site ID.</param>
+        /// <returns>List of function log.</returns>
+        public IQueryable<LogFunction> SearchFunction(
+            int pageIndex, 
+            int pageSize, 
+            out int totalRows, 
+            string name, 
+            DateTime from, 
+            DateTime to, 
+            int siteId = 0)
         {
             IQueryable<LogFunction> logList = null;
             totalRows = 0;

@@ -23,12 +23,20 @@ namespace Fanex.NAP.Core.Service.Impl
     {
         public IServiceContext ServiceContext { get; set; }
 
+        /// <summary>
+        /// Handle exception.
+        /// </summary>
+        /// <param name="ex">The exception.</param>
         public void HandleException(Exception ex)
         {
             LogService.Error(ex.Message, ex);
             throw ex;
         }
 
+        /// <summary>
+        /// Get execute store procedure log criteria.
+        /// </summary>
+        /// <returns>Execute SP log criteria.</returns>
         public LogExecSpCriteria GetLogExecSpCriteria()
         {
             Check.Argument.IsNotNull(this.ServiceContext, "ServiceContext");

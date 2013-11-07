@@ -20,6 +20,9 @@ namespace Fanex.NAP.Framework.Data
     /// </summary>
     public abstract class CriteriaBase : ICriteria
     {
+        /// <summary>
+        /// Get store procedure call parameter.
+        /// </summary>
         public virtual Hashtable GetSpParams()
         {
             var storeProcNameParams = new Hashtable();
@@ -47,6 +50,10 @@ namespace Fanex.NAP.Framework.Data
             return storeProcNameParams;
         }
 
+        /// <summary>
+        /// Add store procedure call parameter.
+        /// </summary>
+        /// <param name="storeProcParamName"></param>
         public virtual Hashtable AddSpParams(Hashtable storeProcParamName)
         {
             Type type = this.GetType();

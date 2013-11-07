@@ -32,6 +32,9 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
             _maintenanceService = maintenanceService ?? new MaintainanceService();
         }
 
+        /// <summary>
+        /// Offline page.
+        /// </summary>
         public ActionResult Offline()
         {
             var downTime = _maintenanceService.GetDowntimeInfo();

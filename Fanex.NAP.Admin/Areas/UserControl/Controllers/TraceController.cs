@@ -41,12 +41,23 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         public TraceController(ITraceService traceService, IFunctionService functionService, ISiteService siteService)
         {
             _traceService = traceService ?? new TraceService();
-            this._functionService = functionService ?? new FunctionService();
+            _functionService = functionService ?? new FunctionService();
             _siteService = siteService ?? new SiteService();
         }
 
         #region Log Exec Sp
 
+        /// <summary>
+        /// Manage execute SP log.
+        /// </summary>
+        /// <param name="id">The page index.</param>
+        /// <param name="size">The page size.</param>
+        /// <param name="q"></param>
+        /// <param name="username">The username.</param>
+        /// <param name="from">From date value.</param>
+        /// <param name="to">To date value.</param>
+        /// <param name="filterBy">Filter by option.</param>
+        /// <returns>Action result.</returns>
         [NapAuth(FunctionKey = FunctionKeys.ExecSpLog)]
         [HttpGet]
         public ActionResult LogExecSp(
@@ -87,6 +98,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return View(criteria);
         }
 
+        /// <summary>
+        /// Manage execute SP log.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>Action result.</returns>
         [HttpPost]
         public ActionResult LogExecSp(GetAllLogCriteria criteria)
         {
@@ -108,6 +124,16 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
         #region Log User Login
 
+        /// <summary>
+        /// Manage user login log.
+        /// </summary>
+        /// <param name="id">The page index.</param>
+        /// <param name="size">The page size.</param>
+        /// <param name="q"></param>
+        /// <param name="from">From date value.</param>
+        /// <param name="to">To date value.</param>
+        /// <param name="siteId">The site ID.</param>
+        /// <returns>Action result.</returns>
         [HttpGet]
         public ActionResult LogUserLogin(
             int id = 1,
@@ -158,6 +184,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return View(criteria);
         }
 
+        /// <summary>
+        /// Manage user login log.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>Action result.</returns>
         [HttpPost]
         public ActionResult LogUserLogin(GetAllLogUserLoginCriteria criteria)
         {
@@ -178,6 +209,16 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
         #region Log Function
 
+        /// <summary>
+        /// Manage function log.
+        /// </summary>
+        /// <param name="id">The page index.</param>
+        /// <param name="size">The page size.</param>
+        /// <param name="q">The username.</param>
+        /// <param name="from">From date value.</param>
+        /// <param name="to">To date value.</param>
+        /// <param name="siteId">The site ID.</param>
+        /// <returns>Action result.</returns>
         [HttpGet]
         public ActionResult LogFunction(
             int id = 1,
@@ -201,7 +242,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
             criteria.Name = criteria.Name ?? string.Empty;
 
-            IQueryable<LogFunction> listLog = _traceService.SearcFunction(
+            IQueryable<LogFunction> listLog = _traceService.SearchFunction(
                                                 criteria.PageIndex,
                                                 criteria.PageSize,
                                                 out totalLogs,
@@ -221,6 +262,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return View(criteria);
         }
 
+        /// <summary>
+        /// Manage function log.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>Action result.</returns>
         [HttpPost]
         public ActionResult LogFunction(GetAllLogFunctionCriteria criteria)
         {
@@ -241,6 +287,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
         #region Ajax
 
+        /// <summary>
+        /// Get log insert detail.
+        /// </summary>
+        /// <param name="id">The log ID.</param>
+        /// <returns>Action result.</returns>
         [HttpPost]
         public ActionResult GetLogInsertDetail(int id)
         {
@@ -258,6 +309,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
         #region View log
 
+        /// <summary>
+        /// Get user insert log detail.
+        /// </summary>
+        /// <param name="log">Execute SP log.</param>
+        /// <returns>Partial view result.</returns>
         public PartialViewResult _NAP_User_Insert(LogExecSp log)
         {
             XElement elementNew = XElement.Parse(log.Data);
@@ -285,6 +341,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return PartialView("~/Areas/UserControl/Views/Trace/_NAPLogInsert.cshtml");
         }
 
+        /// <summary>
+        /// Get customer insert log detail.
+        /// </summary>
+        /// <param name="log">Execute SP log.</param>
+        /// <returns>Partial view result.</returns>
         public PartialViewResult _NAP_Cust_Insert(LogExecSp log)
         {
             XElement elementNew = XElement.Parse(log.Data);
@@ -330,6 +391,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return PartialView("~/Areas/UserControl/Views/Trace/_NAPLogInsert.cshtml");
         }
 
+        /// <summary>
+        /// Get function insert log detail.
+        /// </summary>
+        /// <param name="log">Execute SP log.</param>
+        /// <returns>Partial view result.</returns>
         public PartialViewResult _NAP_Function_Insert(LogExecSp log)
         {
             XElement elementNew = XElement.Parse(log.Data);
@@ -399,6 +465,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return PartialView("~/Areas/UserControl/Views/Trace/_NAPLogInsert.cshtml");
         }
 
+        /// <summary>
+        /// Get group insert log detail.
+        /// </summary>
+        /// <param name="log">Execute SP log.</param>
+        /// <returns>Partial view result.</returns>
         public PartialViewResult _NAP_Group_Insert(LogExecSp log)
         {
             XElement elementNew = XElement.Parse(log.Data);
@@ -432,6 +503,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return PartialView("~/Areas/UserControl/Views/Trace/_NAPLogInsert.cshtml");
         }
 
+        /// <summary>
+        /// Get menu item insert log detail.
+        /// </summary>
+        /// <param name="log">Execute SP log.</param>
+        /// <returns>Partial view result.</returns>
         public PartialViewResult _NAP_MenuItem_Insert(LogExecSp log)
         {
             XElement elementNew = XElement.Parse(log.Data);
@@ -501,6 +577,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return PartialView("~/Areas/UserControl/Views/Trace/_NAPLogInsert.cshtml");
         }
 
+        /// <summary>
+        /// Get insert site log detail.
+        /// </summary>
+        /// <param name="log">Execute SP log.</param>
+        /// <returns>Partial view result.</returns>
         public PartialViewResult _NAP_Site_InsertWithSiteURL(LogExecSp log)
         {
             XElement elementNew = XElement.Parse(log.Data);
@@ -559,6 +640,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return PartialView("~/Areas/UserControl/Views/Trace/_NAP_Site_InsertWithSiteURL.cshtml");
         }
 
+        /// <summary>
+        /// Get update menu item log detail.
+        /// </summary>
+        /// <param name="log">Execute SP log.</param>
+        /// <returns>Partial view result.</returns>
         public PartialViewResult _NAP_MenuItem_Update(LogExecSp log)
         {
             XElement elementNew = XElement.Parse(log.Data);
@@ -637,6 +723,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return PartialView("~/Areas/UserControl/Views/Trace/_NAPLogUpdate.cshtml");
         }
 
+        /// <summary>
+        /// Get update menu item status log detail.
+        /// </summary>
+        /// <param name="log">Execute SP log.</param>
+        /// <returns>Partial view result.</returns>
         public PartialViewResult _NAP_MenuItem_UpdateStatus(LogExecSp log)
         {
             XElement elementNew = XElement.Parse(log.Data);
@@ -660,6 +751,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return PartialView("~/Areas/UserControl/Views/Trace/_NAPLogUpdate.cshtml");
         }
 
+        /// <summary>
+        /// Get update function log detail.
+        /// </summary>
+        /// <param name="log">Execute SP log.</param>
+        /// <returns>Partial view result.</returns>
         public PartialViewResult _NAP_Function_Update(LogExecSp log)
         {
             XElement elementNew = XElement.Parse(log.Data);
@@ -739,6 +835,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return PartialView("~/Areas/UserControl/Views/Trace/_NAPLogUpdate.cshtml");
         }
 
+        /// <summary>
+        /// Get update function status log detail.
+        /// </summary>
+        /// <param name="log">Execute SP log.</param>
+        /// <returns>Partial view result.</returns>
         public PartialViewResult _NAP_Function_UpdateStatus(LogExecSp log)
         {
             XElement elementNew = XElement.Parse(log.Data);
@@ -762,6 +863,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return PartialView("~/Areas/UserControl/Views/Trace/_NAPLogUpdate.cshtml");
         }
 
+        /// <summary>
+        /// Get update site log detail.
+        /// </summary>
+        /// <param name="log">Execute SP log.</param>
+        /// <returns>Partial view result.</returns>
         public PartialViewResult _NAP_Site_Update(LogExecSp log)
         {
             XElement elementNew = XElement.Parse(log.Data);
@@ -805,6 +911,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return PartialView("~/Areas/UserControl/Views/Trace/_NAPLogUpdate.cshtml");
         }
 
+        /// <summary>
+        /// Get update site status log detail.
+        /// </summary>
+        /// <param name="log">Execute SP log.</param>
+        /// <returns>Partial view result.</returns>
         public PartialViewResult _NAP_Site_UpdateStatus(LogExecSp log)
         {
             XElement elementNew = XElement.Parse(log.Data);
@@ -828,6 +939,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return PartialView("~/Areas/UserControl/Views/Trace/_NAPLogUpdate.cshtml");
         }
 
+        /// <summary>
+        /// Get update group log detail.
+        /// </summary>
+        /// <param name="log">Execute SP log.</param>
+        /// <returns>Partial view result.</returns>
         public PartialViewResult _NAP_Group_Update(LogExecSp log)
         {
             XElement elementNew = XElement.Parse(log.Data);
@@ -864,6 +980,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return PartialView("~/Areas/UserControl/Views/Trace/_NAPLogUpdate.cshtml");
         }
 
+        /// <summary>
+        /// Get update group status log detail.
+        /// </summary>
+        /// <param name="log">Execute SP log.</param>
+        /// <returns>Partial view result.</returns>
         public PartialViewResult _NAP_Group_UpdateStatus(LogExecSp log)
         {
             XElement elementNew = XElement.Parse(log.Data);
@@ -887,6 +1008,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return PartialView("~/Areas/UserControl/Views/Trace/_NAPLogUpdate.cshtml");
         }
 
+        /// <summary>
+        /// Get update customer log detail.
+        /// </summary>
+        /// <param name="log">Execute SP log.</param>
+        /// <returns>Partial view result.</returns>
         public PartialViewResult _NAP_Cust_Update(LogExecSp log)
         {
             XElement elementNew = XElement.Parse(log.Data ?? "<ROOT/>");
@@ -931,6 +1057,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return PartialView("~/Areas/UserControl/Views/Trace/_NAPLogUpdate.cshtml");
         }
 
+        /// <summary>
+        /// Get site URL log detail.
+        /// </summary>
+        /// <param name="log">Execute SP log.</param>
+        /// <returns>Partial view result.</returns>
         public PartialViewResult _NAP_Site_Url(LogExecSp log)
         {
             XElement elementNew = XElement.Parse(log.Data);
@@ -988,6 +1119,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return PartialView("~/Areas/UserControl/Views/Trace/_NAP_Site_Url.cshtml");
         }
 
+        /// <summary>
+        /// Get assign permission log detail.
+        /// </summary>
+        /// <param name="log">Execute SP log.</param>
+        /// <returns>Partial view result.</returns>
         public PartialViewResult _NAP_Assign_Permission(LogExecSp log)
         {
             XElement elementNew = XElement.Parse(log.Data);
@@ -1068,6 +1204,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return PartialView("~/Areas/UserControl/Views/Trace/_NAP_Assign_Permission.cshtml");
         }
 
+        /// <summary>
+        /// Get assign site log detail.
+        /// </summary>
+        /// <param name="log">Execute SP log.</param>
+        /// <returns>Partial view result.</returns>
         public PartialViewResult _NAP_Assign_Site(LogExecSp log)
         {
             XElement elementNew = XElement.Parse(log.Data);
@@ -1135,6 +1276,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return PartialView("~/Areas/UserControl/Views/Trace/_NAP_Assign_Site.cshtml");
         }
 
+        /// <summary>
+        /// Get assign permission to users log detail.
+        /// </summary>
+        /// <param name="log">Execute SP log.</param>
+        /// <returns>Partial view result.</returns>
         public PartialViewResult _NAP_Function_AssignToUsers(LogExecSp log)
         {
             XElement elementNew = XElement.Parse(log.Data);
@@ -1189,6 +1335,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return PartialView("~/Areas/UserControl/Views/Trace/_NAP_Function_AssignToUsers.cshtml");
         }
 
+        /// <summary>
+        /// Get assign permission to groups log detail.
+        /// </summary>
+        /// <param name="log">Execute SP log.</param>
+        /// <returns>Partial view result.</returns>
         public PartialViewResult _NAP_Function_AssignFunctionToGroups(LogExecSp log)
         {
             XElement elementNew = XElement.Parse(log.Data);
@@ -1247,12 +1398,15 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
         #region Mailing list log
 
+        /// <summary>
+        /// Get insert mailing list log detail.
+        /// </summary>
+        /// <param name="log">Execute SP log.</param>
+        /// <returns>Partial view result.</returns>
         public PartialViewResult _NAP_MailingList_Insert(LogExecSp log)
         {
             XElement elementNew = XElement.Parse(log.Data);
             XElement elementOld = XElement.Parse(log.OldData ?? "<ROOT/>");
-
-            #region NAP_MailingLists_Insert
 
             if (log.ActionId == (int)LogAction.NAP_MailingList_Insert)
             {
@@ -1322,17 +1476,18 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 ViewBag.LogData = listLogData;
             }
 
-            #endregion
-
             return PartialView("~/Areas/UserControl/Views/Trace/_NAPLogInsert.cshtml");
         }
 
+        /// <summary>
+        /// Get update mailing list log detail.
+        /// </summary>
+        /// <param name="log">Execute SP log.</param>
+        /// <returns>Partial view result.</returns>
         public PartialViewResult _NAP_MailingList_Update(LogExecSp log)
         {
             XElement elementNew = XElement.Parse(log.Data);
             XElement elementOld = XElement.Parse(log.OldData ?? "<ROOT/>");
-
-            #region NAP_MailingLists_Update
 
             if (log.ActionId == (int)LogAction.NAP_MailingList_Update)
             {
@@ -1414,17 +1569,18 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 ViewBag.LogData = listLogData;
             }
 
-            #endregion
-
             return PartialView("~/Areas/UserControl/Views/Trace/_NAPLogUpdate.cshtml");
         }
 
+        /// <summary>
+        /// Get update mailing list status log detail.
+        /// </summary>
+        /// <param name="log">Execute SP log.</param>
+        /// <returns>Partial view result.</returns>
         public PartialViewResult _NAP_MailingList_UpdateStatus(LogExecSp log)
         {
             XElement elementNew = XElement.Parse(log.Data);
             XElement elementOld = XElement.Parse(log.OldData ?? "<ROOT/>");
-
-            #region NAP_MailingLists_UpdateStatus
 
             if (log.ActionId == (int)LogAction.NAP_MailingList_UpdateStatus)
             {
@@ -1440,17 +1596,18 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 ViewBag.LogData = listLogData;
             }
 
-            #endregion
-
             return PartialView("~/Areas/UserControl/Views/Trace/_NAPLogUpdate.cshtml");
         }
 
+        /// <summary>
+        /// Get update mailing list internal log detail.
+        /// </summary>
+        /// <param name="log">Execute SP log.</param>
+        /// <returns>Partial view result.</returns>
         public PartialViewResult _NAP_MailingList_UpdateInternal(LogExecSp log)
         {
             XElement elementNew = XElement.Parse(log.Data);
             XElement elementOld = XElement.Parse(log.OldData ?? "<ROOT/>");
-
-            #region NAP_Function_Insert
 
             if (log.ActionId == (int)LogAction.NAP_MailingList_UpdateIsInternal)
             {
@@ -1465,8 +1622,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 ViewBag.IsInsert = true;
                 ViewBag.LogData = listLogData;
             }
-
-            #endregion
 
             return PartialView("~/Areas/UserControl/Views/Trace/_NAPLogUpdate.cshtml");
         }

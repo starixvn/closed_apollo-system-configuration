@@ -44,6 +44,8 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Get menu item by ID.
         /// </summary>
+        /// <param name="id">The menu item ID.</param>
+        /// <returns>The menu item object.</returns>
         public IMenuItem GetById(int id)
         {
             // check parameters
@@ -72,6 +74,9 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Get menu item by name and site.
         /// </summary>
+        /// <param name="name"></param>
+        /// <param name="siteId">The site ID.</param>
+        /// <returns>The menu item object.</returns>
         public IMenuItem GetByNameAndSite(string name, int siteId)
         {
             // check parameters
@@ -102,6 +107,9 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Get all menu item.
         /// </summary>
+        /// <param name="env">The environment.</param>
+        /// <param name="isActive">Is active or not.</param>
+        /// <returns>The list of menu item object.</returns>
         public IEnumerable<IMenuItem> GetAll(string env = Constant.UAT, bool? isActive = null)
         {
             // check parameters
@@ -131,6 +139,10 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Get all menu item select list item.
         /// </summary>
+        /// <param name="env">The environment.</param>
+        /// <param name="isActive">Is active or not.</param>
+        /// <param name="selectedMenuItemId">Selected menu item ID.</param>
+        /// <returns>The list of select list item.</returns>
         public IList<SelectListItem> GetAllSelectListItem(
             string env = Constant.UAT,
             bool? isActive = null,
@@ -173,6 +185,10 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Get menu item by site.
         /// </summary>
+        /// <param name="siteId">The site ID.</param>
+        /// <param name="env">The environment.</param>
+        /// <param name="isActive">Is active or not.</param>
+        /// <returns>The list of menu item object.</returns>
         public IEnumerable<IMenuItem> GetBySite(int siteId, string env = Constant.UAT, bool? isActive = null)
         {
             // check parameters
@@ -204,6 +220,11 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Get menu item select list item by site.
         /// </summary>
+        /// <param name="siteId">The site ID.</param>
+        /// <param name="env">The environment.</param>
+        /// <param name="isActive">Is active or not.</param>
+        /// <param name="selectedMenuItemId">Selected menu item ID.</param>
+        /// <returns>The list of menu item object.</returns>
         public IList<SelectListItem> GetSelectListItemBySite(
             int siteId,
             string env = Constant.UAT,
@@ -249,6 +270,10 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Get menu item by site in hierarchy.
         /// </summary>
+        /// <param name="siteId">The site ID.</param>
+        /// <param name="env">The environment.</param>
+        /// <param name="isActive">Is active or not.</param>
+        /// <returns>The list of menu item object.</returns>
         public IEnumerable<IMenuItem> GetBySiteInHierarchy(int siteId, string env = Constant.UAT, bool? isActive = null)
         {
             // check parameters
@@ -282,6 +307,9 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Get parent menu item by ID.
         /// </summary>
+        /// <param name="id">The menu item ID.</param>
+        /// <param name="env">The environment.</param>
+        /// <returns>The list of menu item object.</returns>
         public IEnumerable<IMenuItem> GetParentById(int id, string env = Constant.UAT)
         {
             // check parameters
@@ -310,7 +338,14 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Get parent menu item select list item by ID.
         /// </summary>
-        public IList<SelectListItem> GetParentSelectListItemById(int id, int selectedMenuItemId = 0, string env = Constant.UAT)
+        /// <param name="id">The menu item ID.</param>
+        /// <param name="selectedMenuItemId">Selected menu item ID.</param>
+        /// <param name="env">The environment.</param>
+        /// <returns>The list of select list item.</returns>
+        public IList<SelectListItem> GetParentSelectListItemById(
+            int id, 
+            int selectedMenuItemId = 0, 
+            string env = Constant.UAT)
         {
             // check parameters
             Check.Argument.IsNotNegativeOrZero(id, "Id");
@@ -348,6 +383,10 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Get menu item by user include group.
         /// </summary>
+        /// <param name="userId">The user ID.</param>
+        /// <param name="env">The environment.</param>
+        /// <param name="isActive">Is active or not.</param>
+        /// <returns>The list of menu item object.</returns>
         public IEnumerable<IMenuItem> GetByUserIncludeGroup(
             int userId,
             string env = Constant.UAT,
@@ -380,6 +419,11 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Get menu item by user and site include group.
         /// </summary>
+        /// <param name="userId">The user ID.</param>
+        /// <param name="siteId">The site ID.</param>
+        /// <param name="env">The environment.</param>
+        /// <param name="isActive">Is active or not.</param>
+        /// <returns>The list of menu item object.</returns>
         public IEnumerable<IMenuItem> GetByUserAndSiteIncludeGroup(
             int userId,
             int siteId,
@@ -416,6 +460,11 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Search menu item.
         /// </summary>
+        /// <param name="menuItemName">Menu item name.</param>
+        /// <param name="siteId">The site ID.</param>
+        /// <param name="env">The environment.</param>
+        /// <param name="isActive">Is active or not.</param>
+        /// <returns>The list of menu item object.</returns>
         public IEnumerable<IMenuItem> Search(
             string menuItemName,
             int siteId,
@@ -451,6 +500,8 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Insert menu item.
         /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>The command result.</returns>
         public ICommandResult Insert(InsertMenuItemCriteria criteria)
         {
             // check parameters
@@ -476,6 +527,8 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Update menu item.
         /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>The command result.</returns>
         public ICommandResult Update(UpdateMenuItemCriteria criteria)
         {
             // check parameters
@@ -501,6 +554,8 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Update menu item status.
         /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>The command result.</returns>
         public ICommandResult UpdateStatus(UpdateStatusMenuItemCriteria criteria)
         {
             // check parameters
@@ -526,6 +581,9 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Sort menu item in hierarchy.
         /// </summary>
+        /// <param name="menuItemList">List of </param>
+        /// <param name="parentId">The parent ID.</param>
+        /// <returns>The list of menu item object.</returns>
         private IEnumerable<IMenuItem> SortMenuItemsInHierarchy(IEnumerable<IMenuItem> menuItemList, int parentId = 0)
         {
             var sortedMenuItemList = new List<IMenuItem>();

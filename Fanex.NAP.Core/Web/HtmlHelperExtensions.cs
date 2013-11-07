@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------
-// <copyright file="HtmlHelperExtensions.cs" company="Nexcel Solutions Vietnam">
+// <copyright file="HtmlHelperExtension.cs" company="Nexcel Solutions Vietnam">
 // Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------
@@ -44,6 +44,10 @@ namespace Fanex.NAP.Core.Web
         /// <summary>
         /// Truncates a string if it is longer than a given length.
         /// </summary>
+        /// <param name="htmlHelper">HTML helper.</param>
+        /// <param name="value"></param>
+        /// <param name="length"></param>
+        /// <returns>HTML string.</returns>
         public static IHtmlString Truncate(this HtmlHelper htmlHelper, string value, int length)
         {
             var builder = new TagBuilder("a");
@@ -61,6 +65,13 @@ namespace Fanex.NAP.Core.Web
 
         #region Radio Button List
 
+        /// <summary>
+        /// Radio button list helper.
+        /// </summary>
+        /// <param name="helper">HTML helper.</param>
+        /// <param name="name"></param>
+        /// <param name="items"></param>
+        /// <returns>HTML string.</returns>
         public static IHtmlString RadioButtonList(
             this HtmlHelper helper,
             string name,
@@ -70,6 +81,14 @@ namespace Fanex.NAP.Core.Web
             return helper.RadioButtonList(name, items, htmlAttributes);
         }
 
+        /// <summary>
+        /// Radio button list helper.
+        /// </summary>
+        /// <param name="helper">HTML helper.</param>
+        /// <param name="name"></param>
+        /// <param name="items"></param>
+        /// <param name="htmlAttributes">HTML attributes.</param>
+        /// <returns>HTML string.</returns>
         public static IHtmlString RadioButtonList(
             this HtmlHelper helper,
             string name,
@@ -79,6 +98,14 @@ namespace Fanex.NAP.Core.Web
             return helper.RadioButtonList(name, items, (IDictionary<string, object>)HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes));
         }
 
+        /// <summary>
+        /// Radio button list helper.
+        /// </summary>
+        /// <param name="helper">HTML helper.</param>
+        /// <param name="name"></param>
+        /// <param name="items"></param>
+        /// <param name="htmlAttributes">HTML attributes.</param>
+        /// <returns>HTML string.</returns>
         public static IHtmlString RadioButtonList(
             this HtmlHelper helper,
             string name,
@@ -108,6 +135,13 @@ namespace Fanex.NAP.Core.Web
             return new HtmlString(rdoList.ToString());
         }
 
+        /// <summary>
+        /// Radio button list helper.
+        /// </summary>
+        /// <param name="helper">HTML helper.</param>
+        /// <param name="expression"></param>
+        /// <param name="items"></param>
+        /// <returns>HTML string.</returns>
         public static IHtmlString RadioButtonListFor<TModel, TProperty>(
             this HtmlHelper<TModel> helper,
             Expression<Func<TModel, TProperty>> expression,
@@ -117,6 +151,14 @@ namespace Fanex.NAP.Core.Web
             return helper.RadioButtonListFor(expression, items, htmlAttributes);
         }
 
+        /// <summary>
+        /// Radio button list helper.
+        /// </summary>
+        /// <param name="helper">HTML helper.</param>
+        /// <param name="expression"></param>
+        /// <param name="items"></param>
+        /// <param name="htmlAttributes">HTML attributes.</param>
+        /// <returns>HTML string.</returns>
         public static IHtmlString RadioButtonListFor<TModel, TProperty>(
             this HtmlHelper<TModel> helper,
             Expression<Func<TModel, TProperty>> expression,
@@ -129,6 +171,14 @@ namespace Fanex.NAP.Core.Web
                 (IDictionary<string, object>)HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes));
         }
 
+        /// <summary>
+        /// Radio button list helper.
+        /// </summary>
+        /// <param name="helper">HTML helper.</param>
+        /// <param name="expression"></param>
+        /// <param name="items"></param>
+        /// <param name="htmlAttributes">HTML attributes.</param>
+        /// <returns>HTML string.</returns>
         public static IHtmlString RadioButtonListFor<TModel, TProperty>(
             this HtmlHelper<TModel> helper,
             Expression<Func<TModel, TProperty>> expression,
@@ -161,7 +211,6 @@ namespace Fanex.NAP.Core.Web
 
         #endregion
 
-        #region DateTime
         /// <summary>
         /// Converts the value of the current System.DateTime object to its equivalent string
         /// representation using the specified format.
@@ -169,7 +218,7 @@ namespace Fanex.NAP.Core.Web
         /// <param name="value">Date time value.</param>
         /// <param name="dateFormat">Date format.</param>
         /// <param name="timeFormat">Time format.</param>
-        /// <returns></returns>
+        /// <returns>HTML string.</returns>
         public static IHtmlString ToFullDateString(
             this DateTime value, 
             string dateFormat = "MMM dd, yyyy",
@@ -181,7 +230,6 @@ namespace Fanex.NAP.Core.Web
                     value.ToString(dateFormat),
                     value.ToString(timeFormat)));
         }
-        #endregion
 
         /// <summary>
         /// Converts the value of the user level to its equivalent string representation.
@@ -313,6 +361,9 @@ namespace Fanex.NAP.Core.Web
             return res;
         }
 
+        /// <summary>
+        /// Get ot name.
+        /// </summary>
         public static string[] GetBotName(string userAgent)
         {
             userAgent = userAgent.ToLower();
@@ -363,6 +414,9 @@ namespace Fanex.NAP.Core.Web
             return GetArray(res, res);
         }
 
+        /// <summary>
+        /// Get opertion system name.
+        /// </summary>
         public static string[] GetOS(string userAgent)
         {
             string[] arrayBog = GetBotName(userAgent);

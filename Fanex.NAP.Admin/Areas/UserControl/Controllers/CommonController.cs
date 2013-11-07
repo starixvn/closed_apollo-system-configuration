@@ -36,9 +36,14 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return View();
         }
 
-        public ActionResult Error(string aspxErrorPath)
+        /// <summary>
+        /// Error page.
+        /// </summary>
+        /// <param name="errorPath">The error path.</param>
+        /// <returns>Action result.</returns>
+        public ActionResult Error(string errorPath)
         {
-            if (!string.IsNullOrEmpty(aspxErrorPath))
+            if (!string.IsNullOrEmpty(errorPath))
             {
                 return RedirectToAction("Error");
             }
@@ -46,13 +51,19 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return View();
         }
 
-        public ActionResult NotFound(string aspxErrorPath, string url)
+        /// <summary>
+        /// Not found page.
+        /// </summary>
+        /// <param name="errorPath">The error path.</param>
+        /// <param name="url"></param>
+        /// <returns>Action result.</returns>
+        public ActionResult NotFound(string errorPath, string url)
         {
-            if (!string.IsNullOrEmpty(aspxErrorPath))
+            if (!string.IsNullOrEmpty(errorPath))
             {
-                ViewBag.RequestedUrl = aspxErrorPath;
+                ViewBag.RequestedUrl = errorPath;
 
-                return RedirectToAction("NotFound", new { url = aspxErrorPath });
+                return RedirectToAction("NotFound", new { url = errorPath });
             }
 
             ViewBag.RequestedUrl = url;

@@ -64,12 +64,17 @@ namespace Fanex.NAP.Core.Web.Auth
             return authInfo;
         }
 
+        /// <summary>
+        /// Authorize action handler.
+        /// </summary>
         public string ToXml()
         {
             string xml = string.Empty;
-            using (StringWriter sw = new StringWriter())
+
+            using (var sw = new StringWriter())
             {
-                XmlSerializer serializer = new XmlSerializer(typeof(AuthInfo));
+                var serializer = new XmlSerializer(typeof(AuthInfo));
+
                 serializer.Serialize(sw, this);
                 sw.Close();
                 xml = sw.ToString();
