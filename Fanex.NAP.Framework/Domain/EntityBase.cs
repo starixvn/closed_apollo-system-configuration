@@ -16,7 +16,7 @@ namespace Fanex.NAP.Framework.Domain
     /// </summary>
     /// <typeparam name="TId">The type of the id.</typeparam>
     /// <typeparam name="TName">The type of the name.</typeparam>
-    public class EntityBase<TId, TName> : IEntity<TId, TName>
+    public sealed class EntityBase<TId, TName> : IEntity<TId, TName>
     {
         TId IEntity<TId, TName>.Id
         {
