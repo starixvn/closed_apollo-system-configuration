@@ -37,26 +37,19 @@ namespace Fanex.NAP.Core.Repository.Impl
         /// <returns>The function.</returns>
         public override IFunction Get(ICriteria criteria)
         {
-            try
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                using (var db = new ObjectDb(criteria.GetSettingKey()))
-                {
-                    return db.QueryEntity<Function, Function, Site, User, User, Function>(
-                         (f, pf, s, cu, mu) =>
-                         {
-                             f.Parent = pf;
-                             f.Site = s;
-                             f.Creator = cu;
-                             f.Modifier = mu;
-                             return f;
-                         },
-                         "ParentId,SiteId,CreatorId,ModifierId",
-                         criteria.GetSpParams());
-                }
-            }
-            catch
-            {
-                throw;
+                return db.QueryEntity<Function, Function, Site, User, User, Function>(
+                        (f, pf, s, cu, mu) =>
+                        {
+                            f.Parent = pf;
+                            f.Site = s;
+                            f.Creator = cu;
+                            f.Modifier = mu;
+                            return f;
+                        },
+                        "ParentId,SiteId,CreatorId,ModifierId",
+                        criteria.GetSpParams());
             }
         }
 
@@ -67,16 +60,9 @@ namespace Fanex.NAP.Core.Repository.Impl
         /// <returns>Number of function.</returns>
         public override int Count(ICriteria criteria)
         {
-            try
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                using (var db = new ObjectDb(criteria.GetSettingKey()))
-                {
-                    return (int)db.ExecuteScalar(criteria.GetSpParams());
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+                return (int)db.ExecuteScalar(criteria.GetSpParams());
             }
         }
 
@@ -87,26 +73,19 @@ namespace Fanex.NAP.Core.Repository.Impl
         /// <returns>List of function.</returns>
         public override IEnumerable<IFunction> Fetch(ICriteria criteria)
         {
-            try
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                using (var db = new ObjectDb(criteria.GetSettingKey()))
-                {
-                    return db.Query<Function, Function, Site, User, User, Function>(
-                        (f, pf, s, cu, mu) =>
-                        {
-                            f.Parent = pf;
-                            f.Site = s;
-                            f.Creator = cu;
-                            f.Modifier = mu;
-                            return f;
-                        },
-                        "ParentId,SiteId,CreatorId,ModifierId",
-                        criteria.GetSpParams()).OrderBy(f => f.Name).ToList<Function>();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+                return db.Query<Function, Function, Site, User, User, Function>(
+                    (f, pf, s, cu, mu) =>
+                    {
+                        f.Parent = pf;
+                        f.Site = s;
+                        f.Creator = cu;
+                        f.Modifier = mu;
+                        return f;
+                    },
+                    "ParentId,SiteId,CreatorId,ModifierId",
+                    criteria.GetSpParams()).OrderBy(f => f.Name).ToList<Function>();
             }
         }
 
@@ -233,24 +212,18 @@ namespace Fanex.NAP.Core.Repository.Impl
         /// <returns>Command result.</returns>
         public ICommandResult Duplicate(ref DuplicateFunctionCriteria criteria, ICriteria logCriteria)
         {
-            try
+            Hashtable hash = criteria.GetSpParams();
+
+            hash = logCriteria.AddSpParams(hash);
+            hash = (new ResultCriteria()).AddSpParams(hash);
+
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                Hashtable hash = criteria.GetSpParams();
-                hash = logCriteria.AddSpParams(hash);
-                hash = (new ResultCriteria()).AddSpParams(hash);
+                db.ExecuteNonQuery(hash);
 
-                using (var db = new ObjectDb(criteria.GetSettingKey()))
-                {
-                    db.ExecuteNonQuery(hash);
+                criteria.FunctionId = Convert.ToInt32(db.GetParameterValue("FunctionId"));
 
-                    criteria.FunctionId = Convert.ToInt32(db.GetParameterValue("FunctionId"));
-
-                    return GetCommandResult(hash);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+                return GetCommandResult(hash);
             }
         }
 
@@ -262,24 +235,18 @@ namespace Fanex.NAP.Core.Repository.Impl
         /// <returns>Command result.</returns>
         public ICommandResult Insert(ref InsertFunctionCriteria criteria, ICriteria logCriteria)
         {
-            try
+            Hashtable hash = criteria.GetSpParams();
+
+            hash = logCriteria.AddSpParams(hash);
+            hash = (new ResultCriteria()).AddSpParams(hash);
+
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                Hashtable hash = criteria.GetSpParams();
-                hash = logCriteria.AddSpParams(hash);
-                hash = (new ResultCriteria()).AddSpParams(hash);
+                db.ExecuteNonQuery(hash);
 
-                using (var db = new ObjectDb(criteria.GetSettingKey()))
-                {
-                    db.ExecuteNonQuery(hash);
+                criteria.FunctionId = Convert.ToInt32(db.GetParameterValue("FunctionId"));
 
-                    criteria.FunctionId = Convert.ToInt32(db.GetParameterValue("FunctionId"));
-
-                    return GetCommandResult(hash);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+                return GetCommandResult(hash);
             }
         }
 
@@ -291,22 +258,16 @@ namespace Fanex.NAP.Core.Repository.Impl
         /// <returns>Command result.</returns>
         public ICommandResult Update(ICriteria criteria, ICriteria logCriteria)
         {
-            try
-            {
-                Hashtable hash = criteria.GetSpParams();
-                hash = logCriteria.AddSpParams(hash);
-                hash = (new ResultCriteria()).AddSpParams(hash);
+            Hashtable hash = criteria.GetSpParams();
 
-                using (var db = new ObjectDb(criteria.GetSettingKey()))
-                {
-                    db.ExecuteNonQuery(hash);
+            hash = logCriteria.AddSpParams(hash);
+            hash = (new ResultCriteria()).AddSpParams(hash);
 
-                    return GetCommandResult(hash);
-                }
-            }
-            catch (Exception ex)
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                throw ex;
+                db.ExecuteNonQuery(hash);
+
+                return GetCommandResult(hash);
             }
         }
 

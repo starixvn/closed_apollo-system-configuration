@@ -61,35 +61,27 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         [NapAuth(FunctionKey = FunctionKeys.ManageSite, Policy = Constant.Policy.Read)]
         public ActionResult Manage(GetAllSiteCriteria criteria)
         {
-            try
-            {
-                int policy = _userService.GetUserSiteFunctionKeyPolicy(
-                                                CurrentSession.UserId,
-                                                this.SiteId,
-                                                FunctionKeys.ManageSite.ToString());
+            int policy = _userService.GetUserSiteFunctionKeyPolicy(
+                                            CurrentSession.UserId,
+                                            this.SiteId,
+                                            FunctionKeys.ManageSite.ToString());
 
-                ViewBag.Site = _siteService.GetByUserAndFunctionKeyIncludeGroup(
-                                                        CurrentSession.UserId,
-                                                        FunctionKeys.ManageUser.ToString(),
-                                                        this.Environment,
-                                                        policy: Constant.Policy.Read).Select(s => s.Id).ToList();
+            ViewBag.Site = _siteService.GetByUserAndFunctionKeyIncludeGroup(
+                                                    CurrentSession.UserId,
+                                                    FunctionKeys.ManageUser.ToString(),
+                                                    this.Environment,
+                                                    policy: Constant.Policy.Read).Select(s => s.Id).ToList();
 
-                var hasManageUser = _userService.GetUserSiteFunctionKeyPolicy(
-                   CurrentSession.UserId,
-                   SiteId,
-                   FunctionKeys.ManageUser.ToString()) >= 1 ? true : false;
+            var hasManageUser = _userService.GetUserSiteFunctionKeyPolicy(
+                CurrentSession.UserId,
+                SiteId,
+                FunctionKeys.ManageUser.ToString()) >= 1 ? true : false;
 
-                ViewFlags.HasEditRight = policy >= (int)Constant.Policy.Host;
-                ViewFlags.HasManageUserRight = hasManageUser;
+            ViewFlags.HasEditRight = policy >= (int)Constant.Policy.Host;
+            ViewFlags.HasManageUserRight = hasManageUser;
 
-                ViewBag.SiteList = _siteService.GetAllWithNumOfUsers(this.Environment).OrderBy(s => s.Id).ToList();
-                ViewBag.SiteUrlList = _siteService.GetAllSiteUrl(this.Environment).ToList();
-            }
-            catch (Exception ex)
-            {
-                LogService.Error(ex.Message, ex);
-                throw ex;
-            }
+            ViewBag.SiteList = _siteService.GetAllWithNumOfUsers(this.Environment).OrderBy(s => s.Id).ToList();
+            ViewBag.SiteUrlList = _siteService.GetAllSiteUrl(this.Environment).ToList();
 
             return View(criteria);
         }
@@ -192,28 +184,20 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         [NapAuth(FunctionKey = FunctionKeys.ManageSite, Policy = Constant.Policy.Host)]
         public ActionResult Edit(int id)
         {
+            var site = _siteService.GetById(id);
+
+            if (site == null)
+            {
+                return RedirectToAction("NotFound", "Common");
+            }
+
             var criteria = new UpdateSiteCriteria();
 
-            try
-            {
-                var site = _siteService.GetById(id);
-
-                if (site == null)
-                {
-                    return RedirectToAction("NotFound", "Common");
-                }
-
-                criteria.SiteId = site.Id;
-                criteria.SiteName = site.Name;
-                criteria.Description = site.Description;
-                criteria.IsActive = site.IsActive;
-                criteria.Environment = site.Environment;
-            }
-            catch (Exception ex)
-            {
-                LogService.Error(ex.Message, ex);
-                throw ex;
-            }
+            criteria.SiteId = site.Id;
+            criteria.SiteName = site.Name;
+            criteria.Description = site.Description;
+            criteria.IsActive = site.IsActive;
+            criteria.Environment = site.Environment;
 
             return View(criteria);
         }
@@ -227,34 +211,26 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         [NapAuth(FunctionKey = FunctionKeys.ManageSite, Policy = Constant.Policy.Host)]
         public ActionResult Edit(UpdateSiteCriteria criteria)
         {
-            try
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
+                // checks SiteName duplication
+                string siteName = criteria.SiteName = criteria.SiteName.Trim();
+                var site = _siteService.GetByName(siteName);
+
+                if (site != null && site.Id != criteria.SiteId)
                 {
-                    // checks SiteName duplication
-                    string siteName = criteria.SiteName = criteria.SiteName.Trim();
-                    var site = _siteService.GetByName(siteName);
+                    ModelState.AddModelError("SiteName", string.Format(ViewResources.DuplicateMsg, siteName));
 
-                    if (site != null && site.Id != criteria.SiteId)
-                    {
-                        ModelState.AddModelError("SiteName", string.Format(ViewResources.DuplicateMsg, siteName));
-
-                        return View(criteria);
-                    }
-
-                    // updates site
-                    var result = _siteService.Update(criteria);
-
-                    if (result != null && result.IsSuccessful)
-                    {
-                        ViewBag.Success = true;
-                    }
+                    return View(criteria);
                 }
-            }
-            catch (Exception ex)
-            {
-                LogService.Error(ex.Message, ex);
-                throw ex;
+
+                // updates site
+                var result = _siteService.Update(criteria);
+
+                if (result != null && result.IsSuccessful)
+                {
+                    ViewBag.Success = true;
+                }
             }
 
             return View(criteria);
@@ -272,28 +248,20 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         [NapAuth(FunctionKey = FunctionKeys.ManageSite, Policy = Constant.Policy.Read)]
         public ActionResult EditUrl(int id)
         {
-            try
-            {
-                var site = _siteService.GetById(id);
+            var site = _siteService.GetById(id);
 
-                if (site == null)
-                {
-                    return HttpNotFound();
-                }
-
-                ViewBag.SiteId = site.Id;
-                ViewBag.SiteName = site.Name;
-                ViewBag.Urls = _siteService.GetSiteUrlBySiteId(id, this.Environment).ToList();
-                ViewFlags.SetEditRight(_userService.GetUserSiteFunctionKeyPolicy(
-                                                                        CurrentSession.UserId,
-                                                                        this.SiteId,
-                                                                        FunctionKeys.ManageSite.ToString()));
-            }
-            catch (Exception ex)
+            if (site == null)
             {
-                LogService.Error(ex.Message, ex);
-                throw ex;
+                return HttpNotFound();
             }
+
+            ViewBag.SiteId = site.Id;
+            ViewBag.SiteName = site.Name;
+            ViewBag.Urls = _siteService.GetSiteUrlBySiteId(id, this.Environment).ToList();
+            ViewFlags.SetEditRight(_userService.GetUserSiteFunctionKeyPolicy(
+                                                                    CurrentSession.UserId,
+                                                                    this.SiteId,
+                                                                    FunctionKeys.ManageSite.ToString()));
 
             return View();
         }
@@ -473,23 +441,15 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             if (Request.IsAjaxRequest())
             {
-                try
+                var result = _siteService.UpdateStatus(new UpdateStatusSiteCriteria
                 {
-                    var result = _siteService.UpdateStatus(new UpdateStatusSiteCriteria
-                    {
-                        SiteId = id,
-                        IsActive = isActive
-                    });
+                    SiteId = id,
+                    IsActive = isActive
+                });
 
-                    if (result != null && result.IsSuccessful)
-                    {
-                        return Json(Constant.OK);
-                    }
-                }
-                catch (Exception ex)
+                if (result != null && result.IsSuccessful)
                 {
-                    LogService.Error(ex.Message, ex);
-                    throw ex;
+                    return Json(Constant.OK);
                 }
             }
 

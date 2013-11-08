@@ -37,20 +37,13 @@ namespace Fanex.NAP.Core.Repository.Impl
         /// <returns>The group.</returns>
         public override IGroup Get(ICriteria criteria)
         {
-            try
+            using (ObjectDb objectDb = new ObjectDb(criteria.GetSettingKey()))
             {
-                using (ObjectDb objectDb = new ObjectDb(criteria.GetSettingKey()))
-                {
-                    var objGroup = objectDb.QueryEntity<Group, User, User, Group>(
-                        (g, cu, mu) => { g.Creator = cu; g.Modifier = mu; return g; },
-                        "CreatorId,ModifierId",
-                        criteria.GetSpParams());
-                    return objGroup;
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+                var objGroup = objectDb.QueryEntity<Group, User, User, Group>(
+                    (g, cu, mu) => { g.Creator = cu; g.Modifier = mu; return g; },
+                    "CreatorId,ModifierId",
+                    criteria.GetSpParams());
+                return objGroup;
             }
         }
 
@@ -61,21 +54,14 @@ namespace Fanex.NAP.Core.Repository.Impl
         /// <returns>List of group.</returns>
         public override IEnumerable<IGroup> Fetch(ICriteria criteria)
         {
-            try
+            using (ObjectDb objectDb = new ObjectDb(criteria.GetSettingKey()))
             {
-                using (ObjectDb objectDb = new ObjectDb(criteria.GetSettingKey()))
-                {
-                    var listGroup = objectDb.Query<Group, User, User, Group>(
-                        (g, cu, mu) => { g.Creator = cu; g.Modifier = mu; return g; },
-                        "CreatorId,ModifierId",
-                        criteria.GetSpParams());
+                var listGroup = objectDb.Query<Group, User, User, Group>(
+                    (g, cu, mu) => { g.Creator = cu; g.Modifier = mu; return g; },
+                    "CreatorId,ModifierId",
+                    criteria.GetSpParams());
 
-                    return listGroup.OrderBy(g => g.Name).ToList<Group>();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+                return listGroup.OrderBy(g => g.Name).ToList<Group>();
             }
         }
 
@@ -87,23 +73,16 @@ namespace Fanex.NAP.Core.Repository.Impl
         /// <returns>Command result.</returns>
         public ICommandResult Insert(ref InsertGroupCriteria criteria, ICriteria logCriteria)
         {
-            try
-            {
-                Hashtable hash = criteria.GetSpParams();
+            Hashtable hash = criteria.GetSpParams();
 
-                hash = logCriteria.AddSpParams(hash);
-                hash = (new ResultCriteria()).AddSpParams(hash);
+            hash = logCriteria.AddSpParams(hash);
+            hash = (new ResultCriteria()).AddSpParams(hash);
 
-                using (ObjectDb objectDb = new ObjectDb(criteria.GetSettingKey()))
-                {
-                    objectDb.ExecuteNonQuery(hash);
-                    criteria.GroupId = Convert.ToInt32(objectDb.GetParameterValue("GroupId"));
-                    return GetCommandResult(hash);
-                }
-            }
-            catch (Exception ex)
+            using (ObjectDb objectDb = new ObjectDb(criteria.GetSettingKey()))
             {
-                throw ex;
+                objectDb.ExecuteNonQuery(hash);
+                criteria.GroupId = Convert.ToInt32(objectDb.GetParameterValue("GroupId"));
+                return GetCommandResult(hash);
             }
         }
 
@@ -115,22 +94,15 @@ namespace Fanex.NAP.Core.Repository.Impl
         /// <returns>Command result.</returns>
         public ICommandResult Update(ICriteria criteria, ICriteria logCriteria)
         {
-            try
-            {
-                Hashtable hash = criteria.GetSpParams();
+            Hashtable hash = criteria.GetSpParams();
 
-                hash = logCriteria.AddSpParams(hash);
-                hash = (new ResultCriteria()).AddSpParams(hash);
+            hash = logCriteria.AddSpParams(hash);
+            hash = (new ResultCriteria()).AddSpParams(hash);
 
-                using (ObjectDb objectDb = new ObjectDb(criteria.GetSettingKey()))
-                {
-                    objectDb.ExecuteNonQuery(hash);
-                    return GetCommandResult(hash);
-                }
-            }
-            catch (Exception ex)
+            using (ObjectDb objectDb = new ObjectDb(criteria.GetSettingKey()))
             {
-                throw ex;
+                objectDb.ExecuteNonQuery(hash);
+                return GetCommandResult(hash);
             }
         }
 

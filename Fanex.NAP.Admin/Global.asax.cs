@@ -40,6 +40,8 @@ namespace Fanex.NAP.Admin
         /// <summary>
         /// Application error event handler.
         /// </summary>
+        /// <param name="sender">Event sender.</param>
+        /// <param name="e">Event arguments.</param>
         protected void Application_Error(object sender, EventArgs e)
         {
             // Logging

@@ -398,15 +398,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         [NapAuth(FunctionKey = FunctionKeys.ManageUser, Policy = Constant.Policy.Read)]
         public ActionResult UserInfo(int id)
         {
-            try
-            {
-                return View(_userService.GetById(id));
-            }
-            catch (Exception ex)
-            {
-                LogService.Error(ex.Message, ex);
-                throw ex;
-            }
+            return View(_userService.GetById(id));
         }
 
         #endregion
@@ -439,26 +431,18 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             PagerList<IUser> userList = null;
             int totalUsers = 0;
 
-            try
+            if (username.Length > 0)
             {
-                if (username.Length > 0)
+                var users = _userService.SearchByUsername(username, pageIndex, pageSize, out totalUsers);
+
+                userList = new PagerList<IUser>(pageIndex, pageSize, totalUsers, users);
+                ViewBag.Groups = _groupService.GetAllSelectListItem();
+                ViewBag.Username = username;
+
+                if (Request.IsAjaxRequest())
                 {
-                    var users = _userService.SearchByUsername(username, pageIndex, pageSize, out totalUsers);
-
-                    userList = new PagerList<IUser>(pageIndex, pageSize, totalUsers, users);
-                    ViewBag.Groups = _groupService.GetAllSelectListItem();
-                    ViewBag.Username = username;
-
-                    if (Request.IsAjaxRequest())
-                    {
-                        return PartialView("AddExisting_UserList", userList);
-                    }
+                    return PartialView("AddExisting_UserList", userList);
                 }
-            }
-            catch (Exception ex)
-            {
-                LogService.Error(ex.Message, ex);
-                throw ex;
             }
 
             // return current state page manage user
@@ -505,39 +489,31 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         [NapAuth(FunctionKey = FunctionKeys.ManageUser, Policy = Constant.Policy.Host)]
         public ActionResult AddNew(InsertCustCriteria criteria)
         {
-            try
-            {
-                ViewBag.Groups = _groupService.GetAllSelectListItem(selectedGroupId: criteria.GroupId);
+            ViewBag.Groups = _groupService.GetAllSelectListItem(selectedGroupId: criteria.GroupId);
 
-                if (ModelState.IsValid)
+            if (ModelState.IsValid)
+            {
+                // check username duplication
+                if (_userService.CheckUsernameExist(criteria.Username))
                 {
-                    // check username duplication
-                    if (_userService.CheckUsernameExist(criteria.Username))
-                    {
-                        ModelState.AddModelError("Username", string.Format(ViewResources.DuplicateMsg, criteria.Username));
-                        return View(criteria);
-                    }
-                    
-                    // add new user
-                    criteria.UserPwd = Cryptography.CfsEnCode(criteria.UserPwd);
-                    criteria.FirstName = criteria.FirstName == null ? string.Empty : criteria.FirstName;
-                    criteria.LastName = criteria.LastName == null ? string.Empty : criteria.LastName;
-                    criteria.Email = criteria.Email == null ? string.Empty : criteria.Email;
-
-                    // assign all functions to the new user if he is site admin or portal admin
-                    var result = _userService.Insert(criteria);
-
-                    if (result != null && result.IsSuccessful)
-                    {
-                        ViewBag.Success = true;
-                        ViewBag.UserId = criteria.CustId;
-                    }
+                    ModelState.AddModelError("Username", string.Format(ViewResources.DuplicateMsg, criteria.Username));
+                    return View(criteria);
                 }
-            }
-            catch (Exception ex)
-            {
-                LogService.Error(ex.Message, ex);
-                throw ex;
+                    
+                // add new user
+                criteria.UserPwd = Cryptography.CfsEnCode(criteria.UserPwd);
+                criteria.FirstName = criteria.FirstName == null ? string.Empty : criteria.FirstName;
+                criteria.LastName = criteria.LastName == null ? string.Empty : criteria.LastName;
+                criteria.Email = criteria.Email == null ? string.Empty : criteria.Email;
+
+                // assign all functions to the new user if he is site admin or portal admin
+                var result = _userService.Insert(criteria);
+
+                if (result != null && result.IsSuccessful)
+                {
+                    ViewBag.Success = true;
+                    ViewBag.UserId = criteria.CustId;
+                }
             }
 
             return View(criteria);
@@ -566,35 +542,27 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 ReturnGroupId = returnGroupId ?? 0
             };
 
-            try
+            IUser user = _userService.GetById(id);
+
+            if (user == null)
             {
-                IUser user = _userService.GetById(id);
-
-                if (user == null)
-                {
-                    return RedirectToAction("Manage");
-                }
-
-                criteria.CustId = user.Id;
-                criteria.FirstName = user.FirstName;
-                criteria.LastName = user.LastName;
-                criteria.Email = user.Email;
-                criteria.Username = user.Username;
-                criteria.GroupId = user.Group != null ? user.Group.Id : 0;
-
-                if (user.Group == null)
-                {
-                    ViewBag.Groups = _groupService.GetAllSelectListItem();
-                }
-                else
-                {
-                    ViewBag.Groups = _groupService.GetAllSelectListItem(selectedGroupId: user.Group.Id);
-                }
+                return RedirectToAction("Manage");
             }
-            catch (Exception ex)
+
+            criteria.CustId = user.Id;
+            criteria.FirstName = user.FirstName;
+            criteria.LastName = user.LastName;
+            criteria.Email = user.Email;
+            criteria.Username = user.Username;
+            criteria.GroupId = user.Group != null ? user.Group.Id : 0;
+
+            if (user.Group == null)
             {
-                LogService.Error(ex.Message, ex);
-                throw ex;
+                ViewBag.Groups = _groupService.GetAllSelectListItem();
+            }
+            else
+            {
+                ViewBag.Groups = _groupService.GetAllSelectListItem(selectedGroupId: user.Group.Id);
             }
 
             return View(criteria);
@@ -609,29 +577,21 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         [NapAuth(FunctionKey = FunctionKeys.ManageUser, Policy = Constant.Policy.Host)]
         public ActionResult Edit(UpdateCustCriteria criteria)
         {
-            try
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
+                criteria.FirstName = criteria.FirstName == null ? string.Empty : criteria.FirstName;
+                criteria.LastName = criteria.LastName == null ? string.Empty : criteria.LastName;
+                criteria.Email = criteria.Email == null ? string.Empty : criteria.Email;
+
+                var result = _userService.InsertOrUpdate(criteria);
+
+                if (result != null && result.IsSuccessful)
                 {
-                    criteria.FirstName = criteria.FirstName == null ? string.Empty : criteria.FirstName;
-                    criteria.LastName = criteria.LastName == null ? string.Empty : criteria.LastName;
-                    criteria.Email = criteria.Email == null ? string.Empty : criteria.Email;
-
-                    var result = _userService.InsertOrUpdate(criteria);
-
-                    if (result != null && result.IsSuccessful)
-                    {
-                        ViewBag.Success = true;
-                    }
+                    ViewBag.Success = true;
                 }
+            }
 
-                ViewBag.Groups = _groupService.GetAllSelectListItem(selectedGroupId: criteria.GroupId);
-            }
-            catch (Exception ex)
-            {
-                LogService.Error(ex.Message, ex);
-                throw ex;
-            }
+            ViewBag.Groups = _groupService.GetAllSelectListItem(selectedGroupId: criteria.GroupId);
 
             return View(criteria);
         }
@@ -659,25 +619,17 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 ReturnGroupId = groupId ?? 0
             };
 
-            try
-            {
-                IUser user = _userService.GetById(id);
+            IUser user = _userService.GetById(id);
 
-                if (user == null)
-                {
-                    return RedirectToAction("Manage");
-                }
-
-                criteria.CustId = user.Id;
-                criteria.Username = user.Username;
-                criteria.UserPwd = string.Empty;
-                criteria.ConfirmUserPwd = string.Empty;
-            }
-            catch (Exception ex)
+            if (user == null)
             {
-                LogService.Error(ex.Message, ex);
-                throw ex;
+                return RedirectToAction("Manage");
             }
+
+            criteria.CustId = user.Id;
+            criteria.Username = user.Username;
+            criteria.UserPwd = string.Empty;
+            criteria.ConfirmUserPwd = string.Empty;
 
             return View(criteria);
         }
@@ -691,39 +643,31 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         [NapAuth(FunctionKey = FunctionKeys.ManageUser, Policy = Constant.Policy.Host)]
         public ActionResult ResetPassword(ResetPasswordCustCriteria criteria)
         {
-            try
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
+                IUser user = _userService.GetById(criteria.CustId);
+
+                if (user == null)
                 {
-                    IUser user = _userService.GetById(criteria.CustId);
-
-                    if (user == null)
-                    {
-                        return RedirectToAction("Manage");
-                    }
-
-                    // check password confirmation
-                    if (!criteria.UserPwd.Equals(criteria.ConfirmUserPwd))
-                    {
-                        ModelState.AddModelError("Password", ViewResources.WrongPasswordConfirmation);
-
-                        return View(criteria);
-                    }
-
-                    criteria.UserPwd = Cryptography.CfsEnCode(criteria.UserPwd);
-
-                    var result = _userService.InsertOrUpdate(criteria);
-
-                    if (result != null && result.IsSuccessful)
-                    {
-                        ViewBag.Success = true;
-                    }
+                    return RedirectToAction("Manage");
                 }
-            }
-            catch (Exception ex)
-            {
-                LogService.Error(ex.Message, ex);
-                throw ex;
+
+                // check password confirmation
+                if (!criteria.UserPwd.Equals(criteria.ConfirmUserPwd))
+                {
+                    ModelState.AddModelError("Password", ViewResources.WrongPasswordConfirmation);
+
+                    return View(criteria);
+                }
+
+                criteria.UserPwd = Cryptography.CfsEnCode(criteria.UserPwd);
+
+                var result = _userService.InsertOrUpdate(criteria);
+
+                if (result != null && result.IsSuccessful)
+                {
+                    ViewBag.Success = true;
+                }
             }
 
             return View(criteria);
@@ -751,35 +695,27 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         [HttpPost]
         public ActionResult ChangePassword(UpdatePasswordCustCriteria criteria)
         {
-            try
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
+                var user = _userService.GetById(CurrentSession.UserId);
+                string oldPwd = Cryptography.CfsEnCode(criteria.OldUserPwd);
+
+                if (oldPwd.Equals(user.Password))
                 {
-                    var user = _userService.GetById(CurrentSession.UserId);
-                    string oldPwd = Cryptography.CfsEnCode(criteria.OldUserPwd);
+                    criteria.CustId = user.Id;
+                    criteria.UserPwd = Cryptography.CfsEnCode(criteria.UserPwd);
 
-                    if (oldPwd.Equals(user.Password))
+                    var result = _userService.InsertOrUpdate(criteria);
+
+                    if (result != null && result.IsSuccessful)
                     {
-                        criteria.CustId = user.Id;
-                        criteria.UserPwd = Cryptography.CfsEnCode(criteria.UserPwd);
-
-                        var result = _userService.InsertOrUpdate(criteria);
-
-                        if (result != null && result.IsSuccessful)
-                        {
-                            ViewBag.Success = true;
-                        }
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("OldUserPwd", ViewResources.Wrong_password);
+                        ViewBag.Success = true;
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                LogService.Error(ex.Message, ex);
-                throw ex;
+                else
+                {
+                    ModelState.AddModelError("OldUserPwd", ViewResources.Wrong_password);
+                }
             }
 
             return View(criteria);
@@ -1023,42 +959,34 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             if (Request.IsAjaxRequest())
             {
-                try
+                string xmlValue = "<ROOT>";
+                string[] strValueSiteLevel = value.Split(';');
+
+                foreach (var item in strValueSiteLevel)
                 {
-                    string xmlValue = "<ROOT>";
-                    string[] strValueSiteLevel = value.Split(';');
-
-                    foreach (var item in strValueSiteLevel)
+                    if (!item.IsNullOrTrimEmpty())
                     {
-                        if (!item.IsNullOrTrimEmpty())
-                        {
-                            string[] strTemp = item.Split(',');
-                            xmlValue += "<SiteLevel SiteId='" + strTemp[0] + "' Level='" + strTemp[1] + "' ></SiteLevel>";
-                        }
-                    }
-
-                    xmlValue += "</ROOT>";
-
-                    var criteria = new AssignSiteUserCriteria
-                    {
-                        ModifiedBy = CurrentSession.UserId,
-                        ModifiedDate = DateTime.Now,
-                        UserId = userId,
-                        Value = xmlValue
-                    };
-
-                    // assigns all functions to the user if he/she is site-admin or portal-admin
-                    var result = _userService.AssignSite(criteria);
-
-                    if (result != null && result.IsSuccessful)
-                    {
-                        return Constant.OK;
+                        string[] strTemp = item.Split(',');
+                        xmlValue += "<SiteLevel SiteId='" + strTemp[0] + "' Level='" + strTemp[1] + "' ></SiteLevel>";
                     }
                 }
-                catch (Exception ex)
+
+                xmlValue += "</ROOT>";
+
+                var criteria = new AssignSiteUserCriteria
                 {
-                    LogService.Error(ex.Message, ex);
-                    throw ex;
+                    ModifiedBy = CurrentSession.UserId,
+                    ModifiedDate = DateTime.Now,
+                    UserId = userId,
+                    Value = xmlValue
+                };
+
+                // assigns all functions to the user if he/she is site-admin or portal-admin
+                var result = _userService.AssignSite(criteria);
+
+                if (result != null && result.IsSuccessful)
+                {
+                    return Constant.OK;
                 }
             }
 
@@ -1077,23 +1005,14 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         public ActionResult UserProfile()
         {
             var criteria = new UpdateCustCriteria();
+            var user = _userService.GetById(CurrentSession.UserId);
 
-            try
-            {
-                var user = _userService.GetById(CurrentSession.UserId);
-
-                criteria.CustId = user.Id;
-                criteria.Username = user.Username;
-                criteria.FirstName = user.FirstName;
-                criteria.LastName = user.LastName;
-                criteria.Email = user.Email;
-                criteria.GroupId = user.Group != null ? user.Group.Id : 0;
-            }
-            catch (Exception ex)
-            {
-                LogService.Error(ex.Message, ex);
-                throw ex;
-            }
+            criteria.CustId = user.Id;
+            criteria.Username = user.Username;
+            criteria.FirstName = user.FirstName;
+            criteria.LastName = user.LastName;
+            criteria.Email = user.Email;
+            criteria.GroupId = user.Group != null ? user.Group.Id : 0;
 
             return View(criteria);
         }
@@ -1106,28 +1025,20 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         [HttpPost]
         public ActionResult UserProfile(UpdateCustCriteria criteria)
         {
-            try
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
+                criteria.CustId = CurrentSession.UserId;
+                criteria.Username = CurrentSession.Username;
+                criteria.FirstName = criteria.FirstName ?? string.Empty;
+                criteria.LastName = criteria.LastName ?? string.Empty;
+                criteria.Email = criteria.Email ?? string.Empty;
+
+                var result = _userService.InsertOrUpdate(criteria);
+
+                if (result != null && result.IsSuccessful)
                 {
-                    criteria.CustId = CurrentSession.UserId;
-                    criteria.Username = CurrentSession.Username;
-                    criteria.FirstName = criteria.FirstName ?? string.Empty;
-                    criteria.LastName = criteria.LastName ?? string.Empty;
-                    criteria.Email = criteria.Email ?? string.Empty;
-
-                    var result = _userService.InsertOrUpdate(criteria);
-
-                    if (result != null && result.IsSuccessful)
-                    {
-                        ViewBag.Success = true;
-                    }
+                    ViewBag.Success = true;
                 }
-            }
-            catch (Exception ex)
-            {
-                LogService.Error(ex.Message, ex);
-                throw ex;
             }
 
             return View(criteria);
@@ -1149,17 +1060,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             if (Request.IsAjaxRequest())
             {
-                try
-                {
-                    var userList = _userService.GetByGroupAndSite(groupId, siteId);
-
-                    return View(userList);
-                }
-                catch (Exception ex)
-                {
-                    LogService.Error(ex.Message, ex);
-                    throw ex;
-                }
+                return View(_userService.GetByGroupAndSite(groupId, siteId));
             }
 
             return new EmptyResult();
@@ -1176,17 +1077,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             if (Request.IsAjaxRequest())
             {
-                try
-                {
-                    IEnumerable<SiteLevel> listSiteLive = _siteService.GetSiteLevelByUser(userId, this.Environment);
+                IEnumerable<SiteLevel> listSiteLive = _siteService.GetSiteLevelByUser(userId, this.Environment);
 
-                    return Json(listSiteLive);
-                }
-                catch (Exception ex)
-                {
-                    LogService.Error(ex.Message, ex);
-                    throw ex;
-                }
+                return Json(listSiteLive);
             }
 
             return Json(null);
@@ -1202,17 +1095,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             if (Request.IsAjaxRequest())
             {
-                try
-                {
-                    IEnumerable<FunctionPolicy> listFunctionPolicy = this._functionService.GetByUser(userId, this.Environment);
+                IEnumerable<FunctionPolicy> listFunctionPolicy = this._functionService.GetByUser(userId, this.Environment);
 
-                    return Json(listFunctionPolicy);
-                }
-                catch (Exception ex)
-                {
-                    LogService.Error(ex.Message, ex);
-                    throw ex;
-                }
+                return Json(listFunctionPolicy);
             }
 
             return Json(null);
@@ -1269,25 +1154,18 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                     CreatedDate = DateTime.Now
                 };
 
-                try
+                var user = _userService.GetById(userId);
+
+                if (user != null)
                 {
-                    var user = _userService.GetById(userId);
-
-                    if (user != null)
-                    {
-                        throw new Exception(string.Format("User {0} (id: {1}) existed in NAP!", user.Username, user.Id));
-                    }
-
-                    var result = _userService.InsertOrUpdate(criteria);
-
-                    if (result != null && result.IsSuccessful)
-                    {
-                        return Constant.OK;
-                    }
+                    throw new Exception(string.Format("User {0} (id: {1}) existed in NAP!", user.Username, user.Id));
                 }
-                catch (Exception ex)
+
+                var result = _userService.InsertOrUpdate(criteria);
+
+                if (result != null && result.IsSuccessful)
                 {
-                    LogService.Error(ex.Message, ex);
+                    return Constant.OK;
                 }
             }
 
@@ -1305,17 +1183,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             if (Request.IsAjaxRequest())
             {
-                try
-                {
-                    IEnumerable<IUser> listUser = _userService.GetByGroupAndSite(groupId);
+                IEnumerable<IUser> listUser = _userService.GetByGroupAndSite(groupId);
 
-                    return Json(listUser);
-                }
-                catch (Exception ex)
-                {
-                    LogService.Error(ex.Message, ex);
-                    throw ex;
-                }
+                return Json(listUser);
             }
 
             return Json(null);

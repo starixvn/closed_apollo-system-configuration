@@ -47,17 +47,11 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <returns>MailingList Object.</returns>
         public IMailingList GetById(int listId)
         {
-            try
+            var criteria = new GetMailingListByIdCriteria { ListId = listId };
+
+            if (criteria.IsValid())
             {
-                var criteria = new GetMailingListByIdCriteria { ListId = listId };
-                if (criteria.IsValid())
-                {
-                    return _mailingListRepository.Get(criteria);
-                }
-            }
-            catch (Exception ex)
-            {
-                HandleException(ex);
+                return _mailingListRepository.Get(criteria);
             }
 
             return null;
@@ -70,21 +64,14 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <returns>MailingList Object.</returns>
         public IMailingList GetByKey(string listKey)
         {
-            try
+            var criteria = new GetMailingListByKeyCriteria
             {
-                var criteria = new GetMailingListByKeyCriteria
-                {
-                    ListKey = listKey
-                };
+                ListKey = listKey
+            };
 
-                if (criteria.IsValid())
-                {
-                    return _mailingListRepository.Get(criteria);
-                }
-            }
-            catch (Exception ex)
+            if (criteria.IsValid())
             {
-                HandleException(ex);
+                return _mailingListRepository.Get(criteria);
             }
 
             return null;
@@ -97,21 +84,14 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <returns>MailingList Object.</returns>
         public IMailingList GetByName(string listName)
         {
-            try
+            var criteria = new GetMailingListByNameCriteria
             {
-                var criteria = new GetMailingListByNameCriteria
-                {
-                    ListName = listName
-                };
+                ListName = listName
+            };
 
-                if (criteria.IsValid())
-                {
-                    return _mailingListRepository.Get(criteria);
-                }
-            }
-            catch (Exception ex)
+            if (criteria.IsValid())
             {
-                HandleException(ex);
+                return _mailingListRepository.Get(criteria);
             }
 
             return null;
@@ -126,16 +106,9 @@ namespace Fanex.NAP.Core.Service.Impl
         {
             Check.Argument.IsNotEmpty(criteria.Environment, "Environment");
 
-            try
+            if (criteria.IsValid())
             {
-                if (criteria.IsValid())
-                {
-                    return _mailingListRepository.Fetch(criteria);
-                }
-            }
-            catch (Exception ex)
-            {
-                HandleException(ex);
+                return _mailingListRepository.Fetch(criteria);
             }
 
             return null;
@@ -150,16 +123,9 @@ namespace Fanex.NAP.Core.Service.Impl
         {
             Check.Argument.IsNotEmpty(criteria.FunctionKey, "FunctionKey");
 
-            try
+            if (criteria.IsValid())
             {
-                if (criteria.IsValid())
-                {
-                    return _mailingListRepository.Fetch(criteria);
-                }
-            }
-            catch (Exception ex)
-            {
-                HandleException(ex);
+                return _mailingListRepository.Fetch(criteria);
             }
 
             return null;
@@ -174,21 +140,14 @@ namespace Fanex.NAP.Core.Service.Impl
         {
             Check.Argument.IsNotNull(criteria, "criteria");
 
-            try
+            if (criteria.IsValid())
             {
-                if (criteria.IsValid())
-                {
-                    LogExecSpCriteria logCriteria = GetLogExecSpCriteria();
+                LogExecSpCriteria logCriteria = GetLogExecSpCriteria();
 
-                    if (criteria.IsValid() && logCriteria.IsValid())
-                    {
-                        return _mailingListRepository.Insert(ref criteria, logCriteria);
-                    }
+                if (criteria.IsValid() && logCriteria.IsValid())
+                {
+                    return _mailingListRepository.Insert(ref criteria, logCriteria);
                 }
-            }
-            catch (Exception ex)
-            {
-                HandleException(ex);
             }
 
             return null;
@@ -203,21 +162,14 @@ namespace Fanex.NAP.Core.Service.Impl
         {
             Check.Argument.IsNotNull(criteria, "criteria");
 
-            try
+            if (criteria.IsValid())
             {
-                if (criteria.IsValid())
-                {
-                    LogExecSpCriteria logCriteria = GetLogExecSpCriteria();
+                LogExecSpCriteria logCriteria = GetLogExecSpCriteria();
 
-                    if (criteria.IsValid() && logCriteria.IsValid())
-                    {
-                        return _mailingListRepository.Update(criteria, logCriteria);
-                    }
+                if (criteria.IsValid() && logCriteria.IsValid())
+                {
+                    return _mailingListRepository.Update(criteria, logCriteria);
                 }
-            }
-            catch (Exception ex)
-            {
-                HandleException(ex);
             }
 
             return null;

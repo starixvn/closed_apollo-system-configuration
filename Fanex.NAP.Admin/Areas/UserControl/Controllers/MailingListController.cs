@@ -67,25 +67,17 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             if (Request.IsAjaxRequest())
             {
-                try
+                var result = _mailingListService.Update(new UpdateStatusMailingListCriteria
                 {
-                    var result = _mailingListService.Update(new UpdateStatusMailingListCriteria
-                    {
-                        ListId = id,
-                        IsActive = active,
-                        ModifiedBy = CurrentSession.UserId,
-                        ModifiedDate = DateTime.Now
-                    });
+                    ListId = id,
+                    IsActive = active,
+                    ModifiedBy = CurrentSession.UserId,
+                    ModifiedDate = DateTime.Now
+                });
 
-                    if (result != null && result.IsSuccessful)
-                    {
-                        return Json(Constant.OK);
-                    }
-                }
-                catch (Exception ex)
+                if (result != null && result.IsSuccessful)
                 {
-                    LogService.Error(ex.Message, ex);
-                    throw ex;
+                    return Json(Constant.OK);
                 }
             }
 
@@ -104,25 +96,17 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             if (Request.IsAjaxRequest())
             {
-                try
+                var result = _mailingListService.Update(new UpdateIsInternalMailingListCriteria
                 {
-                    var result = _mailingListService.Update(new UpdateIsInternalMailingListCriteria
-                    {
-                        ListId = id,
-                        IsInternal = isInternal,
-                        ModifiedBy = CurrentSession.UserId,
-                        ModifiedDate = DateTime.Now
-                    });
+                    ListId = id,
+                    IsInternal = isInternal,
+                    ModifiedBy = CurrentSession.UserId,
+                    ModifiedDate = DateTime.Now
+                });
 
-                    if (result != null && result.IsSuccessful)
-                    {
-                        return Json(Constant.OK);
-                    }
-                }
-                catch (Exception ex)
+                if (result != null && result.IsSuccessful)
                 {
-                    LogService.Error(ex.Message, ex);
-                    throw ex;
+                    return Json(Constant.OK);
                 }
             }
 
@@ -140,35 +124,27 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             GetMailingListByUserAndSiteIncludeGroupCriteria criteria = null;
 
-            try
-            {
-                var hasEditRight = false;
-                var isITGroup = CheckIsPortalAminOrITGroup();
+            var hasEditRight = false;
+            var isITGroup = CheckIsPortalAminOrITGroup();
 
-                criteria = new GetMailingListByUserAndSiteIncludeGroupCriteria
-                {
-                    UserId = CurrentSession.UserId,
-                    SiteId = siteId ?? this.SiteId,
-                    Environment = this.Environment,
-                    IsInternal = isITGroup
-                };
+            criteria = new GetMailingListByUserAndSiteIncludeGroupCriteria
+            {
+                UserId = CurrentSession.UserId,
+                SiteId = siteId ?? this.SiteId,
+                Environment = this.Environment,
+                IsInternal = isITGroup
+            };
                 
-                var mailingList = _mailingListService.GetBySite(criteria);
-                IList<SelectListItem> siteItemList = new List<SelectListItem>();
+            var mailingList = _mailingListService.GetBySite(criteria);
+            IList<SelectListItem> siteItemList = new List<SelectListItem>();
 
-                GetSitesAndPolicyForManageAction(criteria, ref hasEditRight, ref siteItemList);
+            GetSitesAndPolicyForManageAction(criteria, ref hasEditRight, ref siteItemList);
 
-                ViewBag.IsPortalAdmin = this.UserIsPortalAdmin;
-                ViewBag.MailingList = mailingList;
-                ViewBag.IsITGroup = isITGroup;
-                ViewBag.ViewFlags.HasEditRight = hasEditRight;
-                ViewBag.SiteItemList = siteItemList;
-            }
-            catch (Exception ex)
-            {
-                LogService.Error(ex.Message, ex);
-                throw ex;
-            }
+            ViewBag.IsPortalAdmin = this.UserIsPortalAdmin;
+            ViewBag.MailingList = mailingList;
+            ViewBag.IsITGroup = isITGroup;
+            ViewBag.ViewFlags.HasEditRight = hasEditRight;
+            ViewBag.SiteItemList = siteItemList;
 
             return View(criteria);
         }
@@ -182,30 +158,22 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         [NapAuth(FunctionKey = FunctionKeys.ManageMailingList, Policy = Constant.Policy.Read)]
         public ActionResult Manage(GetMailingListByUserAndSiteIncludeGroupCriteria criteria)
         {
-            try
-            {
-                var hasEditRight = false;
-                var isITGroup = CheckIsPortalAminOrITGroup();
+            var hasEditRight = false;
+            var isITGroup = CheckIsPortalAminOrITGroup();
 
-                criteria.UserId = CurrentSession.UserId;
-                criteria.IsInternal = isITGroup;
+            criteria.UserId = CurrentSession.UserId;
+            criteria.IsInternal = isITGroup;
 
-                var mailingList = _mailingListService.GetBySite(criteria);
-                IList<SelectListItem> siteItemList = new List<SelectListItem>();
+            var mailingList = _mailingListService.GetBySite(criteria);
+            IList<SelectListItem> siteItemList = new List<SelectListItem>();
 
-                GetSitesAndPolicyForManageAction(criteria, ref hasEditRight, ref siteItemList);
+            GetSitesAndPolicyForManageAction(criteria, ref hasEditRight, ref siteItemList);
 
-                ViewBag.IsPortalAdmin = this.UserIsPortalAdmin;
-                ViewBag.MailingList = mailingList;
-                ViewBag.IsITGroup = isITGroup;
-                ViewBag.ViewFlags.HasEditRight = hasEditRight;
-                ViewBag.SiteItemList = siteItemList;
-            }
-            catch (Exception ex)
-            {
-                LogService.Error(ex.Message, ex);
-                throw ex;
-            }
+            ViewBag.IsPortalAdmin = this.UserIsPortalAdmin;
+            ViewBag.MailingList = mailingList;
+            ViewBag.IsITGroup = isITGroup;
+            ViewBag.ViewFlags.HasEditRight = hasEditRight;
+            ViewBag.SiteItemList = siteItemList;
 
             return View(criteria);
         }
@@ -227,22 +195,14 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 BCCList = string.Empty
             };
 
-            try
-            {
-                var siteItemList = GetSiteList(criteria.SiteId, criteria.Environment);
-                var functionItemList = GetFunctionList(criteria.SiteId, criteria.Environment);
-                var mailFunctionItemList = GetMailFunctionList(criteria.Environment);
+            var siteItemList = GetSiteList(criteria.SiteId, criteria.Environment);
+            var functionItemList = GetFunctionList(criteria.SiteId, criteria.Environment);
+            var mailFunctionItemList = GetMailFunctionList(criteria.Environment);
 
-                ViewBag.FunctionList = functionItemList;
-                ViewBag.MailFunctionList = mailFunctionItemList;
-                ViewBag.SiteItemList = siteItemList;
-                ViewBag.IsITGroup = CheckIsPortalAminOrITGroup();
-            }
-            catch (Exception ex)
-            {
-                LogService.Error(ex.Message, ex);
-                throw ex;
-            }
+            ViewBag.FunctionList = functionItemList;
+            ViewBag.MailFunctionList = mailFunctionItemList;
+            ViewBag.SiteItemList = siteItemList;
+            ViewBag.IsITGroup = CheckIsPortalAminOrITGroup();
 
             return View(criteria);
         }
@@ -256,42 +216,34 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         [NapAuth(FunctionKey = FunctionKeys.ManageMailingList, Policy = Constant.Policy.Host)]
         public ActionResult AddNew(InsertMailingListCriteria criteria)
         {
-            try
+            var siteItemList = GetSiteList(criteria.SiteId, criteria.Environment);
+            var functionItemList = GetFunctionList(criteria.SiteId, criteria.Environment);
+            var mailFunctionItemList = GetMailFunctionList(criteria.Environment);
+
+            ViewBag.FunctionList = functionItemList;
+            ViewBag.MailFunctionList = mailFunctionItemList;
+            ViewBag.SiteItemList = siteItemList;
+            ViewBag.IsITGroup = CheckIsPortalAminOrITGroup();
+
+            if (ModelState.IsValid)
             {
-                var siteItemList = GetSiteList(criteria.SiteId, criteria.Environment);
-                var functionItemList = GetFunctionList(criteria.SiteId, criteria.Environment);
-                var mailFunctionItemList = GetMailFunctionList(criteria.Environment);
-
-                ViewBag.FunctionList = functionItemList;
-                ViewBag.MailFunctionList = mailFunctionItemList;
-                ViewBag.SiteItemList = siteItemList;
-                ViewBag.IsITGroup = CheckIsPortalAminOrITGroup();
-
-                if (ModelState.IsValid)
+                if (!CheckInvalidMailingListForAddNew(criteria))
                 {
-                    if (!CheckInvalidMailingListForAddNew(criteria))
-                    {
-                        return View(criteria);
-                    }
-
-                    criteria.CreatedBy = this.CurrentSession.UserId;
-                    criteria.CreatedDate = DateTime.Now;
-                    criteria.ToList = RemoveDuplicatedEmail(criteria.ToList);
-                    criteria.CCList = RemoveDuplicatedEmail(criteria.CCList);
-                    criteria.BCCList = RemoveDuplicatedEmail(criteria.BCCList);
-
-                    var result = _mailingListService.Insert(criteria);
-
-                    if (result != null && result.IsSuccessful)
-                    {
-                        ViewBag.Success = true;
-                    }
+                    return View(criteria);
                 }
-            }
-            catch (Exception ex)
-            {
-                LogService.Error(ex.Message, ex);
-                throw ex;
+
+                criteria.CreatedBy = this.CurrentSession.UserId;
+                criteria.CreatedDate = DateTime.Now;
+                criteria.ToList = RemoveDuplicatedEmail(criteria.ToList);
+                criteria.CCList = RemoveDuplicatedEmail(criteria.CCList);
+                criteria.BCCList = RemoveDuplicatedEmail(criteria.BCCList);
+
+                var result = _mailingListService.Insert(criteria);
+
+                if (result != null && result.IsSuccessful)
+                {
+                    ViewBag.Success = true;
+                }
             }
 
             return View(criteria);
@@ -307,45 +259,36 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         public ActionResult Edit(int id)
         {
             var criteria = new UpdateMailingListCriteria();
+            var siteName = string.Empty;
+            var isITGroup = CheckIsPortalAminOrITGroup();
+            var mailingList = _mailingListService.GetById(id);
 
-            try
+            if (ReferenceEquals(mailingList, null))
             {
-                var siteName = string.Empty;
-                var isITGroup = CheckIsPortalAminOrITGroup();
-                var mailingList = _mailingListService.GetById(id);
-
-                if (ReferenceEquals(mailingList, null))
-                {
-                    return RedirectToAction("Manage");
-                }
-
-                criteria.ListId = mailingList.Id;
-                criteria.ListKey = mailingList.Key;
-                criteria.ListName = mailingList.Name;
-                criteria.Description = mailingList.Description;
-                criteria.SiteId = mailingList.Site.Id;
-                criteria.SiteName = mailingList.Site.Name;
-                criteria.Environment = mailingList.Environment;
-                criteria.ListFunctionId = mailingList.MailFunction.Id;
-                criteria.FunctionId = mailingList.Function.Id;
-                criteria.ToList = mailingList.ToList;
-                criteria.CCList = mailingList.CCList;
-                criteria.BCCList = mailingList.BCCList;
-                criteria.IsInternal = mailingList.IsInternal;
-                criteria.IsActive = mailingList.IsActive;
-
-                var functionItemList = GetFunctionList(criteria.SiteId, criteria.Environment);
-                var mailFunctionItemList = GetMailFunctionList(criteria.Environment);
-
-                ViewBag.MailFunctionList = mailFunctionItemList;
-                ViewBag.FunctionList = functionItemList;
-                ViewBag.IsITGroup = isITGroup;
+                return RedirectToAction("Manage");
             }
-            catch (Exception ex)
-            {
-                LogService.Error(ex.Message, ex);
-                throw ex;
-            }
+
+            criteria.ListId = mailingList.Id;
+            criteria.ListKey = mailingList.Key;
+            criteria.ListName = mailingList.Name;
+            criteria.Description = mailingList.Description;
+            criteria.SiteId = mailingList.Site.Id;
+            criteria.SiteName = mailingList.Site.Name;
+            criteria.Environment = mailingList.Environment;
+            criteria.ListFunctionId = mailingList.MailFunction.Id;
+            criteria.FunctionId = mailingList.Function.Id;
+            criteria.ToList = mailingList.ToList;
+            criteria.CCList = mailingList.CCList;
+            criteria.BCCList = mailingList.BCCList;
+            criteria.IsInternal = mailingList.IsInternal;
+            criteria.IsActive = mailingList.IsActive;
+
+            var functionItemList = GetFunctionList(criteria.SiteId, criteria.Environment);
+            var mailFunctionItemList = GetMailFunctionList(criteria.Environment);
+
+            ViewBag.MailFunctionList = mailFunctionItemList;
+            ViewBag.FunctionList = functionItemList;
+            ViewBag.IsITGroup = isITGroup;
 
             return View(criteria);
         }
@@ -359,45 +302,37 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         [NapAuth(FunctionKey = FunctionKeys.ManageMailingList, Policy = Constant.Policy.Host)]
         public ActionResult Edit(UpdateMailingListCriteria criteria)
         {
-            try
-            {
-                var siteName = string.Empty;
-                var isITGroup = CheckIsPortalAminOrITGroup();
+            var siteName = string.Empty;
+            var isITGroup = CheckIsPortalAminOrITGroup();
 
-                ViewBag.IsITGroup = isITGroup;
+            ViewBag.IsITGroup = isITGroup;
 
-                var functionItemList = GetFunctionList(criteria.SiteId, criteria.Environment);
-                var mailFunctionItemList = GetMailFunctionList(criteria.Environment);
+            var functionItemList = GetFunctionList(criteria.SiteId, criteria.Environment);
+            var mailFunctionItemList = GetMailFunctionList(criteria.Environment);
 
-                ViewBag.MailFunctionList = mailFunctionItemList;
-                ViewBag.FunctionList = functionItemList;
-                ViewBag.IsITGroup = isITGroup;
+            ViewBag.MailFunctionList = mailFunctionItemList;
+            ViewBag.FunctionList = functionItemList;
+            ViewBag.IsITGroup = isITGroup;
                 
-                if (ModelState.IsValid)
-                {
-                    if (!CheckInvalidMailingListForEdit(criteria))
-                    {
-                        return View(criteria);
-                    }
-
-                    criteria.ModifiedBy = this.CurrentSession.UserId;
-                    criteria.ModifiedDate = DateTime.Now;
-                    criteria.ToList = RemoveDuplicatedEmail(criteria.ToList);
-                    criteria.CCList = RemoveDuplicatedEmail(criteria.CCList);
-                    criteria.BCCList = RemoveDuplicatedEmail(criteria.BCCList);
-
-                    var result = _mailingListService.Update(criteria);
-
-                    if (result != null && result.IsSuccessful)
-                    {
-                        ViewBag.Success = true;
-                    }
-                }
-            }
-            catch (Exception ex)
+            if (ModelState.IsValid)
             {
-                LogService.Error(ex.Message, ex);
-                throw ex;
+                if (!CheckInvalidMailingListForEdit(criteria))
+                {
+                    return View(criteria);
+                }
+
+                criteria.ModifiedBy = this.CurrentSession.UserId;
+                criteria.ModifiedDate = DateTime.Now;
+                criteria.ToList = RemoveDuplicatedEmail(criteria.ToList);
+                criteria.CCList = RemoveDuplicatedEmail(criteria.CCList);
+                criteria.BCCList = RemoveDuplicatedEmail(criteria.BCCList);
+
+                var result = _mailingListService.Update(criteria);
+
+                if (result != null && result.IsSuccessful)
+                {
+                    ViewBag.Success = true;
+                }
             }
 
             return View(criteria);
@@ -414,28 +349,20 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             if (Request.IsAjaxRequest())
             {
-                try
-                {
-                    List<Function> functionList = null;
+                List<Function> functionList = null;
 
-                    if (this.UserIsPortalAdmin)
-                    {
-                        functionList = (List<Function>)_functionService.GetBySite(siteId, environment, true);
-                    }
-                    else
-                    {
-                        var functionPolicyList = _functionService.GetByUserAndSiteIncludeGroup(this.CurrentSession.UserId, siteId, environment);
-                        functionPolicyList = functionPolicyList.Where(t => t.Policy >= (byte)Constant.Policy.Host);
-                        functionList = functionPolicyList.Select(t => t.Function).ToList();
-                    }
-
-                    return Json(functionList);
-                }
-                catch (Exception ex)
+                if (this.UserIsPortalAdmin)
                 {
-                    LogService.Error(ex.Message, ex);
-                    throw ex;
+                    functionList = (List<Function>)_functionService.GetBySite(siteId, environment, true);
                 }
+                else
+                {
+                    var functionPolicyList = _functionService.GetByUserAndSiteIncludeGroup(this.CurrentSession.UserId, siteId, environment);
+                    functionPolicyList = functionPolicyList.Where(t => t.Policy >= (byte)Constant.Policy.Host);
+                    functionList = functionPolicyList.Select(t => t.Function).ToList();
+                }
+
+                return Json(functionList);
             }
 
             return Json(null);
@@ -451,27 +378,19 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             if (Request.IsAjaxRequest())
             {
-                try
+                var criteria = new GetByParentKeyAndSiteCriteria
                 {
-                    var criteria = new GetByParentKeyAndSiteCriteria
-                    {
-                        SiteId = this.SiteId,
-                        ParentKey = FunctionKeys.MailingList,
-                        Environment = environment,
-                        IsActive = true,
-                        RoleId = (byte)Constant.Policy.Host,
-                        UserId = this.CurrentSession.UserId
-                    };
+                    SiteId = this.SiteId,
+                    ParentKey = FunctionKeys.MailingList,
+                    Environment = environment,
+                    IsActive = true,
+                    RoleId = (byte)Constant.Policy.Host,
+                    UserId = this.CurrentSession.UserId
+                };
 
-                    var functionList = _functionService.GetByParentKeyAndSite(criteria).ToList();
+                var functionList = _functionService.GetByParentKeyAndSite(criteria).ToList();
 
-                    return Json(functionList);
-                }
-                catch (Exception ex)
-                {
-                    LogService.Error(ex.Message, ex);
-                    throw ex;
-                }
+                return Json(functionList);
             }
 
             return Json(null);

@@ -71,39 +71,31 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         [NapAuth(FunctionKey = FunctionKeys.ManageGroup, Policy = Constant.Policy.Read)]
         public ActionResult Manage()
         {
-            try
-            {
-                // check edit right
-                int policy = _userService.GetUserSiteFunctionKeyPolicy(
-                            CurrentSession.UserId,
-                            this.SiteId,
-                            FunctionKeys.ManageGroup.ToString());
+            // check edit right
+            int policy = _userService.GetUserSiteFunctionKeyPolicy(
+                        CurrentSession.UserId,
+                        this.SiteId,
+                        FunctionKeys.ManageGroup.ToString());
 
-                ViewFlags.HasEditRight = policy >= (int)Constant.Policy.Host;
+            ViewFlags.HasEditRight = policy >= (int)Constant.Policy.Host;
 
-                // check assign-function right                
-                int assignFunctionPolicy = _userService.GetUserSiteFunctionKeyPolicy(
-                            CurrentSession.UserId,
-                            this.SiteId,
-                            FunctionKeys.AssignFunctionToGroup.ToString());
+            // check assign-function right                
+            int assignFunctionPolicy = _userService.GetUserSiteFunctionKeyPolicy(
+                        CurrentSession.UserId,
+                        this.SiteId,
+                        FunctionKeys.AssignFunctionToGroup.ToString());
 
-                ViewFlags.HasAssignFunctionRight = assignFunctionPolicy >= (int)Constant.Policy.Read;
+            ViewFlags.HasAssignFunctionRight = assignFunctionPolicy >= (int)Constant.Policy.Read;
 
-                // check manage-user right
-                var hasManageUser = _userService.GetUserSiteFunctionKeyPolicy(
-                   CurrentSession.UserId,
-                   SiteId,
-                   FunctionKeys.ManageUser.ToString()) >= 1 ? true : false;
+            // check manage-user right
+            var hasManageUser = _userService.GetUserSiteFunctionKeyPolicy(
+                CurrentSession.UserId,
+                SiteId,
+                FunctionKeys.ManageUser.ToString()) >= 1 ? true : false;
 
-                ViewFlags.HasManageUserRight = hasManageUser;
+            ViewFlags.HasManageUserRight = hasManageUser;
 
-                ViewBag.GroupList = _groupService.GetAllWithNumOfUser(string.Empty, Environment);
-            }
-            catch (Exception ex)
-            {
-                LogService.Error(ex.Message, ex);
-                throw ex;
-            }
+            ViewBag.GroupList = _groupService.GetAllWithNumOfUser(string.Empty, Environment);
 
             return View(new GetAllWithNumOfUserGroupCriteria());
         }
@@ -117,41 +109,33 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         [NapAuth(FunctionKey = FunctionKeys.ManageGroup, Policy = Constant.Policy.Read)]
         public ActionResult Manage(GetAllWithNumOfUserGroupCriteria criteria)
         {
-            try
-            {
-                criteria.Environment = Environment;
+            criteria.Environment = Environment;
 
-                // check edit right
-                int policy = _userService.GetUserSiteFunctionKeyPolicy(
+            // check edit right
+            int policy = _userService.GetUserSiteFunctionKeyPolicy(
+                                            CurrentSession.UserId,
+                                            this.SiteId,
+                                            FunctionKeys.ManageGroup.ToString());
+
+            ViewFlags.HasEditRight = policy >= (int)Constant.Policy.Host;
+
+            // check assign-function right
+            int assignFunctionPolicy = _userService.GetUserSiteFunctionKeyPolicy(
                                                 CurrentSession.UserId,
                                                 this.SiteId,
-                                                FunctionKeys.ManageGroup.ToString());
+                                                FunctionKeys.AssignFunctionToGroup.ToString());
 
-                ViewFlags.HasEditRight = policy >= (int)Constant.Policy.Host;
+            ViewFlags.HasAssignFunctionRight = assignFunctionPolicy >= (int)Constant.Policy.Read;
 
-                // check assign-function right
-                int assignFunctionPolicy = _userService.GetUserSiteFunctionKeyPolicy(
-                                                    CurrentSession.UserId,
-                                                    this.SiteId,
-                                                    FunctionKeys.AssignFunctionToGroup.ToString());
+            // check manage-user right
+            var hasManageUser = _userService.GetUserSiteFunctionKeyPolicy(
+                        CurrentSession.UserId,
+                        SiteId,
+                        FunctionKeys.ManageUser.ToString()) >= 1 ? true : false;
 
-                ViewFlags.HasAssignFunctionRight = assignFunctionPolicy >= (int)Constant.Policy.Read;
+            ViewFlags.HasManageUserRight = hasManageUser;
 
-                // check manage-user right
-                var hasManageUser = _userService.GetUserSiteFunctionKeyPolicy(
-                           CurrentSession.UserId,
-                           SiteId,
-                           FunctionKeys.ManageUser.ToString()) >= 1 ? true : false;
-
-                ViewFlags.HasManageUserRight = hasManageUser;
-
-                ViewBag.GroupList = _groupService.GetAllWithNumOfUser(criteria.GroupName);
-            }
-            catch (Exception ex)
-            {
-                LogService.Error(ex.Message, ex);
-                throw ex;
-            }
+            ViewBag.GroupList = _groupService.GetAllWithNumOfUser(criteria.GroupName);
 
             return View(criteria);
         }
@@ -180,40 +164,32 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         [NapAuth(FunctionKey = FunctionKeys.ManageGroup, Policy = Constant.Policy.Host)]
         public ActionResult AddNew(InsertGroupCriteria criteria)
         {
-            try
-            {
-                criteria.GroupName = criteria.GroupName.Trim();
+            criteria.GroupName = criteria.GroupName.Trim();
 
-                if (ModelState.IsValid)
+            if (ModelState.IsValid)
+            {
+                // Check name exist
+                var group = _groupService.GetByName(criteria.GroupName);
+
+                if (!ReferenceEquals(group, null))
                 {
-                    // Check name exist
-                    var group = _groupService.GetByName(criteria.GroupName);
+                    ModelState.AddModelError(
+                        "SiteName",
+                        string.Format(ViewResources.DuplicateMsg, criteria.GroupName));
 
-                    if (!ReferenceEquals(group, null))
-                    {
-                        ModelState.AddModelError(
-                            "SiteName",
-                            string.Format(ViewResources.DuplicateMsg, criteria.GroupName));
-
-                        return View(criteria);
-                    }
-
-                    // Add group
-                    criteria.CreatedBy = CurrentSession.UserId;
-                    criteria.CreatedDate = DateTime.Now;
-
-                    var result = _groupService.Insert(criteria);
-
-                    if (result != null && result.IsSuccessful)
-                    {
-                        ViewBag.Success = true;
-                    }
+                    return View(criteria);
                 }
-            }
-            catch (Exception ex)
-            {
-                LogService.Error(ex.Message, ex);
-                throw ex;
+
+                // Add group
+                criteria.CreatedBy = CurrentSession.UserId;
+                criteria.CreatedDate = DateTime.Now;
+
+                var result = _groupService.Insert(criteria);
+
+                if (result != null && result.IsSuccessful)
+                {
+                    ViewBag.Success = true;
+                }
             }
 
             return View(criteria);
@@ -234,25 +210,17 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             var criteria = new UpdateGroupCriteria();
 
-            try
-            {
-                var group = _groupService.GetById(id);
+            var group = _groupService.GetById(id);
 
-                if (ReferenceEquals(group, null))
-                {
-                    return RedirectToAction("Manage");
-                }
-
-                criteria.GroupId = group.Id;
-                criteria.Description = group.Description;
-                criteria.GroupName = group.Name;
-                criteria.IsActive = group.IsActive;
-            }
-            catch (Exception ex)
+            if (ReferenceEquals(group, null))
             {
-                LogService.Error(ex.Message, ex);
-                throw ex;
+                return RedirectToAction("Manage");
             }
+
+            criteria.GroupId = group.Id;
+            criteria.Description = group.Description;
+            criteria.GroupName = group.Name;
+            criteria.IsActive = group.IsActive;
 
             return View(criteria);
         }
@@ -266,43 +234,35 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         [NapAuth(FunctionKey = FunctionKeys.ManageGroup, Policy = Constant.Policy.Host)]
         public ActionResult Edit(UpdateGroupCriteria criteria)
         {
-            try
+            criteria.GroupName = criteria.GroupName.Trim();
+
+            if (ModelState.IsValid)
             {
-                criteria.GroupName = criteria.GroupName.Trim();
+                // Check name exist
+                var group = _groupService.GetByName(criteria.GroupName);
 
-                if (ModelState.IsValid)
+                if (!ReferenceEquals(group, null))
                 {
-                    // Check name exist
-                    var group = _groupService.GetByName(criteria.GroupName);
-
-                    if (!ReferenceEquals(group, null))
+                    if (group.Id != criteria.GroupId)
                     {
-                        if (group.Id != criteria.GroupId)
-                        {
-                            ModelState.AddModelError(
-                                "SiteName",
-                                string.Format(ViewResources.DuplicateMsg, criteria.GroupName));
+                        ModelState.AddModelError(
+                            "SiteName",
+                            string.Format(ViewResources.DuplicateMsg, criteria.GroupName));
 
-                            return View(criteria);
-                        }
-                    }
-
-                    // update function
-                    criteria.ModifiedBy = CurrentSession.UserId;
-                    criteria.ModifiedDate = DateTime.Now;
-
-                    var result = _groupService.Update(criteria);
-
-                    if (result != null && result.IsSuccessful)
-                    {
-                        ViewBag.Success = true;
+                        return View(criteria);
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                LogService.Error(ex.Message, ex);
-                throw ex;
+
+                // update function
+                criteria.ModifiedBy = CurrentSession.UserId;
+                criteria.ModifiedDate = DateTime.Now;
+
+                var result = _groupService.Update(criteria);
+
+                if (result != null && result.IsSuccessful)
+                {
+                    ViewBag.Success = true;
+                }
             }
 
             return View(criteria);
@@ -323,25 +283,17 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             if (Request.IsAjaxRequest())
             {
-                try
+                var result = _groupService.UpdateStatus(new UpdateStatusGroupCriteria
                 {
-                    var result = _groupService.UpdateStatus(new UpdateStatusGroupCriteria
-                    {
-                        GroupId = id,
-                        IsActive = isActive,
-                        ModifiedBy = CurrentSession.UserId,
-                        ModifiedDate = DateTime.Now
-                    });
+                    GroupId = id,
+                    IsActive = isActive,
+                    ModifiedBy = CurrentSession.UserId,
+                    ModifiedDate = DateTime.Now
+                });
 
-                    if (result != null && result.IsSuccessful)
-                    {
-                        return Json(Constant.OK);
-                    }
-                }
-                catch (Exception ex)
+                if (result != null && result.IsSuccessful)
                 {
-                    LogService.Error(ex.Message, ex);
-                    throw ex;
+                    return Json(Constant.OK);
                 }
             }
 
@@ -551,15 +503,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         [NapAuth(FunctionKey = FunctionKeys.ManageGroup, Policy = Constant.Policy.Read)]
         public ActionResult GroupInfo(int id)
         {
-            try
-            {
-                return View(_groupService.GetById(id));
-            }
-            catch (Exception ex)
-            {
-                LogService.Error(ex.Message, ex);
-                throw ex;
-            }
+            return View(_groupService.GetById(id));
         }
 
         #endregion

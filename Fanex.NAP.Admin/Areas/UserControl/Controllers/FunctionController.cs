@@ -79,15 +79,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 Environment = this.Environment
             };
 
-            try
-            {
-                PrepareManageData(criteria);
-            }
-            catch (Exception ex)
-            {
-                LogService.Error(ex.Message, ex);
-                throw ex;
-            }
+            PrepareManageData(criteria);
 
             return View(criteria);
         }
@@ -101,15 +93,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         [NapAuth(FunctionKey = FunctionKeys.ManageFunction, Policy = Constant.Policy.Read)]
         public ActionResult Manage(GetBySiteFunctionCriteria criteria)
         {
-            try
-            {
-                PrepareManageData(criteria);
-            }
-            catch (Exception ex)
-            {
-                LogService.Error(ex.Message, ex);
-                throw ex;
-            }
+            PrepareManageData(criteria);
 
             return View(criteria);
         }
@@ -133,15 +117,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 Environment = this.Environment
             };
 
-            try
-            {
-                GetSitesAndFunctionsForAddNew(criteria);
-            }
-            catch (Exception ex)
-            {
-                LogService.Error(ex.Message, ex);
-                throw ex;
-            }
+            GetSitesAndFunctionsForAddNew(criteria);
 
             return View(criteria);
         }
@@ -261,15 +237,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                     ReturnSiteId = siteId ?? function.Site.Id
                 };
 
-            try
-            {
-                GetSitesAndFunctionsForAddNew(criteria, getSiteList: false);
-            }
-            catch (Exception ex)
-            {
-                LogService.Error(ex.Message, ex);
-                throw ex;
-            }
+            GetSitesAndFunctionsForAddNew(criteria, getSiteList: false);
 
             return View(criteria);
         }
@@ -347,45 +315,37 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             var criteria = new UpdateFunctionCriteria();
 
-            try
-            {
-                var function = this._functionService.GetById(id);
+            var function = this._functionService.GetById(id);
 
-                if (ReferenceEquals(function, null))
+            if (ReferenceEquals(function, null))
+            {
+                return RedirectToAction("Manage");
+            }
+
+            criteria.FunctionId = function.Id;
+            criteria.SiteId = function.Site.Id;
+            criteria.SiteName = function.Site.Name;
+            criteria.FunctionName = function.Name;
+            criteria.FunctionKey = function.Key;
+            criteria.Description = function.Description;
+            criteria.ParentId = function.Parent == null ? null : (int?)function.Parent.Id;
+            criteria.ParentName = function.Parent == null ? null : function.Parent.Name;
+            criteria.Readonly = function.Crud == (byte)Constant.Crud.Read;
+            criteria.DisplayOrder = function.DisplayOrder;
+            criteria.IsActive = function.IsActive;
+            criteria.Environment = function.Environment;
+
+            // get parent function list
+            var functionList = this._functionService.GetBySite(criteria.SiteId, criteria.Environment, true);
+
+            ViewBag.ParentFunctionItemList = functionList
+                .Where(f => f.Id != id && (f.Parent == null || f.Parent.Id != id))
+                .Select(s => new SelectListItem
                 {
-                    return RedirectToAction("Manage");
-                }
-
-                criteria.FunctionId = function.Id;
-                criteria.SiteId = function.Site.Id;
-                criteria.SiteName = function.Site.Name;
-                criteria.FunctionName = function.Name;
-                criteria.FunctionKey = function.Key;
-                criteria.Description = function.Description;
-                criteria.ParentId = function.Parent == null ? null : (int?)function.Parent.Id;
-                criteria.ParentName = function.Parent == null ? null : function.Parent.Name;
-                criteria.Readonly = function.Crud == (byte)Constant.Crud.Read;
-                criteria.DisplayOrder = function.DisplayOrder;
-                criteria.IsActive = function.IsActive;
-                criteria.Environment = function.Environment;
-
-                // get parent function list
-                var functionList = this._functionService.GetBySite(criteria.SiteId, criteria.Environment, true);
-
-                ViewBag.ParentFunctionItemList = functionList
-                    .Where(f => f.Id != id && (f.Parent == null || f.Parent.Id != id))
-                    .Select(s => new SelectListItem
-                    {
-                        Text = s.Name,
-                        Value = s.Id.ToString(),
-                        Selected = function.Parent != null && s.Id == function.Parent.Id
-                    }).ToList();
-            }
-            catch (Exception ex)
-            {
-                LogService.Error(ex.Message, ex);
-                throw ex;
-            }
+                    Text = s.Name,
+                    Value = s.Id.ToString(),
+                    Selected = function.Parent != null && s.Id == function.Parent.Id
+                }).ToList();
 
             return View(criteria);
         }
@@ -527,25 +487,17 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             if (Request.IsAjaxRequest())
             {
-                try
+                var result = this._functionService.UpdateStatus(new UpdateStatusFunctionCriteria
                 {
-                    var result = this._functionService.UpdateStatus(new UpdateStatusFunctionCriteria
-                    {
-                        FunctionId = id,
-                        IsActive = isActive,
-                        ModifiedBy = CurrentSession.UserId,
-                        ModifiedDate = DateTime.Now
-                    });
+                    FunctionId = id,
+                    IsActive = isActive,
+                    ModifiedBy = CurrentSession.UserId,
+                    ModifiedDate = DateTime.Now
+                });
 
-                    if (result != null && result.IsSuccessful)
-                    {
-                        return Json(Constant.OK);
-                    }
-                }
-                catch (Exception ex)
+                if (result != null && result.IsSuccessful)
                 {
-                    LogService.Error(ex.Message, ex);
-                    throw ex;
+                    return Json(Constant.OK);
                 }
             }
 
@@ -567,42 +519,34 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             int functionId = id;
             int siteId = 0;
 
-            try
+            var function = this._functionService.GetById(functionId);
+
+            if (function == null)
             {
-                var function = this._functionService.GetById(functionId);
-
-                if (function == null)
-                {
-                    return HttpNotFound();
-                }
-
-                siteId = function.Site.Id;
-
-                ViewBag.Function = function;
-                ViewBag.Users = _userService.GetByFunctionAndSite(functionId, siteId).ToList();
-                ViewBag.Groups = _groupService.GetByFunctionAndSite(functionId, siteId).ToList();
-
-                // gets logged-in-user privileges
-                ViewFlags.HasAssignFunctionToUserRight = _userService.GetUserSiteFunctionKeyPolicy(
-                            CurrentSession.UserId,
-                            function.Site.Id,
-                            FunctionKeys.AssignFunctionToUser.ToString()) >= (int)Constant.Policy.Host;
-
-                ViewFlags.HasAssignFunctionToGroupRight = _userService.GetUserSiteFunctionKeyPolicy(
-                    CurrentSession.UserId,
-                    function.Site.Id,
-                    FunctionKeys.AssignFunctionToGroup.ToString()) >= (int)Constant.Policy.Host;
-
-                ViewBag.GroupSelectList = _groupService.GetAllSelectListItem();
-                ViewBag.SiteId = siteId.ToString();
-            }
-            catch (Exception ex)
-            {
-                LogService.Error(ex.Message, ex);
-                throw ex;
+                return HttpNotFound();
             }
 
-            return View();
+            siteId = function.Site.Id;
+
+            ViewBag.Function = function;
+            ViewBag.Users = _userService.GetByFunctionAndSite(functionId, siteId).ToList();
+            ViewBag.Groups = _groupService.GetByFunctionAndSite(functionId, siteId).ToList();
+
+            // gets logged-in-user privileges
+            ViewFlags.HasAssignFunctionToUserRight = _userService.GetUserSiteFunctionKeyPolicy(
+                        CurrentSession.UserId,
+                        function.Site.Id,
+                        FunctionKeys.AssignFunctionToUser.ToString()) >= (int)Constant.Policy.Host;
+
+            ViewFlags.HasAssignFunctionToGroupRight = _userService.GetUserSiteFunctionKeyPolicy(
+                CurrentSession.UserId,
+                function.Site.Id,
+                FunctionKeys.AssignFunctionToGroup.ToString()) >= (int)Constant.Policy.Host;
+
+            ViewBag.GroupSelectList = _groupService.GetAllSelectListItem();
+            ViewBag.SiteId = siteId.ToString();
+
+        return View();
         }
 
         /// <summary>
@@ -633,37 +577,29 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 PagerList<UserLevel> userList = new PagerList<UserLevel>(pageIndex, pageSize, 0, new List<UserLevel>());
                 int totalUsers = 0;
 
-                try
+                var function = this._functionService.GetById(functionId);
+
+                if (function == null)
                 {
-                    var function = this._functionService.GetById(functionId);
-
-                    if (function == null)
-                    {
-                        return HttpNotFound();
-                    }
-
-                    var users = _userService.SearchUserExcludeFunction(
-                        pageIndex,
-                        pageSize,
-                        out totalUsers,
-                        username,
-                        groupId,
-                        function.Site.Id,
-                        functionId);
-
-                    userList = new PagerList<UserLevel>(pageIndex, pageSize, totalUsers, users);
-
-                    // checks currently-logged-in user's policy on the function
-                    var adminPolicy = _userService.GetUserFunctionPolicy(CurrentSession.UserId, functionId);
-                    ViewBag.IsReadonlyAssign = adminPolicy < (int)Constant.Policy.Host;
-
-                    return View(userList);
+                    return HttpNotFound();
                 }
-                catch (Exception ex)
-                {
-                    LogService.Error(ex.Message, ex);
-                    throw ex;
-                }
+
+                var users = _userService.SearchUserExcludeFunction(
+                    pageIndex,
+                    pageSize,
+                    out totalUsers,
+                    username,
+                    groupId,
+                    function.Site.Id,
+                    functionId);
+
+                userList = new PagerList<UserLevel>(pageIndex, pageSize, totalUsers, users);
+
+                // checks currently-logged-in user's policy on the function
+                var adminPolicy = _userService.GetUserFunctionPolicy(CurrentSession.UserId, functionId);
+                ViewBag.IsReadonlyAssign = adminPolicy < (int)Constant.Policy.Host;
+
+                return View(userList);
             }
 
             return new EmptyResult();
@@ -694,29 +630,21 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                     throw new ArgumentException(string.Format("Function (id={0}) not found", id));
                 }
 
-                try
+                var criteria = new AssignFunctionToUsersCriteria
                 {
-                    var criteria = new AssignFunctionToUsersCriteria
-                    {
-                        FunctionId = id,
-                        SiteId = function.Site.Id,
-                        UserRead = readList.Split(',').ToList(),
-                        UserHost = hostList.Split(',').ToList(),
-                        ModifiedBy = CurrentSession.UserId,
-                        ModifiedDate = DateTime.Now
-                    };
+                    FunctionId = id,
+                    SiteId = function.Site.Id,
+                    UserRead = readList.Split(',').ToList(),
+                    UserHost = hostList.Split(',').ToList(),
+                    ModifiedBy = CurrentSession.UserId,
+                    ModifiedDate = DateTime.Now
+                };
 
-                    var result = this._functionService.AssignFunctionToUsers(criteria);
+                var result = this._functionService.AssignFunctionToUsers(criteria);
 
-                    if (result != null && result.IsSuccessful)
-                    {
-                        return Constant.OK;
-                    }
-                }
-                catch (Exception ex)
+                if (result != null && result.IsSuccessful)
                 {
-                    LogService.Error(ex.Message, ex);
-                    throw ex;
+                    return Constant.OK;
                 }
             }
 
@@ -737,28 +665,20 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 int functionId = fid;
                 string groupName = q.Trim();
 
-                try
+                var function = this._functionService.GetById(functionId);
+
+                if (function == null)
                 {
-                    var function = this._functionService.GetById(functionId);
-
-                    if (function == null)
-                    {
-                        return HttpNotFound();
-                    }
-
-                    var group = _groupService.SearchGroupExcludeFunction(groupName, function.Site.Id, fid);
-
-                    // checks currently-logged-in user's policy on the function
-                    var adminPolicy = _userService.GetUserFunctionPolicy(CurrentSession.UserId, fid);
-                    ViewBag.IsReadonlyAssign = adminPolicy < (int)Constant.Policy.Host;
-
-                    return View(group);
+                    return HttpNotFound();
                 }
-                catch (Exception ex)
-                {
-                    LogService.Error(ex.Message, ex);
-                    throw ex;
-                }
+
+                var group = _groupService.SearchGroupExcludeFunction(groupName, function.Site.Id, fid);
+
+                // checks currently-logged-in user's policy on the function
+                var adminPolicy = _userService.GetUserFunctionPolicy(CurrentSession.UserId, fid);
+                ViewBag.IsReadonlyAssign = adminPolicy < (int)Constant.Policy.Host;
+
+                return View(group);
             }
 
             return new EmptyResult();
@@ -789,29 +709,21 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                     throw new ArgumentException(string.Format("Function (id={0}) not found", id));
                 }
 
-                try
+                var criteria = new AssignFunctionToGroupsCriteria
                 {
-                    var criteria = new AssignFunctionToGroupsCriteria
-                    {
-                        FunctionId = id,
-                        SiteId = function.Site.Id,
-                        GroupRead = readList.Split(',').ToList(),
-                        GroupHost = hostList.Split(',').ToList(),
-                        ModifiedBy = CurrentSession.UserId,
-                        ModifiedDate = DateTime.Now
-                    };
+                    FunctionId = id,
+                    SiteId = function.Site.Id,
+                    GroupRead = readList.Split(',').ToList(),
+                    GroupHost = hostList.Split(',').ToList(),
+                    ModifiedBy = CurrentSession.UserId,
+                    ModifiedDate = DateTime.Now
+                };
 
-                    var result = this._functionService.AssignFunctionToGroups(criteria);
+                var result = this._functionService.AssignFunctionToGroups(criteria);
 
-                    if (result != null && result.IsSuccessful)
-                    {
-                        return Constant.OK;
-                    }
-                }
-                catch (Exception ex)
+                if (result != null && result.IsSuccessful)
                 {
-                    LogService.Error(ex.Message, ex);
-                    throw ex;
+                    return Constant.OK;
                 }
             }
 
@@ -833,19 +745,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             if (Request.IsAjaxRequest())
             {
-                try
-                {
-                    var functionList = this._functionService.GetBySite(siteId, this.Environment, true).ToList();
+                var functionList = this._functionService.GetBySite(siteId, this.Environment, true).ToList();
 
-                    functionList.Insert(0, new Function { Id = 0, Name = ViewResources.None });
+                functionList.Insert(0, new Function { Id = 0, Name = ViewResources.None });
 
-                    return Json(functionList);
-                }
-                catch (Exception ex)
-                {
-                    LogService.Error(ex.Message, ex);
-                    throw ex;
-                }
+                return Json(functionList);
             }
 
             return Json(null);
@@ -864,34 +768,26 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             if (Request.IsAjaxRequest())
             {
-                try
+                if (functionId != 0)
                 {
-                    if (functionId != 0)
-                    {
-                        var function = this._functionService.GetById(functionId);
+                    var function = this._functionService.GetById(functionId);
 
-                        var functionList = this._functionService.GetBySite(function.Site.Id, env, true).ToList();
+                    var functionList = this._functionService.GetBySite(function.Site.Id, env, true).ToList();
 
-                        functionList = functionList.Where(f => f.Id != functionId && (f.Parent == null
-                                                    || f.Parent.Id != functionId)).ToList();
+                    functionList = functionList.Where(f => f.Id != functionId && (f.Parent == null
+                                                || f.Parent.Id != functionId)).ToList();
 
-                        functionList.Insert(0, new Function { Id = 0, Name = ViewResources.None });
+                    functionList.Insert(0, new Function { Id = 0, Name = ViewResources.None });
 
-                        return Json(functionList);
-                    }
-                    else
-                    {
-                        var functionList = this._functionService.GetBySite(siteId, env, true).ToList();
-
-                        functionList.Insert(0, new Function { Id = 0, Name = ViewResources.None });
-
-                        return Json(functionList);
-                    }
+                    return Json(functionList);
                 }
-                catch (Exception ex)
+                else
                 {
-                    LogService.Error(ex.Message, ex);
-                    throw ex;
+                    var functionList = this._functionService.GetBySite(siteId, env, true).ToList();
+
+                    functionList.Insert(0, new Function { Id = 0, Name = ViewResources.None });
+
+                    return Json(functionList);
                 }
             }
 

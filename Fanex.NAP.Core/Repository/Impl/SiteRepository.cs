@@ -35,16 +35,9 @@ namespace Fanex.NAP.Core.Repository.Impl
         /// <returns>The site object.</returns>
         public override ISite Get(ICriteria criteria)
         {
-            try
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                using (var db = new ObjectDb(criteria.GetSettingKey()))
-                {
-                    return db.QueryEntity<Site>(criteria.GetSpParams());
-                }
-            }
-            catch
-            {
-                throw;
+                return db.QueryEntity<Site>(criteria.GetSpParams());
             }
         }
 
@@ -55,23 +48,16 @@ namespace Fanex.NAP.Core.Repository.Impl
         /// <returns>The site URL.</returns>
         public SiteUrl GetSiteUrl(ICriteria criteria)
         {
-            try
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                using (var db = new ObjectDb(criteria.GetSettingKey()))
-                {
-                    return db.QueryEntity<SiteUrl, Site, SiteUrl>(
-                        (su, s) =>
-                        {
-                            su.Site = s;
-                            return su;
-                        },
-                        "Id",
-                        criteria.GetSpParams());
-                }
-            }
-            catch
-            {
-                throw;
+                return db.QueryEntity<SiteUrl, Site, SiteUrl>(
+                    (su, s) =>
+                    {
+                        su.Site = s;
+                        return su;
+                    },
+                    "Id",
+                    criteria.GetSpParams());
             }
         }
 
@@ -92,16 +78,9 @@ namespace Fanex.NAP.Core.Repository.Impl
         /// <returns>List of site.</returns>
         public override IEnumerable<ISite> Fetch(ICriteria criteria)
         {
-            try
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                using (var db = new ObjectDb(criteria.GetSettingKey()))
-                {
-                    return db.Query<Site>(criteria.GetSpParams()).OrderBy(s => s.Name).ToList<Site>();
-                }
-            }
-            catch
-            {
-                throw;
+                return db.Query<Site>(criteria.GetSpParams()).OrderBy(s => s.Name).ToList<Site>();
             }
         }
 
@@ -112,25 +91,18 @@ namespace Fanex.NAP.Core.Repository.Impl
         /// <returns>List of site level.</returns>
         public IEnumerable<SiteLevel> FetchSiteLevel(ICriteria criteria)
         {
-            try
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                using (var db = new ObjectDb(criteria.GetSettingKey()))
-                {
-                    return db.Query<SiteLevel, Site, User, User, SiteLevel>(
-                         (sl, s, cu, mu) =>
-                         {
-                             sl.Site = s;
-                             sl.Creator = cu;
-                             sl.Modifier = mu;
-                             return sl;
-                         },
-                         "SiteId,CreatorId,ModifierId",
-                         criteria.GetSpParams()).OrderBy(s => s.Site.Name).ToList<SiteLevel>();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+                return db.Query<SiteLevel, Site, User, User, SiteLevel>(
+                        (sl, s, cu, mu) =>
+                        {
+                            sl.Site = s;
+                            sl.Creator = cu;
+                            sl.Modifier = mu;
+                            return sl;
+                        },
+                        "SiteId,CreatorId,ModifierId",
+                        criteria.GetSpParams()).OrderBy(s => s.Site.Name).ToList<SiteLevel>();
             }
         }
 
@@ -141,23 +113,16 @@ namespace Fanex.NAP.Core.Repository.Impl
         /// <returns>List of site URL.</returns>
         public IEnumerable<SiteUrl> FetchSiteUrl(ICriteria criteria)
         {
-            try
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                using (var db = new ObjectDb(criteria.GetSettingKey()))
-                {
-                    return db.Query<SiteUrl, Site, SiteUrl>(
-                         (su, s) =>
-                         {
-                             su.Site = s;
-                             return su;
-                         },
-                         "Id",
-                         criteria.GetSpParams()).OrderBy(s => s.Site.Name).ToList<SiteUrl>();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+                return db.Query<SiteUrl, Site, SiteUrl>(
+                        (su, s) =>
+                        {
+                            su.Site = s;
+                            return su;
+                        },
+                        "Id",
+                        criteria.GetSpParams()).OrderBy(s => s.Site.Name).ToList<SiteUrl>();
             }
         }
 
@@ -169,26 +134,18 @@ namespace Fanex.NAP.Core.Repository.Impl
         /// <returns>Command result.</returns>
         public ICommandResult Insert(ref InsertSiteCriteria criteria, ICriteria logCriteria)
         {
-            try
+            Hashtable hash = criteria.GetSpParams();
+
+            hash = logCriteria.AddSpParams(hash);
+            hash = (new ResultCriteria()).AddSpParams(hash);
+
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                // prepare SP parameters
-                Hashtable hash = criteria.GetSpParams();
+                db.ExecuteNonQuery(hash);
 
-                hash = logCriteria.AddSpParams(hash);
-                hash = (new ResultCriteria()).AddSpParams(hash);
+                criteria.SiteId = Convert.ToInt32(db.GetParameterValue("SiteId"));
 
-                using (var db = new ObjectDb(criteria.GetSettingKey()))
-                {
-                    db.ExecuteNonQuery(hash);
-
-                    criteria.SiteId = Convert.ToInt32(db.GetParameterValue("SiteId"));
-
-                    return GetCommandResult(hash);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+                return GetCommandResult(hash);
             }
         }
 
@@ -200,25 +157,18 @@ namespace Fanex.NAP.Core.Repository.Impl
         /// <returns>Command result.</returns>
         public ICommandResult InsertSiteUrl(ref InsertSiteUrlCriteria criteria, ICriteria logCriteria)
         {
-            try
+            Hashtable hash = criteria.GetSpParams();
+
+            hash = logCriteria.AddSpParams(hash);
+            hash = (new ResultCriteria()).AddSpParams(hash);
+
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                Hashtable hash = criteria.GetSpParams();
+                db.ExecuteNonQuery(hash);
 
-                hash = logCriteria.AddSpParams(hash);
-                hash = (new ResultCriteria()).AddSpParams(hash);
+                criteria.SiteUrlId = Convert.ToInt32(db.GetParameterValue("SiteUrlId"));
 
-                using (var db = new ObjectDb(criteria.GetSettingKey()))
-                {
-                    db.ExecuteNonQuery(hash);
-
-                    criteria.SiteUrlId = Convert.ToInt32(db.GetParameterValue("SiteUrlId"));
-
-                    return GetCommandResult(hash);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+                return GetCommandResult(hash);
             }
         }
 
@@ -230,24 +180,16 @@ namespace Fanex.NAP.Core.Repository.Impl
         /// <returns>Command result.</returns>
         public ICommandResult Update(ICriteria criteria, ICriteria logCriteria)
         {
-            try
+            Hashtable hash = criteria.GetSpParams();
+
+            hash = logCriteria.AddSpParams(hash);
+            hash = (new ResultCriteria()).AddSpParams(hash);
+
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                // prepare SP parameters
-                Hashtable hash = criteria.GetSpParams();
+                db.ExecuteNonQuery(hash);
 
-                hash = logCriteria.AddSpParams(hash);
-                hash = (new ResultCriteria()).AddSpParams(hash);
-
-                using (var db = new ObjectDb(criteria.GetSettingKey()))
-                {
-                    db.ExecuteNonQuery(hash);
-
-                    return GetCommandResult(hash);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+                return GetCommandResult(hash);
             }
         }
 

@@ -51,21 +51,14 @@ namespace Fanex.NAP.Core.Service.Impl
             // check parameters
             Check.Argument.IsNotNegativeOrZero(id, "Id");
 
-            try
+            var criteria = new GetByIdMenuItemCriteria
             {
-                var criteria = new GetByIdMenuItemCriteria
-                {
-                    MenuItemId = id
-                };
+                MenuItemId = id
+            };
 
-                if (criteria.IsValid())
-                {
-                    return this._menuItemRepository.Get(criteria);
-                }
-            }
-            catch (Exception ex)
+            if (criteria.IsValid())
             {
-                HandleException(ex);
+                return this._menuItemRepository.Get(criteria);
             }
 
             return null;
@@ -83,22 +76,15 @@ namespace Fanex.NAP.Core.Service.Impl
             Check.Argument.IsNotEmpty(name, "Name");
             Check.Argument.IsNotNegativeOrZero(siteId, "SiteId");
 
-            try
+            var criteria = new GetByNameAndSiteMenuItemCriteria
             {
-                var criteria = new GetByNameAndSiteMenuItemCriteria
-                {
-                    MenuItemName = name,
-                    SiteId = siteId
-                };
+                MenuItemName = name,
+                SiteId = siteId
+            };
 
-                if (criteria.IsValid())
-                {
-                    return this._menuItemRepository.Get(criteria);
-                }
-            }
-            catch (Exception ex)
+            if (criteria.IsValid())
             {
-                HandleException(ex);
+                return this._menuItemRepository.Get(criteria);
             }
 
             return null;
@@ -115,22 +101,15 @@ namespace Fanex.NAP.Core.Service.Impl
             // check parameters
             Check.Argument.IsNotEmpty(env, "Environment");
 
-            try
+            var criteria = new GetAllMenuItemCriteria
             {
-                var criteria = new GetAllMenuItemCriteria
-                {
-                    Environment = env,
-                    IsActive = isActive
-                };
+                Environment = env,
+                IsActive = isActive
+            };
 
-                if (criteria.IsValid())
-                {
-                    return this._menuItemRepository.Fetch(criteria);
-                }
-            }
-            catch (Exception ex)
+            if (criteria.IsValid())
             {
-                HandleException(ex);
+                return this._menuItemRepository.Fetch(criteria);
             }
 
             return null;
@@ -151,32 +130,25 @@ namespace Fanex.NAP.Core.Service.Impl
             // check parameters
             Check.Argument.IsNotEmpty(env, "Environment");
 
-            try
+            var criteria = new GetAllMenuItemCriteria
             {
-                var criteria = new GetAllMenuItemCriteria
-                {
-                    Environment = env,
-                    IsActive = isActive
-                };
+                Environment = env,
+                IsActive = isActive
+            };
 
-                if (criteria.IsValid())
-                {
-                    IEnumerable<IMenuItem> menuItemList = this._menuItemRepository.Fetch(criteria);
+            if (criteria.IsValid())
+            {
+                IEnumerable<IMenuItem> menuItemList = this._menuItemRepository.Fetch(criteria);
 
-                    if (menuItemList != null)
-                    {
-                        return menuItemList.Select(s => new SelectListItem
-                            {
-                                Text = s.Name,
-                                Value = s.Id.ToString(),
-                                Selected = s.Id == selectedMenuItemId
-                            }).ToList();
-                    }
+                if (menuItemList != null)
+                {
+                    return menuItemList.Select(s => new SelectListItem
+                        {
+                            Text = s.Name,
+                            Value = s.Id.ToString(),
+                            Selected = s.Id == selectedMenuItemId
+                        }).ToList();
                 }
-            }
-            catch (Exception ex)
-            {
-                HandleException(ex);
             }
 
             return null;
@@ -195,23 +167,16 @@ namespace Fanex.NAP.Core.Service.Impl
             Check.Argument.IsNotNegativeOrZero(siteId, "SiteId");
             Check.Argument.IsNotEmpty(env, "Environment");
 
-            try
+            var criteria = new GetBySiteMenuItemCriteria
             {
-                var criteria = new GetBySiteMenuItemCriteria
-                {
-                    SiteId = siteId,
-                    Environment = env,
-                    IsActive = isActive
-                };
+                SiteId = siteId,
+                Environment = env,
+                IsActive = isActive
+            };
 
-                if (criteria.IsValid())
-                {
-                    return this._menuItemRepository.Fetch(criteria);
-                }
-            }
-            catch (Exception ex)
+            if (criteria.IsValid())
             {
-                HandleException(ex);
+                return this._menuItemRepository.Fetch(criteria);
             }
 
             return null;
@@ -235,33 +200,26 @@ namespace Fanex.NAP.Core.Service.Impl
             Check.Argument.IsNotNegativeOrZero(siteId, "SiteId");
             Check.Argument.IsNotEmpty(env, "Environment");
 
-            try
+            var criteria = new GetBySiteMenuItemCriteria
             {
-                var criteria = new GetBySiteMenuItemCriteria
-                {
-                    SiteId = siteId,
-                    Environment = env,
-                    IsActive = isActive
-                };
+                SiteId = siteId,
+                Environment = env,
+                IsActive = isActive
+            };
 
-                if (criteria.IsValid())
-                {
-                    IEnumerable<IMenuItem> menuItemList = this._menuItemRepository.Fetch(criteria);
+            if (criteria.IsValid())
+            {
+                IEnumerable<IMenuItem> menuItemList = this._menuItemRepository.Fetch(criteria);
 
-                    if (menuItemList != null)
-                    {
-                        return menuItemList.Select(s => new SelectListItem
-                            {
-                                Text = s.Name,
-                                Value = s.Id.ToString(),
-                                Selected = s.Id == selectedMenuItemId
-                            }).ToList();
-                    }
+                if (menuItemList != null)
+                {
+                    return menuItemList.Select(s => new SelectListItem
+                        {
+                            Text = s.Name,
+                            Value = s.Id.ToString(),
+                            Selected = s.Id == selectedMenuItemId
+                        }).ToList();
                 }
-            }
-            catch (Exception ex)
-            {
-                HandleException(ex);
             }
 
             return null;
@@ -280,25 +238,18 @@ namespace Fanex.NAP.Core.Service.Impl
             Check.Argument.IsNotNegativeOrZero(siteId, "SiteId");
             Check.Argument.IsNotEmpty(env, "Environment");
 
-            try
+            var criteria = new GetBySiteMenuItemCriteria
             {
-                var criteria = new GetBySiteMenuItemCriteria
-                {
-                    SiteId = siteId,
-                    Environment = env,
-                    IsActive = isActive
-                };
+                SiteId = siteId,
+                Environment = env,
+                IsActive = isActive
+            };
 
-                if (criteria.IsValid())
-                {
-                    IEnumerable<IMenuItem> menuItemList = this._menuItemRepository.Fetch(criteria).OrderBy(x => x.DisplayOrder);
-
-                    return SortMenuItemsInHierarchy(menuItemList);
-                }
-            }
-            catch (Exception ex)
+            if (criteria.IsValid())
             {
-                HandleException(ex);
+                IEnumerable<IMenuItem> menuItemList = this._menuItemRepository.Fetch(criteria).OrderBy(x => x.DisplayOrder);
+
+                return SortMenuItemsInHierarchy(menuItemList);
             }
 
             return null;
@@ -314,22 +265,16 @@ namespace Fanex.NAP.Core.Service.Impl
         {
             // check parameters
             Check.Argument.IsNotNegativeOrZero(id, "Id");
-            try
-            {
-                var criteria = new GetParentByIdMenuItemCriteria
-                {
-                    MenuItemId = id,
-                    Environment = env
-                };
 
-                if (criteria.IsValid())
-                {
-                    return this._menuItemRepository.Fetch(criteria);
-                }
-            }
-            catch (Exception ex)
+            var criteria = new GetParentByIdMenuItemCriteria
             {
-                HandleException(ex);
+                MenuItemId = id,
+                Environment = env
+            };
+
+            if (criteria.IsValid())
+            {
+                return this._menuItemRepository.Fetch(criteria);
             }
 
             return null;
@@ -349,32 +294,26 @@ namespace Fanex.NAP.Core.Service.Impl
         {
             // check parameters
             Check.Argument.IsNotNegativeOrZero(id, "Id");
-            try
+
+            var criteria = new GetParentByIdMenuItemCriteria
             {
-                var criteria = new GetParentByIdMenuItemCriteria
-                {
-                    MenuItemId = id,
-                    Environment = env
-                };
+                MenuItemId = id,
+                Environment = env
+            };
 
-                if (criteria.IsValid())
-                {
-                    IEnumerable<IMenuItem> menuItemList = this._menuItemRepository.Fetch(criteria);
+            if (criteria.IsValid())
+            {
+                IEnumerable<IMenuItem> menuItemList = this._menuItemRepository.Fetch(criteria);
 
-                    if (menuItemList != null)
-                    {
-                        return menuItemList.Select(s => new SelectListItem
-                            {
-                                Text = s.Name,
-                                Value = s.Id.ToString(),
-                                Selected = s.Id == selectedMenuItemId
-                            }).ToList();
-                    }
+                if (menuItemList != null)
+                {
+                    return menuItemList.Select(s => new SelectListItem
+                        {
+                            Text = s.Name,
+                            Value = s.Id.ToString(),
+                            Selected = s.Id == selectedMenuItemId
+                        }).ToList();
                 }
-            }
-            catch (Exception ex)
-            {
-                HandleException(ex);
             }
 
             return null;
@@ -395,22 +334,15 @@ namespace Fanex.NAP.Core.Service.Impl
             Check.Argument.IsNotNegativeOrZero(userId, "UserId");
             Check.Argument.IsNotEmpty(env, "Environment");
 
-            try
+            var criteria = new GetByUserIncludeGroupMenuItemCriteria
             {
-                var criteria = new GetByUserIncludeGroupMenuItemCriteria
-                {
-                    UserId = userId,
-                    Environment = env
-                };
+                UserId = userId,
+                Environment = env
+            };
 
-                if (criteria.IsValid())
-                {
-                    return this._menuItemRepository.Fetch(criteria);
-                }
-            }
-            catch (Exception ex)
+            if (criteria.IsValid())
             {
-                HandleException(ex);
+                return this._menuItemRepository.Fetch(criteria);
             }
 
             return null;
@@ -435,23 +367,16 @@ namespace Fanex.NAP.Core.Service.Impl
             Check.Argument.IsNotNegativeOrZero(siteId, "SiteId");
             Check.Argument.IsNotEmpty(env, "Environment");
 
-            try
+            var criteria = new GetByUserAndSiteIncludeGroupMenuItemCriteria
             {
-                var criteria = new GetByUserAndSiteIncludeGroupMenuItemCriteria
-                {
-                    UserId = userId,
-                    SiteId = siteId,
-                    Environment = env
-                };
+                UserId = userId,
+                SiteId = siteId,
+                Environment = env
+            };
 
-                if (criteria.IsValid())
-                {
-                    return this._menuItemRepository.Fetch(criteria);
-                }
-            }
-            catch (Exception ex)
+            if (criteria.IsValid())
             {
-                HandleException(ex);
+                return this._menuItemRepository.Fetch(criteria);
             }
 
             return null;
@@ -474,24 +399,17 @@ namespace Fanex.NAP.Core.Service.Impl
             // check parameters
             Check.Argument.IsNotEmpty(env, "Environment");
 
-            try
+            var criteria = new SearchAllMenuItemCriteria
             {
-                var criteria = new SearchAllMenuItemCriteria
-                {
-                    MenuItemName = menuItemName,
-                    SiteId = siteId,
-                    Environment = env,
-                    IsActive = isActive
-                };
+                MenuItemName = menuItemName,
+                SiteId = siteId,
+                Environment = env,
+                IsActive = isActive
+            };
 
-                if (criteria.IsValid())
-                {
-                    return this._menuItemRepository.Fetch(criteria);
-                }
-            }
-            catch (Exception ex)
+            if (criteria.IsValid())
             {
-                HandleException(ex);
+                return this._menuItemRepository.Fetch(criteria);
             }
 
             return null;
@@ -507,20 +425,13 @@ namespace Fanex.NAP.Core.Service.Impl
             // check parameters
             Check.Argument.IsNotNull(criteria, "criteria");
 
-            try
-            {
-                LogExecSpCriteria logCriteria = GetLogExecSpCriteria();
+            LogExecSpCriteria logCriteria = GetLogExecSpCriteria();
 
-                if (criteria.IsValid() && logCriteria.IsValid())
-                {
-                    return this._menuItemRepository.Insert(ref criteria, logCriteria);
-                }
-            }
-            catch (Exception ex)
+            if (criteria.IsValid() && logCriteria.IsValid())
             {
-                HandleException(ex);
+                return this._menuItemRepository.Insert(ref criteria, logCriteria);
             }
-
+            
             return null;
         }
 
@@ -534,18 +445,11 @@ namespace Fanex.NAP.Core.Service.Impl
             // check parameters
             Check.Argument.IsNotNull(criteria, "criteria");
 
-            try
-            {
-                LogExecSpCriteria logCriteria = GetLogExecSpCriteria();
+            LogExecSpCriteria logCriteria = GetLogExecSpCriteria();
 
-                if (criteria.IsValid() && logCriteria.IsValid())
-                {
-                    return this._menuItemRepository.Update(criteria, logCriteria);
-                }
-            }
-            catch (Exception ex)
+            if (criteria.IsValid() && logCriteria.IsValid())
             {
-                HandleException(ex);
+                return this._menuItemRepository.Update(criteria, logCriteria);
             }
 
             return null;
@@ -561,18 +465,11 @@ namespace Fanex.NAP.Core.Service.Impl
             // check parameters
             Check.Argument.IsNotNull(criteria, "criteria");
 
-            try
-            {
-                LogExecSpCriteria logCriteria = GetLogExecSpCriteria();
+            LogExecSpCriteria logCriteria = GetLogExecSpCriteria();
 
-                if (criteria.IsValid() && logCriteria.IsValid())
-                {
-                    return this._menuItemRepository.Update(criteria, logCriteria);
-                }
-            }
-            catch (Exception ex)
+            if (criteria.IsValid() && logCriteria.IsValid())
             {
-                HandleException(ex);
+                return this._menuItemRepository.Update(criteria, logCriteria);
             }
 
             return null;

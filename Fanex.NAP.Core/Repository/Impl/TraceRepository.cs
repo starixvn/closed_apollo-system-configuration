@@ -32,22 +32,15 @@ namespace Fanex.NAP.Core.Repository.Impl
         /// <returns>List of execute SP log.</returns>
         public IQueryable<LogExecSp> SearchLogExecSp(ICriteria criteria, out int totalRows)
         {
-            try
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                using (var db = new ObjectDb(criteria.GetSettingKey()))
-                {
-                    Hashtable hash = criteria.GetSpParams();
+                Hashtable hash = criteria.GetSpParams();
 
-                    var logList = db.Query<LogExecSp>(hash);
+                var logList = db.Query<LogExecSp>(hash);
 
-                    totalRows = Convert.ToInt32(hash["totalrows"]);
+                totalRows = Convert.ToInt32(hash["totalrows"]);
 
-                    return logList.AsQueryable();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+                return logList.AsQueryable();
             }
         }
 
@@ -58,18 +51,11 @@ namespace Fanex.NAP.Core.Repository.Impl
         /// <returns>Execute SP log.</returns>
         public LogExecSp GetById(ICriteria criteria)
         {
-            try
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                using (var db = new ObjectDb(criteria.GetSettingKey()))
-                {
-                    Hashtable hash = criteria.GetSpParams();
+                Hashtable hash = criteria.GetSpParams();
 
-                    return db.QueryEntity<LogExecSp>(hash);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+                return db.QueryEntity<LogExecSp>(hash);
             }
         }
 
@@ -80,21 +66,14 @@ namespace Fanex.NAP.Core.Repository.Impl
         /// <returns>Command result.</returns>
         public ICommandResult InsertLog(ICriteria criteria)
         {
-            try
-            {
-                // prepare SP parameters
-                Hashtable hash = criteria.GetSpParams();
+            // prepare SP parameters
+            Hashtable hash = criteria.GetSpParams();
 
-                using (var db = new ObjectDb(criteria.GetSettingKey()))
-                {
-                    db.ExecuteNonQuery(hash);
-
-                    return new CommandResult();
-                }
-            }
-            catch (Exception ex)
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                throw ex;
+                db.ExecuteNonQuery(hash);
+
+                return new CommandResult();
             }
         }
 
@@ -106,25 +85,18 @@ namespace Fanex.NAP.Core.Repository.Impl
         /// <returns>List of user login log.</returns>
         public IQueryable<LogUserLogin> SearchLogUserLogin(ICriteria criteria, out int totalRows)
         {
-            try
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                using (var db = new ObjectDb(criteria.GetSettingKey()))
-                {
-                    Hashtable hash = criteria.GetSpParams();
+                Hashtable hash = criteria.GetSpParams();
 
-                    var logList = db.Query<LogUserLogin, User, Site, LogUserLogin>(
-                                    (l, u, s) => { l.User = u; l.Site = s; return l; },
-                                    "UserId,SiteId",
-                                    hash);
+                var logList = db.Query<LogUserLogin, User, Site, LogUserLogin>(
+                                (l, u, s) => { l.User = u; l.Site = s; return l; },
+                                "UserId,SiteId",
+                                hash);
 
-                    totalRows = Convert.ToInt32(hash["totalrows"]);
+                totalRows = Convert.ToInt32(hash["totalrows"]);
 
-                    return logList.AsQueryable();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+                return logList.AsQueryable();
             }
         }
 
@@ -136,25 +108,18 @@ namespace Fanex.NAP.Core.Repository.Impl
         /// <returns>List of function log.</returns>
         public IQueryable<LogFunction> SearchLogFunction(ICriteria criteria, out int totalRows)
         {
-            try
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                using (var db = new ObjectDb(criteria.GetSettingKey()))
-                {
-                    Hashtable hash = criteria.GetSpParams();
+                Hashtable hash = criteria.GetSpParams();
 
-                    var logList = db.Query<LogFunction, Function, User, Site, LogFunction>(
-                                    (l, f, u, s) => { l.Function = f; l.User = u; l.Site = s; return l; },
-                                    "FunctionId,UserId,SiteId",
-                                    hash);
+                var logList = db.Query<LogFunction, Function, User, Site, LogFunction>(
+                                (l, f, u, s) => { l.Function = f; l.User = u; l.Site = s; return l; },
+                                "FunctionId,UserId,SiteId",
+                                hash);
 
-                    totalRows = Convert.ToInt32(hash["totalrows"]);
+                totalRows = Convert.ToInt32(hash["totalrows"]);
 
-                    return logList.AsQueryable();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+                return logList.AsQueryable();
             }
         }
     }

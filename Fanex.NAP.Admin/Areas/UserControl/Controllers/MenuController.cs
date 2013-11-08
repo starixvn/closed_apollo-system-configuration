@@ -78,45 +78,37 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 Environment = this.Environment
             };
 
-            try
+            if (CurrentSession.Level == (int)Constant.Level.PortalAdmin)
             {
-                if (CurrentSession.Level == (int)Constant.Level.PortalAdmin)
-                {
-                    ViewBag.Site = _siteService.GetAllSelectListItem(criteria.Environment, true, criteria.SiteId);
-                    ViewBag.ViewFlags.HasEditRight = true;
-                }
-                else
-                {
-                    ViewBag.Site =
-                        _siteService.GetSelectListItemByUserAndFunctionKeyIncludeGroup(
-                                            CurrentSession.UserId,
-                                            FunctionKeys.ManageMenu.ToString(),
-                                            criteria.Environment,
-                                            policy: Constant.Policy.Read,
-                                            selectedSiteId: criteria.SiteId);
-
-                    // get user policy
-                    int policy = _userService.GetUserSiteFunctionKeyPolicy(
-                                                    CurrentSession.UserId,
-                                                    criteria.SiteId,
-                                                    FunctionKeys.ManageMenu.ToString());
-
-                    int policyCurrentSite = _userService.GetUserSiteFunctionKeyPolicy(
-                                                    CurrentSession.UserId,
-                                                    this.SiteId,
-                                                    FunctionKeys.ManageMenu.ToString());
-
-                    ViewBag.ViewFlags.HasEditRight = policy >= (int)Constant.Policy.Host
-                                                        && policyCurrentSite >= (int)Constant.Policy.Host;
-                }
-
-                ViewBag.MenuItemList = _menuItemService.GetBySiteInHierarchy(criteria.SiteId, criteria.Environment);
+                ViewBag.Site = _siteService.GetAllSelectListItem(criteria.Environment, true, criteria.SiteId);
+                ViewBag.ViewFlags.HasEditRight = true;
             }
-            catch (Exception ex)
+            else
             {
-                LogService.Error(ex.Message, ex);
-                throw ex;
+                ViewBag.Site =
+                    _siteService.GetSelectListItemByUserAndFunctionKeyIncludeGroup(
+                                        CurrentSession.UserId,
+                                        FunctionKeys.ManageMenu.ToString(),
+                                        criteria.Environment,
+                                        policy: Constant.Policy.Read,
+                                        selectedSiteId: criteria.SiteId);
+
+                // get user policy
+                int policy = _userService.GetUserSiteFunctionKeyPolicy(
+                                                CurrentSession.UserId,
+                                                criteria.SiteId,
+                                                FunctionKeys.ManageMenu.ToString());
+
+                int policyCurrentSite = _userService.GetUserSiteFunctionKeyPolicy(
+                                                CurrentSession.UserId,
+                                                this.SiteId,
+                                                FunctionKeys.ManageMenu.ToString());
+
+                ViewBag.ViewFlags.HasEditRight = policy >= (int)Constant.Policy.Host
+                                                    && policyCurrentSite >= (int)Constant.Policy.Host;
             }
+
+            ViewBag.MenuItemList = _menuItemService.GetBySiteInHierarchy(criteria.SiteId, criteria.Environment);
 
             return View(criteria);
         }
@@ -130,45 +122,37 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         [NapAuth(FunctionKey = FunctionKeys.ManageMenu, Policy = Constant.Policy.Read)]
         public ActionResult Manage(GetBySiteMenuItemCriteria criteria)
         {
-            try
+            if (CurrentSession.Level == (int)Constant.Level.PortalAdmin)
             {
-                if (CurrentSession.Level == (int)Constant.Level.PortalAdmin)
-                {
-                    ViewBag.Site = _siteService.GetAllSelectListItem(criteria.Environment, true, criteria.SiteId);
-                    ViewBag.ViewFlags.HasEditRight = true;
-                }
-                else
-                {
-                    ViewBag.Site =
-                        _siteService.GetSelectListItemByUserAndFunctionKeyIncludeGroup(
-                                            CurrentSession.UserId,
-                                            FunctionKeys.ManageMenu.ToString(),
-                                            criteria.Environment,
-                                            policy: Constant.Policy.Read,
-                                            selectedSiteId: criteria.SiteId);
-
-                    // get user policy
-                    int policy = _userService.GetUserSiteFunctionKeyPolicy(
-                                                    CurrentSession.UserId,
-                                                    criteria.SiteId,
-                                                    FunctionKeys.ManageMenu.ToString());
-
-                    int policyCurrentSite = _userService.GetUserSiteFunctionKeyPolicy(
-                                                    CurrentSession.UserId,
-                                                    this.SiteId,
-                                                    FunctionKeys.ManageMenu.ToString());
-
-                    ViewBag.ViewFlags.HasEditRight = policy >= (int)Constant.Policy.Host
-                                                        && policyCurrentSite >= (int)Constant.Policy.Host;
-                }
-
-                ViewBag.MenuItemList = _menuItemService.GetBySiteInHierarchy(criteria.SiteId, criteria.Environment);
+                ViewBag.Site = _siteService.GetAllSelectListItem(criteria.Environment, true, criteria.SiteId);
+                ViewBag.ViewFlags.HasEditRight = true;
             }
-            catch (Exception ex)
+            else
             {
-                LogService.Error(ex.Message, ex);
-                throw ex;
+                ViewBag.Site =
+                    _siteService.GetSelectListItemByUserAndFunctionKeyIncludeGroup(
+                                        CurrentSession.UserId,
+                                        FunctionKeys.ManageMenu.ToString(),
+                                        criteria.Environment,
+                                        policy: Constant.Policy.Read,
+                                        selectedSiteId: criteria.SiteId);
+
+                // get user policy
+                int policy = _userService.GetUserSiteFunctionKeyPolicy(
+                                                CurrentSession.UserId,
+                                                criteria.SiteId,
+                                                FunctionKeys.ManageMenu.ToString());
+
+                int policyCurrentSite = _userService.GetUserSiteFunctionKeyPolicy(
+                                                CurrentSession.UserId,
+                                                this.SiteId,
+                                                FunctionKeys.ManageMenu.ToString());
+
+                ViewBag.ViewFlags.HasEditRight = policy >= (int)Constant.Policy.Host
+                                                    && policyCurrentSite >= (int)Constant.Policy.Host;
             }
+
+            ViewBag.MenuItemList = _menuItemService.GetBySiteInHierarchy(criteria.SiteId, criteria.Environment);
 
             return View(criteria);
         }
@@ -222,46 +206,39 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         [NapAuth(FunctionKey = FunctionKeys.ManageMenu, Policy = Constant.Policy.Host)]
         public ActionResult AddNewMenuItem(InsertMenuItemCriteria criteria)
         {
-            try
+            ViewBag.Parent = _menuItemService.GetAllSelectListItem(this.Environment, isActive: true);
+            ViewBag.Function = this._functionService.GetSelectListItemBySite(criteria.SiteId, this.Environment, isActive: true);
+
+            if (CurrentSession.Level == (int)Constant.Level.PortalAdmin)
             {
-                ViewBag.Parent = _menuItemService.GetAllSelectListItem(this.Environment, isActive: true);
-                ViewBag.Function = this._functionService.GetSelectListItemBySite(criteria.SiteId, this.Environment, isActive: true);
-                if (CurrentSession.Level == (int)Constant.Level.PortalAdmin)
-                {
-                    ViewBag.Site = _siteService.GetAllSelectListItem(criteria.Environment, true, criteria.SiteId);
-                }
-                else
-                {
-                    ViewBag.Site =
-                        _siteService.GetSelectListItemByUserAndFunctionKeyIncludeGroup(
-                                            CurrentSession.UserId,
-                                            FunctionKeys.ManageMenu.ToString(),
-                                            criteria.Environment,
-                                            policy: Constant.Policy.Host,
-                                            selectedSiteId: criteria.SiteId);
-                }
-
-                if (ModelState.IsValid)
-                {
-                    // Add new
-                    criteria.CreatedBy = CurrentSession.UserId;
-                    criteria.CreatedDate = DateTime.Now;
-                    criteria.ParentId = criteria.ParentId == 0 ? null : criteria.ParentId;
-                    criteria.ParentName = criteria.ParentId == 0 || criteria.ParentId == null ? null
-                        : criteria.ParentName;
-
-                    var result = _menuItemService.Insert(criteria);
-
-                    if (result != null && result.IsSuccessful)
-                    {
-                        ViewBag.Success = true;
-                    }
-                }
+                ViewBag.Site = _siteService.GetAllSelectListItem(criteria.Environment, true, criteria.SiteId);
             }
-            catch (Exception ex)
+            else
             {
-                LogService.Error(ex.Message, ex);
-                throw ex;
+                ViewBag.Site =
+                    _siteService.GetSelectListItemByUserAndFunctionKeyIncludeGroup(
+                                        CurrentSession.UserId,
+                                        FunctionKeys.ManageMenu.ToString(),
+                                        criteria.Environment,
+                                        policy: Constant.Policy.Host,
+                                        selectedSiteId: criteria.SiteId);
+            }
+
+            if (ModelState.IsValid)
+            {
+                // Add new
+                criteria.CreatedBy = CurrentSession.UserId;
+                criteria.CreatedDate = DateTime.Now;
+                criteria.ParentId = criteria.ParentId == 0 ? null : criteria.ParentId;
+                criteria.ParentName = criteria.ParentId == 0 || criteria.ParentId == null ? null
+                    : criteria.ParentName;
+
+                var result = _menuItemService.Insert(criteria);
+
+                if (result != null && result.IsSuccessful)
+                {
+                    ViewBag.Success = true;
+                }
             }
 
             return View(criteria);
@@ -281,35 +258,26 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         public ActionResult EditMenuItem(int menuItemId)
         {
             var criteria = new UpdateMenuItemCriteria();
+            var menuItem = (MenuItem)_menuItemService.GetById(menuItemId);
 
-            try
+            if (menuItem == null)
             {
-                var menuItem = (MenuItem)_menuItemService.GetById(menuItemId);
-
-                if (menuItem == null)
-                {
-                    return RedirectToAction("Manage");
-                }
-
-                criteria.MenuItemId = menuItem.Id;
-                criteria.MenuItemName = menuItem.Name;
-                criteria.Description = menuItem.Description;
-                criteria.DisplayOrder = menuItem.DisplayOrder;
-                criteria.FunctionId = menuItem.Function.Id;
-                criteria.IsActive = menuItem.IsActive;
-                criteria.ParentId = menuItem.Parent != null ? menuItem.Parent.Id : 0;
-                criteria.ParentName = menuItem.Parent != null ? menuItem.Parent.Name : string.Empty;
-                criteria.Policy = menuItem.Policy;
-                criteria.SiteId = menuItem.Site.Id;
-                criteria.SiteName = menuItem.Site.Name;
-                criteria.Url = menuItem.Url;
-                criteria.Environment = menuItem.Environment;
+                return RedirectToAction("Manage");
             }
-            catch (Exception ex)
-            {
-                LogService.Error(ex.Message, ex);
-                throw ex;
-            }
+
+            criteria.MenuItemId = menuItem.Id;
+            criteria.MenuItemName = menuItem.Name;
+            criteria.Description = menuItem.Description;
+            criteria.DisplayOrder = menuItem.DisplayOrder;
+            criteria.FunctionId = menuItem.Function.Id;
+            criteria.IsActive = menuItem.IsActive;
+            criteria.ParentId = menuItem.Parent != null ? menuItem.Parent.Id : 0;
+            criteria.ParentName = menuItem.Parent != null ? menuItem.Parent.Name : string.Empty;
+            criteria.Policy = menuItem.Policy;
+            criteria.SiteId = menuItem.Site.Id;
+            criteria.SiteName = menuItem.Site.Name;
+            criteria.Url = menuItem.Url;
+            criteria.Environment = menuItem.Environment;
 
             ViewBag.Function = this._functionService.GetSelectListItemBySite(
                                                         criteria.SiteId,
@@ -338,44 +306,36 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         [NapAuth(FunctionKey = FunctionKeys.ManageMenu, Policy = Constant.Policy.Host)]
         public ActionResult EditMenuItem(UpdateMenuItemCriteria criteria)
         {
-            try
+            ViewBag.Function = this._functionService.GetSelectListItemBySite(
+                                                        criteria.SiteId,
+                                                        criteria.Environment,
+                                                        isActive: true,
+                                                        selectedFunctionId: criteria.FunctionId);
+
+            if (criteria.ParentId == null)
             {
-                ViewBag.Function = this._functionService.GetSelectListItemBySite(
-                                                            criteria.SiteId,
-                                                            criteria.Environment,
-                                                            isActive: true,
-                                                            selectedFunctionId: criteria.FunctionId);
-
-                if (criteria.ParentId == null)
-                {
-                    ViewBag.Parent = _menuItemService.GetParentSelectListItemById(criteria.MenuItemId);
-                }
-                else
-                {
-                    ViewBag.Parent = _menuItemService.GetParentSelectListItemById(criteria.MenuItemId, (int)criteria.ParentId);
-                }
-
-                if (ModelState.IsValid)
-                {
-                    // Update menu item
-                    criteria.ModifierId = CurrentSession.UserId;
-                    criteria.ModifiedDate = DateTime.Now;
-                    criteria.ParentId = criteria.ParentId == 0 ? null : criteria.ParentId;
-                    criteria.ParentName = criteria.ParentId == 0 || criteria.ParentId == null ? null
-                        : criteria.ParentName;
-
-                    var result = _menuItemService.Update(criteria);
-
-                    if (result != null && result.IsSuccessful)
-                    {
-                        ViewBag.Success = true;
-                    }
-                }
+                ViewBag.Parent = _menuItemService.GetParentSelectListItemById(criteria.MenuItemId);
             }
-            catch (Exception ex)
+            else
             {
-                LogService.Error(ex.Message, ex);
-                throw ex;
+                ViewBag.Parent = _menuItemService.GetParentSelectListItemById(criteria.MenuItemId, (int)criteria.ParentId);
+            }
+
+            if (ModelState.IsValid)
+            {
+                // Update menu item
+                criteria.ModifierId = CurrentSession.UserId;
+                criteria.ModifiedDate = DateTime.Now;
+                criteria.ParentId = criteria.ParentId == 0 ? null : criteria.ParentId;
+                criteria.ParentName = criteria.ParentId == 0 || criteria.ParentId == null ? null
+                    : criteria.ParentName;
+
+                var result = _menuItemService.Update(criteria);
+
+                if (result != null && result.IsSuccessful)
+                {
+                    ViewBag.Success = true;
+                }
             }
 
             return View(criteria);
@@ -400,25 +360,17 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 List<IMenuItem> menuItemList = new List<IMenuItem>();
 
                 environment = !string.IsNullOrEmpty(environment) ? environment : this.Environment;
+                menuItemList.Add(new MenuItem { Id = 0, Name = ViewResources.None });
 
-                try
+                if (menuItemId != null)
                 {
-                    menuItemList.Add(new MenuItem { Id = 0, Name = ViewResources.None });
-                    if (menuItemId != null)
-                    {
-                        menuItemList.AddRange(_menuItemService.GetParentById(
-                                        (int)menuItemId,
-                                        env: environment).ToList());
-                    }
-                    else
-                    {
-                        menuItemList.AddRange(_menuItemService.GetBySite((int)siteId, environment).ToList());
-                    }
+                    menuItemList.AddRange(_menuItemService.GetParentById(
+                                    (int)menuItemId,
+                                    env: environment).ToList());
                 }
-                catch (Exception ex)
+                else
                 {
-                    LogService.Error(ex.Message, ex);
-                    throw ex;
+                    menuItemList.AddRange(_menuItemService.GetBySite((int)siteId, environment).ToList());
                 }
 
                 return Json(menuItemList);
@@ -439,18 +391,10 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             if (Request.IsAjaxRequest())
             {
-                try
-                {
-                    return Json(this._functionService.GetBySite(
-                                        siteId,
-                                        !string.IsNullOrEmpty(environment) ? environment : this.Environment,
-                                        isActive: true));
-                }
-                catch (Exception ex)
-                {
-                    LogService.Error(ex.Message, ex);
-                    throw ex;
-                }
+                return Json(this._functionService.GetBySite(
+                                    siteId,
+                                    !string.IsNullOrEmpty(environment) ? environment : this.Environment,
+                                    isActive: true));
             }
 
             return Json(null);
@@ -468,25 +412,17 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             if (Request.IsAjaxRequest())
             {
-                try
+                var result = _menuItemService.UpdateStatus(new UpdateStatusMenuItemCriteria
                 {
-                    var result = _menuItemService.UpdateStatus(new UpdateStatusMenuItemCriteria
-                    {
-                        IsActive = isActive,
-                        MenuItemId = id,
-                        ModifiedBy = CurrentSession.UserId,
-                        ModifiedDate = DateTime.Now
-                    });
+                    IsActive = isActive,
+                    MenuItemId = id,
+                    ModifiedBy = CurrentSession.UserId,
+                    ModifiedDate = DateTime.Now
+                });
 
-                    if (result != null && result.IsSuccessful)
-                    {
-                        return Json(Constant.OK);
-                    }
-                }
-                catch (Exception ex)
+                if (result != null && result.IsSuccessful)
                 {
-                    LogService.Error(ex.Message, ex);
-                    throw ex;
+                    return Json(Constant.OK);
                 }
             }
 

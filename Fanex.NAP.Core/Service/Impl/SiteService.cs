@@ -73,21 +73,14 @@ namespace Fanex.NAP.Core.Service.Impl
             // check parammeters
             Check.Argument.IsNotNegativeOrZero(id, "id");
 
-            try
+            var criteria = new GetByIdSiteCriteria
             {
-                var criteria = new GetByIdSiteCriteria
-                {
-                    SiteId = id
-                };
+                SiteId = id
+            };
 
-                if (criteria.IsValid())
-                {
-                    return this._siteRepository.Get(criteria);
-                }
-            }
-            catch (Exception ex)
+            if (criteria.IsValid())
             {
-                this.HandleException(ex);
+                return this._siteRepository.Get(criteria);
             }
 
             return null;
@@ -103,21 +96,14 @@ namespace Fanex.NAP.Core.Service.Impl
             // check parammeters
             Check.Argument.IsNotEmpty(name, "name");
 
-            try
+            var criteria = new GetByNameSiteCriteria
             {
-                var criteria = new GetByNameSiteCriteria
-                {
-                    SiteName = name
-                };
+                SiteName = name
+            };
 
-                if (criteria.IsValid())
-                {
-                    return this._siteRepository.Get(criteria);
-                }
-            }
-            catch (Exception ex)
+            if (criteria.IsValid())
             {
-                this.HandleException(ex);
+                return this._siteRepository.Get(criteria);
             }
 
             return null;
@@ -133,39 +119,32 @@ namespace Fanex.NAP.Core.Service.Impl
             // check parammeters
             Check.Argument.IsNotNegativeOrZero(id, "id");
 
-            try
+            bool isActive = false;
+            string cacheKey = CacheKey.CacheSiteStatus + id.ToString();
+
+            if (this._cache.Contains(cacheKey))
             {
-                bool isActive = false;
-                string cacheKey = CacheKey.CacheSiteStatus + id.ToString();
-
-                if (this._cache.Contains(cacheKey))
-                {
-                    isActive = this._cache.Get<bool>(cacheKey);
-                }
-                else
-                {
-                    var criteria = new GetByIdSiteCriteria
-                    {
-                        SiteId = id
-                    };
-
-                    if (criteria.IsValid())
-                    {
-                        ISite site = this._siteRepository.Get(criteria);
-
-                        if (site != null)
-                        {
-                            this._cache.Set(CacheKey.CacheSiteStatus, site.IsActive, 3600);
-                            isActive = site.IsActive;
-                        }
-                    }
-
-                    return isActive;
-                }
+                isActive = this._cache.Get<bool>(cacheKey);
             }
-            catch (Exception ex)
+            else
             {
-                this.HandleException(ex);
+                var criteria = new GetByIdSiteCriteria
+                {
+                    SiteId = id
+                };
+
+                if (criteria.IsValid())
+                {
+                    ISite site = this._siteRepository.Get(criteria);
+
+                    if (site != null)
+                    {
+                        this._cache.Set(CacheKey.CacheSiteStatus, site.IsActive, 3600);
+                        isActive = site.IsActive;
+                    }
+                }
+
+                return isActive;
             }
 
             return false;
@@ -184,23 +163,16 @@ namespace Fanex.NAP.Core.Service.Impl
             Check.Argument.IsNotNegativeOrZero(userId, "userId");
             Check.Argument.IsNotEmpty(env, "Environment");
 
-            try
+            var criteria = new GetByUserSiteCriteria
             {
-                var criteria = new GetByUserSiteCriteria
-                {
-                    UserId = userId,
-                    Environment = env,
-                    IsActive = isActive
-                };
+                UserId = userId,
+                Environment = env,
+                IsActive = isActive
+            };
 
-                if (criteria.IsValid())
-                {
-                    return this._siteRepository.FetchSiteLevel(criteria).OrderBy(sl => sl.Site.Name);
-                }
-            }
-            catch (Exception ex)
+            if (criteria.IsValid())
             {
-                this.HandleException(ex);
+                return this._siteRepository.FetchSiteLevel(criteria).OrderBy(sl => sl.Site.Name);
             }
 
             return null;
@@ -216,22 +188,15 @@ namespace Fanex.NAP.Core.Service.Impl
         {
             Check.Argument.IsNotEmpty(env, "Environment");
 
-            try
+            var criteria = new GetAllSiteCriteria
             {
-                var criteria = new GetAllSiteCriteria
-                {
-                    Environment = env,
-                    IsActive = isActive
-                };
+                Environment = env,
+                IsActive = isActive
+            };
 
-                if (criteria.IsValid())
-                {
-                    return this._siteRepository.Fetch(criteria).OrderBy(s => s.Name);
-                }
-            }
-            catch (Exception ex)
+            if (criteria.IsValid())
             {
-                this.HandleException(ex);
+                return this._siteRepository.Fetch(criteria).OrderBy(s => s.Name);
             }
 
             return null;
@@ -251,32 +216,25 @@ namespace Fanex.NAP.Core.Service.Impl
         {
             Check.Argument.IsNotEmpty(env, "Environment");
 
-            try
+            var criteria = new GetAllSiteCriteria
             {
-                var criteria = new GetAllSiteCriteria
-                {
-                    Environment = env,
-                    IsActive = isActive
-                };
+                Environment = env,
+                IsActive = isActive
+            };
 
-                if (criteria.IsValid())
-                {
-                    IEnumerable<ISite> siteList = this._siteRepository.Fetch(criteria).OrderBy(s => s.Name);
+            if (criteria.IsValid())
+            {
+                IEnumerable<ISite> siteList = this._siteRepository.Fetch(criteria).OrderBy(s => s.Name);
 
-                    if (siteList != null)
-                    {
-                        return siteList.Select(s => new SelectListItem
-                            {
-                                Text = s.Name,
-                                Value = s.Id.ToString(),
-                                Selected = s.Id == selectedSiteId
-                            }).ToList();
-                    }
+                if (siteList != null)
+                {
+                    return siteList.Select(s => new SelectListItem
+                        {
+                            Text = s.Name,
+                            Value = s.Id.ToString(),
+                            Selected = s.Id == selectedSiteId
+                        }).ToList();
                 }
-            }
-            catch (Exception ex)
-            {
-                this.HandleException(ex);
             }
 
             return null;
@@ -292,22 +250,15 @@ namespace Fanex.NAP.Core.Service.Impl
         {
             Check.Argument.IsNotEmpty(env, "Environment");
 
-            try
+            var criteria = new GetAllSiteWithNumOfUserCriteria
             {
-                var criteria = new GetAllSiteWithNumOfUserCriteria
-                {
-                    Environment = env,
-                    IsActive = isActive
-                };
+                Environment = env,
+                IsActive = isActive
+            };
 
-                if (criteria.IsValid())
-                {
-                    return this._siteRepository.Fetch(criteria).OrderBy(s => s.Name);
-                }
-            }
-            catch (Exception ex)
+            if (criteria.IsValid())
             {
-                HandleException(ex);
+                return this._siteRepository.Fetch(criteria).OrderBy(s => s.Name);
             }
 
             return null;
@@ -332,33 +283,26 @@ namespace Fanex.NAP.Core.Service.Impl
             Check.Argument.IsNotEmpty(functionKey, "FunctionKey");
             Check.Argument.IsNotEmpty(env, "Environment");
 
-            try
+            var criteria = new GetByUserAndFunctionKeyIncludeGroupFunctionCriteria
             {
-                var criteria = new GetByUserAndFunctionKeyIncludeGroupFunctionCriteria
-                {
-                    UserId = userId,
-                    FunctionKey = functionKey,
-                    Environment = env
-                };
+                UserId = userId,
+                FunctionKey = functionKey,
+                Environment = env
+            };
 
-                if (criteria.IsValid())
-                {
-                    IEnumerable<FunctionPolicy> functionPolicyList = this._functionRepository.FetchFunctionPolicy(criteria).OrderBy(s => s.Site.Name);
+            if (criteria.IsValid())
+            {
+                IEnumerable<FunctionPolicy> functionPolicyList = this._functionRepository.FetchFunctionPolicy(criteria).OrderBy(s => s.Site.Name);
 
-                    if (functionPolicyList != null)
-                    {
-                        return functionPolicyList.Where(f => f.Policy >= (int)policy)
-                            .Select(s => new Site
-                            {
-                                Id = s.Site.Id,
-                                Name = s.Site.Name
-                            }).ToList();
-                    }
+                if (functionPolicyList != null)
+                {
+                    return functionPolicyList.Where(f => f.Policy >= (int)policy)
+                        .Select(s => new Site
+                        {
+                            Id = s.Site.Id,
+                            Name = s.Site.Name
+                        }).ToList();
                 }
-            }
-            catch (Exception ex)
-            {
-                HandleException(ex);
             }
 
             return null;
@@ -385,34 +329,27 @@ namespace Fanex.NAP.Core.Service.Impl
             Check.Argument.IsNotEmpty(functionKey, "FunctionKey");
             Check.Argument.IsNotEmpty(env, "Environment");
 
-            try
+            var criteria = new GetByUserAndFunctionKeyIncludeGroupFunctionCriteria
             {
-                var criteria = new GetByUserAndFunctionKeyIncludeGroupFunctionCriteria
-                {
-                    UserId = userId,
-                    FunctionKey = functionKey,
-                    Environment = env
-                };
+                UserId = userId,
+                FunctionKey = functionKey,
+                Environment = env
+            };
 
-                if (criteria.IsValid())
-                {
-                    IEnumerable<FunctionPolicy> functionPolicyList = this._functionRepository.FetchFunctionPolicy(criteria).OrderBy(s => s.Site.Name);
+            if (criteria.IsValid())
+            {
+                IEnumerable<FunctionPolicy> functionPolicyList = this._functionRepository.FetchFunctionPolicy(criteria).OrderBy(s => s.Site.Name);
 
-                    if (functionPolicyList != null)
-                    {
-                        return functionPolicyList.Where(f => f.Policy >= (int)policy)
-                            .Select(s => new SelectListItem
-                            {
-                                Text = s.Site.Name,
-                                Value = s.Site.Id.ToString(),
-                                Selected = s.Site.Id == selectedSiteId
-                            }).ToList();
-                    }
+                if (functionPolicyList != null)
+                {
+                    return functionPolicyList.Where(f => f.Policy >= (int)policy)
+                        .Select(s => new SelectListItem
+                        {
+                            Text = s.Site.Name,
+                            Value = s.Site.Id.ToString(),
+                            Selected = s.Site.Id == selectedSiteId
+                        }).ToList();
                 }
-            }
-            catch (Exception ex)
-            {
-                HandleException(ex);
             }
 
             return null;
@@ -432,18 +369,11 @@ namespace Fanex.NAP.Core.Service.Impl
             // check parameters
             Check.Argument.IsNotNull(criteria, "criteria");
 
-            try
-            {
-                LogExecSpCriteria logCriteria = GetLogExecSpCriteria();
+            LogExecSpCriteria logCriteria = GetLogExecSpCriteria();
 
-                if (criteria.IsValid() && logCriteria.IsValid())
-                {
-                    return this._siteRepository.Insert(ref criteria, logCriteria);
-                }
-            }
-            catch (Exception ex)
+            if (criteria.IsValid() && logCriteria.IsValid())
             {
-                HandleException(ex);
+                return this._siteRepository.Insert(ref criteria, logCriteria);
             }
 
             return null;
@@ -459,18 +389,11 @@ namespace Fanex.NAP.Core.Service.Impl
             // check parameters
             Check.Argument.IsNotNull(criteria, "criteria");
 
-            try
-            {
-                LogExecSpCriteria logCriteria = GetLogExecSpCriteria();
+            LogExecSpCriteria logCriteria = GetLogExecSpCriteria();
 
-                if (criteria.IsValid() && logCriteria.IsValid())
-                {
-                    return this._siteRepository.Update(criteria, logCriteria);
-                }
-            }
-            catch (Exception ex)
+            if (criteria.IsValid() && logCriteria.IsValid())
             {
-                HandleException(ex);
+                return this._siteRepository.Update(criteria, logCriteria);
             }
 
             return null;
@@ -486,18 +409,11 @@ namespace Fanex.NAP.Core.Service.Impl
             // check parameters
             Check.Argument.IsNotNull(criteria, "criteria");
 
-            try
-            {
-                LogExecSpCriteria logCriteria = GetLogExecSpCriteria();
+            LogExecSpCriteria logCriteria = GetLogExecSpCriteria();
 
-                if (criteria.IsValid() && logCriteria.IsValid())
-                {
-                    return this._siteRepository.Update(criteria, logCriteria);
-                }
-            }
-            catch (Exception ex)
+            if (criteria.IsValid() && logCriteria.IsValid())
             {
-                HandleException(ex);
+                return this._siteRepository.Update(criteria, logCriteria);
             }
 
             return null;
@@ -518,22 +434,15 @@ namespace Fanex.NAP.Core.Service.Impl
             Check.Argument.IsNotNegativeOrZero(userId, "userId");
             Check.Argument.IsNotNegativeOrZero(siteId, "siteId");
 
-            try
+            var criteria = new GetUserSiteLevelSiteCriteria
             {
-                var criteria = new GetUserSiteLevelSiteCriteria
-                {
-                    UserId = userId,
-                    SiteId = siteId
-                };
+                UserId = userId,
+                SiteId = siteId
+            };
 
-                if (criteria.IsValid())
-                {
-                    return this._siteRepository.FetchSiteLevel(criteria).FirstOrDefault<SiteLevel>();
-                }
-            }
-            catch (Exception ex)
+            if (criteria.IsValid())
             {
-                HandleException(ex);
+                return this._siteRepository.FetchSiteLevel(criteria).FirstOrDefault<SiteLevel>();
             }
 
             return null;
@@ -552,21 +461,14 @@ namespace Fanex.NAP.Core.Service.Impl
         {
             Check.Argument.IsNotEmpty(env, "Environment");
 
-            try
+            var criteria = new GetAllSiteUrlCriteria
             {
-                var criteria = new GetAllSiteUrlCriteria
-                {
-                    Environment = env
-                };
+                Environment = env
+            };
 
-                if (criteria.IsValid())
-                {
-                    return this._siteRepository.FetchSiteUrl(criteria);
-                }
-            }
-            catch (Exception ex)
+            if (criteria.IsValid())
             {
-                HandleException(ex);
+                return this._siteRepository.FetchSiteUrl(criteria);
             }
 
             return null;
@@ -585,22 +487,15 @@ namespace Fanex.NAP.Core.Service.Impl
 
             var result = new List<SiteUrl>();
 
-            try
+            var criteria = new GetSiteUrlByUserCriteria
             {
-                var criteria = new GetSiteUrlByUserCriteria
-                {
-                    UserId = userId,
-                    Environment = env
-                };
+                UserId = userId,
+                Environment = env
+            };
 
-                if (criteria.IsValid())
-                {
-                    result = this._siteRepository.FetchSiteUrl(criteria).OrderBy(su => su.Site.Name).ToList();
-                }
-            }
-            catch (Exception ex)
+            if (criteria.IsValid())
             {
-                HandleException(ex);
+                result = this._siteRepository.FetchSiteUrl(criteria).OrderBy(su => su.Site.Name).ToList();
             }
 
             return result;
@@ -619,22 +514,15 @@ namespace Fanex.NAP.Core.Service.Impl
 
             var result = new List<SiteUrl>();
 
-            try
+            var criteria = new GetSiteUrlBySiteIdCriteria
             {
-                var criteria = new GetSiteUrlBySiteIdCriteria
-                {
-                    SiteId = siteId,
-                    Environment = env
-                };
+                SiteId = siteId,
+                Environment = env
+            };
 
-                if (criteria.IsValid())
-                {
-                    result = this._siteRepository.FetchSiteUrl(criteria).OrderBy(su => su.Site.Name).ToList();
-                }
-            }
-            catch (Exception ex)
+            if (criteria.IsValid())
             {
-                HandleException(ex);
+                result = this._siteRepository.FetchSiteUrl(criteria).OrderBy(su => su.Site.Name).ToList();
             }
 
             return result;
@@ -651,21 +539,14 @@ namespace Fanex.NAP.Core.Service.Impl
 
             SiteUrl result = null;
 
-            try
+            var criteria = new GetSiteUrlByIdCriteria
             {
-                var criteria = new GetSiteUrlByIdCriteria
-                {
-                    SiteUrlId = siteUrlId
-                };
+                SiteUrlId = siteUrlId
+            };
 
-                if (criteria.IsValid())
-                {
-                    result = this._siteRepository.GetSiteUrl(criteria);
-                }
-            }
-            catch (Exception ex)
+            if (criteria.IsValid())
             {
-                HandleException(ex);
+                result = this._siteRepository.GetSiteUrl(criteria);
             }
 
             return result;
@@ -680,18 +561,11 @@ namespace Fanex.NAP.Core.Service.Impl
         {
             Check.Argument.IsNotNull(criteria, "criteria");
 
-            try
-            {
-                LogExecSpCriteria logCriteria = GetLogExecSpCriteria();
+            LogExecSpCriteria logCriteria = GetLogExecSpCriteria();
 
-                if (criteria.IsValid() && logCriteria.IsValid())
-                {
-                    return this._siteRepository.Update(criteria, logCriteria);
-                }
-            }
-            catch (Exception ex)
+            if (criteria.IsValid() && logCriteria.IsValid())
             {
-                HandleException(ex);
+                return this._siteRepository.Update(criteria, logCriteria);
             }
 
             return null;
@@ -706,18 +580,11 @@ namespace Fanex.NAP.Core.Service.Impl
         {
             Check.Argument.IsNotNull(criteria, "criteria");
 
-            try
-            {
-                LogExecSpCriteria logCriteria = GetLogExecSpCriteria();
+            LogExecSpCriteria logCriteria = GetLogExecSpCriteria();
 
-                if (criteria.IsValid() && logCriteria.IsValid())
-                {
-                    return this._siteRepository.Update(criteria, logCriteria);
-                }
-            }
-            catch (Exception ex)
+            if (criteria.IsValid() && logCriteria.IsValid())
             {
-                this.HandleException(ex);
+                return this._siteRepository.Update(criteria, logCriteria);
             }
 
             return null;
@@ -732,18 +599,11 @@ namespace Fanex.NAP.Core.Service.Impl
         {
             Check.Argument.IsNotNull(criteria, "criteria");
 
-            try
-            {
-                LogExecSpCriteria logCriteria = GetLogExecSpCriteria();
+            LogExecSpCriteria logCriteria = GetLogExecSpCriteria();
 
-                if (criteria.IsValid() && logCriteria.IsValid())
-                {
-                    return this._siteRepository.InsertSiteUrl(ref criteria, logCriteria);
-                }
-            }
-            catch (Exception ex)
+            if (criteria.IsValid() && logCriteria.IsValid())
             {
-                this.HandleException(ex);
+                return this._siteRepository.InsertSiteUrl(ref criteria, logCriteria);
             }
 
             return null;

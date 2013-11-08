@@ -249,6 +249,7 @@ namespace Fanex.NAP.Framework.Data
         /// <summary>
         /// Add dynamic parameter to hash table.
         /// </summary>
+        /// <param name="hash">Input hash table.</param>
         /// <param name="parameters">Dynamic parameters.</param>
         /// <returns>Returned hash table.</returns>
         protected Hashtable AddDynamicParamsToHashtable(Hashtable hash, dynamic parameters)
