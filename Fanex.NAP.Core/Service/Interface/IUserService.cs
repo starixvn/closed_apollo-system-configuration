@@ -96,18 +96,8 @@ namespace Fanex.NAP.Core.Service.Interface
 
         ICommandResult ChangeUserSiteStatus(int userId, int siteId, bool isActive);
 
-        /// <summary>
-        /// Modify user site.
-        /// </summary>
-        /// <param name="site">UserId and List(SiteLevel).</param>
-        /// <returns>Command result.</returns>
         ICommandResult AssignSite(AssignSiteUserCriteria site);
 
-        /// <summary>
-        /// Modify user function.
-        /// </summary>
-        /// <param name="criteria">The criteria modify user function.</param>
-        /// <returns>Command result.</returns>
         ICommandResult AssignFunction(AssignFunctionUserCriteria criteria);
 
         ICommandResult ChangePassword(ICriteria user);

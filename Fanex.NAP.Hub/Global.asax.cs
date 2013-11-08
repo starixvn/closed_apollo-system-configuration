@@ -17,6 +17,7 @@ namespace Fanex.NAP.Hub
     using System.Web.Optimization;
     using System.Web.Routing;
     using System.Web.Security;
+    using Fanex.Logging;
     using Fanex.NAP.Core.Criteria.User;
     using Fanex.NAP.Core.Service.Impl;
     using Fanex.NAP.Core.Service.Interface;
@@ -72,25 +73,26 @@ namespace Fanex.NAP.Hub
         }
 
         /// <summary>
-        /// Handles the Error event of the Application control.
+        /// Application error event handler.
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        /// <param name="sender">Event sender.</param>
+        /// <param name="e">Event arguments.</param>
         protected void Application_Error(object sender, EventArgs e)
         {
-            // Get the exception object.
-            Exception exception = Server.GetLastError();
-            var code = (exception is HttpException) ? (exception as HttpException).GetHttpCode() : 500;
-            if (code != 404)
+            // Logging
+            Exception ex = Server.GetLastError().GetBaseException();
+
+            if (!Request.IsLocal)
             {
-                if (exception.InnerException != null)
-                {
-                    Logging.LogService.Error(exception.InnerException.Message, exception.InnerException);
-                }
-                else
-                {
-                    Logging.LogService.Error(exception.Message, exception);
-                }
+                string message = ex.Message +
+                    "\r\nSource: " + ex.Source +
+                    "\r\nDomain: " + HttpContext.Current.Request.Headers["Host"] +
+                    "\r\nForm: " + Request.Form.ToString() +
+                    "\r\nQueryString: " + Request.QueryString.ToString() +
+                    "\r\nTargetSite: " + ex.TargetSite +
+                    "\r\nStackTrace: " + ex.StackTrace;
+
+                LogService.Error(message);
             }
         }
 

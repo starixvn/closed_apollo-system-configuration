@@ -78,7 +78,7 @@ namespace Fanex.NAP.Core.Business
         {
             /// <summary>
             /// The user level.
-            /// </summary>            
+            /// </summary>
             User = 0,
 
             /// <summary>

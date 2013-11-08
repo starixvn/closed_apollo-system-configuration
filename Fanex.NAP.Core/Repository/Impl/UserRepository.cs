@@ -289,7 +289,7 @@ namespace Fanex.NAP.Core.Repository.Impl
         /// </summary>
         /// <param name="criteria">The criteria search user.</param>
         /// <param name="totalRows">Total rows.</param>
-        /// <returns>List of users.</returns>
+        /// <returns>List of user level.</returns>
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         public IQueryable<UserLevel> Search(ICriteria criteria, out int totalRows)
         {

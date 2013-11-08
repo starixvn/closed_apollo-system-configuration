@@ -216,7 +216,6 @@
     <Content Include="Areas\UserControl\Views\ExchangeRate\Insert.cshtml" />
     <Content Include="Areas\UserControl\Views\ExchangeRate\Update.cshtml" />
     <Content Include="Areas\UserControl\themes\nap\exchangerate\ExchangeRate.less" />
-    <None Include="Areas\UserLogin\Controllers\LoginController.cs.bk" />
     <Compile Include="Areas\UserLogin\Controllers\LoginController.cs" />
     <Compile Include="Areas\UserLogin\Controllers\SSOController.cs">
       <SubType>
