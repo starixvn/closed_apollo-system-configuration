@@ -53,6 +53,9 @@ namespace Fanex.NAP.Core.Criteria.Site
         public List<SiteUrl> Urls { get; set; }
 
         /// <summary>
+        /// Gets site URL string.
+        /// </summary>
+        /// <value>
         /// <ROOT>
         ///    <SiteURL
         ///         URL="http://www.example.com/"
@@ -60,8 +63,8 @@ namespace Fanex.NAP.Core.Criteria.Site
         ///         IsDefault="1"
         ///         IsActive="1">
         ///    </SiteURL>
-        /// </ROOT>
-        /// </summary>
+        /// </ROOT>.
+        /// </value>
         public string SiteUrls
         {
             get

@@ -39,8 +39,11 @@ namespace Fanex.NAP.Core.Criteria.Group
         public int[] FuncHost { get; set; }
 
         /// <summary>
-        /// <ROOT><FunctionPolicy SiteId="4" FunctionId="4" Policy="2"></FunctionPolicy></ROOT>
+        /// Gets permission string.
         /// </summary>
+        /// <value>
+        /// XML string <ROOT><FunctionPolicy SiteId="4" FunctionId="4" Policy="2"></FunctionPolicy></ROOT>.
+        /// </value>
         public string Value
         {
             get

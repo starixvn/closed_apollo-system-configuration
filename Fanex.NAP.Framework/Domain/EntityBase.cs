@@ -18,8 +18,30 @@ namespace Fanex.NAP.Framework.Domain
     /// <typeparam name="TName">The type of the name.</typeparam>
     public class EntityBase<TId, TName> : IEntity<TId, TName>
     {
-        TId IEntity<TId, TName>.Id { get; set; }
+        TId IEntity<TId, TName>.Id
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
 
-        TName IEntity<TId, TName>.Name { get; set; }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        TName IEntity<TId, TName>.Name
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
     }
 }

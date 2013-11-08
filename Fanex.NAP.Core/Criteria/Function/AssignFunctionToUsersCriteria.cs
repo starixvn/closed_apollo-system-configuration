@@ -26,10 +26,10 @@ namespace Fanex.NAP.Core.Criteria.Function
         public int SiteId { get; set; }
 
         /// <summary>
-        ///   <ROOT><User UserId="1" Policy="2"></User></ROOT>
+        /// Gets permission string.
         /// </summary>
         /// <value>
-        /// The value.
+        /// <ROOT><User UserId="1" Policy="2"></User></ROOT>.
         /// </value>
         public string Value
         {

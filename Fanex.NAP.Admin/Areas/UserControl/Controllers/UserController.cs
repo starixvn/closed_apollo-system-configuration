@@ -1115,19 +1115,10 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             {
                 if (groupId != 0)
                 {
-                    try
-                    {
-                        IEnumerable<FunctionPolicy> listFunctionPolicy = this._functionService.GetByGroup(
-                            groupId,
-                            this.Environment);
+                    IEnumerable<FunctionPolicy> listFunctionPolicy = 
+                        this._functionService.GetByGroup(groupId, this.Environment);
 
-                        return Json(listFunctionPolicy);
-                    }
-                    catch (Exception ex)
-                    {
-                        LogService.Error(ex.Message, ex);
-                        throw ex;
-                    }
+                    return Json(listFunctionPolicy);
                 }
             }
 

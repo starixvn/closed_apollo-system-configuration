@@ -23,7 +23,7 @@ namespace Fanex.NAP.Core.Criteria.User
         /// Gets or sets user site information.
         /// </summary>
         /// <value>
-        /// <ROOT><SiteLevel SiteId="4" Level="3" ></SiteLevel></ROOT>
+        /// <ROOT><SiteLevel SiteId="4" Level="3" ></SiteLevel></ROOT>.
         /// </value>
         public string Value { get; set; }
 

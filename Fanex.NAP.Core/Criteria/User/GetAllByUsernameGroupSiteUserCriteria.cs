@@ -27,11 +27,14 @@ namespace Fanex.NAP.Core.Criteria.User
         public int GroupId { get; set; }
 
         /// <summary>
+        /// Gets site list string.
+        /// </summary>
+        /// <value>
         /// <ROOT>
         ///     <Site SiteId="1"></Site>
         ///     <Site SiteId="2"></Site>
-        /// </ROOT>
-        /// </summary>
+        /// </ROOT>.
+        /// </value>
         public string Site
         {
             get
