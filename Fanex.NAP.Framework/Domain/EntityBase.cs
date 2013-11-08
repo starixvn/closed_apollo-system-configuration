@@ -22,12 +22,12 @@ namespace Fanex.NAP.Framework.Domain
         {
             get
             {
-                throw new NotImplementedException();
+                throw new Exception();
             }
 
             set
             {
-                throw new NotImplementedException();
+                throw new Exception();
             }
         }
 
@@ -35,12 +35,12 @@ namespace Fanex.NAP.Framework.Domain
         {
             get
             {
-                throw new NotImplementedException();
+                throw new Exception();
             }
 
             set
             {
-                throw new NotImplementedException();
+                throw new Exception();
             }
         }
     }

@@ -45,13 +45,13 @@ namespace Fanex.NAP.Core.Service.Impl
             var umctrl = new UMBusiness();
 
             // gets Agent Site UM Status.
-            var umInfo = umctrl.GetMaintenanceInfo(Sites.CSD, NapSettings.Settings.UMAddress);
+            var maintenanceInfo = umctrl.GetMaintenanceInfo(Sites.CSD, NapSettings.Settings.UMAddress);
 
-            if (!ReferenceEquals(umInfo, null))
+            if (!ReferenceEquals(maintenanceInfo, null))
             {
-                isdowntime = umInfo.Status;
-                timeFrom = umInfo.Start_time;
-                timeTo = umInfo.End_time;
+                isdowntime = maintenanceInfo.Status;
+                timeFrom = maintenanceInfo.Start_time;
+                timeTo = maintenanceInfo.End_time;
             }
             else
             {
