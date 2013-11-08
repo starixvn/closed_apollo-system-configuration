@@ -20,15 +20,8 @@ namespace Fanex.NAP.Framework.Domain
     {
         TId IEntity<TId, TName>.Id
         {
-            get
-            {
-                throw new Exception();
-            }
-
-            set
-            {
-                throw new Exception();
-            }
+            get;
+            set;
         }
 
         TName IEntity<TId, TName>.Name
