@@ -36,9 +36,6 @@
         <Setting Key="NAP_Cust_Insert" SpName="NAP_Cust_Insert" DbName="SVRNAP.bodb_NAP.bodbAdminNet"  />
         <Setting Key="NAP_Cust_Update" SpName="NAP_Cust_Update" DbName="SVRNAP.bodb_NAP.bodbAdminNet"  />
         <Setting Key="NAP_Cust_UpdatePassword" SpName="NAP_Cust_UpdatePassword" DbName="SVRCUST.CustDB.bodbAdminNet"  />
-<<<<<<< HEAD
-    </Function>  
-=======
     </Function>
     <Function Name="MailingList">
       <Setting Key="NAP_Function_GetByParentKeyAndSite" SpName="NAP_Function_GetByParentKeyAndSite" DbName="SVRNAP.bodb_NAP.bodbAdminNet">
