@@ -32,25 +32,18 @@ namespace Fanex.NAP.Core.Repository.Impl
         /// <returns>Mailing List Object.</returns>
         public override IMailingList Get(ICriteria criteria)
         {
-            try
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                using (var db = new ObjectDb(criteria.GetSettingKey()))
-                {
-                    return db.QueryEntity<MailingList, Site, Function, Function, MailingList>(
-                         (m, si, mf, f) =>
-                         {
-                             m.Site = si;
-                             m.MailFunction = mf;
-                             m.Function = f;
-                             return m;
-                         },
-                        "SiteId,ListFunctionId,FunctionId",
-                         criteria.GetSpParams());
-                }
-            }
-            catch
-            {
-                throw;
+                return db.QueryEntity<MailingList, Site, Function, Function, MailingList>(
+                        (m, si, mf, f) =>
+                        {
+                            m.Site = si;
+                            m.MailFunction = mf;
+                            m.Function = f;
+                            return m;
+                        },
+                    "SiteId,ListFunctionId,FunctionId",
+                        criteria.GetSpParams());
             }
         }
 
@@ -61,25 +54,18 @@ namespace Fanex.NAP.Core.Repository.Impl
         /// <returns>List Mailing List Object.</returns>
         public override IEnumerable<IMailingList> Fetch(ICriteria criteria)
         {
-            try
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                using (var db = new ObjectDb(criteria.GetSettingKey()))
-                {
-                    return db.Query<MailingList, Site, Function, Function, MailingList>(
-                        (m, si, mf, f) =>
-                        {
-                            m.Site = si;
-                            m.MailFunction = mf;
-                            m.Function = f;
-                            return m;
-                        },
-                        "SiteId,ListFunctionId,FunctionId",
-                        criteria.GetSpParams());
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+                return db.Query<MailingList, Site, Function, Function, MailingList>(
+                    (m, si, mf, f) =>
+                    {
+                        m.Site = si;
+                        m.MailFunction = mf;
+                        m.Function = f;
+                        return m;
+                    },
+                    "SiteId,ListFunctionId,FunctionId",
+                    criteria.GetSpParams());
             }
         }
 
@@ -91,24 +77,18 @@ namespace Fanex.NAP.Core.Repository.Impl
         /// <returns>ICommand Result.</returns>
         public ICommandResult Insert(ref InsertMailingListCriteria criteria, ICriteria logCriteria)
         {
-            try
+            Hashtable hash = criteria.GetSpParams();
+
+            hash = logCriteria.AddSpParams(hash);
+            hash = (new ResultCriteria()).AddSpParams(hash);
+
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                Hashtable hash = criteria.GetSpParams();
-                hash = logCriteria.AddSpParams(hash);
-                hash = (new ResultCriteria()).AddSpParams(hash);
+                db.ExecuteNonQuery(hash);
 
-                using (var db = new ObjectDb(criteria.GetSettingKey()))
-                {
-                    db.ExecuteNonQuery(hash);
+                criteria.ListId = Convert.ToInt32(db.GetParameterValue("ListId"));
 
-                    criteria.ListId = Convert.ToInt32(db.GetParameterValue("ListId"));
-
-                    return GetCommandResult(hash);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+                return GetCommandResult(hash);
             }
         }
 
@@ -120,22 +100,16 @@ namespace Fanex.NAP.Core.Repository.Impl
         /// <returns>ICommand Result.</returns>
         public ICommandResult Update(ICriteria criteria, ICriteria logCriteria)
         {
-            try
-            {
-                Hashtable hash = criteria.GetSpParams();
-                hash = logCriteria.AddSpParams(hash);
-                hash = (new ResultCriteria()).AddSpParams(hash);
+            Hashtable hash = criteria.GetSpParams();
 
-                using (var db = new ObjectDb(criteria.GetSettingKey()))
-                {
-                    db.ExecuteNonQuery(hash);
+            hash = logCriteria.AddSpParams(hash);
+            hash = (new ResultCriteria()).AddSpParams(hash);
 
-                    return GetCommandResult(hash);
-                }
-            }
-            catch (Exception ex)
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                throw ex;
+                db.ExecuteNonQuery(hash);
+
+                return GetCommandResult(hash);
             }
         }
     }

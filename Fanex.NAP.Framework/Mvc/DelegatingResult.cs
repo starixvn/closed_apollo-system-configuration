@@ -15,10 +15,11 @@ namespace Fanex.NAP.Framework.Mvc
     /// <summary>
     /// <see cref="http://haacked.com/archive/2008/05/11/delegating-action-result.aspx"/>
     /// <example>
-    /// <para>public ActionResult Hello() {
-    /// <para> return new DelegatingResult(context => {
-    /// <para> context.HttpContext.Response.AddHeader("something", "something");
-    /// <para> context.HttpContext.Response.Write("Hello World!");});}    
+    /// public ActionResult Hello() {
+    ///  return new DelegatingResult(context => {
+    ///  context.HttpContext.Response.AddHeader("something", "something");
+    ///  context.HttpContext.Response.Write("Hello World!");});
+    /// }
     /// </example>
     /// </summary>
     public class DelegatingResult : ActionResult

@@ -20,8 +20,11 @@ namespace Fanex.NAP.Core.Criteria.User
         public int UserId { get; set; }
 
         /// <summary>
-        /// <ROOT><SiteLevel SiteId="4" Level="3" ></SiteLevel></ROOT>
+        /// Gets or sets user site information.
         /// </summary>
+        /// <value>
+        /// <ROOT><SiteLevel SiteId="4" Level="3" ></SiteLevel></ROOT>
+        /// </value>
         public string Value { get; set; }
 
         public int ModifiedBy { get; set; }

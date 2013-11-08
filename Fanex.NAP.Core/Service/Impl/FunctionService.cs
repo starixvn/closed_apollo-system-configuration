@@ -749,7 +749,6 @@ namespace Fanex.NAP.Core.Service.Impl
                 return this._functionRepository.Update(criteria, logCriteria);
             }
 
-
             return null;
         }
 

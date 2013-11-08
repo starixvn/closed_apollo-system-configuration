@@ -44,7 +44,7 @@ namespace Fanex.NAP.Framework.Data
 
         public virtual bool IsSuccessful
         {
-            get { throw new NotImplementedException(); }
+            get { return true; }
         }
     }
 }

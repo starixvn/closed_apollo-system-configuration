@@ -14,6 +14,7 @@ namespace Fanex.NAP.Framework.Exceptions
     /// <summary>
     /// Data access exception.
     /// </summary>
+    [Serializable]
     public class NapDataAccessException : Exception
     {
     }

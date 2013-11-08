@@ -20,8 +20,9 @@ namespace Fanex.NAP.Framework.Data
         public string SqlParamName { get; set; }
 
         /// <summary>
-        /// Set true to indicate not use this property to create a parameter.
+        /// Gets or sets a value indicating whether use this property to create a parameter.
         /// </summary>
+        /// <value>True : ignored, false : not ignored.</value>
         public bool Ignored { get; set; }
     }
 }

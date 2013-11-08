@@ -94,16 +94,9 @@ namespace Fanex.NAP.Core.Repository.Impl
         /// <returns>The menu item.</returns>
         public override int Count(ICriteria criteria)
         {
-            try
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                using (var db = new ObjectDb(criteria.GetSettingKey()))
-                {
-                    return (int)db.ExecuteScalar(criteria.GetSpParams());
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+                return (int)db.ExecuteScalar(criteria.GetSpParams());
             }
         }
 
@@ -176,26 +169,19 @@ namespace Fanex.NAP.Core.Repository.Impl
         /// <returns>Command result.</returns>
         public ICommandResult Insert(ref InsertMenuItemCriteria criteria, ICriteria logCriteria)
         {
-            try
+            // prepare SP parameters
+            Hashtable hash = criteria.GetSpParams();
+
+            hash = logCriteria.AddSpParams(hash);
+            hash = (new ResultCriteria()).AddSpParams(hash);
+
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                // prepare SP parameters
-                Hashtable hash = criteria.GetSpParams();
+                db.ExecuteNonQuery(hash);
 
-                hash = logCriteria.AddSpParams(hash);
-                hash = (new ResultCriteria()).AddSpParams(hash);
+                criteria.MenuItemId = Convert.ToInt32(db.GetParameterValue("MenuItemId"));
 
-                using (var db = new ObjectDb(criteria.GetSettingKey()))
-                {
-                    db.ExecuteNonQuery(hash);
-
-                    criteria.MenuItemId = Convert.ToInt32(db.GetParameterValue("MenuItemId"));
-
-                    return GetCommandResult(hash);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+                return GetCommandResult(hash);
             }
         }
 
@@ -207,24 +193,17 @@ namespace Fanex.NAP.Core.Repository.Impl
         /// <returns>Command result.</returns>
         public ICommandResult Update(ICriteria criteria, ICriteria logCriteria)
         {
-            try
+            // prepare SP parameters
+            Hashtable hash = criteria.GetSpParams();
+
+            hash = logCriteria.AddSpParams(hash);
+            hash = (new ResultCriteria()).AddSpParams(hash);
+
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                // prepare SP parameters
-                Hashtable hash = criteria.GetSpParams();
+                db.ExecuteNonQuery(hash);
 
-                hash = logCriteria.AddSpParams(hash);
-                hash = (new ResultCriteria()).AddSpParams(hash);
-
-                using (var db = new ObjectDb(criteria.GetSettingKey()))
-                {
-                    db.ExecuteNonQuery(hash);
-
-                    return GetCommandResult(hash);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+                return GetCommandResult(hash);
             }
         }
 

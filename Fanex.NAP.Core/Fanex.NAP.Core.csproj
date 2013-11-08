@@ -117,6 +117,8 @@
     </Compile>
     <Compile Include="Command\CommandResult.cs" />
     <Compile Include="Command\ICommand.cs" />
+    <Compile Include="Configuration\DomainElement.cs" />
+    <Compile Include="Configuration\DomainCollection.cs" />
     <Compile Include="Configuration\NapSettings.cs" />
     <Compile Include="Criteria\Function\AssignFunctionToUsersCriteria.cs" />
     <Compile Include="Criteria\Function\AssignFunctionToGroupsCriteria.cs" />
@@ -288,6 +290,8 @@
     <Compile Include="Web\Auth\INapPrincipal.cs" />
     <Compile Include="Web\Auth\NapPrincipal.cs" />
     <Compile Include="Web\Context\CurrentContext.cs" />
+    <Compile Include="Web\BundleHelper.cs" />
+    <Compile Include="Web\UserAgentTools.cs" />
     <Compile Include="Web\Session\CurrentSession.cs" />
     <Compile Include="Web\Context\ICurrentContext.cs" />
     <Compile Include="Web\Session\ICurrentSession.cs" />

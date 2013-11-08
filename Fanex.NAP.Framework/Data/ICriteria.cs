@@ -17,7 +17,7 @@ namespace Fanex.NAP.Framework.Data
         /// <summary>
         /// Gets store procedure parameters.
         /// </summary>
-        /// <returns>Hashtable SP parameters.</return>
+        /// <returns>Hash table SP parameters.</returns>
         Hashtable GetSpParams();
 
         /// <summary>
