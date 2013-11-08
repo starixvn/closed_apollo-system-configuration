@@ -540,7 +540,10 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// <param name="hasEditRight">Return role is edit or no.</param>
         /// <param name="siteItemList">Return list sites.</param>
         [NonAction]
-        private void GetSitesAndPolicyForManageAction(GetMailingListByUserAndSiteIncludeGroupCriteria criteria, ref bool hasEditRight, ref IList<SelectListItem> siteItemList)
+        private void GetSitesAndPolicyForManageAction(
+            GetMailingListByUserAndSiteIncludeGroupCriteria criteria, 
+            ref bool hasEditRight, 
+            ref IList<SelectListItem> siteItemList)
         {
             if (this.UserIsPortalAdmin)
             {

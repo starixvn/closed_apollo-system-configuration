@@ -17,6 +17,7 @@ namespace Fanex.NAP.Framework.Data
     /// <summary>
     /// <remarks>ref to Orchard</remarks>
     /// </summary>
+    /// <typeparam name="T">Object type.</typeparam>
     public class Orderable<T>
     {
         private IEnumerable<T> _queryable;

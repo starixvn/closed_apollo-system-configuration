@@ -115,7 +115,7 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Get function by key and site.
         /// </summary>
-        /// <param name="key"></param>
+        /// <param name="key">Function key.</param>
         /// <param name="siteId">The site ID.</param>
         /// <returns>The function object.</returns>
         public IFunction GetByKeyAndSite(string key, int siteId)

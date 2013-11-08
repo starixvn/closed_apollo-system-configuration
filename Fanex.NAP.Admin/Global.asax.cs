@@ -23,6 +23,9 @@ namespace Fanex.NAP.Admin
     /// </summary>
     public class MvcApplication : HttpApplication
     {
+        /// <summary>
+        /// Application start event handler.
+        /// </summary>
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
@@ -34,6 +37,9 @@ namespace Fanex.NAP.Admin
             DbSettingProviderManager.Current.Start();
         }
 
+        /// <summary>
+        /// Application error event handler.
+        /// </summary>
         protected void Application_Error(object sender, EventArgs e)
         {
             // Logging

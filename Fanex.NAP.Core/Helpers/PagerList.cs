@@ -15,6 +15,7 @@ namespace Fanex.NAP.Core.Helpers
     /// <summary>
     /// Page list.
     /// </summary>
+    /// <typeparam name="T">Object type.</typeparam>
     public class PagerList<T> : List<T>, IPagedList
     {
         public PagerList(int pageIndex, int pageSize, int totalItemCount, IEnumerable<T> items)

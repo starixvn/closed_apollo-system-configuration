@@ -15,6 +15,7 @@ namespace Fanex.NAP.Framework.Collections
     /// <summary>
     /// Page of items.
     /// </summary>
+    /// <typeparam name="T">Object type.</typeparam>
     public class PageOfItems<T> : List<T>, IPageOfItems<T>
     {
         public PageOfItems(IEnumerable<T> items)

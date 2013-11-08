@@ -23,6 +23,7 @@ namespace Fanex.NAP.Framework.Data
         /// <summary>
         /// Get store procedure call parameter.
         /// </summary>
+        /// <returns>Store procedure parameters.</returns>
         public virtual Hashtable GetSpParams()
         {
             var storeProcNameParams = new Hashtable();
@@ -53,7 +54,8 @@ namespace Fanex.NAP.Framework.Data
         /// <summary>
         /// Add store procedure call parameter.
         /// </summary>
-        /// <param name="storeProcParamName"></param>
+        /// <param name="storeProcParamName">Store procedure parameter name.</param>
+        /// <returns>Store procedure parameters.</returns>
         public virtual Hashtable AddSpParams(Hashtable storeProcParamName)
         {
             Type type = this.GetType();

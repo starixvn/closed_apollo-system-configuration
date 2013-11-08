@@ -107,34 +107,7 @@ namespace Fanex.NAP.Core.Web.Attribute
                 {
                     // allow access
                     // log access function here
-                    /*
-                    #region write log function
-
-                    var function = _FunctionService.GetByKeyAndSite(FunctionKey.ToString(), _SiteId);
-
-                    string controller = filterContext.RouteData.Values["controller"].ToString();
-
-                    string action = filterContext.RouteData.Values["action"].ToString();
-
-                    string id = filterContext.RouteData.Values["id"] != null ? filterContext.RouteData.Values["id"].ToString() : string.Empty;
-
-                    string queryString = filterContext.HttpContext.Request.QueryString.ToString();
-
-                    string param = string.Format("Controller : {0}; Action : {1}; Params : {2}{3}",
-                                        controller,
-                                        action, id != string.Empty ? "id=" + id : id,
-                                        id != string.Empty && queryString != string.Empty ? "&" + queryString : queryString);
-
-                    _TraceService.InsertLogFunction(function.Id,
-                                    principal.AuthInfo.UserId,
-                                    _SiteId,
-                                    param,
-                                    _CurrentContext.IP,
-                                    DateTime.Now,
-                                    _CurrentContext.BrowserName);
-
-                    #endregion
-                    */
+                    // write log function here (pending due to performance)
                 }
                 else
                 {
@@ -151,6 +124,7 @@ namespace Fanex.NAP.Core.Web.Attribute
         /// Check function authorization.
         /// </summary>
         /// <param name="userId">The user ID.</param>
+        /// <returns>True : has permission, false : not.</returns>
         public bool CheckFunctionAuthorization(int userId)
         {
             if (userId <= 0)

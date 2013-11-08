@@ -24,6 +24,7 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Get down time information.
         /// </summary>
+        /// <returns>Down time object.</returns>
         public Downtime GetDowntimeInfo()
         {
             bool isdowntime = false;
@@ -43,29 +44,18 @@ namespace Fanex.NAP.Core.Service.Impl
             string timeTo = string.Empty;
             var umctrl = new UMBusiness();
 
-            try
+            // gets Agent Site UM Status.
+            var umInfo = umctrl.GetMaintenanceInfo(Sites.CSD, NapSettings.Settings.UMAddress);
+
+            if (!ReferenceEquals(umInfo, null))
             {
-                // gets Agent Site UM Status.
-                var umInfo = umctrl.GetMaintenanceInfo(Sites.CSD, NapSettings.Settings.UMAddress);
-
-                if (!ReferenceEquals(umInfo, null))
-                {
-                    isdowntime = umInfo.Status;
-                    timeFrom = umInfo.Start_time;
-                    timeTo = umInfo.End_time;
-                }
-                else
-                {
-                    return downTime;
-                }
-
                 isdowntime = umInfo.Status;
                 timeFrom = umInfo.Start_time;
                 timeTo = umInfo.End_time;
             }
-            catch (Exception ex)
+            else
             {
-                LogService.Error(ex.Message, ex);
+                return downTime;
             }
 
             if (isdowntime)

@@ -924,6 +924,7 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <param name="userId">The user ID.</param>
         /// <param name="functionKey">The function key.</param>
         /// <param name="listSite">List of site select list item.</param>
+        /// <returns>Hash table policy.</returns>
         public Hashtable GetUserListSiteFunctionKeyPolicy(
             int userId, 
             string functionKey, 
@@ -958,6 +959,7 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <param name="siteId">The site ID.</param>
         /// <param name="functionKey">The function key.</param>
         /// <param name="policy">The function policy.</param>
+        /// <returns>True : has, false : not.</returns>
         public bool HasPermissionUserSiteFunctionKey(int userId, int siteId, string functionKey, Constant.Policy policy)
         {
             Check.Argument.IsNotNegativeOrZero(userId, "userId");
@@ -985,6 +987,7 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <summary>
         /// Get user SSO time.
         /// </summary>
+        /// <returns>SSO time string.</returns>
         public string UserSSOGetTime()
         {
             try

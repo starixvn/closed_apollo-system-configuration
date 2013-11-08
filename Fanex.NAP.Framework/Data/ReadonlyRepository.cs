@@ -23,6 +23,7 @@ namespace Fanex.NAP.Framework.Data
     /// <summary>
     /// Readonly repository.
     /// </summary>
+    /// <typeparam name="T">Object type.</typeparam>
     public class ReadonlyRepository<T> : DynamicRepository, IReadonlyRepository<T>
     {
         public virtual T Get(int id)

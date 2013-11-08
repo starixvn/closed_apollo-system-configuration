@@ -67,6 +67,7 @@ namespace Fanex.NAP.Core.Web.Auth
         /// <summary>
         /// Authorize action handler.
         /// </summary>
+        /// <returns>XML string.</returns>
         public string ToXml()
         {
             string xml = string.Empty;

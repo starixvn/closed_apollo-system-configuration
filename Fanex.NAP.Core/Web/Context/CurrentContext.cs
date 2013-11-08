@@ -92,6 +92,7 @@ namespace Fanex.NAP.Core.Web.Context
         /// <summary>
         /// Get current domain.
         /// </summary>
+        /// <returns>Domain element.</returns>
         public DomainElement GetCurrentDomain()
         {
             var domainList = NapSettings.Settings.Domains;
@@ -130,6 +131,7 @@ namespace Fanex.NAP.Core.Web.Context
         /// Resolve culture.
         /// </summary>
         /// <param name="request">HTTP request.</param>
+        /// <returns>Culture information.</returns>
         private CultureInfo ResolveCulture(HttpRequest request)
         {
             string[] languages = request.UserLanguages;

@@ -53,7 +53,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// </summary>
         /// <param name="id">The page index.</param>
         /// <param name="size">The page size.</param>
-        /// <param name="q"></param>
+        /// <param name="q">The item name.</param>
         /// <param name="username">The username.</param>
         /// <param name="from">From date value.</param>
         /// <param name="to">To date value.</param>
@@ -130,7 +130,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// </summary>
         /// <param name="id">The page index.</param>
         /// <param name="size">The page size.</param>
-        /// <param name="q"></param>
+        /// <param name="q">The username.</param>
         /// <param name="from">From date value.</param>
         /// <param name="to">To date value.</param>
         /// <param name="siteId">The site ID.</param>

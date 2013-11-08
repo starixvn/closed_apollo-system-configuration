@@ -47,7 +47,8 @@ namespace Fanex.NAP.Core.Web.Validation
         /// <summary>
         /// Check if value is valid.
         /// </summary>
-        /// <param name="values"></param>
+        /// <param name="values">The input object.</param>
+        /// <returns>True : valid, false : not valid.</returns>
         public override bool IsValid(object values)
         {
             if (values is IEnumerable<string>)

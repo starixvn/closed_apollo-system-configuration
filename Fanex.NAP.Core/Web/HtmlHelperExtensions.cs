@@ -11,6 +11,7 @@ namespace Fanex.NAP.Core.Web
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using System.Linq.Expressions;
     using System.Text;
@@ -22,20 +23,6 @@ namespace Fanex.NAP.Core.Web
     using Fanex.NAP.Core.Business;
 
     /// <summary>
-    /// Bundle helper.
-    /// </summary>
-    public static class BundleHelper
-    {
-        public static IHtmlString RenderScript(string path)
-        {
-            string virtualPath = path.Substring(0, path.Length - 3);
-            BundleTable.Bundles.Add(new ScriptBundle(virtualPath).Include(path));
-
-            return Scripts.Render(virtualPath);
-        }
-    }
-
-    /// <summary>
     /// HTML Helpers.
     /// </summary>
     public static class HtmlHelperExtensions
@@ -45,8 +32,8 @@ namespace Fanex.NAP.Core.Web
         /// Truncates a string if it is longer than a given length.
         /// </summary>
         /// <param name="htmlHelper">HTML helper.</param>
-        /// <param name="value"></param>
-        /// <param name="length"></param>
+        /// <param name="value">Input string.</param>
+        /// <param name="length">Maximum length.</param>
         /// <returns>HTML string.</returns>
         public static IHtmlString Truncate(this HtmlHelper htmlHelper, string value, int length)
         {
@@ -138,8 +125,10 @@ namespace Fanex.NAP.Core.Web
         /// <summary>
         /// Radio button list helper.
         /// </summary>
+        /// <typeparam name="TModel">Model object type.</typeparam>
+        /// <typeparam name="TProperty">Property object type.</typeparam>
         /// <param name="helper">HTML helper.</param>
-        /// <param name="expression"></param>
+        /// <param name="expression">Property expression.</param>
         /// <param name="items">List of select list item.</param>
         /// <returns>HTML string.</returns>
         public static IHtmlString RadioButtonListFor<TModel, TProperty>(
@@ -154,8 +143,10 @@ namespace Fanex.NAP.Core.Web
         /// <summary>
         /// Radio button list helper.
         /// </summary>
+        /// <typeparam name="TModel">Model object type.</typeparam>
+        /// <typeparam name="TProperty">Property object type.</typeparam>
         /// <param name="helper">HTML helper.</param>
-        /// <param name="expression"></param>
+        /// <param name="expression">Property expression.</param>
         /// <param name="items">List of select list item.</param>
         /// <param name="htmlAttributes">HTML attributes.</param>
         /// <returns>HTML string.</returns>
@@ -174,8 +165,10 @@ namespace Fanex.NAP.Core.Web
         /// <summary>
         /// Radio button list helper.
         /// </summary>
+        /// <typeparam name="TModel">Model object type.</typeparam>
+        /// <typeparam name="TProperty">Property object type.</typeparam>
         /// <param name="helper">HTML helper.</param>
-        /// <param name="expression"></param>
+        /// <param name="expression">Property expression.</param>
         /// <param name="items">List of select list item.</param>
         /// <param name="htmlAttributes">HTML attributes.</param>
         /// <returns>HTML string.</returns>
@@ -365,6 +358,7 @@ namespace Fanex.NAP.Core.Web
         /// Get bot name.
         /// </summary>
         /// <param name="userAgent">The user agent information.</param>
+        /// <returns>Bot name string array.</returns>
         public static string[] GetBotName(string userAgent)
         {
             userAgent = userAgent.ToLower();
@@ -419,6 +413,8 @@ namespace Fanex.NAP.Core.Web
         /// Get operation system name.
         /// </summary>
         /// <param name="userAgent">The user agent information.</param>
+        /// <returns>Operation system array string.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         public static string[] GetOS(string userAgent)
         {
             string[] arrayBog = GetBotName(userAgent);
@@ -659,6 +655,20 @@ namespace Fanex.NAP.Core.Web
             }
 
             return GetArray("<b>?</b>", "<b>?</b>");
+        }
+    }
+
+    /// <summary>
+    /// Bundle helper.
+    /// </summary>
+    public static class BundleHelper
+    {
+        public static IHtmlString RenderScript(string path)
+        {
+            string virtualPath = path.Substring(0, path.Length - 3);
+            BundleTable.Bundles.Add(new ScriptBundle(virtualPath).Include(path));
+
+            return Scripts.Render(virtualPath);
         }
     }
 }

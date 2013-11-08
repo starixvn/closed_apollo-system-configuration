@@ -20,9 +20,6 @@ namespace Fanex.NAP.Core.Criteria.Function
     /// </summary>
     public class DuplicateFunctionCriteria : CriteriaBase
     {
-        /// <summary>
-        /// The constructor.
-        /// </summary>
         public DuplicateFunctionCriteria()
         {
             this.Environment = Constant.UAT;

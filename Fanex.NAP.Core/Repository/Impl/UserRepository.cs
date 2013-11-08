@@ -12,6 +12,7 @@ namespace Fanex.NAP.Core.Repository.Impl
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using Fanex.Common.Extensions;
     using Fanex.Data;
@@ -41,6 +42,7 @@ namespace Fanex.NAP.Core.Repository.Impl
                     (u, g, uc, um) => { u.Group = g; u.Creator = uc; u.Modifier = um; return u; },
                     "GroupId,CreatorId,ModifierId",
                     criteria.GetSpParams());
+
                 return objUser;
             }
         }
@@ -52,20 +54,14 @@ namespace Fanex.NAP.Core.Repository.Impl
         /// <returns>List of user.</returns>
         public override IEnumerable<IUser> Fetch(ICriteria criteria)
         {
-            try
+            using (ObjectDb objectDb = new ObjectDb(criteria.GetSettingKey()))
             {
-                using (ObjectDb objectDb = new ObjectDb(criteria.GetSettingKey()))
-                {
-                    var objListUser = objectDb.Query<User, Group, User, User, User>(
-                        (u, g, uc, um) => { u.Group = g; u.Creator = uc; u.Modifier = um; return u; },
-                        "GroupId,CreatorId,ModifierId",
-                        criteria.GetSpParams());
-                    return objListUser;
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+                var objListUser = objectDb.Query<User, Group, User, User, User>(
+                    (u, g, uc, um) => { u.Group = g; u.Creator = uc; u.Modifier = um; return u; },
+                    "GroupId,CreatorId,ModifierId",
+                    criteria.GetSpParams());
+
+                return objListUser;
             }
         }
 
@@ -77,22 +73,15 @@ namespace Fanex.NAP.Core.Repository.Impl
         /// <returns>List of user.</returns>
         public IQueryable<IUser> Fetch(ICriteria criteria, out int totalRows)
         {
-            try
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                using (var db = new ObjectDb(criteria.GetSettingKey()))
-                {
-                    Hashtable hash = criteria.GetSpParams();
+                Hashtable hash = criteria.GetSpParams();
 
-                    var userList = db.Query<User>(hash);
+                var userList = db.Query<User>(hash);
 
-                    totalRows = Convert.ToInt32(hash["totalrows"]);
+                totalRows = Convert.ToInt32(hash["totalrows"]);
 
-                    return userList.AsQueryable();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+                return userList.AsQueryable();
             }
         }
 
@@ -134,24 +123,17 @@ namespace Fanex.NAP.Core.Repository.Impl
         /// <returns>Command result.</returns>
         public ICommandResult Insert(InsertCustCriteria criteria, ICriteria logCriteria)
         {
-            try
+            Hashtable hash = criteria.GetSpParams();
+
+            hash = logCriteria.AddSpParams(hash);
+            hash = (new ResultCriteria()).AddSpParams(hash);
+
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                Hashtable hash = criteria.GetSpParams();
+                db.ExecuteNonQuery(hash);
+                criteria.CustId = Convert.ToInt32(db.GetParameterValue("CustId"));
 
-                hash = logCriteria.AddSpParams(hash);
-                hash = (new ResultCriteria()).AddSpParams(hash);
-
-                using (var db = new ObjectDb(criteria.GetSettingKey()))
-                {
-                    db.ExecuteNonQuery(hash);
-                    criteria.CustId = Convert.ToInt32(db.GetParameterValue("CustId"));
-
-                    return GetCommandResult(hash);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+                return GetCommandResult(hash);
             }
         }
 
@@ -163,22 +145,15 @@ namespace Fanex.NAP.Core.Repository.Impl
         /// <returns>Command result.</returns>
         public ICommandResult Update(ICriteria criteria, ICriteria logCriteria)
         {
-            try
-            {
-                Hashtable hash = criteria.GetSpParams();
+            Hashtable hash = criteria.GetSpParams();
 
-                hash = logCriteria.AddSpParams(hash);
-                hash = (new ResultCriteria()).AddSpParams(hash);
+            hash = logCriteria.AddSpParams(hash);
+            hash = (new ResultCriteria()).AddSpParams(hash);
 
-                using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
-                {
-                    objectDb.ExecuteNonQuery(hash);
-                    return GetCommandResult(hash);
-                }
-            }
-            catch (Exception ex)
+            using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
             {
-                throw ex;
+                objectDb.ExecuteNonQuery(hash);
+                return GetCommandResult(hash);
             }
         }
 
@@ -188,19 +163,12 @@ namespace Fanex.NAP.Core.Repository.Impl
         /// <param name="criteria">The criteria user check in.</param>
         public void UserCheckIn(ref UserCheckInUserCriteria criteria)
         {
-            try
-            {
-                Hashtable hash = criteria.GetSpParams();
+            Hashtable hash = criteria.GetSpParams();
 
-                using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
-                {
-                    objectDb.ExecuteNonQuery(hash);
-                    criteria.OnUserId = Convert.ToInt32(hash["onuserid"].ToString());
-                }
-            }
-            catch (Exception ex)
+            using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
             {
-                throw ex;
+                objectDb.ExecuteNonQuery(hash);
+                criteria.OnUserId = Convert.ToInt32(hash["onuserid"].ToString());
             }
         }
 
@@ -210,19 +178,12 @@ namespace Fanex.NAP.Core.Repository.Impl
         /// <param name="criteria">The criteria user recheck in.</param>
         public void UserReCheckIn(ref UserReCheckInUserCriteria criteria)
         {
-            try
-            {
-                Hashtable hash = criteria.GetSpParams();
+            Hashtable hash = criteria.GetSpParams();
 
-                using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
-                {
-                    objectDb.ExecuteNonQuery(hash);
-                    criteria.IsKickedOut = Convert.ToBoolean(hash["iskickedout"].ToString());
-                }
-            }
-            catch (Exception ex)
+            using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
             {
-                throw ex;
+                objectDb.ExecuteNonQuery(hash);
+                criteria.IsKickedOut = Convert.ToBoolean(hash["iskickedout"].ToString());
             }
         }
 
@@ -232,18 +193,11 @@ namespace Fanex.NAP.Core.Repository.Impl
         /// <param name="criteria">The criteria user logout.</param>
         public void UserLogOut(LogOutUserCriteria criteria)
         {
-            try
-            {
-                Hashtable hash = criteria.GetSpParams();
+            Hashtable hash = criteria.GetSpParams();
 
-                using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
-                {
-                    objectDb.ExecuteNonQuery(hash);
-                }
-            }
-            catch (Exception ex)
+            using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
             {
-                throw ex;
+                objectDb.ExecuteNonQuery(hash);
             }
         }
 
@@ -253,19 +207,12 @@ namespace Fanex.NAP.Core.Repository.Impl
         /// <param name="criteria">The criteria user SSO check in.</param>
         public void UserSSOCheckIn(ref UserSSOCheckInUserCriteria criteria)
         {
-            try
-            {
-                Hashtable hash = criteria.GetSpParams();
+            Hashtable hash = criteria.GetSpParams();
 
-                using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
-                {
-                    objectDb.ExecuteNonQuery(hash);
-                    criteria.OnUserId = Convert.ToInt32(hash["onuserid"].ToString());
-                }
-            }
-            catch (Exception ex)
+            using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
             {
-                throw ex;
+                objectDb.ExecuteNonQuery(hash);
+                criteria.OnUserId = Convert.ToInt32(hash["onuserid"].ToString());
             }
         }
 
@@ -274,72 +221,66 @@ namespace Fanex.NAP.Core.Repository.Impl
         /// </summary>
         /// <param name="criteria">The criteria search user level.</param>
         /// <returns>Command result.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         public IEnumerable<UserLevel> Search(ICriteria criteria)
         {
-            try
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                using (var db = new ObjectDb(criteria.GetSettingKey()))
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
                 {
-                    using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                    var userLevelList = new List<UserLevel>();
+
+                    while (reader.Read())
                     {
-                        var userLevelList = new List<UserLevel>();
-
-                        while (reader.Read())
+                        userLevelList.Add(new UserLevel
                         {
-                            userLevelList.Add(new UserLevel
+                            Level = reader.ToInt("Level"),
+                            User = reader.IsDBNull("UserId") ? null : new User
                             {
-                                Level = reader.ToInt("Level"),
-                                User = reader.IsDBNull("UserId") ? null : new User
+                                Id = reader.ToInt("UserId"),
+                                FirstName = reader.ToString("FirstName"),
+                                LastName = reader.ToString("LastName"),
+                                Username = reader.ToString("Username"),
+                                Email = reader.ToString("Email"),
+                                Password = reader.ToString("UserPwd"),
+                                LastLoginDate = reader.ToDateTime("LastLoginDate"),
+                                CreatedDate = reader.ToDateTime("CreatedDate"),
+                                ModifiedDate = reader.ToDateTime("ModifiedDate"),
+                                Group = reader.IsDBNull("GroupId") ? null : new Group
                                 {
-                                    Id = reader.ToInt("UserId"),
-                                    FirstName = reader.ToString("FirstName"),
-                                    LastName = reader.ToString("LastName"),
-                                    Username = reader.ToString("Username"),
-                                    Email = reader.ToString("Email"),
-                                    Password = reader.ToString("UserPwd"),
-                                    LastLoginDate = reader.ToDateTime("LastLoginDate"),
-                                    CreatedDate = reader.ToDateTime("CreatedDate"),
-                                    ModifiedDate = reader.ToDateTime("ModifiedDate"),
-                                    Group = reader.IsDBNull("GroupId") ? null : new Group
-                                    {
-                                        Id = reader.ToShort("GroupId"),
-                                        Name = reader.ToString("GroupName")
-                                    },
-                                    Creator = reader.IsDBNull("CreatorId") ? null : new User
-                                    {
-                                        Id = reader.ToInt("CreatorId"),
-                                        Username = reader.ToString("CreatorUsername")
-                                    },
-                                    Modifier = reader.IsDBNull("ModifierId") ? null : new User
-                                    {
-                                        Id = reader.ToInt("ModifierId"),
-                                        Username = reader.ToString("ModifierUsername")
-                                    },
+                                    Id = reader.ToShort("GroupId"),
+                                    Name = reader.ToString("GroupName")
                                 },
-                                CreatedDate = reader.ToDateTime("CreatedDateUserSite"),
-                                ModifiedDate = reader.ToDateTime("ModifiedDateUserSite"),
-                                Creator = reader.IsDBNull("CreatorIdUserSite") ? null : new User
+                                Creator = reader.IsDBNull("CreatorId") ? null : new User
                                 {
-                                    Id = reader.ToInt("CreatorIdUserSite"),
-                                    Username = reader.ToString("CreatorUsernameUserSite")
+                                    Id = reader.ToInt("CreatorId"),
+                                    Username = reader.ToString("CreatorUsername")
                                 },
-                                Modifier = reader.IsDBNull("ModifierIdUserSite") ? null : new User
+                                Modifier = reader.IsDBNull("ModifierId") ? null : new User
                                 {
-                                    Id = reader.ToInt("ModifierIdUserSite"),
-                                    Username = reader.ToString("ModifierUsernameUserSite")
+                                    Id = reader.ToInt("ModifierId"),
+                                    Username = reader.ToString("ModifierUsername")
                                 },
-                                IsActive = reader.ToBool("IsActive"),
-                                LastLoginDate = reader.ToDateTime("LastLoginDateUserSite")
-                            });
-                        }
-
-                        return userLevelList.GroupBy(u => u.User.Id).Select(u => u.First());
+                            },
+                            CreatedDate = reader.ToDateTime("CreatedDateUserSite"),
+                            ModifiedDate = reader.ToDateTime("ModifiedDateUserSite"),
+                            Creator = reader.IsDBNull("CreatorIdUserSite") ? null : new User
+                            {
+                                Id = reader.ToInt("CreatorIdUserSite"),
+                                Username = reader.ToString("CreatorUsernameUserSite")
+                            },
+                            Modifier = reader.IsDBNull("ModifierIdUserSite") ? null : new User
+                            {
+                                Id = reader.ToInt("ModifierIdUserSite"),
+                                Username = reader.ToString("ModifierUsernameUserSite")
+                            },
+                            IsActive = reader.ToBool("IsActive"),
+                            LastLoginDate = reader.ToDateTime("LastLoginDateUserSite")
+                        });
                     }
+
+                    return userLevelList.GroupBy(u => u.User.Id).Select(u => u.First());
                 }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
             }
         }
 
@@ -349,81 +290,75 @@ namespace Fanex.NAP.Core.Repository.Impl
         /// <param name="criteria">The criteria search user.</param>
         /// <param name="totalRows">Total rows.</param>
         /// <returns>List of users.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         public IQueryable<UserLevel> Search(ICriteria criteria, out int totalRows)
         {
-            try
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                using (var db = new ObjectDb(criteria.GetSettingKey()))
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
                 {
-                    using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                    var userLevelList = new List<UserLevel>();
+
+                    while (reader.Read())
                     {
-                        var userLevelList = new List<UserLevel>();
-
-                        while (reader.Read())
+                        userLevelList.Add(new UserLevel
                         {
-                            userLevelList.Add(new UserLevel
+                            Level = reader.ToInt("Level"),
+                            User = reader.IsDBNull("UserId") ? null : new User
                             {
-                                Level = reader.ToInt("Level"),
-                                User = reader.IsDBNull("UserId") ? null : new User
+                                Id = reader.ToInt("UserId"),
+                                FirstName = reader.ToString("FirstName"),
+                                LastName = reader.ToString("LastName"),
+                                Username = reader.ToString("Username"),
+                                Email = reader.ToString("Email"),
+                                Password = reader.ToString("UserPwd"),
+                                LastLoginDate = reader.ToDateTime("LastLoginDate"),
+                                CreatedDate = reader.ToDateTime("CreatedDate"),
+                                ModifiedDate = reader.ToDateTime("ModifiedDate"),
+                                Group = reader.IsDBNull("GroupId") ? null : new Group
                                 {
-                                    Id = reader.ToInt("UserId"),
-                                    FirstName = reader.ToString("FirstName"),
-                                    LastName = reader.ToString("LastName"),
-                                    Username = reader.ToString("Username"),
-                                    Email = reader.ToString("Email"),
-                                    Password = reader.ToString("UserPwd"),
-                                    LastLoginDate = reader.ToDateTime("LastLoginDate"),
-                                    CreatedDate = reader.ToDateTime("CreatedDate"),
-                                    ModifiedDate = reader.ToDateTime("ModifiedDate"),
-                                    Group = reader.IsDBNull("GroupId") ? null : new Group
-                                    {
-                                        Id = reader.ToShort("GroupId"),
-                                        Name = reader.ToString("GroupName")
-                                    },
-                                    Creator = reader.IsDBNull("CreatorId") ? null : new User
-                                    {
-                                        Id = reader.ToInt("CreatorId"),
-                                        Username = reader.ToString("CreatorUsername")
-                                    },
-                                    Modifier = reader.IsDBNull("ModifierId") ? null : new User
-                                    {
-                                        Id = reader.ToInt("ModifierId"),
-                                        Username = reader.ToString("ModifierUsername")
-                                    },
+                                    Id = reader.ToShort("GroupId"),
+                                    Name = reader.ToString("GroupName")
                                 },
-                                CreatedDate = reader.ToDateTime("CreatedDateUserSite"),
-                                ModifiedDate = reader.ToDateTime("ModifiedDateUserSite"),
-                                Creator = reader.IsDBNull("CreatorIdUserSite") ? null : new User
+                                Creator = reader.IsDBNull("CreatorId") ? null : new User
                                 {
-                                    Id = reader.ToInt("CreatorIdUserSite"),
-                                    Username = reader.ToString("CreatorUsernameUserSite")
+                                    Id = reader.ToInt("CreatorId"),
+                                    Username = reader.ToString("CreatorUsername")
                                 },
-                                Modifier = reader.IsDBNull("ModifierIdUserSite") ? null : new User
+                                Modifier = reader.IsDBNull("ModifierId") ? null : new User
                                 {
-                                    Id = reader.ToInt("ModifierIdUserSite"),
-                                    Username = reader.ToString("ModifierUsernameUserSite")
+                                    Id = reader.ToInt("ModifierId"),
+                                    Username = reader.ToString("ModifierUsername")
                                 },
-                                IsActive = reader.ToBool("IsActive"),
-                                LastLoginDate = reader.ToDateTime("LastLoginDateUserSite"),
-                                Site = reader.IsDBNull("SiteId") ? null : new Site
-                                {
-                                    Id = reader.ToByte("SiteId"),
-                                    Name = reader.ToString("SiteName")
-                                }
-                            });
-                        }
-
-                        reader.Close();
-
-                        totalRows = (int)db.GetParameterValue("totalrows");
-
-                        return userLevelList.AsQueryable();
+                            },
+                            CreatedDate = reader.ToDateTime("CreatedDateUserSite"),
+                            ModifiedDate = reader.ToDateTime("ModifiedDateUserSite"),
+                            Creator = reader.IsDBNull("CreatorIdUserSite") ? null : new User
+                            {
+                                Id = reader.ToInt("CreatorIdUserSite"),
+                                Username = reader.ToString("CreatorUsernameUserSite")
+                            },
+                            Modifier = reader.IsDBNull("ModifierIdUserSite") ? null : new User
+                            {
+                                Id = reader.ToInt("ModifierIdUserSite"),
+                                Username = reader.ToString("ModifierUsernameUserSite")
+                            },
+                            IsActive = reader.ToBool("IsActive"),
+                            LastLoginDate = reader.ToDateTime("LastLoginDateUserSite"),
+                            Site = reader.IsDBNull("SiteId") ? null : new Site
+                            {
+                                Id = reader.ToByte("SiteId"),
+                                Name = reader.ToString("SiteName")
+                            }
+                        });
                     }
+
+                    reader.Close();
+
+                    totalRows = (int)db.GetParameterValue("totalrows");
+
+                    return userLevelList.AsQueryable();
                 }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
             }
         }
 
@@ -453,6 +388,7 @@ namespace Fanex.NAP.Core.Repository.Impl
         /// </summary>
         /// <param name="criteria">The criteria get user policy.</param>
         /// <returns>List of user policy.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         public IEnumerable<UserPolicy> GetUserPolicy(ICriteria criteria)
         {
             using (var db = new ObjectDb(criteria.GetSettingKey()))

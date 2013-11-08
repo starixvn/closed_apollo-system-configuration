@@ -18,7 +18,7 @@ namespace Fanex.NAP.Framework.Data
     using Fanex.Data;
 
     /// <summary>
-    /// TODO: Update summary.
+    /// Dynamic repository.
     /// </summary>
     public class DynamicRepository : IDynamicRepository
     {
@@ -27,6 +27,12 @@ namespace Fanex.NAP.Framework.Data
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Get object information.
+        /// </summary>
+        /// <typeparam name="T">Object type.</typeparam>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>Returned object.</returns>
         public virtual T Get<T>(ICriteria criteria)
         {
             try
@@ -43,6 +49,11 @@ namespace Fanex.NAP.Framework.Data
             }
         }
 
+        /// <summary>
+        /// Count number of item.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>Number of object.</returns>
         public virtual int Count(ICriteria criteria)
         {
             try
@@ -60,11 +71,22 @@ namespace Fanex.NAP.Framework.Data
             }
         }
 
+        /// <summary>
+        /// Fetch object.
+        /// </summary>
+        /// <typeparam name="T">Object type.</typeparam>
+        /// <returns>List of object.</returns>
         public IEnumerable<T> Fetch<T>()
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Fetch object.
+        /// </summary>
+        /// <typeparam name="T">Object type.</typeparam>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>List of object.</returns>
         public virtual IEnumerable<T> Fetch<T>(ICriteria criteria)
         {
             try
@@ -82,6 +104,13 @@ namespace Fanex.NAP.Framework.Data
             }
         }
 
+        /// <summary>
+        /// Fetch object.
+        /// </summary>
+        /// <typeparam name="T">Object type.</typeparam>
+        /// <param name="criteria">The criteria.</param>
+        /// <param name="order">Order type.</param>
+        /// <returns>List of object.</returns>
         public virtual IEnumerable<T> Fetch<T>(ICriteria criteria, Action<Orderable<T>> order)
         {
             try
@@ -104,6 +133,12 @@ namespace Fanex.NAP.Framework.Data
             }
         }
 
+        /// <summary>
+        /// Get single object.
+        /// </summary>
+        /// <typeparam name="T">Object type.</typeparam>
+        /// <param name="parameters">Dynamic parameters.</param>
+        /// <returns>Returned object.</returns>
         public virtual T Single<T>(dynamic parameters)
         {
             try
@@ -123,6 +158,12 @@ namespace Fanex.NAP.Framework.Data
             }
         }
 
+        /// <summary>
+        /// Query object.
+        /// </summary>
+        /// <typeparam name="T">Object type.</typeparam>
+        /// <param name="parameters">Dynamic parameters.</param>
+        /// <returns>List of object.</returns>
         public virtual IEnumerable<T> Query<T>(dynamic parameters)
         {
             try
@@ -142,6 +183,11 @@ namespace Fanex.NAP.Framework.Data
             }
         }
 
+        /// <summary>
+        /// Get number of records.
+        /// </summary>
+        /// <param name="parameters">Dynamic parameters.</param>
+        /// <returns>Number of records.</returns>
         public virtual int Length(dynamic parameters)
         {
             try
@@ -177,6 +223,11 @@ namespace Fanex.NAP.Framework.Data
             }
         }
 
+        /// <summary>
+        /// Convert dynamic parameter to hash table.
+        /// </summary>
+        /// <param name="parameters">Dynamic parameters.</param>
+        /// <returns>Returned hash table.</returns>
         protected Hashtable ConvertDynamicParamsToHashtable(dynamic parameters)
         {
             this.CheckSettingKeyExist(parameters);
@@ -195,6 +246,11 @@ namespace Fanex.NAP.Framework.Data
             return hash;
         }
 
+        /// <summary>
+        /// Add dynamic parameter to hash table.
+        /// </summary>
+        /// <param name="parameters">Dynamic parameters.</param>
+        /// <returns>Returned hash table.</returns>
         protected Hashtable AddDynamicParamsToHashtable(Hashtable hash, dynamic parameters)
         {
             Type type = parameters.GetType();
@@ -210,6 +266,11 @@ namespace Fanex.NAP.Framework.Data
             return hash;
         }
 
+        /// <summary>
+        /// Get setting key from dynamic parameter.
+        /// </summary>
+        /// <param name="parameters">Dynamic parameters.</param>
+        /// <returns>Setting key.</returns>
         protected string GetSettingKeyFromDynamicParam(dynamic parameters)
         {
             Type type = parameters.GetType();

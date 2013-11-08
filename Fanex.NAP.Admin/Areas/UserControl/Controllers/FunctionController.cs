@@ -961,9 +961,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// <summary>
         /// Insert child function.
         /// </summary>
-        /// <param name="orderedFunctionList"></param>
+        /// <param name="orderedFunctionList">Ordered function list.</param>
         /// <param name="functionList">List of function.</param>
-        /// <param name="parent"></param>
+        /// <param name="parent">Parent function.</param>
         private void InsertChildFunction(
             ref List<Function> orderedFunctionList, 
             List<Function> functionList, 

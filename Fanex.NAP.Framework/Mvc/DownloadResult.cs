@@ -44,6 +44,10 @@ namespace Fanex.NAP.Framework.Mvc
             set;
         }
 
+        /// <summary>
+        /// Execute result.
+        /// </summary>
+        /// <param name="context">Controller context.</param>
         public override void ExecuteResult(ControllerContext context)
         {
             if (!string.IsNullOrEmpty(this.FileDownloadName))

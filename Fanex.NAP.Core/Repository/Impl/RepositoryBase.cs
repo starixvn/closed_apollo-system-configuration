@@ -16,6 +16,7 @@ namespace Fanex.NAP.Core.Repository.Impl
     /// <summary>
     /// Repository base.
     /// </summary>
+    /// <typeparam name="T">Object type.</typeparam>
     public class RepositoryBase<T> : ReadonlyRepository<T>
     {
         /// <summary>

@@ -177,7 +177,7 @@ namespace Fanex.NAP.Core.Configuration
 
     /// <summary>
     /// Server Collection, map to collection in configuration file.
-    /// </summary>    
+    /// </summary>
     public class DomainCollection : ConfigurationElementCollection
     {
         /// <summary>

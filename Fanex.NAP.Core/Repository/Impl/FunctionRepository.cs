@@ -13,6 +13,7 @@ namespace Fanex.NAP.Core.Repository.Impl
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using Fanex.Common.Extensions;
     using Fanex.Data;
@@ -165,6 +166,7 @@ namespace Fanex.NAP.Core.Repository.Impl
         /// </summary>
         /// <param name="criteria">The criteria fetch full function policy.</param>
         /// <returns>List of full function policy.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         public IEnumerable<FunctionPolicy> FetchFullFunctionPolicy(ICriteria criteria)
         {
             using (var db = new ObjectDb(criteria.GetSettingKey()))
