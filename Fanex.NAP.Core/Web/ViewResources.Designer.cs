@@ -61,6 +61,15 @@ namespace Fanex.NAP.Core.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Accounting Portal.
+        /// </summary>
+        public static string Accounting_Portal {
+            get {
+                return ResourceManager.GetString("Accounting_Portal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Action.
         /// </summary>
         public static string Action {
@@ -628,6 +637,15 @@ namespace Fanex.NAP.Core.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The {0} field is required..
+        /// </summary>
+        public static string Field_Required {
+            get {
+                return ResourceManager.GetString("Field_Required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Filter.
         /// </summary>
         public static string Filter {
@@ -934,6 +952,24 @@ namespace Fanex.NAP.Core.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to List Name.
+        /// </summary>
+        public static string List_Name {
+            get {
+                return ResourceManager.GetString("List_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List Function.
+        /// </summary>
+        public static string ListFunction {
+            get {
+                return ResourceManager.GetString("ListFunction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to LIVE.
         /// </summary>
         public static string LIVE {
@@ -1006,7 +1042,7 @@ namespace Fanex.NAP.Core.Web {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to List Function.
+        ///   Looks up a localized string similar to Mail Function.
         /// </summary>
         public static string MailFunction {
             get {
@@ -1033,7 +1069,7 @@ namespace Fanex.NAP.Core.Web {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to List Name.
+        ///   Looks up a localized string similar to Mailing List Name.
         /// </summary>
         public static string MailingList_Name {
             get {
@@ -1164,15 +1200,6 @@ namespace Fanex.NAP.Core.Web {
         public static string Modifier {
             get {
                 return ResourceManager.GetString("Modifier", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The {0} field is required..
-        /// </summary>
-        public static string Msg_Requried {
-            get {
-                return ResourceManager.GetString("Msg_Requried", resourceCulture);
             }
         }
         

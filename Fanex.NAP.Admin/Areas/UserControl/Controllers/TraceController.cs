@@ -1430,7 +1430,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 });
                 listLogData.Add(new LogData
                 {
-                    FieldName = ViewResources.MailingList_Name,
+                    FieldName = ViewResources.List_Name,
                     NewValue = elementNew.Attribute("ListName").Value
                 });
                 listLogData.Add(new LogData
@@ -1450,7 +1450,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 });
                 listLogData.Add(new LogData
                 {
-                    FieldName = ViewResources.MailFunction,
+                    FieldName = ViewResources.ListFunction,
                     NewValue = elementNew.Attribute("ListFunctionName").Value
                 });
                 listLogData.Add(new LogData
@@ -1513,7 +1513,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 });
                 listLogData.Add(new LogData
                 {
-                    FieldName = ViewResources.MailingList_Name,
+                    FieldName = ViewResources.List_Name,
                     OldValue = elementOld.Attribute("ListName").Value,
                     NewValue = elementNew.Attribute("ListName").Value
                 });
@@ -1537,7 +1537,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 });
                 listLogData.Add(new LogData
                 {
-                    FieldName = ViewResources.MailFunction,
+                    FieldName = ViewResources.ListFunction,
                     OldValue = elementOld.Attribute("ListFunctionName").Value,
                     NewValue = elementNew.Attribute("ListFunctionName").Value
                 });

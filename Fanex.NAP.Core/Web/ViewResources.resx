@@ -720,13 +720,13 @@
   <data name="Internal_Only" xml:space="preserve">
     <value>Internal-only</value>
   </data>
-  <data name="MailFunction" xml:space="preserve">
+  <data name="ListFunction" xml:space="preserve">
     <value>List Function</value>
   </data>
   <data name="MailingList" xml:space="preserve">
     <value>Mailing List</value>
   </data>
-  <data name="MailingList_Name" xml:space="preserve">
+  <data name="List_Name" xml:space="preserve">
     <value>List Name</value>
   </data>
   <data name="Manage_MailingList" xml:space="preserve">
@@ -744,7 +744,16 @@
   <data name="Update_MailingList" xml:space="preserve">
     <value>Update Mailing List</value>
   </data>
-  <data name="Msg_Requried" xml:space="preserve">
+  <data name="Field_Required" xml:space="preserve">
     <value>The {0} field is required.</value>
+  </data>
+  <data name="MailFunction" xml:space="preserve">
+    <value>Mail Function</value>
+  </data>
+  <data name="MailingList_Name" xml:space="preserve">
+    <value>Mailing List Name</value>
+  </data>
+  <data name="Accounting_Portal" xml:space="preserve">
+    <value>Accounting Portal</value>
   </data>
 </root>

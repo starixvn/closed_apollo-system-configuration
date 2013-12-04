@@ -7,7 +7,7 @@
 //   <change who="Quinn.Vo" date="2013.8.29">Created</change>
 // </history>
 
-namespace Fanex.NAP.Core.Services.Impl
+namespace Fanex.NAP.Core.Service.Impl
 {
     using System.Configuration;
     using System.Text.RegularExpressions;
@@ -41,8 +41,8 @@ namespace Fanex.NAP.Core.Services.Impl
                 MailBcc = mailBcc,
                 Subject = subject,
                 Title = string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["Email.SenderName"]) 
-                ? string.Empty 
-                : ConfigurationManager.AppSettings["Email.SenderName"],
+                    ? string.Empty 
+                    : ConfigurationManager.AppSettings["Email.SenderName"],
                 Body = body
             };
 
@@ -72,6 +72,7 @@ namespace Fanex.NAP.Core.Services.Impl
             else
             {
                 var arrEmail = emailList.Split(';');
+
                 foreach (var email in arrEmail)
                 {
                     if (!IsValidEmail(email))

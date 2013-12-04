@@ -10,6 +10,7 @@
 namespace Fanex.NAP.Admin.Core.Extensions
 {
     using System;
+    using System.Globalization;
     using System.IO;
     using Fanex.Logging;
 
@@ -51,7 +52,7 @@ namespace Fanex.NAP.Admin.Core.Extensions
                 return string.Empty;
             }
 
-            return string.Format(new System.Globalization.CultureInfo("en-US"), "{0:yyyy-MM-dd}", dt);
+            return string.Format(new CultureInfo("en-US"), "{0:yyyy-MM-dd}", dt);
         }
 
         /// <summary>

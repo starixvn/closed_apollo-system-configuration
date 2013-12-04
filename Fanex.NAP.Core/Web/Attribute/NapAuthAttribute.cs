@@ -179,7 +179,7 @@ namespace Fanex.NAP.Core.Web.Attribute
                 else
                 {
                     string settingUrl = NapSettings.Settings.UnauthorizeUrl;
-                    response.Redirect(string.IsNullOrWhiteSpace(settingUrl) ? "~/Admin/Common/Unauthorize" : settingUrl);
+                    response.Redirect(string.IsNullOrWhiteSpace(settingUrl) ? "~/Admin/Common/Unauthorize" : settingUrl, false);
                 }
             }
             catch

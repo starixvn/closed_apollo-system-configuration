@@ -47,7 +47,7 @@ namespace Fanex.NAP.Core.Web.Attribute
                     }
                     else
                     {
-                        response.Redirect("~/UserLogin/Login");
+                        response.Redirect("~/UserLogin/Login", false);
                     }
                 }
             }

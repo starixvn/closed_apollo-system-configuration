@@ -21,7 +21,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
     using Fanex.NAP.Core.Model;
     using Fanex.NAP.Core.Service.Impl;
     using Fanex.NAP.Core.Service.Interface;
-    using Fanex.NAP.Core.Services.Impl;
     using Fanex.NAP.Core.Web;
     using Fanex.NAP.Core.Web.Attribute;
 
@@ -633,7 +632,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             var mailingList = _mailingListService.GetByName(listName);
             if (string.IsNullOrWhiteSpace(criteria.ListName))
             {
-                ModelState.AddModelError("ListName", string.Format(ViewResources.Msg_Requried, listName));
+                ModelState.AddModelError("ListName", string.Format(ViewResources.Field_Required, listName));
                 isValid = false;
             }
             else
@@ -660,13 +659,13 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             
             if (criteria.ListFunctionId == 0)
             {
-                ModelState.AddModelError("ListFunctionId", string.Format(ViewResources.Msg_Requried, ViewResources.MailFunction));
+                ModelState.AddModelError("ListFunctionId", string.Format(ViewResources.Field_Required, ViewResources.ListFunction));
                 isValid = false;
             }
 
             if (criteria.FunctionId == 0)
             {
-                ModelState.AddModelError("FunctionId", string.Format(ViewResources.Msg_Requried, ViewResources.Function));
+                ModelState.AddModelError("FunctionId", string.Format(ViewResources.Field_Required, ViewResources.Function));
                 isValid = false;
             }
 
@@ -689,7 +688,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
             if (string.IsNullOrWhiteSpace(criteria.ListName))
             {
-                ModelState.AddModelError("ListName", string.Format(ViewResources.Msg_Requried, listName));
+                ModelState.AddModelError("ListName", string.Format(ViewResources.Field_Required, listName));
                 isValid = false;
             }
             else
@@ -716,13 +715,13 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
             if (criteria.ListFunctionId == 0)
             {
-                ModelState.AddModelError("ListFunctionId", string.Format(ViewResources.Msg_Requried, ViewResources.MailFunction));
+                ModelState.AddModelError("ListFunctionId", string.Format(ViewResources.Field_Required, ViewResources.ListFunction));
                 isValid = false;
             }
 
             if (criteria.FunctionId == 0)
             {
-                ModelState.AddModelError("FunctionId", string.Format(ViewResources.Msg_Requried, ViewResources.Function));
+                ModelState.AddModelError("FunctionId", string.Format(ViewResources.Field_Required, ViewResources.Function));
                 isValid = false;
             }
 
@@ -744,7 +743,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
             if (string.IsNullOrWhiteSpace(emailToList))
             {
-                ModelState.AddModelError("ToList", string.Format(ViewResources.Msg_Requried, ViewResources.To));
+                ModelState.AddModelError("ToList", string.Format(ViewResources.Field_Required, ViewResources.To));
                 isValid = false;
             }
 

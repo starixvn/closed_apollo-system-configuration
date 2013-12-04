@@ -61,7 +61,7 @@ namespace Fanex.NAP.Framework.Mvc
             string filePath = context.HttpContext.Server.MapPath(this.VirtualPath);
             if (!File.Exists(filePath))
             {
-                context.HttpContext.Response.Redirect(this.ErrorUrl);
+                context.HttpContext.Response.Redirect(this.ErrorUrl, false);
             }
             else
             {

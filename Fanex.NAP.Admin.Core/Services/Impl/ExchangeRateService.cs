@@ -23,7 +23,7 @@ namespace Fanex.NAP.Admin.Core.Services.Impl
     using Fanex.NAP.Admin.Core.Repositories.Interface;
     using Fanex.NAP.Admin.Core.Services.Interface;
     using Fanex.NAP.Core.Domain;
-    using Fanex.NAP.Core.Services.Impl;
+    using Fanex.NAP.Core.Service.Impl;
     using Fanex.NAP.Core.Web;
     using NPOI.HSSF.UserModel;
 
@@ -246,7 +246,7 @@ namespace Fanex.NAP.Admin.Core.Services.Impl
             {
                 isValid = false;
                 errorMsg.ErrorCode = 106;
-                errorMsg.MsgMinBetLive = string.Format(ViewResources.Msg_Requried, Lang.MinBetLive);
+                errorMsg.MsgMinBetLive = string.Format(ViewResources.Field_Required, Lang.MinBetLive);
             }
             else
             {
@@ -274,7 +274,7 @@ namespace Fanex.NAP.Admin.Core.Services.Impl
             {
                 isValid = false;
                 errorMsg.ErrorCode = 104;
-                errorMsg.MsgMinBet = string.Format(ViewResources.Msg_Requried, Lang.MinBet);
+                errorMsg.MsgMinBet = string.Format(ViewResources.Field_Required, Lang.MinBet);
             }
             else
             {
@@ -302,7 +302,7 @@ namespace Fanex.NAP.Admin.Core.Services.Impl
             {
                 isValid = false;
                 errorMsg.ErrorCode = 102;
-                errorMsg.MsgActualRate = string.Format(ViewResources.Msg_Requried, Lang.BaseRate);
+                errorMsg.MsgActualRate = string.Format(ViewResources.Field_Required, Lang.BaseRate);
             }
             else
             {
@@ -323,7 +323,7 @@ namespace Fanex.NAP.Admin.Core.Services.Impl
             {
                 isValid = false;
                 errorMsg.ErrorCode = 101;
-                errorMsg.MsgCurrency = string.Format(ViewResources.Msg_Requried, Lang.Currency);
+                errorMsg.MsgCurrency = string.Format(ViewResources.Field_Required, Lang.Currency);
             }
 
             return isValid;
