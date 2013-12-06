@@ -81,7 +81,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             if (CurrentSession.Level == (int)Constant.Level.PortalAdmin)
             {
                 ViewBag.Site = _siteService.GetAllSelectListItem(criteria.Environment, true, criteria.SiteId);
-                ViewBag.ViewFlags.HasEditRight = true;
+                ViewFlags.HasEditRight = true;
             }
             else
             {
@@ -92,20 +92,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                                         criteria.Environment,
                                         policy: Constant.Policy.Read,
                                         selectedSiteId: criteria.SiteId);
-
-                // get user policy
-                int policy = _userService.GetUserSiteFunctionKeyPolicy(
-                                                CurrentSession.UserId,
-                                                criteria.SiteId,
-                                                FunctionKeys.ManageMenu);
-
-                int policyCurrentSite = _userService.GetUserSiteFunctionKeyPolicy(
-                                                CurrentSession.UserId,
-                                                this.SiteId,
-                                                FunctionKeys.ManageMenu);
-
-                ViewBag.ViewFlags.HasEditRight = policy >= (int)Constant.Policy.Host
-                                                    && policyCurrentSite >= (int)Constant.Policy.Host;
+                ViewFlags.HasEditRight =
+                    HasRight(FunctionKeys.ManageMenu, Constant.Policy.Host)
+                    && HasRightOnSite(criteria.SiteId, FunctionKeys.ManageMenu, Constant.Policy.Host);
             }
 
             ViewBag.MenuItemList = _menuItemService.GetBySiteInHierarchy(criteria.SiteId, criteria.Environment);
@@ -125,7 +114,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             if (CurrentSession.Level == (int)Constant.Level.PortalAdmin)
             {
                 ViewBag.Site = _siteService.GetAllSelectListItem(criteria.Environment, true, criteria.SiteId);
-                ViewBag.ViewFlags.HasEditRight = true;
+                ViewFlags.HasEditRight = true;
             }
             else
             {
@@ -136,20 +125,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                                         criteria.Environment,
                                         policy: Constant.Policy.Read,
                                         selectedSiteId: criteria.SiteId);
-
-                // get user policy
-                int policy = _userService.GetUserSiteFunctionKeyPolicy(
-                                                CurrentSession.UserId,
-                                                criteria.SiteId,
-                                                FunctionKeys.ManageMenu);
-
-                int policyCurrentSite = _userService.GetUserSiteFunctionKeyPolicy(
-                                                CurrentSession.UserId,
-                                                this.SiteId,
-                                                FunctionKeys.ManageMenu);
-
-                ViewBag.ViewFlags.HasEditRight = 
-                    policy >= (int)Constant.Policy.Host && policyCurrentSite >= (int)Constant.Policy.Host;
+                ViewFlags.HasEditRight =
+                    HasRight(FunctionKeys.ManageMenu, Constant.Policy.Host)
+                    && HasRightOnSite(criteria.SiteId, FunctionKeys.ManageMenu, Constant.Policy.Host);
             }
 
             ViewBag.MenuItemList = _menuItemService.GetBySiteInHierarchy(criteria.SiteId, criteria.Environment);

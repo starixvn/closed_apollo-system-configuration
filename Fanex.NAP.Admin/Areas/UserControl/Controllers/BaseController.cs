@@ -49,6 +49,8 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
         private ViewFlags _viewFlags;
 
+        private IUserService _userService;
+
         public BaseController()
         {
             CurrentContext = new CurrentContext();
@@ -67,6 +69,8 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 HasEditRight = false,
                 IsReCheckin = NapSettings.Settings.EnableReCheckIn
             };
+
+            _userService = new UserService { ServiceContext = ServiceContext };
         }
 
         protected ViewFlags ViewFlags
@@ -113,5 +117,33 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
             return PartialView("~/Areas/UserControl/Views/Shared/_Menu.cshtml");
         }
+
+        /// <summary>
+        /// Determines whether the specified user has the right on a function.
+        /// </summary>
+        /// <param name="functionKey">The function key.</param>
+        /// <param name="policy">The policy.</param>
+        /// <returns>Whether the specified user has the right on a function.</returns>
+        public bool HasRight(string functionKey, Constant.Policy policy)
+        {
+            int functionPolicy = _userService.GetUserSiteFunctionKeyPolicy(CurrentSession.UserId, this.SiteId, functionKey);
+
+            return functionPolicy >= (int)policy;
+        }
+
+        /// <summary>
+        /// Determines whether the specified user has the right on a function of a site.
+        /// </summary>
+        /// <param name="siteId">The site ID.</param>
+        /// <param name="functionKey">The function key.</param>
+        /// <param name="policy">The policy.</param>
+        /// <returns>Whether the specified user has the right on a function.</returns>
+        public bool HasRightOnSite(int siteId, string functionKey, Constant.Policy policy)
+        {
+            int functionPolicy = _userService.GetUserSiteFunctionKeyPolicy(CurrentSession.UserId, siteId, functionKey);
+
+            return functionPolicy >= (int)policy;
+        }
+
     }
 }

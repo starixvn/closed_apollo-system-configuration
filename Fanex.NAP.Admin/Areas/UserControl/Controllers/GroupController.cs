@@ -55,7 +55,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             _groupService = groupService ?? new GroupService { ServiceContext = ServiceContext };
             _siteService = siteService ?? new SiteService { ServiceContext = ServiceContext };
-            this._functionService = functionService ?? new FunctionService { ServiceContext = ServiceContext };
+            _functionService = functionService ?? new FunctionService { ServiceContext = ServiceContext };
             _userService = userService ?? new UserService { ServiceContext = ServiceContext };
         }
 
@@ -71,25 +71,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         [NapAuth(FunctionKey = FunctionKeys.ManageGroup, Policy = Constant.Policy.Read)]
         public ActionResult Manage()
         {
-            // check edit right
-            int policy = 
-                _userService.GetUserSiteFunctionKeyPolicy(CurrentSession.UserId, this.SiteId, FunctionKeys.ManageGroup);
-
-            ViewFlags.HasEditRight = policy >= (int)Constant.Policy.Host;
-
-            // check assign-function right                
-            int assignFunctionPolicy = _userService.GetUserSiteFunctionKeyPolicy(
-                        CurrentSession.UserId,
-                        this.SiteId,
-                        FunctionKeys.AssignFunctionToGroup);
-
-            ViewFlags.HasAssignFunctionRight = assignFunctionPolicy >= (int)Constant.Policy.Read;
-
-            // check manage-user right
-            int hasManageUser = 
-                _userService.GetUserSiteFunctionKeyPolicy(CurrentSession.UserId, SiteId, FunctionKeys.ManageUser);
-
-            ViewFlags.HasManageUserRight = hasManageUser >= (int)Constant.Policy.Read;
+            ViewFlags.HasEditRight = HasRight(FunctionKeys.ManageGroup, Constant.Policy.Host);
+            ViewFlags.HasAssignFunctionRight = HasRight(FunctionKeys.AssignFunctionToGroup, Constant.Policy.Read);
+            ViewFlags.HasManageUserRight = HasRight(FunctionKeys.ManageUser, Constant.Policy.Read);
 
             ViewBag.GroupList = _groupService.GetAllWithNumOfUser(string.Empty, Environment);
 
@@ -107,25 +91,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             criteria.Environment = Environment;
 
-            // check edit right
-            int policy = 
-                _userService.GetUserSiteFunctionKeyPolicy(CurrentSession.UserId, this.SiteId, FunctionKeys.ManageGroup);
-
-            ViewFlags.HasEditRight = policy >= (int)Constant.Policy.Host;
-
-            // check assign-function right
-            int assignFunctionPolicy = _userService.GetUserSiteFunctionKeyPolicy(
-                                                CurrentSession.UserId,
-                                                this.SiteId,
-                                                FunctionKeys.AssignFunctionToGroup);
-
-            ViewFlags.HasAssignFunctionRight = assignFunctionPolicy >= (int)Constant.Policy.Read;
-
-            // check manage-user right
-            int hasManageUser = 
-                _userService.GetUserSiteFunctionKeyPolicy(CurrentSession.UserId, SiteId, FunctionKeys.ManageUser);
-
-            ViewFlags.HasManageUserRight = hasManageUser >= (int)Constant.Policy.Read;
+            ViewFlags.HasEditRight = HasRight(FunctionKeys.ManageGroup, Constant.Policy.Host);
+            ViewFlags.HasAssignFunctionRight = HasRight(FunctionKeys.AssignFunctionToGroup, Constant.Policy.Read);
+            ViewFlags.HasManageUserRight = HasRight(FunctionKeys.ManageUser, Constant.Policy.Read);
 
             ViewBag.GroupList = _groupService.GetAllWithNumOfUser(criteria.GroupName);
 
@@ -165,9 +133,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
                 if (!ReferenceEquals(group, null))
                 {
-                    ModelState.AddModelError(
-                        "SiteName",
-                        string.Format(ViewResources.DuplicateMsg, criteria.GroupName));
+                    ModelState.AddModelError("SiteName", string.Format(ViewResources.DuplicateMsg, criteria.GroupName));
 
                     return View(criteria);
                 }
@@ -237,9 +203,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 {
                     if (group.Id != criteria.GroupId)
                     {
-                        ModelState.AddModelError(
-                            "SiteName",
-                            string.Format(ViewResources.DuplicateMsg, criteria.GroupName));
+                        ModelState.AddModelError("SiteName", string.Format(ViewResources.DuplicateMsg, criteria.GroupName));
 
                         return View(criteria);
                     }
@@ -322,12 +286,8 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             criteria.GroupName = group.Name;
             criteria.SiteId = site.Id;
 
-            int policy = _userService.GetUserSiteFunctionKeyPolicy(
-                                            CurrentSession.UserId,
-                                            criteria.SiteId,
-                                            FunctionKeys.AssignFunctionToGroup.ToString());
-
-            ViewBag.ViewFlags.HasAssignFunctionRight = policy >= (int)Constant.Policy.Host;
+            ViewBag.ViewFlags.HasAssignFunctionRight =
+                HasRightOnSite(criteria.SiteId, FunctionKeys.AssignFunctionToGroup, Constant.Policy.Host);
 
             if (CurrentSession.Level == (int)Constant.Level.PortalAdmin)
             {
@@ -337,7 +297,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             {
                 ViewBag.SiteSelectList = _siteService.GetSelectListItemByUserAndFunctionKeyIncludeGroup(
                                                     CurrentSession.UserId,
-                                                    FunctionKeys.AssignFunctionToGroup.ToString(),
+                                                    FunctionKeys.AssignFunctionToGroup,
                                                     this.Environment,
                                                     policy: Constant.Policy.Read,
                                                     selectedSiteId: criteria.SiteId);
@@ -376,14 +336,14 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             int policy = _userService.GetUserSiteFunctionKeyPolicy(
                                             CurrentSession.UserId,
                                             criteria.SiteId,
-                                            FunctionKeys.AssignFunctionToGroup.ToString());
+                                            FunctionKeys.AssignFunctionToGroup);
 
-            if (policy < (int)Constant.Policy.Host)
+            if (policy < (int)Constant.Policy.Read)
             {
                 return RedirectToAction("Unauthorize", "Common");
             }
 
-            ViewBag.ViewFlags.HasAssignFunctionRight = policy >= (int)Constant.Policy.Host;
+            ViewFlags.HasAssignFunctionRight = policy >= (int)Constant.Policy.Host;
 
             criteria.ModifiedBy = CurrentSession.UserId;
             criteria.ModifiedDate = DateTime.Now;
@@ -468,7 +428,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             {
                 ViewBag.SiteSelectList = _siteService.GetSelectListItemByUserAndFunctionKeyIncludeGroup(
                                                         CurrentSession.UserId,
-                                                        FunctionKeys.AssignFunctionToGroup.ToString(),
+                                                        FunctionKeys.AssignFunctionToGroup,
                                                         this.Environment,
                                                         policy: Constant.Policy.Read,
                                                         selectedSiteId: criteria.SiteId);

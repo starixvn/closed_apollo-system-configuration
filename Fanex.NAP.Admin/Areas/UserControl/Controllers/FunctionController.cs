@@ -127,7 +127,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <returns>Action result.</returns>
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageFunction, Policy = Constant.Policy.Host)]
         public ActionResult AddNew(InsertFunctionCriteria criteria)
@@ -137,45 +136,22 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             if (ModelState.IsValid)
             {
                 // checks duplicate function name
-                string functionName = criteria.FunctionName = criteria.FunctionName.Trim();
-                var function = this._functionService.GetByNameAndSite(functionName, criteria.SiteId);
+                criteria.FunctionName = criteria.FunctionName.Trim();
+                var function = this._functionService.GetByNameAndSite(criteria.FunctionName, criteria.SiteId);
 
                 if (function != null)
                 {
-                    ModelState.AddModelError("FunctionName", string.Format(ViewResources.DuplicateMsg, functionName));
+                    ModelState.AddModelError("FunctionName", string.Format(ViewResources.DuplicateMsg, criteria.FunctionName));
                     return View(criteria);
                 }
 
                 // checks duplicate function key
-                string functionKey = criteria.FunctionKey = criteria.FunctionName.Replace(Constant.SPACE, string.Empty);
-
-                // replace char not letter or digit of function key
-                StringBuilder strFunctionKeyModify = new StringBuilder();
-
-                for (int i = 0; i < functionKey.Length; i++)
-                {
-                    char item = functionKey[i];
-                    if (char.IsLetterOrDigit(item))
-                    {
-                        strFunctionKeyModify.Append(item);
-                    }
-                    else
-                    {
-                        strFunctionKeyModify.Append("_");
-                    }
-                }
-
-                criteria.FunctionKey = strFunctionKeyModify.ToString();
-                functionKey = strFunctionKeyModify.ToString();
-
-                function = this._functionService.GetByKeyAndSite(functionKey, criteria.SiteId);
+                criteria.FunctionKey = GenerateFunctionKey(criteria.FunctionName);
+                function = this._functionService.GetByKeyAndSite(criteria.FunctionKey, criteria.SiteId);
 
                 if (function != null)
                 {
-                    ModelState.AddModelError(
-                        "FunctionKey",
-                        string.Format(ViewResources.DuplicateMsg, functionKey));
-
+                    ModelState.AddModelError("FunctionKey", string.Format(ViewResources.DuplicateMsg, criteria.FunctionKey));
                     return View(criteria);
                 }
 
@@ -265,20 +241,20 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             if (ModelState.IsValid)
             {
                 // checks duplicate function name
-                string functionName = criteria.FunctionName = criteria.FunctionName.Trim();
+                criteria.FunctionName = criteria.FunctionName.Trim();
 
-                if (this._functionService.GetByNameAndSite(functionName, criteria.SiteId) != null)
+                if (this._functionService.GetByNameAndSite(criteria.FunctionName, criteria.SiteId) != null)
                 {
-                    ModelState.AddModelError("FunctionName", string.Format(ViewResources.DuplicateMsg, functionName));
+                    ModelState.AddModelError("FunctionName", string.Format(ViewResources.DuplicateMsg, criteria.FunctionName));
                     return View(criteria);
                 }
 
                 // checks duplicate function key
-                string functionKey = criteria.FunctionKey = criteria.FunctionName.Replace(Constant.SPACE, string.Empty);
+                criteria.FunctionKey = GenerateFunctionKey(criteria.FunctionName);
 
-                if (this._functionService.GetByKeyAndSite(functionKey, criteria.SiteId) != null)
+                if (this._functionService.GetByKeyAndSite(criteria.FunctionKey, criteria.SiteId) != null)
                 {
-                    ModelState.AddModelError("FunctionKey", string.Format(ViewResources.DuplicateMsg, functionKey));
+                    ModelState.AddModelError("FunctionKey", string.Format(ViewResources.DuplicateMsg, criteria.FunctionKey));
                     return View(criteria);
                 }
 
@@ -379,47 +355,29 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             if (ModelState.IsValid)
             {
                 // checks Function Name duplication
-                string functionName = criteria.FunctionName = criteria.FunctionName.Trim();
-                var function = this._functionService.GetByNameAndSite(functionName, criteria.SiteId);
+                criteria.FunctionName = criteria.FunctionName.Trim();
+                var function = this._functionService.GetByNameAndSite(criteria.FunctionName, criteria.SiteId);
 
                 if (function != null && function.Id != criteria.FunctionId)
                 {
                     criteria.FunctionKey = currentFunction.Key;
 
-                    ModelState.AddModelError("FunctionName", string.Format(ViewResources.DuplicateMsg, functionName));
+                    ModelState.AddModelError("FunctionName", string.Format(ViewResources.DuplicateMsg, criteria.FunctionName));
 
                     return View(criteria);
                 }
 
                 // checks Function Key duplication
-                string tempFunctionKey = criteria.FunctionKey != null ? criteria.FunctionKey : criteria.FunctionName;
-
-                string functionKey = criteria.FunctionKey = tempFunctionKey.Replace(Constant.SPACE, string.Empty);
-
-                // replace char not letter or digit of function key
-                StringBuilder strFunctionKeyModify = new StringBuilder();
-
-                for (int i = 0; i < functionKey.Length; i++)
+                if (criteria.FunctionKey != null)
                 {
-                    char item = functionKey[i];
-                    if (char.IsLetterOrDigit(item))
-                    {
-                        strFunctionKeyModify.Append(item);
-                    }
-                    else
-                    {
-                        strFunctionKeyModify.Append("_");
-                    }
+                    criteria.FunctionKey = GenerateFunctionKey(criteria.FunctionName);
                 }
 
-                criteria.FunctionKey = strFunctionKeyModify.ToString();
-                functionKey = strFunctionKeyModify.ToString();
-
-                function = this._functionService.GetByKeyAndSite(functionKey, criteria.SiteId);
+                function = this._functionService.GetByKeyAndSite(criteria.FunctionKey, criteria.SiteId);
 
                 if (function != null && function.Id != criteria.FunctionId)
                 {
-                    ModelState.AddModelError("FunctionKey", string.Format(ViewResources.DuplicateMsg, functionKey));
+                    ModelState.AddModelError("FunctionKey", string.Format(ViewResources.DuplicateMsg, criteria.FunctionKey));
 
                     return View(criteria);
                 }
@@ -533,15 +491,10 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             ViewBag.Groups = _groupService.GetByFunctionAndSite(functionId, siteId).ToList();
 
             // gets logged-in-user privileges
-            ViewFlags.HasAssignFunctionToUserRight = _userService.GetUserSiteFunctionKeyPolicy(
-                        CurrentSession.UserId,
-                        function.Site.Id,
-                        FunctionKeys.AssignFunctionToUser) >= (int)Constant.Policy.Host;
-
-            ViewFlags.HasAssignFunctionToGroupRight = _userService.GetUserSiteFunctionKeyPolicy(
-                CurrentSession.UserId,
-                function.Site.Id,
-                FunctionKeys.AssignFunctionToGroup) >= (int)Constant.Policy.Host;
+            ViewFlags.HasAssignFunctionToUserRight =
+                HasRightOnSite(function.Site.Id, FunctionKeys.AssignFunctionToUser, Constant.Policy.Host);
+            ViewFlags.HasAssignFunctionToGroupRight =
+                HasRightOnSite(function.Site.Id, FunctionKeys.AssignFunctionToGroup, Constant.Policy.Host);
 
             ViewBag.GroupSelectList = _groupService.GetAllSelectListItem();
             ViewBag.SiteId = siteId.ToString();
@@ -820,26 +773,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             }
 
             // checks Function Key duplication
-            string tempFunctionKey = functionName;
-            string functionKey = tempFunctionKey.Replace(Constant.SPACE, string.Empty);
-
-            // replace char not letter or digit of function key
-            StringBuilder strFunctionKeyModify = new StringBuilder();
-
-            for (int i = 0; i < functionKey.Length; i++)
-            {
-                char item = functionKey[i];
-                if (char.IsLetterOrDigit(item))
-                {
-                    strFunctionKeyModify.Append(item);
-                }
-                else
-                {
-                    strFunctionKeyModify.Append("_");
-                }
-            }
-
-            functionKey = strFunctionKeyModify.ToString();
+            string functionKey = GenerateFunctionKey(functionName);
 
             function = this._functionService.GetByKeyAndSite(functionKey, tempFunction.Site.Id);
 
@@ -848,7 +782,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 return Json(-2);
             }
 
-            return Json(strFunctionKeyModify.ToString());
+            return Json(functionKey);
         }
         #endregion
 
@@ -901,18 +835,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                         policy: Constant.Policy.Read,
                         selectedSiteId: criteria.SiteId);
 
-                int policyCurrentSite = _userService.GetUserSiteFunctionKeyPolicy(
-                        CurrentSession.UserId,
-                        this.SiteId,
-                        FunctionKeys.ManageFunction);
-
-                int policy = _userService.GetUserSiteFunctionKeyPolicy(
-                        CurrentSession.UserId,
-                        criteria.SiteId,
-                        FunctionKeys.ManageFunction);
-
-                ViewBag.ViewFlags.HasEditRight = 
-                    policy >= (int)Constant.Policy.Host && policyCurrentSite >= (int)Constant.Policy.Host;
+                ViewBag.ViewFlags.HasEditRight =
+                    HasRight(FunctionKeys.ManageFunction, Constant.Policy.Host)
+                    && HasRightOnSite(criteria.SiteId, FunctionKeys.ManageFunction, Constant.Policy.Host);
             }
         }
 
@@ -960,6 +885,35 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                                                 isActive: true,
                                                 selectedFunctionId: (int)criteria.ParentId);
             }
+        }
+
+        /// <summary>
+        /// Generate function key from function name.
+        /// </summary>
+        /// <param name="functionName">Function name.</param>
+        /// <returns>Function key.</returns>
+        private string GenerateFunctionKey(string functionName)
+        {
+            string functionKey = functionName.Replace(Constant.SPACE, string.Empty);
+
+            var sb = new StringBuilder();
+            int length = functionKey.Length;
+
+            for (int i = 0; i < length; i++)
+            {
+                char item = functionKey[i];
+
+                if (char.IsLetterOrDigit(item))
+                {
+                    sb.Append(item);
+                }
+                else
+                {
+                    sb.Append("_");
+                }
+            }
+
+            return sb.ToString();
         }
     }
 }

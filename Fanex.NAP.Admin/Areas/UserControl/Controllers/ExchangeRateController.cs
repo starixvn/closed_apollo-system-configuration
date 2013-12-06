@@ -10,6 +10,7 @@
 namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Threading.Tasks;
     using System.Web.Mvc;
@@ -73,14 +74,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         public ActionResult Index()
         {
             var criteria = new GetAllExchangeRateCriteria();
-            var exchangeRateList = this._exchangeRateService.GetAll(criteria);
+            var exchangeRateList = _exchangeRateService.GetAll(criteria);
 
-            int policy = this._userService.GetUserSiteFunctionKeyPolicy(
-                        this.CurrentSession.UserId,
-                        this.SiteId,
-                        FunctionKeys.ExchangeRate.ToString());
-
-            ViewBag.HasAllowEdit = policy >= (int)Constant.Policy.Host;
+            ViewBag.HasAllowEdit = HasRight(FunctionKeys.ExchangeRate, Constant.Policy.Host);
 
             return this.View(exchangeRateList.ToList());
         }
@@ -170,6 +166,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// </summary>
         /// <param name="model">ExchangeRate Model.</param>
         /// <returns>Message result.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ExchangeRate, Policy = Constant.Policy.Host)]
         public JsonResult Update(ExchangeRateModel model)
@@ -183,8 +180,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 MsgMultipliedBy = string.Empty
             };
 
-            var getExchangeRateByIdCriteria =
-                new GetExchangeRateByIdCriteria { ExchangeId = model.ExchangeId };
+            var getExchangeRateByIdCriteria = new GetExchangeRateByIdCriteria 
+            { 
+                ExchangeId = model.ExchangeId 
+            };
+
             var oldExchangeRate = this._exchangeRateService.GetById(getExchangeRateByIdCriteria);
 
             if (oldExchangeRate == null)
@@ -233,7 +233,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             var criteria = new GetAllExchangeRateCriteria();
             var exchangeRateList = this._exchangeRateService.GetAll(criteria);
-
             var excelResult = this._exchangeRateService.ExportExchangeRate(exchangeRateList.ToList());
             var fileName = string.Format("ExchangeRate_{0}", Utilities.ShortDateFormat(DateTime.Now));
 
@@ -268,6 +267,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 oldActualRate,
                 newActualRate,
                 userName));
+
             taskSendMail.Start();
         }
     }

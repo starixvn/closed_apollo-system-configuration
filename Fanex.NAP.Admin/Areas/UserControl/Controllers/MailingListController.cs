@@ -420,9 +420,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             }
 
             //// checks Function Key duplication
-
-            string tempMailingListKey = listName;
-            var listKey = GeneralKeyFromName(tempMailingListKey);
+            var listKey = GenerateListKey(listName);
 
             mailingList = _mailingListService.GetByKey(listKey);
 
@@ -480,12 +478,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                     }).ToList();
                 }
 
-                int policy = _userService.GetUserSiteFunctionKeyPolicy(
-                        CurrentSession.UserId,
-                        this.SiteId,
-                        FunctionKeys.ManageMailingList.ToString());
-
-                hasEditRight = policy >= (int)Constant.Policy.Host;
+                hasEditRight = HasRight(FunctionKeys.ManageMailingList, Constant.Policy.Host);
             }
         }
 
@@ -592,30 +585,32 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         }
 
         /// <summary>
-        /// Get a key from a name.
+        /// Generate list key from list name.
         /// </summary>
-        /// <param name="listName">Mailing List Name.</param>
-        /// <returns>A Mailing List Key.</returns>
-        [NonAction]
-        private string GeneralKeyFromName(string listName)
+        /// <param name="listName">The list name.</param>
+        /// <returns>The list key.</returns>
+        private string GenerateListKey(string listName)
         {
-            var strListKeyModify = new StringBuilder();
-            var listKey = listName.Replace(Constant.SPACE, string.Empty);
+            string listKey = listName.Replace(Constant.SPACE, string.Empty);
 
-            for (int i = 0; i < listKey.Length; i++)
+            var sb = new StringBuilder();
+            int length = listKey.Length;
+
+            for (int i = 0; i < length; i++)
             {
                 char item = listKey[i];
+
                 if (char.IsLetterOrDigit(item))
                 {
-                    strListKeyModify.Append(item);
+                    sb.Append(item);
                 }
                 else
                 {
-                    strListKeyModify.Append("_");
+                    sb.Append("_");
                 }
             }
 
-            return strListKeyModify.ToString();
+            return sb.ToString();
         }
 
         /// <summary>
@@ -645,13 +640,12 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 else
                 {
                     //// checks duplicate mailing list key
-                    var listKey = GeneralKeyFromName(criteria.ListName);
-                    criteria.ListKey = listKey;
-                    mailingList = _mailingListService.GetByKey(listKey);
+                    criteria.ListKey = GenerateListKey(criteria.ListName);
+                    mailingList = _mailingListService.GetByKey(criteria.ListKey);
 
                     if (mailingList != null)
                     {
-                        ModelState.AddModelError("ListKey", string.Format(ViewResources.DuplicateMsg, listKey));
+                        ModelState.AddModelError("ListKey", string.Format(ViewResources.DuplicateMsg, criteria.ListKey));
                         isValid = false;
                     }
                 }
@@ -684,30 +678,31 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             var isValid = true;
             //// checks duplicate mailing list name
-            string listName = criteria.ListName = criteria.ListName != null ? criteria.ListName.Trim() : string.Empty;
+            criteria.ListName = criteria.ListName != null ? criteria.ListName.Trim() : string.Empty;
 
             if (string.IsNullOrWhiteSpace(criteria.ListName))
             {
-                ModelState.AddModelError("ListName", string.Format(ViewResources.Field_Required, listName));
+                ModelState.AddModelError("ListName", string.Format(ViewResources.Field_Required, criteria.ListName));
                 isValid = false;
             }
             else
             {
-                var mailingList = _mailingListService.GetByName(listName);
-                var listKey = criteria.ListKey = GeneralKeyFromName(criteria.ListName);
+                var mailingList = _mailingListService.GetByName(criteria.ListName);
+                
                 if (mailingList != null && mailingList.Id != criteria.ListId)
                 {
-                    ModelState.AddModelError("ListName", string.Format(ViewResources.DuplicateMsg, listName));
+                    ModelState.AddModelError("ListName", string.Format(ViewResources.DuplicateMsg, criteria.ListName));
                     isValid = false;
                 }
                 else
                 {
                     //// checks duplicate function key
-                    mailingList = _mailingListService.GetByKey(listKey);
+                    criteria.ListKey = GenerateListKey(criteria.ListName);
+                    mailingList = _mailingListService.GetByKey(criteria.ListKey);
 
                     if (mailingList != null && mailingList.Id != criteria.ListId)
                     {
-                        ModelState.AddModelError("ListKey", string.Format(ViewResources.DuplicateMsg, listKey));
+                        ModelState.AddModelError("ListKey", string.Format(ViewResources.DuplicateMsg, criteria.ListKey));
                         isValid = false;
                     }
                 }
@@ -776,9 +771,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         private string RemoveDuplicatedEmail(string emails)
         {
             var emailList = new List<string>();
+
             if (!string.IsNullOrWhiteSpace(emails))
             {
                 var arrEmail = emails.Split(';');
+
                 foreach (var email in arrEmail)
                 {
                     if (!emailList.Contains(email.Trim().ToLower()))
@@ -789,6 +786,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             }
 
             var temp = emailList.ToArray();
+
             return string.Join(";", temp);
         }
     }

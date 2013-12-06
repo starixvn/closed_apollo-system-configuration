@@ -61,25 +61,14 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         [NapAuth(FunctionKey = FunctionKeys.ManageSite, Policy = Constant.Policy.Read)]
         public ActionResult Manage(GetAllSiteCriteria criteria)
         {
-            int policy = _userService.GetUserSiteFunctionKeyPolicy(
-                                            CurrentSession.UserId,
-                                            this.SiteId,
-                                            FunctionKeys.ManageSite);
+            ViewFlags.HasEditRight = HasRight(FunctionKeys.ManageSite, Constant.Policy.Host);
+            ViewFlags.HasManageUserRight = HasRight(FunctionKeys.ManageUser, Constant.Policy.Read);
 
             ViewBag.Site = _siteService.GetByUserAndFunctionKeyIncludeGroup(
                                                     CurrentSession.UserId,
                                                     FunctionKeys.ManageUser,
                                                     this.Environment,
                                                     policy: Constant.Policy.Read).Select(s => s.Id).ToList();
-
-            var hasManageUser = _userService.GetUserSiteFunctionKeyPolicy(
-                CurrentSession.UserId,
-                SiteId,
-                FunctionKeys.ManageUser) >= 1 ? true : false;
-
-            ViewFlags.HasEditRight = policy >= (int)Constant.Policy.Host;
-            ViewFlags.HasManageUserRight = hasManageUser;
-
             ViewBag.SiteList = _siteService.GetAllWithNumOfUsers(this.Environment).OrderBy(s => s.Id).ToList();
             ViewBag.SiteUrlList = _siteService.GetAllSiteUrl(this.Environment).ToList();
 
@@ -101,7 +90,14 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             return View(new InsertSiteCriteria
             {
                 Environment = this.Environment,
-                Urls = new List<SiteUrl> { new SiteUrl { IsActive = true, IsDefault = true } }
+                Urls = new List<SiteUrl> 
+                { 
+                    new SiteUrl 
+                    { 
+                        IsActive = true, 
+                        IsDefault = true 
+                    } 
+                }
             });
         }
 
@@ -133,12 +129,12 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 }
 
                 // checks SiteName duplication
-                string siteName = criteria.SiteName = criteria.SiteName.Trim();
-                var site = _siteService.GetByName(siteName);
+                criteria.SiteName = criteria.SiteName.Trim();
+                var site = _siteService.GetByName(criteria.SiteName);
 
                 if (site != null)
                 {
-                    ModelState.AddModelError("SiteName", string.Format(ViewResources.DuplicateMsg, siteName));
+                    ModelState.AddModelError("SiteName", string.Format(ViewResources.DuplicateMsg, criteria.SiteName));
 
                     return View(criteria);
                 }
@@ -215,12 +211,12 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             if (ModelState.IsValid)
             {
                 // checks SiteName duplication
-                string siteName = criteria.SiteName = criteria.SiteName.Trim();
-                var site = _siteService.GetByName(siteName);
+                criteria.SiteName = criteria.SiteName.Trim();
+                var site = _siteService.GetByName(criteria.SiteName);
 
                 if (site != null && site.Id != criteria.SiteId)
                 {
-                    ModelState.AddModelError("SiteName", string.Format(ViewResources.DuplicateMsg, siteName));
+                    ModelState.AddModelError("SiteName", string.Format(ViewResources.DuplicateMsg, criteria.SiteName));
 
                     return View(criteria);
                 }
