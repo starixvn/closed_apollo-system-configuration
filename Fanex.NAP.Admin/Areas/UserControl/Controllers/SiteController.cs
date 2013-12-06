@@ -64,18 +64,18 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             int policy = _userService.GetUserSiteFunctionKeyPolicy(
                                             CurrentSession.UserId,
                                             this.SiteId,
-                                            FunctionKeys.ManageSite.ToString());
+                                            FunctionKeys.ManageSite);
 
             ViewBag.Site = _siteService.GetByUserAndFunctionKeyIncludeGroup(
                                                     CurrentSession.UserId,
-                                                    FunctionKeys.ManageUser.ToString(),
+                                                    FunctionKeys.ManageUser,
                                                     this.Environment,
                                                     policy: Constant.Policy.Read).Select(s => s.Id).ToList();
 
             var hasManageUser = _userService.GetUserSiteFunctionKeyPolicy(
                 CurrentSession.UserId,
                 SiteId,
-                FunctionKeys.ManageUser.ToString()) >= 1 ? true : false;
+                FunctionKeys.ManageUser) >= 1 ? true : false;
 
             ViewFlags.HasEditRight = policy >= (int)Constant.Policy.Host;
             ViewFlags.HasManageUserRight = hasManageUser;
@@ -123,6 +123,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                     foreach (var itemUrl in criteria.Urls)
                     {
                         bool isuri = Uri.IsWellFormedUriString(itemUrl.Url, UriKind.Absolute);
+
                         if (!isuri)
                         {
                             ModelState.AddModelError("SiteUrls", string.Format(ViewResources.InvalidURLValidationMsg, criteria.SiteUrls));
@@ -261,7 +262,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             ViewFlags.SetEditRight(_userService.GetUserSiteFunctionKeyPolicy(
                                                                     CurrentSession.UserId,
                                                                     this.SiteId,
-                                                                    FunctionKeys.ManageSite.ToString()));
+                                                                    FunctionKeys.ManageSite));
 
             return View();
         }
@@ -305,7 +306,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                         }
 
                         // Update
-                        if (result == Constant.OK)
+                        if (result.Equals(Constant.OK))
                         {
                             _siteService.UpdateSiteUrl(new UpdateSiteUrlCriteria
                             {

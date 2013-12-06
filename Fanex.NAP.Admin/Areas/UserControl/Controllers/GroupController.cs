@@ -72,10 +72,8 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         public ActionResult Manage()
         {
             // check edit right
-            int policy = _userService.GetUserSiteFunctionKeyPolicy(
-                        CurrentSession.UserId,
-                        this.SiteId,
-                        FunctionKeys.ManageGroup.ToString());
+            int policy = 
+                _userService.GetUserSiteFunctionKeyPolicy(CurrentSession.UserId, this.SiteId, FunctionKeys.ManageGroup);
 
             ViewFlags.HasEditRight = policy >= (int)Constant.Policy.Host;
 
@@ -83,17 +81,15 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             int assignFunctionPolicy = _userService.GetUserSiteFunctionKeyPolicy(
                         CurrentSession.UserId,
                         this.SiteId,
-                        FunctionKeys.AssignFunctionToGroup.ToString());
+                        FunctionKeys.AssignFunctionToGroup);
 
             ViewFlags.HasAssignFunctionRight = assignFunctionPolicy >= (int)Constant.Policy.Read;
 
             // check manage-user right
-            var hasManageUser = _userService.GetUserSiteFunctionKeyPolicy(
-                CurrentSession.UserId,
-                SiteId,
-                FunctionKeys.ManageUser.ToString()) >= 1 ? true : false;
+            int hasManageUser = 
+                _userService.GetUserSiteFunctionKeyPolicy(CurrentSession.UserId, SiteId, FunctionKeys.ManageUser);
 
-            ViewFlags.HasManageUserRight = hasManageUser;
+            ViewFlags.HasManageUserRight = hasManageUser >= (int)Constant.Policy.Read;
 
             ViewBag.GroupList = _groupService.GetAllWithNumOfUser(string.Empty, Environment);
 
@@ -112,10 +108,8 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             criteria.Environment = Environment;
 
             // check edit right
-            int policy = _userService.GetUserSiteFunctionKeyPolicy(
-                                            CurrentSession.UserId,
-                                            this.SiteId,
-                                            FunctionKeys.ManageGroup.ToString());
+            int policy = 
+                _userService.GetUserSiteFunctionKeyPolicy(CurrentSession.UserId, this.SiteId, FunctionKeys.ManageGroup);
 
             ViewFlags.HasEditRight = policy >= (int)Constant.Policy.Host;
 
@@ -123,17 +117,15 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             int assignFunctionPolicy = _userService.GetUserSiteFunctionKeyPolicy(
                                                 CurrentSession.UserId,
                                                 this.SiteId,
-                                                FunctionKeys.AssignFunctionToGroup.ToString());
+                                                FunctionKeys.AssignFunctionToGroup);
 
             ViewFlags.HasAssignFunctionRight = assignFunctionPolicy >= (int)Constant.Policy.Read;
 
             // check manage-user right
-            var hasManageUser = _userService.GetUserSiteFunctionKeyPolicy(
-                        CurrentSession.UserId,
-                        SiteId,
-                        FunctionKeys.ManageUser.ToString()) >= 1 ? true : false;
+            int hasManageUser = 
+                _userService.GetUserSiteFunctionKeyPolicy(CurrentSession.UserId, SiteId, FunctionKeys.ManageUser);
 
-            ViewFlags.HasManageUserRight = hasManageUser;
+            ViewFlags.HasManageUserRight = hasManageUser >= (int)Constant.Policy.Read;
 
             ViewBag.GroupList = _groupService.GetAllWithNumOfUser(criteria.GroupName);
 
