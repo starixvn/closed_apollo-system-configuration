@@ -144,6 +144,5 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
             return functionPolicy >= (int)policy;
         }
-
     }
 }
