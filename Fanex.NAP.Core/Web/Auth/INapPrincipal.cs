@@ -9,8 +9,6 @@
 
 namespace Fanex.NAP.Core.Web.Auth
 {
-    using System.Diagnostics.CodeAnalysis;
-
     /// <summary>
     /// NAP Principal.
     /// </summary>

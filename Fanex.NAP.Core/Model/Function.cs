@@ -34,7 +34,7 @@ namespace Fanex.NAP.Core.Model
 
         public byte Crud { get; set; }
 
-        public string Environment { get; set; }        
+        public string Environment { get; set; }
 
         public ISite Site { get; set; }
         

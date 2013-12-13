@@ -15,7 +15,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
     using System.Linq;
     using System.Text;
     using System.Web.Mvc;
-    using Fanex.Logging;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Criteria.Function;
     using Fanex.NAP.Core.Helpers;
@@ -414,8 +413,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
                 // update function
                 criteria.ParentId = criteria.ParentId == 0 ? null : criteria.ParentId;
-                criteria.ParentName = criteria.ParentId == null || criteria.ParentId == 0 ? null :
-                    criteria.ParentName;
+                criteria.ParentName = criteria.ParentId == null || criteria.ParentId == 0 ? null : criteria.ParentName;
                 criteria.ModifiedBy = CurrentSession.UserId;
                 criteria.ModifiedDate = DateTime.Now;
 
@@ -645,10 +643,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// <param name="hostList">List of function which has host permission.</param>
         /// <returns>Result string.</returns>
         [NapAuth(FunctionKey = FunctionKeys.AssignFunctionToGroup, Policy = Constant.Policy.Host)]
-        public string AddPrivilegedGroups(
-            int id = 0,
-            string readList = EmptyString,
-            string hostList = EmptyString)
+        public string AddPrivilegedGroups(int id = 0, string readList = EmptyString, string hostList = EmptyString)
         {
             if (Request.IsAjaxRequest())
             {
@@ -872,10 +867,8 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             // gets function list
             if (criteria.ParentId == null)
             {
-                ViewBag.FunctionList = this._functionService.GetSelectListItemBySite(
-                                                criteria.SiteId,
-                                                criteria.Environment,
-                                                isActive: true);
+                ViewBag.FunctionList = 
+                    this._functionService.GetSelectListItemBySite(criteria.SiteId, criteria.Environment, isActive: true);
             }
             else
             {

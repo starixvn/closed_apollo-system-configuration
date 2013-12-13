@@ -29,22 +29,15 @@ namespace Fanex.NAP.Admin.Core.Repositories.Impl
         /// <returns>List exchange rate.</returns>
         public IEnumerable<ExchangeRateModel> GetAll(GetAllExchangeRateCriteria criteria)
         {
-            try
+            if (criteria.IsValid())
             {
-                if (criteria.IsValid())
+                using (var db = new ObjectDb(criteria.GetSettingKey()))
                 {
-                    using (var db = new ObjectDb(criteria.GetSettingKey()))
-                    {
-                        return db.Query<ExchangeRateModel>(criteria.GetSpParams());
-                    }
+                    return db.Query<ExchangeRateModel>(criteria.GetSpParams());
                 }
+            }
 
-                return new List<ExchangeRateModel>();
-            }
-            catch
-            {
-                throw;
-            }
+            return new List<ExchangeRateModel>();
         }
 
         /// <summary>
@@ -54,22 +47,15 @@ namespace Fanex.NAP.Admin.Core.Repositories.Impl
         /// <returns>ExchangeRate Model.</returns>
         public ExchangeRateModel GetById(GetExchangeRateByIdCriteria criteria)
         {
-            try
+            if (criteria.IsValid())
             {
-                if (criteria.IsValid())
+                using (var db = new ObjectDb(criteria.GetSettingKey()))
                 {
-                    using (var db = new ObjectDb(criteria.GetSettingKey()))
-                    {
-                        return db.QueryEntity<ExchangeRateModel>(criteria.GetSpParams());
-                    }
+                    return db.QueryEntity<ExchangeRateModel>(criteria.GetSpParams());
                 }
+            }
 
-                return null;
-            }
-            catch 
-            { 
-                throw; 
-            }
+            return null;
         }
 
         /// <summary>
@@ -78,25 +64,18 @@ namespace Fanex.NAP.Admin.Core.Repositories.Impl
         /// <param name="criteria">InsertExchangeRate Criteria.</param>
         public void InsertExchangeRate(ref InsertExchangeRateCriteria criteria)
         {
-            try
+            if (criteria.IsValid())
             {
-                if (criteria.IsValid())
+                Hashtable parameters = criteria.GetSpParams();
+
+                using (var db = new ObjectDb(criteria.GetSettingKey()))
                 {
-                    Hashtable parameters = criteria.GetSpParams();
-
-                    using (var db = new ObjectDb(criteria.GetSettingKey()))
-                    {
-                        db.ExecuteNonQuery(parameters);
-                    }
-
-                    criteria.ExchangeId = Convert.ToInt32(parameters["exchangeid"]);
-                    criteria.ErrCode = Convert.ToInt32(parameters["errcode"]);
-                    criteria.ErrMsg = parameters["errmsg"].ToString();
+                    db.ExecuteNonQuery(parameters);
                 }
-            }
-            catch 
-            { 
-                throw; 
+
+                criteria.ExchangeId = Convert.ToInt32(parameters["exchangeid"]);
+                criteria.ErrCode = Convert.ToInt32(parameters["errcode"]);
+                criteria.ErrMsg = parameters["errmsg"].ToString();
             }
         }
 
@@ -106,24 +85,17 @@ namespace Fanex.NAP.Admin.Core.Repositories.Impl
         /// <param name="criteria">UpdateExchangeRate Criteria.</param>
         public void UpdateExchangeRate(ref UpdateExchangeRateCriteria criteria)
         {
-            try
+            if (criteria.IsValid())
             {
-                if (criteria.IsValid())
+                Hashtable parameters = criteria.GetSpParams();
+
+                using (var db = new ObjectDb(criteria.GetSettingKey()))
                 {
-                    Hashtable parameters = criteria.GetSpParams();
-
-                    using (var db = new ObjectDb(criteria.GetSettingKey()))
-                    {
-                        db.ExecuteNonQuery(parameters);
-                    }
-
-                    criteria.ErrCode = Convert.ToInt32(parameters["errcode"]);
-                    criteria.ErrMsg = parameters["errmsg"].ToString();
+                    db.ExecuteNonQuery(parameters);
                 }
-            }
-            catch 
-            { 
-                throw; 
+
+                criteria.ErrCode = Convert.ToInt32(parameters["errcode"]);
+                criteria.ErrMsg = parameters["errmsg"].ToString();
             }
         }
     }

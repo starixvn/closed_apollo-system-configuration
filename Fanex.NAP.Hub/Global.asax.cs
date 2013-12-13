@@ -123,29 +123,22 @@ namespace Fanex.NAP.Hub
                 if (HttpContext.Current.User.Identity is FormsIdentity
                     && HttpContext.Current.User.Identity.IsAuthenticated)
                 {
-                    string cookie = FormsAuthentication.FormsCookieName;
-                    HttpCookie httpCookie = Context.Request.Cookies[cookie];
+                    HttpCookie httpCookie = Context.Request.Cookies[FormsAuthentication.FormsCookieName];
 
-                    if (httpCookie == null)
+                    if (httpCookie != null)
                     {
-                        return;
-                    }
+                        FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(httpCookie.Value);
 
-                    FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(httpCookie.Value);
-                    if (ticket == null || ticket.Expired)
-                    {
-                        return;
-                    }
+                        if (ticket == null || ticket.Expired || string.IsNullOrEmpty(ticket.UserData))
+                        {
+                            return;
+                        }
 
-                    FormsIdentity identity = new FormsIdentity(ticket);
-                    if (string.IsNullOrEmpty(ticket.UserData))
-                    {
-                        return;
-                    }
+                        var identity = new FormsIdentity(ticket);
+                        var udata = AuthInfo.CreateUserData(ticket.UserData);
 
-                    AuthInfo udata = AuthInfo.CreateUserData(ticket.UserData);
-                    NapPrincipal principal = new NapPrincipal(identity, udata);
-                    Context.User = principal;
+                        Context.User = new NapPrincipal(identity, udata);
+                    }
                 }
             }
         }

@@ -11,7 +11,6 @@ namespace Fanex.NAP.Core.Repository.Interface
 {
     using System.Collections;
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using Fanex.NAP.Core.Criteria.User;
     using Fanex.NAP.Core.Domain;

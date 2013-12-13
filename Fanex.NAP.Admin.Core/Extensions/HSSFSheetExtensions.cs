@@ -10,9 +10,6 @@
 namespace Fanex.NAP.Admin.Core.Extensions
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
 

@@ -134,7 +134,7 @@ namespace Fanex.NAP.Admin.Core.Services.Impl
         {
             HSSFWorkbook hssfworkbook;
             var templatePath = HttpContext.Current.Server.MapPath(_FilePathExcelTemplate);
-            using (FileStream template = new FileStream(templatePath, FileMode.Open, System.IO.FileAccess.Read))
+            using (var template = new FileStream(templatePath, FileMode.Open, FileAccess.Read))
             {
                 hssfworkbook = new HSSFWorkbook(template);
             }
@@ -143,6 +143,7 @@ namespace Fanex.NAP.Admin.Core.Services.Impl
             var sheet = hssfworkbook.CloneSheet("sheet1", "ExchangeRate");
             var rowIndex = _RowStartBody;
             var rowTemplateNeedCopy = 0;
+
             foreach (var item in exchangeRateList)
             {
                 if (item.ActualRate % 1 == 0)
@@ -176,8 +177,7 @@ namespace Fanex.NAP.Admin.Core.Services.Impl
                 rowIndex++;
             }
 
-            //// remove sheet & row template
-            hssfworkbook.RemoveSheetAt(0);
+            hssfworkbook.RemoveSheetAt(0);      // remove sheet & row template
 
             return hssfworkbook;
         }
@@ -221,9 +221,14 @@ namespace Fanex.NAP.Admin.Core.Services.Impl
             return HttpContext.Current.Server.MapPath(_FilePathEmailTemplate);
         }
 
-        private static bool CheckInValidMultipliedBy(ErrorMessageExchangeRate errorMsg, ExchangeRateModel exchangeRate, bool isValid)
+        private static bool CheckInValidMultipliedBy(
+            ErrorMessageExchangeRate errorMsg, 
+            ExchangeRateModel exchangeRate, 
+            bool isValid)
         {
-            if (!Utilities.IsNumber(exchangeRate.MultipliedBy.ToString()) || exchangeRate.MultipliedBy <= 0 || exchangeRate.MultipliedBy > _MaxValueLength9)
+            if (!Utilities.IsNumber(exchangeRate.MultipliedBy.ToString()) 
+                || exchangeRate.MultipliedBy <= 0 
+                || exchangeRate.MultipliedBy > _MaxValueLength9)
             {
                 isValid = false;
                 errorMsg.ErrorCode = 108;
@@ -250,7 +255,9 @@ namespace Fanex.NAP.Admin.Core.Services.Impl
             }
             else
             {
-                if (!Utilities.IsNumber(exchangeRate.MinBetLive.Value.ToString()) || exchangeRate.MinBetLive.Value < 0 || exchangeRate.MinBetLive.Value > _MaxValueLength15)
+                if (!Utilities.IsNumber(exchangeRate.MinBetLive.Value.ToString()) 
+                    || exchangeRate.MinBetLive.Value < 0 
+                    || exchangeRate.MinBetLive.Value > _MaxValueLength15)
                 {
                     isValid = false;
                     errorMsg.ErrorCode = 107;
@@ -278,7 +285,9 @@ namespace Fanex.NAP.Admin.Core.Services.Impl
             }
             else
             {
-                if (!Utilities.IsNumber(exchangeRate.MinBet.Value.ToString()) || exchangeRate.MinBet.Value < 0 || exchangeRate.MinBet.Value > _MaxValueLength15)
+                if (!Utilities.IsNumber(exchangeRate.MinBet.Value.ToString()) 
+                    || exchangeRate.MinBet.Value < 0 
+                    || exchangeRate.MinBet.Value > _MaxValueLength15)
                 {
                     isValid = false;
                     errorMsg.ErrorCode = 105;
@@ -306,7 +315,9 @@ namespace Fanex.NAP.Admin.Core.Services.Impl
             }
             else
             {
-                if (!Utilities.IsNumber(exchangeRate.ActualRate.Value.ToString()) || exchangeRate.ActualRate.Value < 0 || exchangeRate.ActualRate.Value > _MaxValueLength15)
+                if (!Utilities.IsNumber(exchangeRate.ActualRate.Value.ToString()) 
+                    || exchangeRate.ActualRate.Value < 0 
+                    || exchangeRate.ActualRate.Value > _MaxValueLength15)
                 {
                     isValid = false;
                     errorMsg.ErrorCode = 103;

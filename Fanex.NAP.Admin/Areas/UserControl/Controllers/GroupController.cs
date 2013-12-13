@@ -15,7 +15,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
     using System.Linq;
     using System.Web.Mvc;
     using Fanex.Common.Extensions;
-    using Fanex.Logging;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Criteria.Group;
     using Fanex.NAP.Core.Domain;

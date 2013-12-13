@@ -30,10 +30,11 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
     {
         #region members
 
-        private readonly int _timeExipration = 30;
+        private const int ExpiredDuration = 30;
+
         private IUserService _userService;
         private IMenuItemService _menuItemService;
-        private ICurrentSession _currentSession;        
+        private ICurrentSession _currentSession;
 
         #endregion
 
@@ -44,10 +45,7 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
         {
         }
 
-        public SSOController(
-            IUserService userService,
-            IMenuItemService menuItemService,
-            ICurrentSession currentSession)
+        public SSOController(IUserService userService, IMenuItemService menuItemService, ICurrentSession currentSession)
         {
             _userService = userService ?? new UserService();
             _menuItemService = menuItemService ?? new MenuItemService();
@@ -75,7 +73,7 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
 
             var expiration = Convert.ToDateTime(currentTime) - Convert.ToDateTime(time);
 
-            if (expiration.TotalSeconds <= _timeExipration)
+            if (expiration.TotalSeconds <= ExpiredDuration)
             {
                 // SSO check in
                 var criteria = new UserSSOCheckInUserCriteria
@@ -135,27 +133,26 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
         /// <param name="user">The user object.</param>
         private void CreateAuthInfo(User user)
         {
-            var currentDomain = CurrentContext.GetCurrentDomain();
-
+            string domainPath = CurrentContext.GetCurrentDomain().Path;
             var authInfo = new AuthInfo();
 
             authInfo.UserId = user.Id;
             authInfo.OnUserId = this._currentSession.OnUserId;
 
             var authTicket = new FormsAuthenticationTicket(
-                 1,
+                1,
                 user.Username,
                 DateTime.Now,
                 DateTime.Now.AddMinutes(20000),
                 false,
                 authInfo.ToXml(),
-                currentDomain.Path);
+                domainPath);
 
             string encryptedTicket = FormsAuthentication.Encrypt(authTicket);
             var authCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket)
             {
                 HttpOnly = true,
-                Path = currentDomain.Path,
+                Path = domainPath,
                 Name = FormsAuthentication.FormsCookieName
             };
 

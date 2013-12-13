@@ -79,19 +79,19 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
             {
                 // do SSO check-in
                 var criteria = new UserSSOCheckInUserCriteria
-                        {
-                            UserId = Convert.ToInt32(userId),
-                            SiteId = SiteId,
-                            CheckOnUserId = Convert.ToInt32(onuserId),
-                            OnUserId = 0,
-                            IP = CurrentContext.IP,
-                            NetSessionId = Session.SessionID,
-                            LoginDate = DateTime.Now,
-                            BrowserName = CurrentContext.BrowserName,
-                            CountryCode = CurrentContext.CountryCode,
-                            Domain = CurrentContext.DomainName,
-                            Platform = CurrentContext.Platform
-                        };
+                {
+                    UserId = Convert.ToInt32(userId),
+                    SiteId = SiteId,
+                    CheckOnUserId = Convert.ToInt32(onuserId),
+                    OnUserId = 0,
+                    IP = CurrentContext.IP,
+                    NetSessionId = Session.SessionID,
+                    LoginDate = DateTime.Now,
+                    BrowserName = CurrentContext.BrowserName,
+                    CountryCode = CurrentContext.CountryCode,
+                    Domain = CurrentContext.DomainName,
+                    Platform = CurrentContext.Platform
+                };
 
                 _userService.UserSSOCheckIn(ref criteria);
 
@@ -138,27 +138,26 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
         /// <param name="user">The user object.</param>
         private void CreateAuthInfo(User user)
         {
-            var currentDomain = CurrentContext.GetCurrentDomain();
-
+            string domainPath = CurrentContext.GetCurrentDomain().Path;
             var authInfo = new AuthInfo();
 
             authInfo.UserId = user.Id;
             authInfo.OnUserId = this._currentSession.OnUserId;
 
             var authTicket = new FormsAuthenticationTicket(
-                 1,
+                1,
                 user.Username,
                 DateTime.Now,
                 DateTime.Now.AddMinutes(20000),
                 false,
                 authInfo.ToXml(),
-                currentDomain.Path);
+                domainPath);
 
             string encryptedTicket = FormsAuthentication.Encrypt(authTicket);
             var authCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket)
             {
                 HttpOnly = true,
-                Path = currentDomain.Path,
+                Path = domainPath,
                 Name = FormsAuthentication.FormsCookieName
             };
 

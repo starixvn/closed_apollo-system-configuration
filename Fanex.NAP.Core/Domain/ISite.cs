@@ -10,7 +10,6 @@
 
 namespace Fanex.NAP.Core.Domain
 {
-    using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.Framework.Domain;
 
     public interface ISite : IEntity<byte, string>

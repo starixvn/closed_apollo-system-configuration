@@ -10,7 +10,6 @@
 namespace Fanex.NAP.Core.Command
 {
     using System.Data;
-    using System.Diagnostics.CodeAnalysis;
 
     /// <summary>
     /// Command interface.

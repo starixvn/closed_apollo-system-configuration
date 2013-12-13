@@ -11,7 +11,6 @@
 namespace Fanex.NAP.Core.Service.Interface
 {
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using System.Web.Mvc;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Criteria.Function;

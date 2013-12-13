@@ -9,7 +9,6 @@
 
 namespace Fanex.NAP.Core.Web.Attribute
 {
-    using System.Diagnostics.CodeAnalysis;
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Security;
@@ -29,13 +28,7 @@ namespace Fanex.NAP.Core.Web.Attribute
 
         private static readonly int _SiteId = Configuration.NapSettings.Settings.SiteId;
 
-        private static readonly IUserService _UserService = new UserService();
-
-        private static readonly ITraceService _TraceService = new TraceService();
-
-        private static readonly IFunctionService _FunctionService = new FunctionService();
-
-        private static readonly CurrentContext _CurrentContext = new CurrentContext();
+        private static readonly IUserService _userService = new UserService();
 
         private string _functionKey;
 
@@ -81,42 +74,35 @@ namespace Fanex.NAP.Core.Web.Attribute
         {
             base.OnAuthorization(filterContext);
 
-            try
+            if (filterContext.HttpContext == null)
             {
-                if (filterContext.HttpContext == null)
-                {
-                    CloseConnection(filterContext);
-                    return;
-                }
-
-                // why it is null?
-                var principal = filterContext.HttpContext.User as NapPrincipal;
-
-                if (principal == null)
-                {
-                    principal = new NapPrincipal(filterContext.HttpContext);
-                }
-
-                if (ReferenceEquals(principal, null) || ReferenceEquals(principal.AuthInfo, null))
-                {
-                    CloseConnection(filterContext);
-                    return;
-                }
-
-                if (CheckFunctionAuthorization(principal.AuthInfo.UserId))
-                {
-                    // allow access
-                    // log access function here
-                    // write log function here (pending due to performance)
-                }
-                else
-                {
-                    CloseConnection(filterContext);
-                }
+                CloseConnection(filterContext);
+                return;
             }
-            catch
+
+            // why it is null?
+            var principal = filterContext.HttpContext.User as NapPrincipal;
+
+            if (principal == null)
             {
-                throw;
+                principal = new NapPrincipal(filterContext.HttpContext);
+            }
+
+            if (ReferenceEquals(principal, null) || ReferenceEquals(principal.AuthInfo, null))
+            {
+                CloseConnection(filterContext);
+                return;
+            }
+
+            if (CheckFunctionAuthorization(principal.AuthInfo.UserId))
+            {
+                // allow access
+                // log access function here
+                // write log function here (pending due to performance)
+            }
+            else
+            {
+                CloseConnection(filterContext);
             }
         }
 
@@ -132,7 +118,7 @@ namespace Fanex.NAP.Core.Web.Attribute
                 return false;
             }
 
-            var policy = _UserService.GetUserSiteFunctionKeyPolicy(userId, _SiteId, FunctionKey);
+            var policy = _userService.GetUserSiteFunctionKeyPolicy(userId, _SiteId, FunctionKey);
 
             return policy >= (int)Policy;
         }
@@ -143,48 +129,41 @@ namespace Fanex.NAP.Core.Web.Attribute
         /// <param name="filterContext">Filter context.</param>
         private void CloseConnection(AuthorizationContext filterContext)
         {
-            try
+            if (filterContext == null
+                || filterContext.HttpContext == null
+                || filterContext.HttpContext.Request == null)
             {
-                if (filterContext == null
-                    || filterContext.HttpContext == null
-                    || filterContext.HttpContext.Request == null)
-                {
-                    SignOut();
-                    return;
-                }
-
-                HttpResponseBase response = filterContext.HttpContext.Response;
-
-                if (response == null)
-                {
-                    SignOut();
-                    return;
-                }
-
-                if (filterContext.HttpContext.Request.IsAjaxRequest())
-                {
-                    filterContext.Result = new HttpStatusCodeResult(403, "<center><b>" + ViewResources.UnauthorizeMsg + "</b></center>");
-
-                    response.Buffer = true;
-                    response.StatusCode = 403; // Unauthorized status code
-                    response.Write("<center><b>" + ViewResources.UnauthorizeMsg + "</b></center>");
-                    response.Flush();
-                    response.Close();
-                    response.End();
-                }
-                else if (!filterContext.HttpContext.Request.IsAuthenticated)
-                {
-                    SignOut();
-                }
-                else
-                {
-                    string settingUrl = NapSettings.Settings.UnauthorizeUrl;
-                    response.Redirect(string.IsNullOrWhiteSpace(settingUrl) ? "~/Admin/Common/Unauthorize" : settingUrl, false);
-                }
+                SignOut();
+                return;
             }
-            catch
+
+            HttpResponseBase response = filterContext.HttpContext.Response;
+
+            if (response == null)
             {
-                throw;
+                SignOut();
+                return;
+            }
+
+            if (filterContext.HttpContext.Request.IsAjaxRequest())
+            {
+                filterContext.Result = new HttpStatusCodeResult(403, "<center><b>" + ViewResources.UnauthorizeMsg + "</b></center>");
+
+                response.Buffer = true;
+                response.StatusCode = 403; // Unauthorized status code
+                response.Write("<center><b>" + ViewResources.UnauthorizeMsg + "</b></center>");
+                response.Flush();
+                response.Close();
+                response.End();
+            }
+            else if (!filterContext.HttpContext.Request.IsAuthenticated)
+            {
+                SignOut();
+            }
+            else
+            {
+                string settingUrl = NapSettings.Settings.UnauthorizeUrl;
+                response.Redirect(string.IsNullOrWhiteSpace(settingUrl) ? "~/Admin/Common/Unauthorize" : settingUrl, false);
             }
         }
 

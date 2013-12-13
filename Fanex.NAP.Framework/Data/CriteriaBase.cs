@@ -32,17 +32,13 @@ namespace Fanex.NAP.Framework.Data
             foreach (PropertyInfo propertyInfo in type.GetProperties())
             {
                 Type typeOfPropertyAttribute = typeof(SpParamAttribute);
-                SpParamAttribute attr = (SpParamAttribute)Attribute.GetCustomAttribute(
-                    propertyInfo, 
-                    typeOfPropertyAttribute);
+                var attr = (SpParamAttribute)Attribute.GetCustomAttribute(propertyInfo, typeOfPropertyAttribute);
 
                 if (attr == null)
                 {
                     storeProcNameParams.Add(propertyInfo.Name.ToLower(), propertyInfo.GetValue(this, null));
                 }
-                else if (attr != null
-                    && !attr.Ignored
-                    && attr.SqlParamName != null)
+                else if (attr != null && !attr.Ignored && attr.SqlParamName != null)
                 {
                     storeProcNameParams.Add(attr.SqlParamName.ToLower(), propertyInfo.GetValue(this, null));
                 }
@@ -63,17 +59,13 @@ namespace Fanex.NAP.Framework.Data
             foreach (PropertyInfo propertyInfo in type.GetProperties())
             {
                 Type typeOfPropertyAttribute = typeof(SpParamAttribute);
-                SpParamAttribute attr = (SpParamAttribute)Attribute.GetCustomAttribute(
-                    propertyInfo,
-                    typeOfPropertyAttribute);
+                var attr = (SpParamAttribute)Attribute.GetCustomAttribute(propertyInfo, typeOfPropertyAttribute);
 
                 if (attr == null)
                 {
                     storeProcParamName.Add(propertyInfo.Name.ToLower(), propertyInfo.GetValue(this, null));
                 }
-                else if (attr != null
-                    && !attr.Ignored
-                    && attr.SqlParamName != null)
+                else if (attr != null && !attr.Ignored && attr.SqlParamName != null)
                 {
                     storeProcParamName.Add(attr.SqlParamName.ToLower(), propertyInfo.GetValue(this, null));
                 }

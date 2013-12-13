@@ -30,7 +30,7 @@ $(document).ready(function () {
             $this.attr('checked', active).change();
 
             $.ajax({
-                url: NAP.resolveClientUrl("Site/Activate" + "?id=" + siteId + "&active=" + active),
+                url: NAP.resolveClientUrl("Site/Activate" + "?id=" + siteId + "&isActive=" + active),
                 type: 'POST',
                 contentType: 'application/json',
                 dataType: 'json',

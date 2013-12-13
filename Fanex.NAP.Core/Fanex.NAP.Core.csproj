@@ -266,7 +266,7 @@
     <Compile Include="Service\Impl\EmailService.cs" />
     <Compile Include="Service\Impl\MailingListService.cs" />
     <Compile Include="Service\Impl\TraceService.cs" />
-    <Compile Include="Service\Impl\MaintainanceService.cs" />
+    <Compile Include="Service\Impl\MaintenanceService.cs" />
     <Compile Include="Service\Impl\FunctionService.cs" />
     <Compile Include="Service\Impl\GroupService.cs" />
     <Compile Include="Service\Impl\MenuItemService.cs" />
@@ -278,7 +278,7 @@
     <Compile Include="Service\Interface\ITraceService.cs" />
     <Compile Include="Service\Interface\IGroupService.cs" />
     <Compile Include="Service\Interface\IFunctionService.cs" />
-    <Compile Include="Service\Interface\IMaintainanceService.cs" />
+    <Compile Include="Service\Interface\IMaintenanceService.cs" />
     <Compile Include="Service\Interface\IMenuItemService.cs" />
     <Compile Include="Service\Interface\IBaseService.cs" />
     <Compile Include="Service\Interface\IServiceContext.cs" />

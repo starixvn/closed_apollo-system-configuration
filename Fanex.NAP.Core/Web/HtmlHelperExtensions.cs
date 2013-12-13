@@ -294,8 +294,6 @@ namespace Fanex.NAP.Core.Web
                 value = value.Replace("&gt;", ">");
                 value = value.Replace("&quot;", "\"");
                 value = value.Replace("&apos;", "''");
-
-                return value;
             }
 
             return value;
@@ -308,20 +306,19 @@ namespace Fanex.NAP.Core.Web
         /// <returns>Geographical name.</returns>
         public static string GetGeoName(this string geoId)
         {
-            string name = geoId.ToString();
             var listCulture = CultureInfo.GetCultures(CultureTypes.SpecificCultures);
 
-            foreach (var culture in listCulture)
+            foreach (CultureInfo culture in listCulture)
             {
                 var region = new RegionInfo(culture.LCID);
 
-                if (region.GeoId.ToString() == geoId)
+                if (region.GeoId.ToString().Equals(geoId))
                 {
                     return region.DisplayName;
                 }
             }
 
-            return name;
+            return geoId;
         }
 
         /// <summary>

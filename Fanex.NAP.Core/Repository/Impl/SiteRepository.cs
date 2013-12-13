@@ -94,15 +94,15 @@ namespace Fanex.NAP.Core.Repository.Impl
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
                 return db.Query<SiteLevel, Site, User, User, SiteLevel>(
-                        (sl, s, cu, mu) =>
-                        {
-                            sl.Site = s;
-                            sl.Creator = cu;
-                            sl.Modifier = mu;
-                            return sl;
-                        },
-                        "SiteId,CreatorId,ModifierId",
-                        criteria.GetSpParams()).OrderBy(s => s.Site.Name).ToList<SiteLevel>();
+                    (sl, s, cu, mu) =>
+                    {
+                        sl.Site = s;
+                        sl.Creator = cu;
+                        sl.Modifier = mu;
+                        return sl;
+                    },
+                    "SiteId,CreatorId,ModifierId",
+                    criteria.GetSpParams()).OrderBy(s => s.Site.Name).ToList<SiteLevel>();
             }
         }
 
@@ -116,13 +116,13 @@ namespace Fanex.NAP.Core.Repository.Impl
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
                 return db.Query<SiteUrl, Site, SiteUrl>(
-                        (su, s) =>
-                        {
-                            su.Site = s;
-                            return su;
-                        },
-                        "Id",
-                        criteria.GetSpParams()).OrderBy(s => s.Site.Name).ToList<SiteUrl>();
+                    (su, s) =>
+                    {
+                        su.Site = s;
+                        return su;
+                    },
+                    "Id",
+                    criteria.GetSpParams()).OrderBy(s => s.Site.Name).ToList<SiteUrl>();
             }
         }
 

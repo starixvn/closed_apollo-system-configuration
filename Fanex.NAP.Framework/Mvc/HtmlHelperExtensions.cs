@@ -91,6 +91,7 @@ namespace Fanex.NAP.Framework.Mvc
         {
             var metaData = ModelMetadata.FromLambdaExpression(expression, html.ViewData);
             DateTime? value = DateTime.Now;
+
             if (metaData.Model is DateTime?)
             {
                 value = (DateTime?)metaData.Model;

@@ -10,7 +10,6 @@
 namespace Fanex.NAP.Core.Web.Session
 {
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.Core.Model;
 
     public interface ICurrentSession

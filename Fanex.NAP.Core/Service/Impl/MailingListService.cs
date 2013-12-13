@@ -9,7 +9,6 @@
 
 namespace Fanex.NAP.Core.Service.Impl
 {
-    using System;
     using System.Collections.Generic;
     using Fanex.Common.Helper;
     using Fanex.NAP.Core.Criteria.MailingList;

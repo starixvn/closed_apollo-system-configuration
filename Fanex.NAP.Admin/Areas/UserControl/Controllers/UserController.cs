@@ -17,7 +17,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
     using System.Web.Mvc;
     using Fanex.Common;
     using Fanex.Common.Extensions;
-    using Fanex.Logging;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Criteria.User;
     using Fanex.NAP.Core.Domain;
@@ -268,22 +267,18 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// <returns>Action result.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.ManageUser, Policy = Constant.Policy.Read)]
-        public ActionResult Manage(
-            int size = 20,
-            string q = EmptyString,
-            int groupId = 0,
-            int siteId = -1)
+        public ActionResult Manage(int size = 20, string q = EmptyString, int groupId = 0, int siteId = -1)
         {
             return RedirectToAction(
                 "Manage",
                 new
-            {
-                id = 1,
-                size = size,
-                q = q,
-                groupId = groupId,
-                siteId = siteId
-            });
+                {
+                    id = 1,
+                    size = size,
+                    q = q,
+                    groupId = groupId,
+                    siteId = siteId
+                });
         }
 
         #endregion

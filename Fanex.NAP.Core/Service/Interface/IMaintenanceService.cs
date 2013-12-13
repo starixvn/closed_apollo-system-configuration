@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------
-// <copyright file="IMaintainanceService.cs" company="Nexcel Solutions Vietnam">
+// <copyright file="IMaintenanceService.cs" company="Nexcel Solutions Vietnam">
 // Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------
@@ -14,7 +14,7 @@ namespace Fanex.NAP.Core.Service.Interface
     /// <summary>
     /// Maintenance repository interface.
     /// </summary>
-    public interface IMaintainanceService : IBaseService
+    public interface IMaintenanceService : IBaseService
     {
         Downtime GetDowntimeInfo();
     }

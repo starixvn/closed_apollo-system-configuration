@@ -9,7 +9,6 @@
 
 namespace Fanex.NAP.Core.Web
 {
-    using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.Core.Business;
 
     /// <summary>

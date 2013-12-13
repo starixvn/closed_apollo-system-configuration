@@ -63,27 +63,20 @@ namespace Fanex.NAP.Core.Service.Impl
             IQueryable<LogExecSp> logList = null;
             totalRows = 0;
 
-            try
+            var criteria = new GetAllLogCriteria
             {
-                var criteria = new GetAllLogCriteria
-                {
-                    Username = username,
-                    Name = name,
-                    From = from,
-                    To = to,
-                    FilterType = filterBy,
-                    PageIndex = pageIndex,
-                    PageSize = pageSize
-                };
+                Username = username,
+                Name = name,
+                From = from,
+                To = to,
+                FilterType = filterBy,
+                PageIndex = pageIndex,
+                PageSize = pageSize
+            };
 
-                if (criteria.IsValid())
-                {
-                    logList = this._traceRepository.SearchLogExecSp(criteria, out totalRows).AsQueryable();
-                }
-            }
-            catch (Exception ex)
+            if (criteria.IsValid())
             {
-                HandleException(ex);
+                logList = this._traceRepository.SearchLogExecSp(criteria, out totalRows).AsQueryable();
             }
 
             return logList;
@@ -115,13 +108,13 @@ namespace Fanex.NAP.Core.Service.Impl
                     {
                         var xmlItems = XDocument.Parse(logExec.Items);
                         var xmlItemRows = xmlItems.Descendants("row");
-                        foreach (var item in xmlItemRows)
+
+                        foreach (XElement item in xmlItemRows)
                         {
-                            var alias = item.Attribute("alias").Value.ToString();
+                            var alias = item.Attribute("alias").Value;
                             if (!hashItems.Contains(alias))
                             {
-                                var fieldName = item.Attribute("item").Value.ToString();
-                                hashItems.Add(alias, fieldName);
+                                hashItems.Add(alias, item.Attribute("item").Value);
                             }
                         }
                     }
@@ -130,13 +123,13 @@ namespace Fanex.NAP.Core.Service.Impl
                     {
                         var xmlItems = XDocument.Parse(logExec.SubItems);
                         var xmlItemRows = xmlItems.Descendants("row");
-                        foreach (var item in xmlItemRows)
+
+                        foreach (XElement item in xmlItemRows)
                         {
-                            var alias = item.Attribute("alias").Value.ToString();
+                            var alias = item.Attribute("alias").Value;
                             if (!hashSubItems.Contains(alias))
                             {
-                                var fieldName = item.Attribute("item").Value.ToString();
-                                hashSubItems.Add(alias, fieldName);
+                                hashSubItems.Add(alias, item.Attribute("item").Value);
                             }
                         }
                     }
@@ -145,14 +138,15 @@ namespace Fanex.NAP.Core.Service.Impl
                     {
                         var xmlData = XDocument.Parse(logExec.Data);
                         var xmlElementData = new XElement("ROOT");
+
                         if (hashItems.Count > 0)
                         {
                             foreach (DictionaryEntry item in hashItems)
                             {
-                                var value = xmlData.Root.Attribute(item.Key.ToString()) != null ?
-                                    xmlData.Root.Attribute(item.Key.ToString()).Value.ToString() : string.Empty;
+                                string value = xmlData.Root.Attribute(item.Key.ToString()) != null ?
+                                    xmlData.Root.Attribute(item.Key.ToString()).Value : string.Empty;
 
-                                xmlElementData.SetAttributeValue(item.Value.ToString(), value.ToString());
+                                xmlElementData.SetAttributeValue(item.Value.ToString(), value);
                             }
                         }
 
@@ -160,13 +154,15 @@ namespace Fanex.NAP.Core.Service.Impl
                         {
                             var xmlElementValue = new XElement("ROW");
                             var xmlElementSubData = xmlData.Descendants("z");
-                            foreach (var item in xmlElementSubData)
+
+                            foreach (XElement item in xmlElementSubData)
                             {
                                 var xmlElementChildTemp = new XElement("ITEM");
+
                                 foreach (DictionaryEntry itemAtt in hashSubItems)
                                 {
-                                    var value = item.Attribute(itemAtt.Key.ToString()) != null ?
-                                        item.Attribute(itemAtt.Key.ToString()).Value.ToString() : string.Empty;
+                                    string value = item.Attribute(itemAtt.Key.ToString()) != null ?
+                                        item.Attribute(itemAtt.Key.ToString()).Value : string.Empty;
 
                                     xmlElementChildTemp.SetAttributeValue(itemAtt.Value.ToString(), value);
                                 }
@@ -184,14 +180,15 @@ namespace Fanex.NAP.Core.Service.Impl
                     {
                         var xmlData = XDocument.Parse(logExec.OldData);
                         var xmlElementData = new XElement("ROOT");
+
                         if (hashItems.Count > 0)
                         {
                             foreach (DictionaryEntry item in hashItems)
                             {
-                                var value = xmlData.Root.Attribute(item.Key.ToString()) != null ?
-                                    xmlData.Root.Attribute(item.Key.ToString()).Value.ToString() : string.Empty;
+                                string value = xmlData.Root.Attribute(item.Key.ToString()) != null ?
+                                    xmlData.Root.Attribute(item.Key.ToString()).Value : string.Empty;
 
-                                xmlElementData.SetAttributeValue(item.Value.ToString(), value.ToString());
+                                xmlElementData.SetAttributeValue(item.Value.ToString(), value);
                             }
                         }
 
@@ -199,13 +196,14 @@ namespace Fanex.NAP.Core.Service.Impl
                         {
                             var xmlElementValue = new XElement("ROW");
                             var xmlElementSubData = xmlData.Descendants("z");
+
                             foreach (var item in xmlElementSubData)
                             {
                                 var xmlElementChildTemp = new XElement("ITEM");
                                 foreach (DictionaryEntry itemAtt in hashSubItems)
                                 {
-                                    var value = item.Attribute(itemAtt.Key.ToString()) != null ?
-                                        item.Attribute(itemAtt.Key.ToString()).Value.ToString() : string.Empty;
+                                    string value = item.Attribute(itemAtt.Key.ToString()) != null ?
+                                        item.Attribute(itemAtt.Key.ToString()).Value : string.Empty;
 
                                     xmlElementChildTemp.SetAttributeValue(itemAtt.Value.ToString(), value);
                                 }
@@ -252,30 +250,23 @@ namespace Fanex.NAP.Core.Service.Impl
             string doing,
             int duration)
         {
-            try
+            var criteria = new InsertLogUserLoginCriteria
             {
-                var criteria = new InsertLogUserLoginCriteria
-                {
-                    UserId = userId,
-                    SiteId = siteId,
-                    LogDate = date,
-                    DomainName = domain,
-                    BrowserName = broswser,
-                    Platform = platform,
-                    Doing = doing,
-                    IP = ip,
-                    CountryCode = countryCode,
-                    Duration = duration
-                };
+                UserId = userId,
+                SiteId = siteId,
+                LogDate = date,
+                DomainName = domain,
+                BrowserName = broswser,
+                Platform = platform,
+                Doing = doing,
+                IP = ip,
+                CountryCode = countryCode,
+                Duration = duration
+            };
 
-                if (criteria.IsValid())
-                {
-                    return this._traceRepository.InsertLog(criteria);
-                }
-            }
-            catch (Exception ex)
+            if (criteria.IsValid())
             {
-                HandleException(ex);
+                return this._traceRepository.InsertLog(criteria);
             }
 
             return null;
@@ -304,26 +295,19 @@ namespace Fanex.NAP.Core.Service.Impl
             IQueryable<LogUserLogin> logList = null;
             totalRows = 0;
 
-            try
+            var criteria = new GetAllLogUserLoginCriteria
             {
-                var criteria = new GetAllLogUserLoginCriteria
-                {
-                    Name = name,
-                    From = from,
-                    To = to,
-                    SiteId = siteId,
-                    PageIndex = pageIndex,
-                    PageSize = pageSize
-                };
+                Name = name,
+                From = from,
+                To = to,
+                SiteId = siteId,
+                PageIndex = pageIndex,
+                PageSize = pageSize
+            };
 
-                if (criteria.IsValid())
-                {
-                    logList = this._traceRepository.SearchLogUserLogin(criteria, out totalRows).AsQueryable();
-                }
-            }
-            catch (Exception ex)
+            if (criteria.IsValid())
             {
-                HandleException(ex);
+                logList = this._traceRepository.SearchLogUserLogin(criteria, out totalRows).AsQueryable();
             }
 
             return logList;
@@ -349,27 +333,20 @@ namespace Fanex.NAP.Core.Service.Impl
             DateTime date, 
             string browser)
         {
-            try
+            var criteria = new InsertLogFunctionCriteria
             {
-                var criteria = new InsertLogFunctionCriteria
-                {
-                    FunctionId = functionId,
-                    UserId = userId,
-                    SiteId = siteId,
-                    LogDate = date,
-                    Param = param,
-                    BrowserName = browser,
-                    IP = ip
-                };
+                FunctionId = functionId,
+                UserId = userId,
+                SiteId = siteId,
+                LogDate = date,
+                Param = param,
+                BrowserName = browser,
+                IP = ip
+            };
 
-                if (criteria.IsValid())
-                {
-                    return this._traceRepository.InsertLog(criteria);
-                }
-            }
-            catch (Exception ex)
+            if (criteria.IsValid())
             {
-                HandleException(ex);
+                return this._traceRepository.InsertLog(criteria);
             }
 
             return null;
@@ -398,26 +375,19 @@ namespace Fanex.NAP.Core.Service.Impl
             IQueryable<LogFunction> logList = null;
             totalRows = 0;
 
-            try
+            var criteria = new GetAllLogFunctionCriteria
             {
-                var criteria = new GetAllLogFunctionCriteria
-                {
-                    Name = name,
-                    From = from,
-                    To = to,
-                    SiteId = siteId,
-                    PageIndex = pageIndex,
-                    PageSize = pageSize
-                };
+                Name = name,
+                From = from,
+                To = to,
+                SiteId = siteId,
+                PageIndex = pageIndex,
+                PageSize = pageSize
+            };
 
-                if (criteria.IsValid())
-                {
-                    logList = this._traceRepository.SearchLogFunction(criteria, out totalRows).AsQueryable();
-                }
-            }
-            catch (Exception ex)
+            if (criteria.IsValid())
             {
-                HandleException(ex);
+                logList = this._traceRepository.SearchLogFunction(criteria, out totalRows).AsQueryable();
             }
 
             return logList;
@@ -437,8 +407,6 @@ namespace Fanex.NAP.Core.Service.Impl
                 value = value.Replace(">", "&gt;");
                 value = value.Replace("\"", "&quot;");
                 value = value.Replace("''", "&apos;");
-
-                return value;
             }
 
             return value;

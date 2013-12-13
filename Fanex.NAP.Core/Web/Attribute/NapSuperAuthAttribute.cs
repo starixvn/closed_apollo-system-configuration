@@ -25,35 +25,28 @@ namespace Fanex.NAP.Core.Web.Attribute
         {
             base.OnAuthorization(filterContext);
 
-            try
+            if (filterContext.HttpContext == null)
             {
-                if (filterContext.HttpContext == null)
-                {
-                    return;
-                }
-
-                if (!CheckSessionAuthorization())
-                {
-                    var response = filterContext.HttpContext.Response;
-
-                    if (filterContext.HttpContext.Request.IsAjaxRequest())
-                    {
-                        response.Buffer = true;
-                        response.StatusCode = 403; // Unauthorized status code
-                        response.Write("<center><b>" + ViewResources.UnauthorizeMsg + "</b></center>");
-                        response.Flush();
-                        response.Close();
-                        response.End();
-                    }
-                    else
-                    {
-                        response.Redirect("~/UserLogin/Login", false);
-                    }
-                }
+                return;
             }
-            catch
+
+            if (!CheckSessionAuthorization())
             {
-                throw;
+                var response = filterContext.HttpContext.Response;
+
+                if (filterContext.HttpContext.Request.IsAjaxRequest())
+                {
+                    response.Buffer = true;
+                    response.StatusCode = 403; // Unauthorized status code
+                    response.Write("<center><b>" + ViewResources.UnauthorizeMsg + "</b></center>");
+                    response.Flush();
+                    response.Close();
+                    response.End();
+                }
+                else
+                {
+                    response.Redirect("~/UserLogin/Login", false);
+                }
             }
         }
 

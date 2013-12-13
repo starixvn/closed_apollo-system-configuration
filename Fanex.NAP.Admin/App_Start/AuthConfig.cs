@@ -34,29 +34,21 @@ namespace Fanex.NAP.Admin.App_Start
             {
                 if (user.Identity is FormsIdentity && user.Identity.IsAuthenticated)
                 {
-                    string cookie = FormsAuthentication.FormsCookieName;
-                    HttpCookie httpCookie = context.Request.Cookies[cookie];
+                    HttpCookie httpCookie = context.Request.Cookies[FormsAuthentication.FormsCookieName];
 
-                    if (httpCookie == null)
+                    if (httpCookie != null)
                     {
-                        return;
-                    }
+                        var ticket = FormsAuthentication.Decrypt(httpCookie.Value);
+                        if (ticket == null || ticket.Expired || string.IsNullOrEmpty(ticket.UserData))
+                        {
+                            return;
+                        }
 
-                    var ticket = FormsAuthentication.Decrypt(httpCookie.Value);
-                    if (ticket == null || ticket.Expired)
-                    {
-                        return;
-                    }
+                        var identity = new FormsIdentity(ticket);
+                        var udata = AuthInfo.CreateUserData(ticket.UserData);
 
-                    var identity = new FormsIdentity(ticket);
-                    if (string.IsNullOrEmpty(ticket.UserData))
-                    {
-                        return;
+                        context.User = new NapPrincipal(identity, udata);
                     }
-
-                    var udata = AuthInfo.CreateUserData(ticket.UserData);
-                    var principal = new NapPrincipal(identity, udata);
-                    context.User = principal;
                 }
             }
         }

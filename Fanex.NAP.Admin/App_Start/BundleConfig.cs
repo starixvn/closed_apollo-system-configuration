@@ -9,7 +9,6 @@
 
 namespace Fanex.NAP.Admin.App_Start
 {
-    using System.Diagnostics.CodeAnalysis;
     using System.Web.Optimization;
 
     /// <summary>

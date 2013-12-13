@@ -34,15 +34,13 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
     public class ExchangeRateController : BaseController
     {
         private readonly IExchangeRateService _exchangeRateService;
-        private readonly IUserService _userService;
-        private readonly IFunctionService _functionService;
         private readonly IMailingListService _mailingListService;
 
         /// <summary>
         /// Initializes a new instance of the ExchangeRateController class.
         /// </summary>
         public ExchangeRateController()
-            : this(null, null, null, null)
+            : this(null, null)
         {
         }
 
@@ -50,18 +48,10 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// Initializes a new instance of the ExchangeRateController class.
         /// </summary>
         /// <param name="exchangeRateService">ExchangeRate Service.</param>
-        /// <param name="userService">User Service.</param>
-        /// <param name="functionService">Function Service.</param>
         /// <param name="mailingListService">MailingList Service.</param>
-        public ExchangeRateController(
-            IExchangeRateService exchangeRateService,
-            IUserService userService,
-            IFunctionService functionService,
-            IMailingListService mailingListService)
+        public ExchangeRateController(IExchangeRateService exchangeRateService, IMailingListService mailingListService)
         {
             this._exchangeRateService = exchangeRateService ?? new ExchangeRateService();
-            this._userService = userService ?? new UserService { ServiceContext = ServiceContext };
-            this._functionService = functionService ?? new FunctionService();
             this._mailingListService = mailingListService ?? new MailingListService();
         }
 

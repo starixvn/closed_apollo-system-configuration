@@ -9,8 +9,6 @@
 
 namespace Fanex.NAP.Framework.Data
 {
-    using System.Diagnostics.CodeAnalysis;
-
     /// <summary>
     /// Command result.
     /// </summary>

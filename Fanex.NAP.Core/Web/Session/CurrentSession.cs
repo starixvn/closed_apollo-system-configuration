@@ -11,7 +11,6 @@ namespace Fanex.NAP.Core.Web.Session
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using System.Web;
     using Fanex.NAP.Core.Configuration;
     using Fanex.NAP.Core.Model;

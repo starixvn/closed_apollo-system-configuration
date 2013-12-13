@@ -12,13 +12,7 @@
 namespace Fanex.NAP.Framework.Data
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Reflection;
-
-    using Fanex.Common.Helper;
-    using Fanex.Data;
 
     /// <summary>
     /// Readonly repository.

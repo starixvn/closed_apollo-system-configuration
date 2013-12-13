@@ -36,31 +36,27 @@ namespace Fanex.NAP.Core.Web.Auth
                 throw new ArgumentNullException();
             }
 
-            if (HttpContext.Current.User.Identity is FormsIdentity
-                   && HttpContext.Current.User.Identity.IsAuthenticated)
+            if (HttpContext.Current.User.Identity is FormsIdentity && HttpContext.Current.User.Identity.IsAuthenticated)
             {
-                string cookie = FormsAuthentication.FormsCookieName;
-                HttpCookie httpCookie = httpContext.Request.Cookies[cookie];
+                HttpCookie httpCookie = httpContext.Request.Cookies[FormsAuthentication.FormsCookieName];
 
-                if (httpCookie == null)
+                if (httpCookie != null)
                 {
-                    return;
-                }
+                    FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(httpCookie.Value);
+                    if (ticket == null || ticket.Expired)
+                    {
+                        return;
+                    }
 
-                FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(httpCookie.Value);
-                if (ticket == null || ticket.Expired)
-                {
-                    return;
-                }
+                    FormsIdentity identity = new FormsIdentity(ticket);
+                    if (string.IsNullOrEmpty(ticket.UserData))
+                    {
+                        return;
+                    }
 
-                FormsIdentity identity = new FormsIdentity(ticket);
-                if (string.IsNullOrEmpty(ticket.UserData))
-                {
-                    return;
+                    this._authInfo = AuthInfo.CreateUserData(ticket.UserData);
+                    this._identity = identity;
                 }
-
-                this._authInfo = AuthInfo.CreateUserData(ticket.UserData);
-                this._identity = identity;
             }
         }
 

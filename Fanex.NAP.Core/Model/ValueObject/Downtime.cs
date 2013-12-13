@@ -9,8 +9,6 @@
 
 namespace Fanex.NAP.Core.Model.ValueObject
 {
-    using System.Diagnostics.CodeAnalysis;
-
     /// <summary>
     /// Downtime value object.
     /// </summary>

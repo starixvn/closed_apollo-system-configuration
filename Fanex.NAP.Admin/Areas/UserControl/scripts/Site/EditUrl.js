@@ -15,7 +15,7 @@ var EditSiteUrl = function ($) {
 				chk = row.find('input[type=checkbox]:first'),
 				siteUrlId = $this.attr('suid'),
 				url = $.trim(txt.val()),
-				active = chk.is(':checked');
+				isActive = chk.is(':checked');
 
             // checks url duplication
             var otherRows = row.siblings('tr'),
@@ -37,7 +37,7 @@ var EditSiteUrl = function ($) {
             $.ajax({
                 url: NAP.resolveClientUrl('Site/UpdateSiteUrl'),
                 type: 'POST',
-                data: { id: siteUrlId, url: NAP.encodeURI(url), active: active },
+                data: { id: siteUrlId, url: NAP.encodeURI(url), isActive: isActive },
                 cache: false,
                 beforeSend: function () {
                     NAP.loadingBox.show();
@@ -164,12 +164,12 @@ $(document).ready(function () {
 
         var siteId = $this.attr('sid'),
 			url = NAP.encodeURI(txt.val()),
-			active = chk.is(':checked');
+			isActive = chk.is(':checked');
 
         $.ajax({
             url: NAP.resolveClientUrl('Site/AddSiteUrl'),
             type: 'POST',
-            data: { siteId: siteId, url: url, active: active },
+            data: { siteId: siteId, url: url, isActive: isActive },
             cache: false,
             beforeSend: function () {
                 NAP.loadingBox.show();
@@ -196,7 +196,7 @@ $(document).ready(function () {
                 var newRow = $(
 				'<tr style="display: none">' +
 					'<td class="align-center">' +
-						'<input type="checkbox" ' + (active ? 'checked="checked"' : '') + ' disabled="disabled" />' +
+						'<input type="checkbox" ' + (isActive ? 'checked="checked"' : '') + ' disabled="disabled" />' +
 					'</td>' +
 					'<td>' +
 						'<input type="text" value="' + txt.val() + '" disabled="disabled" />' +

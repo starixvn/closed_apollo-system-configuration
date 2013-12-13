@@ -30,6 +30,8 @@ namespace Fanex.NAP.Core.Service.Interface
 
         bool CheckUsernameExist(string username);
 
+        IUser Authenticate(string username, string password);
+
         IEnumerable<IUser> GetAll();
 
         IEnumerable<UserPolicy> GetByFunctionAndSite(int functionId, int siteId);

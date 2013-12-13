@@ -23,8 +23,6 @@ namespace Fanex.NAP.Framework.Collections
             this.AddRange(items);
         }
 
-        #region IPageOfItems<T> Members
-
         public int PageNumber { get; set; }
 
         public int PageSize { get; set; }
@@ -56,7 +54,5 @@ namespace Fanex.NAP.Framework.Collections
                 : this.PageNumber * this.PageSize;
             }
         }
-
-        #endregion
     }
 }

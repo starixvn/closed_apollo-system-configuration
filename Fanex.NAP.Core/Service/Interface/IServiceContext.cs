@@ -9,8 +9,6 @@
 
 namespace Fanex.NAP.Core.Service.Interface
 {
-    using System.Diagnostics.CodeAnalysis;
-
     /// <summary>
     /// Service context interface.
     /// </summary>

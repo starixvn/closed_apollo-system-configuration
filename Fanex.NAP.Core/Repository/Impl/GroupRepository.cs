@@ -43,6 +43,7 @@ namespace Fanex.NAP.Core.Repository.Impl
                     (g, cu, mu) => { g.Creator = cu; g.Modifier = mu; return g; },
                     "CreatorId,ModifierId",
                     criteria.GetSpParams());
+
                 return objGroup;
             }
         }

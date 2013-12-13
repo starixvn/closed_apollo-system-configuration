@@ -14,7 +14,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Web.Mvc;
-    using Fanex.Logging;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Criteria.Site;
     using Fanex.NAP.Core.Model.ValueObject;
@@ -290,8 +289,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                     {
                         result = "invalid";
                     }
-
-                    if (isuri)
+                    else
                     {
                         // Check URL duplication
                         var altUrls = _siteService.GetSiteUrlBySiteId(siteUrl.Site.Id, siteUrl.Environment);
@@ -300,10 +298,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                         {
                             result = "duplicate";
                         }
-
-                        // Update
-                        if (result.Equals(Constant.OK))
+                        else
                         {
+                            // update site URL
                             _siteService.UpdateSiteUrl(new UpdateSiteUrlCriteria
                             {
                                 SiteUrlId = id,
@@ -380,8 +377,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                     {
                         result = "invalid";
                     }
-
-                    if (isuri)
+                    else
                     {
                         // checks url duplication
                         var siteUrls = _siteService.GetSiteUrlBySiteId(site.Id, this.Environment);
@@ -390,10 +386,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                         {
                             result = "duplicate";
                         }
-
-                        // add site url
-                        if (result == Constant.OK)
+                        else
                         {
+                            // add site url
                             var criteria = new InsertSiteUrlCriteria
                             {
                                 SiteId = siteId,

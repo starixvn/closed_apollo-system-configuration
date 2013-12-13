@@ -61,6 +61,7 @@ namespace Fanex.NAP.Core.Web.Auth
         {
             XmlSerializer serializer = new XmlSerializer(typeof(AuthInfo));
             AuthInfo authInfo = (AuthInfo)serializer.Deserialize(new StringReader(authInfoXml));
+
             return authInfo;
         }
 

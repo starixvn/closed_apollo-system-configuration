@@ -6,6 +6,7 @@
 // <history>
 //   <change who="Anders.Le" date="2012.8.13">Created</change>
 // </history>
+
 namespace Fanex.NAP.Framework.Domain
 {
     public interface IEntity<TId, TName>

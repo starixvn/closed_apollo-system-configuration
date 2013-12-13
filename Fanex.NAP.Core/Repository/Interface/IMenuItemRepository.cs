@@ -9,7 +9,6 @@
 
 namespace Fanex.NAP.Core.Repository.Interface
 {
-    using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.Core.Criteria.MenuItem;
     using Fanex.NAP.Core.Domain;
     using Fanex.NAP.Framework.Data;

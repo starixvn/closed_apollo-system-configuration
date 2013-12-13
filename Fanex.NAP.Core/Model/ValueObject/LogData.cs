@@ -9,8 +9,6 @@
 
 namespace Fanex.NAP.Core.Model.ValueObject
 {
-    using System.Diagnostics.CodeAnalysis;
-
     /// <summary>
     /// The log data.
     /// </summary>

@@ -219,7 +219,7 @@ namespace Fanex.NAP.Framework.Data
 
             if (propInfo == null)
             {
-                throw new NullReferenceException("Input paramater does not contain the expected property SettingKey");
+                throw new NullReferenceException("Input parameter does not contain the expected property SettingKey");
             }
         }
 

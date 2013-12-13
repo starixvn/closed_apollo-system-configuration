@@ -32,7 +32,7 @@ namespace Fanex.NAP.Core.Configuration
 
         #endregion consts
 
-        private static NapSettings _settings = ConfigurationManager.GetSection(__NAP_SETTINGS) as NapSettings;       
+        private static NapSettings _settings = ConfigurationManager.GetSection(__NAP_SETTINGS) as NapSettings;
 
         public static NapSettings Settings
         {
@@ -140,8 +140,7 @@ namespace Fanex.NAP.Core.Configuration
         }
 
         [ConfigurationProperty(__NAP_DOMAIN, IsDefaultCollection = false)]
-        [ConfigurationCollection(typeof(DomainCollection),
-            AddItemName = __NAP_DOMAIN__ADD)]
+        [ConfigurationCollection(typeof(DomainCollection), AddItemName = __NAP_DOMAIN__ADD)]
         public DomainCollection Domains
         {
             get
