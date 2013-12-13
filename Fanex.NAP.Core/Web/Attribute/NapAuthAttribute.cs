@@ -28,7 +28,7 @@ namespace Fanex.NAP.Core.Web.Attribute
 
         private static readonly int _SiteId = Configuration.NapSettings.Settings.SiteId;
 
-        private static readonly IUserService _userService = new UserService();
+        private static readonly IUserService UserService = new UserService();
 
         private string _functionKey;
 
@@ -118,7 +118,7 @@ namespace Fanex.NAP.Core.Web.Attribute
                 return false;
             }
 
-            var policy = _userService.GetUserSiteFunctionKeyPolicy(userId, _SiteId, FunctionKey);
+            var policy = UserService.GetUserSiteFunctionKeyPolicy(userId, _SiteId, FunctionKey);
 
             return policy >= (int)Policy;
         }

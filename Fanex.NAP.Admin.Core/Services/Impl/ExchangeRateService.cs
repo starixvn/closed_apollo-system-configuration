@@ -221,6 +221,13 @@ namespace Fanex.NAP.Admin.Core.Services.Impl
             return HttpContext.Current.Server.MapPath(_FilePathEmailTemplate);
         }
 
+        /// <summary>
+        /// Check in valid multiplied by.
+        /// </summary>
+        /// <param name="errorMsg">Error Message object.</param>
+        /// <param name="exchangeRate">Exchange Rate object.</param>
+        /// <param name="isValid">Status before check.</param>
+        /// <returns>True: valid, false: invalid.</returns>
         private static bool CheckInValidMultipliedBy(
             ErrorMessageExchangeRate errorMsg, 
             ExchangeRateModel exchangeRate, 
