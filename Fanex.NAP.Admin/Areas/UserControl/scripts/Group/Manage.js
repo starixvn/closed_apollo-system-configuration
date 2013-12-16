@@ -45,8 +45,8 @@ $(document).ready(function () {
 	ManageGroup.grid.on('mousedown', 'input[type=checkbox][gid]', function (e) {
 		var $this = $(this),
 			groupName = $this.attr('gname'),
-			active = !$this.is(':checked'),
-			action = active ? 'activate' : 'deactivate',
+			isActive = !$this.is(':checked'),
+			action = isActive ? 'activate' : 'deactivate',
 			msg = "Are you sure you want to " + action + " '" + groupName + "' ?";
 
 		NAP.headlineMsgBox.confirm(msg, function () {
@@ -55,7 +55,7 @@ $(document).ready(function () {
 			$this.attr('checked', active).change();
 
 			$.ajax({
-				url: NAP.resolveClientUrl("Group/Activate" + "?id=" + groupId + "&active=" + active),
+				url: NAP.resolveClientUrl("Group/Activate" + "?id=" + groupId + "&isActive=" + isActive),
 				type: 'POST',
 				contentType: 'application/json',
 				dataType: 'json',
@@ -68,10 +68,10 @@ $(document).ready(function () {
 				},
 				success: function (result) {
 					if (result == 'OK') {
-						var msg = active ? "Activation succeeded!" : "Deactivation succeeded!";
+						var msg = isActive ? "Activation succeeded!" : "Deactivation succeeded!";
 
 						NAP.headlineMsgBox.showInfo(msg, { closeBtn: false });
-						if (active) {
+						if (isActive) {
 							$this.attr('original-title', $this.attr('original-title').replace('Activate', 'Deactivate'));
 						} else {
 							$this.attr('original-title', $this.attr('original-title').replace('Deactivate', 'Activate'));

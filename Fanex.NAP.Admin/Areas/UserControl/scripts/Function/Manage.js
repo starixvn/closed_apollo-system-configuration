@@ -86,17 +86,17 @@ $(document).ready(function () {
 	ManageFunction.grid.on('mousedown', 'input[type=checkbox][fid]', function (e) {
 		var $this = $(this),
 			functionName = $this.attr('fname'),
-			active = !$this.is(':checked'),
-			action = active ? 'activate' : 'deactivate',
+			isActive = !$this.is(':checked'),
+			action = isActive ? 'activate' : 'deactivate',
 			msg = "Are you sure you want to " + action + " '" + functionName + "' ?";
 
 		NAP.headlineMsgBox.confirm(msg, function () {
 			var functionId = $this.attr('fid');
 
-			$this.attr('checked', active).change();
+			$this.attr('checked', isActive).change();
 
 			$.ajax({
-				url: NAP.resolveClientUrl("Function/Activate" + "?id=" + functionId + "&active=" + active),
+				url: NAP.resolveClientUrl("Function/Activate" + "?id=" + functionId + "&isActive=" + isActive),
 				type: 'POST',
 				contentType: 'application/json',
 				dataType: 'json',
@@ -109,10 +109,10 @@ $(document).ready(function () {
 				},
 				success: function (result) {
 					if (result == 'OK') {
-						var msg = active ? "Activation succeeded!" : "Deactivation succeeded!";
+						var msg = isActive ? "Activation succeeded!" : "Deactivation succeeded!";
 
 						NAP.headlineMsgBox.showInfo(msg, { closeBtn: false });
-						if (active) {
+						if (isActive) {
 							$this.attr('original-title', $this.attr('original-title').replace('Activate', 'Deactivate'));
 						} else {
 							$this.attr('original-title', $this.attr('original-title').replace('Deactivate', 'Activate'));
