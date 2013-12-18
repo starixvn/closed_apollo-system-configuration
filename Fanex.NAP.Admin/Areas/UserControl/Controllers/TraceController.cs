@@ -1207,10 +1207,10 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 ViewBag.SiteName = site.Name;
             }
 
-            #endregion
-
             return PartialView("~/Areas/UserControl/Views/Trace/_NAP_Assign_Permission.cshtml");
         }
+
+        #endregion
 
         /// <summary>
         /// Get assign site log detail.

@@ -76,26 +76,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 Environment = this.Environment
             };
 
-            if (CurrentSession.Level == (int)Constant.Level.PortalAdmin)
-            {
-                ViewBag.Site = _siteService.GetAllSelectListItem(criteria.Environment, true, criteria.SiteId);
-                ViewFlags.HasEditRight = true;
-            }
-            else
-            {
-                ViewBag.Site =
-                    _siteService.GetSelectListItemByUserAndFunctionKeyIncludeGroup(
-                                        CurrentSession.UserId,
-                                        FunctionKeys.ManageMenu,
-                                        criteria.Environment,
-                                        policy: Constant.Policy.Read,
-                                        selectedSiteId: criteria.SiteId);
-                ViewFlags.HasEditRight =
-                    HasRight(FunctionKeys.ManageMenu, Constant.Policy.Host)
-                    && HasRightOnSite(criteria.SiteId, FunctionKeys.ManageMenu, Constant.Policy.Host);
-            }
-
-            ViewBag.MenuItemList = _menuItemService.GetBySiteInHierarchy(criteria.SiteId, criteria.Environment);
+            PrepareManageData(criteria);
 
             return View(criteria);
         }
@@ -109,26 +90,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         [NapAuth(FunctionKey = FunctionKeys.ManageMenu, Policy = Constant.Policy.Read)]
         public ActionResult Manage(GetBySiteMenuItemCriteria criteria)
         {
-            if (CurrentSession.Level == (int)Constant.Level.PortalAdmin)
-            {
-                ViewBag.Site = _siteService.GetAllSelectListItem(criteria.Environment, true, criteria.SiteId);
-                ViewFlags.HasEditRight = true;
-            }
-            else
-            {
-                ViewBag.Site =
-                    _siteService.GetSelectListItemByUserAndFunctionKeyIncludeGroup(
-                                        CurrentSession.UserId,
-                                        FunctionKeys.ManageMenu,
-                                        criteria.Environment,
-                                        policy: Constant.Policy.Read,
-                                        selectedSiteId: criteria.SiteId);
-                ViewFlags.HasEditRight =
-                    HasRight(FunctionKeys.ManageMenu, Constant.Policy.Host)
-                    && HasRightOnSite(criteria.SiteId, FunctionKeys.ManageMenu, Constant.Policy.Host);
-            }
-
-            ViewBag.MenuItemList = _menuItemService.GetBySiteInHierarchy(criteria.SiteId, criteria.Environment);
+            PrepareManageData(criteria);
 
             return View(criteria);
         }
@@ -207,8 +169,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 criteria.CreatedBy = CurrentSession.UserId;
                 criteria.CreatedDate = DateTime.Now;
                 criteria.ParentId = criteria.ParentId == 0 ? null : criteria.ParentId;
-                criteria.ParentName = criteria.ParentId == 0 || criteria.ParentId == null ? null
-                    : criteria.ParentName;
+                criteria.ParentName = criteria.ParentId == 0 || criteria.ParentId == null ? null : criteria.ParentName;
 
                 var result = _menuItemService.Insert(criteria);
 
@@ -304,8 +265,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 criteria.ModifierId = CurrentSession.UserId;
                 criteria.ModifiedDate = DateTime.Now;
                 criteria.ParentId = criteria.ParentId == 0 ? null : criteria.ParentId;
-                criteria.ParentName = criteria.ParentId == 0 || criteria.ParentId == null ? null
-                    : criteria.ParentName;
+                criteria.ParentName = criteria.ParentId == 0 || criteria.ParentId == null ? null : criteria.ParentName;
 
                 var result = _menuItemService.Update(criteria);
 
@@ -405,5 +365,33 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         }
 
         #endregion
+
+        /// <summary>
+        /// Prepare manage data.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        private void PrepareManageData(GetBySiteMenuItemCriteria criteria)
+        {
+            if (CurrentSession.Level == (int)Constant.Level.PortalAdmin)
+            {
+                ViewBag.Site = _siteService.GetAllSelectListItem(criteria.Environment, true, criteria.SiteId);
+                ViewFlags.HasEditRight = true;
+            }
+            else
+            {
+                ViewBag.Site =
+                    _siteService.GetSelectListItemByUserAndFunctionKeyIncludeGroup(
+                                        CurrentSession.UserId,
+                                        FunctionKeys.ManageMenu,
+                                        criteria.Environment,
+                                        policy: Constant.Policy.Read,
+                                        selectedSiteId: criteria.SiteId);
+                ViewFlags.HasEditRight =
+                    HasRight(FunctionKeys.ManageMenu, Constant.Policy.Host)
+                    && HasRightOnSite(criteria.SiteId, FunctionKeys.ManageMenu, Constant.Policy.Host);
+            }
+
+            ViewBag.MenuItemList = _menuItemService.GetBySiteInHierarchy(criteria.SiteId, criteria.Environment);
+        }
     }
 }
