@@ -622,9 +622,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
                 var listSiteUrl = new List<SiteUrl>();
                 XDocument documentSiteUrl = XDocument.Parse(strUrl);
-                var siteUrl = documentSiteUrl.Descendants("ITEM");
+                IEnumerable<XElement> siteUrl = documentSiteUrl.Descendants("ITEM");
 
-                foreach (var item in siteUrl)
+                foreach (XElement item in siteUrl)
                 {
                     var objSiteUrl = new SiteUrl
                     {

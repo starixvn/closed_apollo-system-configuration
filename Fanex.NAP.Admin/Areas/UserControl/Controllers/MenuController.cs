@@ -115,23 +115,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 SiteId = siteId ?? this.SiteId
             };
 
-            ViewBag.Parent = _menuItemService.GetSelectListItemBySite(criteria.SiteId, this.Environment, isActive: true);
-            ViewBag.Function = this._functionService.GetSelectListItemBySite(criteria.SiteId, this.Environment, isActive: true);
-
-            if (CurrentSession.Level == (int)Constant.Level.PortalAdmin)
-            {
-                ViewBag.Site = _siteService.GetAllSelectListItem(criteria.Environment, true, criteria.SiteId);
-            }
-            else
-            {
-                ViewBag.Site =
-                    _siteService.GetSelectListItemByUserAndFunctionKeyIncludeGroup(
-                                        CurrentSession.UserId,
-                                        FunctionKeys.ManageMenu,
-                                        criteria.Environment,
-                                        policy: Constant.Policy.Host,
-                                        selectedSiteId: criteria.SiteId);
-            }
+            PrepareAddNewData(criteria);
 
             return View(criteria);
         }
@@ -145,23 +129,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         [NapAuth(FunctionKey = FunctionKeys.ManageMenu, Policy = Constant.Policy.Host)]
         public ActionResult AddNewMenuItem(InsertMenuItemCriteria criteria)
         {
-            ViewBag.Parent = _menuItemService.GetAllSelectListItem(this.Environment, isActive: true);
-            ViewBag.Function = this._functionService.GetSelectListItemBySite(criteria.SiteId, this.Environment, isActive: true);
-
-            if (CurrentSession.Level == (int)Constant.Level.PortalAdmin)
-            {
-                ViewBag.Site = _siteService.GetAllSelectListItem(criteria.Environment, true, criteria.SiteId);
-            }
-            else
-            {
-                ViewBag.Site =
-                    _siteService.GetSelectListItemByUserAndFunctionKeyIncludeGroup(
-                                        CurrentSession.UserId,
-                                        FunctionKeys.ManageMenu,
-                                        criteria.Environment,
-                                        policy: Constant.Policy.Host,
-                                        selectedSiteId: criteria.SiteId);
-            }
+            PrepareAddNewData(criteria);
 
             if (ModelState.IsValid)
             {
@@ -392,6 +360,31 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             }
 
             ViewBag.MenuItemList = _menuItemService.GetBySiteInHierarchy(criteria.SiteId, criteria.Environment);
+        }
+
+        /// <summary>
+        /// Prepare add new data.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        private void PrepareAddNewData(InsertMenuItemCriteria criteria)
+        {
+            ViewBag.Parent = _menuItemService.GetAllSelectListItem(this.Environment, isActive: true);
+            ViewBag.Function = this._functionService.GetSelectListItemBySite(criteria.SiteId, this.Environment, isActive: true);
+
+            if (CurrentSession.Level == (int)Constant.Level.PortalAdmin)
+            {
+                ViewBag.Site = _siteService.GetAllSelectListItem(criteria.Environment, true, criteria.SiteId);
+            }
+            else
+            {
+                ViewBag.Site =
+                    _siteService.GetSelectListItemByUserAndFunctionKeyIncludeGroup(
+                                        CurrentSession.UserId,
+                                        FunctionKeys.ManageMenu,
+                                        criteria.Environment,
+                                        policy: Constant.Policy.Host,
+                                        selectedSiteId: criteria.SiteId);
+            }
         }
     }
 }

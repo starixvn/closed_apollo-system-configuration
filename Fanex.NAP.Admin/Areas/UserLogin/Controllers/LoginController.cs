@@ -144,7 +144,8 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
                     // current site is not NAP Hub
                     if (this.SiteId != 0)
                     {
-                        CreateUserMenu(user);
+                        _currentSession.Menu =
+                            (IList<MenuItem>)_menuItemService.GetByUserAndSiteIncludeGroup(user.Id, SiteId, Environment, true);
                     }
 
                     CreateAuthInfo(user);
@@ -239,7 +240,7 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
                 }
             }
 
-            UserReCheckInUserCriteria criteria = new UserReCheckInUserCriteria();
+            var criteria = new UserReCheckInUserCriteria();
             criteria.OnUserId = Convert.ToInt32(this._currentSession.OnUserId);
             _userService.ReUserCheckIn(ref criteria);
 
@@ -247,16 +248,6 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
         }
 
         #region helpers
-
-        /// <summary>
-        /// Create user menu.
-        /// </summary>
-        /// <param name="user">The login user.</param>
-        private void CreateUserMenu(User user)
-        {
-            this._currentSession.Menu = 
-                (IList<MenuItem>)_menuItemService.GetByUserAndSiteIncludeGroup(user.Id, SiteId, Environment, true);
-        }
 
         /// <summary>
         /// Create authorize information.
