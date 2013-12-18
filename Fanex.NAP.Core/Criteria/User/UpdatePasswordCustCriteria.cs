@@ -27,36 +27,29 @@ namespace Fanex.NAP.Core.Criteria.User
         [Required]
         [Display(Name = "Old_Password", ResourceType = typeof(ViewResources))]
         [StringLength(50, MinimumLength = 2,
-            ErrorMessageResourceName = "InputLengthValidationMsg",
-            ErrorMessageResourceType = typeof(ViewResources))]
+            ErrorMessageResourceName = "InputLengthValidationMsg", ErrorMessageResourceType = typeof(ViewResources))]
         [RegularExpression(@"^[\w\s]{1,}$",
-            ErrorMessageResourceName = "InvalidFieldValidationOldPassword",
-            ErrorMessageResourceType = typeof(ViewResources))]
+            ErrorMessageResourceName = "InvalidFieldValidationOldPassword", ErrorMessageResourceType = typeof(ViewResources))]
         [SpParam(Ignored = true)]
         public string OldUserPwd { get; set; }
 
         [Required]
         [Display(Name = "New_Password", ResourceType = typeof(ViewResources))]
         [StringLength(50, MinimumLength = 2,
-            ErrorMessageResourceName = "InputLengthValidationMsg",
-            ErrorMessageResourceType = typeof(ViewResources))]
+            ErrorMessageResourceName = "InputLengthValidationMsg", ErrorMessageResourceType = typeof(ViewResources))]
         [RegularExpression(@"^[\w\s]{1,}$",
-            ErrorMessageResourceName = "InvalidFieldValidationNewPassword",
-            ErrorMessageResourceType = typeof(ViewResources))]
-        public string UserPwd { get; set; }        
+            ErrorMessageResourceName = "InvalidFieldValidationNewPassword", ErrorMessageResourceType = typeof(ViewResources))]
+        public string UserPwd { get; set; }
 
         [Required]
         [Display(Name = "Confirm_Password", ResourceType = typeof(ViewResources))]
         [StringLength(50, MinimumLength = 2,
-            ErrorMessageResourceName = "InputLengthValidationMsg",
-            ErrorMessageResourceType = typeof(ViewResources))]
+            ErrorMessageResourceName = "InputLengthValidationMsg", ErrorMessageResourceType = typeof(ViewResources))]
         [RegularExpression(@"^[\w\s]{1,}$",
-            ErrorMessageResourceName = "InvalidFieldValidationConfirmPassword",
-            ErrorMessageResourceType = typeof(ViewResources))]
+            ErrorMessageResourceName = "InvalidFieldValidationConfirmPassword", ErrorMessageResourceType = typeof(ViewResources))]
         [SpParam(Ignored = true)]
         [Compare("UserPwd",
-            ErrorMessageResourceName = "PropertiesMustMatchErrMsg",
-            ErrorMessageResourceType = typeof(ViewResources))]
+            ErrorMessageResourceName = "PropertiesMustMatchErrMsg", ErrorMessageResourceType = typeof(ViewResources))]
         public string ConfirmUserPwd { get; set; }
         
         public override string GetSettingKey()

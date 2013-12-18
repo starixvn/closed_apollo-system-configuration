@@ -13,8 +13,8 @@ namespace Fanex.NAP.Core.Criteria.Function
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
-    /// TODO: Update summary.
-    /// </summary>    
+    /// Get all function criteria.
+    /// </summary>
     public class GetAllFunctionCriteria : CriteriaBase
     {
         public string Environment { get; set; }

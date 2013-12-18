@@ -22,40 +22,33 @@ namespace Fanex.NAP.Core.Criteria.User
 
         [Display(Name = "First_Name", ResourceType = typeof(ViewResources))]
         [StringLength(50, MinimumLength = 0,
-            ErrorMessageResourceName = "InputLengthValidationMsg",
-            ErrorMessageResourceType = typeof(ViewResources))]
+            ErrorMessageResourceName = "InputLengthValidationMsg", ErrorMessageResourceType = typeof(ViewResources))]
         public string FirstName { get; set; }
 
         [Display(Name = "Last_Name", ResourceType = typeof(ViewResources))]
         [StringLength(50, MinimumLength = 0,
-            ErrorMessageResourceName = "InputLengthValidationMsg",
-            ErrorMessageResourceType = typeof(ViewResources))]
+            ErrorMessageResourceName = "InputLengthValidationMsg", ErrorMessageResourceType = typeof(ViewResources))]
         public string LastName { get; set; }
 
         [Display(Name = "Email", ResourceType = typeof(ViewResources))]
         [RegularExpression(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*",
-            ErrorMessageResourceName = "EmailFormatValidationMsg",
-            ErrorMessageResourceType = typeof(ViewResources))]
+            ErrorMessageResourceName = "EmailFormatValidationMsg", ErrorMessageResourceType = typeof(ViewResources))]
         public string Email { get; set; }
 
         [Required]
         [Display(Name = "Username", ResourceType = typeof(ViewResources))]
         [StringLength(50, MinimumLength = 2,
-            ErrorMessageResourceName = "InputLengthValidationMsg",
-            ErrorMessageResourceType = typeof(ViewResources))]
+            ErrorMessageResourceName = "InputLengthValidationMsg", ErrorMessageResourceType = typeof(ViewResources))]
         [RegularExpression(@"^[\w\s]{1,}$",
-            ErrorMessageResourceName = "InvalidNameValidationMsg",
-            ErrorMessageResourceType = typeof(ViewResources))]
+            ErrorMessageResourceName = "InvalidNameValidationMsg", ErrorMessageResourceType = typeof(ViewResources))]
         public string Username { get; set; }
 
         [Required]
         [Display(Name = "Password", ResourceType = typeof(ViewResources))]
         [StringLength(50, MinimumLength = 2,
-            ErrorMessageResourceName = "InputLengthValidationMsg",
-            ErrorMessageResourceType = typeof(ViewResources))]
+            ErrorMessageResourceName = "InputLengthValidationMsg", ErrorMessageResourceType = typeof(ViewResources))]
         [RegularExpression(@"^[\w\s]{1,}$",
-            ErrorMessageResourceName = "InvalidNameValidationMsg",
-            ErrorMessageResourceType = typeof(ViewResources))]
+            ErrorMessageResourceName = "InvalidNameValidationMsg", ErrorMessageResourceType = typeof(ViewResources))]
         [DataType(DataType.Password)]
         public string UserPwd { get; set; }
 

@@ -16,7 +16,7 @@ namespace Fanex.NAP.Core.Criteria.User
     /// </summary>
     public class LogOutUserCriteria : CriteriaBase
     {       
-        public int OnUserId { get; set; }      
+        public int OnUserId { get; set; }
 
         public override string GetSettingKey()
         {

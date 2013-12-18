@@ -13,7 +13,7 @@ namespace Fanex.NAP.Framework.Data
     using System.Collections.Generic;
 
     /// <summary>
-    /// TODO: Update summary.
+    /// Dynamic repository interface.
     /// </summary>
     public interface IDynamicRepository
     {

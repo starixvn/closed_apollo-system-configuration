@@ -301,44 +301,6 @@ namespace Fanex.NAP.Core.Service.Impl
         /// <param name="username">The username.</param>
         /// <param name="groupId">The group ID.</param>
         /// <param name="siteId">The site ID.</param>
-        /// <returns>List of user level.</returns>
-        public IQueryable<UserLevel> SearchUserExcludeFunction(
-            int pageIndex,
-            int pageSize,
-            out int totalRows,
-            string username,
-            int groupId = 0,
-            int siteId = 0)
-        {
-            IQueryable<UserLevel> userList = null;
-            totalRows = 0;
-
-            var criteria = new SearchUserCriteria
-            {
-                Username = username,
-                GroupId = groupId,
-                SiteId = siteId,
-                PageIndex = pageIndex,
-                PageSize = pageSize
-            };
-
-            if (criteria.IsValid())
-            {
-                userList = this._userRepository.Search(criteria, out totalRows);
-            }
-
-            return userList;
-        }
-
-        /// <summary>
-        /// Search user exclude function.
-        /// </summary>
-        /// <param name="pageIndex">The page index.</param>
-        /// <param name="pageSize">The page size.</param>
-        /// <param name="totalRows">Total number of records.</param>
-        /// <param name="username">The username.</param>
-        /// <param name="groupId">The group ID.</param>
-        /// <param name="siteId">The site ID.</param>
         /// <param name="functionId">The function ID.</param>
         /// <returns>List of user level.</returns>
         public IQueryable<UserLevel> SearchUserExcludeFunction(

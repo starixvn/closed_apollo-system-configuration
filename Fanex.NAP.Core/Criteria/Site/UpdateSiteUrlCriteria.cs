@@ -26,15 +26,13 @@ namespace Fanex.NAP.Core.Criteria.Site
         [Required]
         [Display(Name = "URL", ResourceType = typeof(ViewResources))]
         [StringLength(100, MinimumLength = 0,
-            ErrorMessageResourceName = "InputLengthValidationMsg",
-            ErrorMessageResourceType = typeof(ViewResources))]
+            ErrorMessageResourceName = "InputLengthValidationMsg", ErrorMessageResourceType = typeof(ViewResources))]
         public string Url { get; set; }
 
         [Required]
         [Display(Name = "Environment", ResourceType = typeof(ViewResources))]
         [StringLength(10, MinimumLength = 0,
-            ErrorMessageResourceName = "InputLengthValidationMsg",
-            ErrorMessageResourceType = typeof(ViewResources))]
+            ErrorMessageResourceName = "InputLengthValidationMsg", ErrorMessageResourceType = typeof(ViewResources))]
         public string Environment { get; set; }
 
         [Display(Name = "Status", ResourceType = typeof(ViewResources))]

@@ -19,7 +19,7 @@ namespace Fanex.NAP.Core.Criteria.User
     {
         public int UserId { get; set; }
 
-        public int GroupId { get; set; }        
+        public int GroupId { get; set; }
 
         public int CreatedBy { get; set; }
 

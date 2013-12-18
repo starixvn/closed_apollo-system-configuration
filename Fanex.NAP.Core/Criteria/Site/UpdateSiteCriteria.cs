@@ -31,17 +31,14 @@ namespace Fanex.NAP.Core.Criteria.Site
         [Required]
         [Display(Name = "Name", ResourceType = typeof(ViewResources))]
         [StringLength(50, MinimumLength = 2,
-            ErrorMessageResourceName = "InputLengthValidationMsg",
-            ErrorMessageResourceType = typeof(ViewResources))]
+            ErrorMessageResourceName = "InputLengthValidationMsg", ErrorMessageResourceType = typeof(ViewResources))]
         [RegularExpression(@"^[\w\s]{1,}$",
-            ErrorMessageResourceName = "InvalidNameValidationMsg",
-            ErrorMessageResourceType = typeof(ViewResources))]
+            ErrorMessageResourceName = "InvalidNameValidationMsg", ErrorMessageResourceType = typeof(ViewResources))]
         public string SiteName { get; set; }
 
         [Display(Name = "Description", ResourceType = typeof(ViewResources))]
         [StringLength(200, MinimumLength = 0,
-            ErrorMessageResourceName = "InputLengthValidationMsg",
-            ErrorMessageResourceType = typeof(ViewResources))]
+            ErrorMessageResourceName = "InputLengthValidationMsg", ErrorMessageResourceType = typeof(ViewResources))]
         public string Description { get; set; }
 
         [Display(Name = "Status", ResourceType = typeof(ViewResources))]

@@ -22,8 +22,7 @@ namespace Fanex.NAP.Core.Criteria.Group
        
         [Display(Name = "Group_Name", ResourceType = typeof(ViewResources))]
         [StringLength(50, MinimumLength = 0,
-            ErrorMessageResourceName = "InputLengthValidationMsg",
-            ErrorMessageResourceType = typeof(ViewResources))]
+            ErrorMessageResourceName = "InputLengthValidationMsg", ErrorMessageResourceType = typeof(ViewResources))]
         public string GroupName { get; set; }
 
         public string Environment { get; set; }

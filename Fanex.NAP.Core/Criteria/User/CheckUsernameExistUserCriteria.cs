@@ -16,7 +16,7 @@ namespace Fanex.NAP.Core.Criteria.User
     /// </summary>
     public class CheckUsernameExistUserCriteria : CriteriaBase
     {       
-        public string Username { get; set; }      
+        public string Username { get; set; }
 
         public override string GetSettingKey()
         {

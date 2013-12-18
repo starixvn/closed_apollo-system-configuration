@@ -26,15 +26,13 @@ namespace Fanex.NAP.Core.Criteria.User
         [Required]
         [Display(Name = "New_Password", ResourceType = typeof(ViewResources))]
         [StringLength(50, MinimumLength = 2,
-            ErrorMessageResourceName = "InputLengthValidationMsg",
-            ErrorMessageResourceType = typeof(ViewResources))]
+            ErrorMessageResourceName = "InputLengthValidationMsg", ErrorMessageResourceType = typeof(ViewResources))]
         public string UserPwd { get; set; }
 
         [Required]
         [Display(Name = "Confirm_Password", ResourceType = typeof(ViewResources))]
         [StringLength(50, MinimumLength = 2,
-            ErrorMessageResourceName = "InputLengthValidationMsg",
-            ErrorMessageResourceType = typeof(ViewResources))]
+            ErrorMessageResourceName = "InputLengthValidationMsg", ErrorMessageResourceType = typeof(ViewResources))]
         [SpParam(Ignored = true)]
         public string ConfirmUserPwd { get; set; }
 

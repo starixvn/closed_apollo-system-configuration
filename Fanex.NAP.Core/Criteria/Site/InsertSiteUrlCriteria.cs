@@ -25,8 +25,7 @@ namespace Fanex.NAP.Core.Criteria.Site
 
         [Display(Name = "URL", ResourceType = typeof(ViewResources))]
         [StringLength(100, MinimumLength = 0,
-            ErrorMessageResourceName = "InputLengthValidationMsg",
-            ErrorMessageResourceType = typeof(ViewResources))]
+            ErrorMessageResourceName = "InputLengthValidationMsg", ErrorMessageResourceType = typeof(ViewResources))]
         public string Url { get; set; }
 
         [Required]

@@ -36,14 +36,12 @@ namespace Fanex.NAP.Core.Criteria.MenuItem
         [Required]
         [Display(Name = "Name", ResourceType = typeof(ViewResources))]
         [StringLength(50, MinimumLength = 2,
-            ErrorMessageResourceName = "InputLengthValidationMsg",
-            ErrorMessageResourceType = typeof(ViewResources))]
+            ErrorMessageResourceName = "InputLengthValidationMsg", ErrorMessageResourceType = typeof(ViewResources))]
         public string MenuItemName { get; set; }
 
         [Display(Name = "Description", ResourceType = typeof(ViewResources))]
         [StringLength(200, MinimumLength = 0,
-            ErrorMessageResourceName = "InputLengthValidationMsg",
-            ErrorMessageResourceType = typeof(ViewResources))]
+            ErrorMessageResourceName = "InputLengthValidationMsg", ErrorMessageResourceType = typeof(ViewResources))]
         public string Description { get; set; }
 
         [Display(Name = "Parent", ResourceType = typeof(ViewResources))]
@@ -57,8 +55,7 @@ namespace Fanex.NAP.Core.Criteria.MenuItem
 
         [Display(Name = "URL", ResourceType = typeof(ViewResources))]
         [StringLength(200, MinimumLength = 0,
-            ErrorMessageResourceName = "InputLengthValidationMsg",
-            ErrorMessageResourceType = typeof(ViewResources))]
+            ErrorMessageResourceName = "InputLengthValidationMsg", ErrorMessageResourceType = typeof(ViewResources))]
         public string Url { get; set; }
 
         [Display(Name = "Display_Order", ResourceType = typeof(ViewResources))]
