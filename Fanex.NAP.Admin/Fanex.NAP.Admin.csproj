@@ -64,9 +64,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\_Dependencies\Fanex\Release\Fanex.Logging.dll</HintPath>
     </Reference>
-    <Reference Include="IBCUtils">
-      <HintPath>..\_Dependencies\Others\IBCUtils.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Caching">
       <HintPath>..\_Dependencies\Entlib\Microsoft.Practices.EnterpriseLibrary.Caching.dll</HintPath>

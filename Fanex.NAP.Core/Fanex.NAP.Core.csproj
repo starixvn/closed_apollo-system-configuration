@@ -64,9 +64,6 @@
     <Reference Include="Fanex.MailDeliver.MailClient">
       <HintPath>..\_Dependencies\MailService\Fanex.MailDeliver.MailClient.dll</HintPath>
     </Reference>
-    <Reference Include="IBCFile">
-      <HintPath>..\_Dependencies\Others\IBCFile.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Caching">
       <HintPath>..\_Dependencies\Entlib\Microsoft.Practices.EnterpriseLibrary.Caching.dll</HintPath>
     </Reference>
@@ -79,9 +76,6 @@
     </Reference>
     <Reference Include="NPOI, Version=1.2.5.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
       <HintPath>..\_Dependencies\NPOI\NPOI.dll</HintPath>
-    </Reference>
-    <Reference Include="SPSRemoting">
-      <HintPath>..\_Dependencies\Others\SPSRemoting.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
