@@ -58,6 +58,7 @@ namespace Fanex.NAP.Core.Criteria.Function
         }
 
         [Display(Name = "Read_only", ResourceType = typeof(ViewResources))]
+        [SpParam(Ignored = true)]
         public bool Readonly { get; set; }
 
         [Required]
