@@ -55,6 +55,9 @@
     <Reference Include="Ionic.Zip">
       <HintPath>..\_Dependencies\NPOI\Ionic.Zip.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Data">
+      <HintPath>..\_Dependencies\Entlib\Microsoft.Practices.EnterpriseLibrary.Data.dll</HintPath>
+    </Reference>
     <Reference Include="NPOI, Version=1.2.5.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\_Dependencies\NPOI\NPOI.dll</HintPath>
@@ -72,7 +75,6 @@
   <ItemGroup>
     <Compile Include="Collections\IPageOfItems.cs" />
     <Compile Include="Collections\PageOfItems.cs" />
-    <Compile Include="Commands\SettingKeyAttribute.cs" />
     <Compile Include="Data\CommandResultBase.cs" />
     <Compile Include="Data\CriteriaBase.cs" />
     <Compile Include="Data\DynamicRepository.cs" />
@@ -89,7 +91,6 @@
     <Compile Include="Domain\IEntity.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Exceptions\NapDataAccessException.cs" />
     <Compile Include="Extensions\DataTableExtension.cs" />
     <Compile Include="Mvc\DelegatingResult.cs" />
     <Compile Include="Mvc\DownloadResult.cs" />

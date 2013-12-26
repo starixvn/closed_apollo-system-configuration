@@ -47,8 +47,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
         #endregion
 
-        private ViewFlags _viewFlags;
-
         private IUserService _userService;
 
         public BaseController()
@@ -82,7 +80,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
             set
             {
-                ViewBag.ViewFlags = _viewFlags = value;
+                ViewBag.ViewFlags = value;
             }
         }
 

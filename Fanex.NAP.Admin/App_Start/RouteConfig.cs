@@ -15,7 +15,7 @@ namespace Fanex.NAP.Admin.App_Start
     /// <summary>
     /// Route config.
     /// </summary>
-    public class RouteConfig
+    public static class RouteConfig
     {
         public static void RegisterRoutes(RouteCollection routes)
         {

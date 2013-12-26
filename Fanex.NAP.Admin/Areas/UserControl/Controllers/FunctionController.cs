@@ -572,8 +572,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             if (Request.IsAjaxRequest())
             {
                 int functionId = id;
-                string userIdList = readList.Trim();
-                string hostIdList = hostList.Trim();
                 var function = this._functionService.GetById(functionId);
 
                 if (function == null)
@@ -648,8 +646,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             if (Request.IsAjaxRequest())
             {
                 int functionId = id;
-                string groupIdList = readList.Trim();
-                string hostIdList = hostList.Trim();
                 var function = this._functionService.GetById(functionId);
 
                 if (function == null)

@@ -317,8 +317,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// <returns>Partial view result.</returns>
         public PartialViewResult _NAP_User_Insert(LogExecSp log)
         {
-            XElement elementNew = XElement.Parse(log.Data);
-            XElement elementOld = XElement.Parse(log.OldData ?? "<ROOT/>");
+            XElement element = XElement.Parse(log.Data);
 
             if (log.ActionId == (int)LogAction.NAP_User_Insert)
             {
@@ -326,13 +325,13 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 listLogData.Add(new LogData
                 {
                     FieldName = ViewResources.Username,
-                    NewValue = elementNew.Attribute("Username").Value
+                    NewValue = element.Attribute("Username").Value
                 });
 
                 listLogData.Add(new LogData
                 {
                     FieldName = ViewResources.Group_Name,
-                    NewValue = elementNew.Attribute("GroupName").Value
+                    NewValue = element.Attribute("GroupName").Value
                 });
 
                 ViewBag.IsInsert = true;
@@ -349,8 +348,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// <returns>Partial view result.</returns>
         public PartialViewResult _NAP_Cust_Insert(LogExecSp log)
         {
-            XElement elementNew = XElement.Parse(log.Data);
-            XElement elementOld = XElement.Parse(log.OldData ?? "<ROOT/>");
+            XElement element = XElement.Parse(log.Data);
 
             if (log.ActionId == (int)LogAction.NAP_Cust_Insert)
             {
@@ -358,31 +356,31 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 listLogData.Add(new LogData
                 {
                     FieldName = ViewResources.Username,
-                    NewValue = elementNew.Attribute("Username").Value
+                    NewValue = element.Attribute("Username").Value
                 });
 
                 listLogData.Add(new LogData
                 {
                     FieldName = ViewResources.Group_Name,
-                    NewValue = elementNew.Attribute("GroupName").Value
+                    NewValue = element.Attribute("GroupName").Value
                 });
 
                 listLogData.Add(new LogData
                 {
                     FieldName = ViewResources.First_Name,
-                    NewValue = elementNew.Attribute("FirstName").Value
+                    NewValue = element.Attribute("FirstName").Value
                 });
 
                 listLogData.Add(new LogData
                 {
                     FieldName = ViewResources.Last_Name,
-                    NewValue = elementNew.Attribute("LastName").Value
+                    NewValue = element.Attribute("LastName").Value
                 });
 
                 listLogData.Add(new LogData
                 {
                     FieldName = ViewResources.Email,
-                    NewValue = elementNew.Attribute("Email").Value
+                    NewValue = element.Attribute("Email").Value
                 });
 
                 ViewBag.IsInsert = true;
@@ -400,8 +398,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         public PartialViewResult _NAP_Function_Insert(LogExecSp log)
         {
-            XElement elementNew = XElement.Parse(log.Data);
-            XElement elementOld = XElement.Parse(log.OldData ?? "<ROOT/>");
+            XElement element = XElement.Parse(log.Data);
 
             if (log.ActionId == (int)LogAction.NAP_Function_Insert)
             {
@@ -409,55 +406,55 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 listLogData.Add(new LogData
                 {
                     FieldName = ViewResources.Function_Name,
-                    NewValue = elementNew.Attribute("FunctionName").Value
+                    NewValue = element.Attribute("FunctionName").Value
                 });
 
                 listLogData.Add(new LogData
                 {
                     FieldName = ViewResources.Site_Name,
-                    NewValue = elementNew.Attribute("SiteName").Value
+                    NewValue = element.Attribute("SiteName").Value
                 });
 
                 listLogData.Add(new LogData
                 {
                     FieldName = ViewResources.Function_Key,
-                    NewValue = elementNew.Attribute("FunctionKey").Value
+                    NewValue = element.Attribute("FunctionKey").Value
                 });
 
                 listLogData.Add(new LogData
                 {
                     FieldName = ViewResources.Description,
-                    NewValue = elementNew.Attribute("Description").Value
+                    NewValue = element.Attribute("Description").Value
                 });
 
                 listLogData.Add(new LogData
                 {
                     FieldName = ViewResources.Parent,
-                    NewValue = elementNew.Attribute("ParentName").Value
+                    NewValue = element.Attribute("ParentName").Value
                 });
 
                 listLogData.Add(new LogData
                 {
                     FieldName = ViewResources.CRUD,
-                    NewValue = elementNew.Attribute("CRUD").Value
+                    NewValue = element.Attribute("CRUD").Value
                 });
 
                 listLogData.Add(new LogData
                 {
                     FieldName = ViewResources.Display_Order,
-                    NewValue = elementNew.Attribute("DisplayOrder").Value
+                    NewValue = element.Attribute("DisplayOrder").Value
                 });
 
                 listLogData.Add(new LogData
                 {
                     FieldName = ViewResources.Active,
-                    NewValue = elementNew.Attribute("IsActive").Value == "1" ? "true" : "false"
+                    NewValue = element.Attribute("IsActive").Value == "1" ? "true" : "false"
                 });
 
                 listLogData.Add(new LogData
                 {
                     FieldName = ViewResources.Environment,
-                    NewValue = elementNew.Attribute("Environment").Value
+                    NewValue = element.Attribute("Environment").Value
                 });
 
                 ViewBag.IsInsert = true;
@@ -474,8 +471,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// <returns>Partial view result.</returns>
         public PartialViewResult _NAP_Group_Insert(LogExecSp log)
         {
-            XElement elementNew = XElement.Parse(log.Data);
-            XElement elementOld = XElement.Parse(log.OldData ?? "<ROOT/>");
+            XElement element = XElement.Parse(log.Data);
 
             if (log.ActionId == (int)LogAction.NAP_Group_Insert)
             {
@@ -483,19 +479,19 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 listLogData.Add(new LogData
                 {
                     FieldName = ViewResources.Group_Name,
-                    NewValue = elementNew.Attribute("GroupName").Value
+                    NewValue = element.Attribute("GroupName").Value
                 });
 
                 listLogData.Add(new LogData
                 {
                     FieldName = ViewResources.Description,
-                    NewValue = elementNew.Attribute("Description").Value
+                    NewValue = element.Attribute("Description").Value
                 });
 
                 listLogData.Add(new LogData
                 {
                     FieldName = ViewResources.Active,
-                    NewValue = elementNew.Attribute("IsActive").Value == "1" ? "true" : "false"
+                    NewValue = element.Attribute("IsActive").Value == "1" ? "true" : "false"
                 });
 
                 ViewBag.IsInsert = true;
@@ -513,8 +509,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         public PartialViewResult _NAP_MenuItem_Insert(LogExecSp log)
         {
-            XElement elementNew = XElement.Parse(log.Data);
-            XElement elementOld = XElement.Parse(log.OldData ?? "<ROOT/>");
+            XElement element = XElement.Parse(log.Data);
 
             if (log.ActionId == (int)LogAction.NAP_MenuItem_Insert)
             {
@@ -522,55 +517,55 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 listLogData.Add(new LogData
                 {
                     FieldName = ViewResources.Menu_Item_Name,
-                    NewValue = elementNew.Attribute("MenuItemName").Value
+                    NewValue = element.Attribute("MenuItemName").Value
                 });
 
                 listLogData.Add(new LogData
                 {
                     FieldName = ViewResources.Function_Name,
-                    NewValue = elementNew.Attribute("FunctionName").Value
+                    NewValue = element.Attribute("FunctionName").Value
                 });
 
                 listLogData.Add(new LogData
                 {
                     FieldName = ViewResources.Site_Name,
-                    NewValue = elementNew.Attribute("SiteName").Value
+                    NewValue = element.Attribute("SiteName").Value
                 });
 
                 listLogData.Add(new LogData
                 {
                     FieldName = ViewResources.Description,
-                    NewValue = elementNew.Attribute("Description").Value
+                    NewValue = element.Attribute("Description").Value
                 });
 
                 listLogData.Add(new LogData
                 {
                     FieldName = ViewResources.Parent,
-                    NewValue = elementNew.Attribute("ParentName").Value
+                    NewValue = element.Attribute("ParentName").Value
                 });
 
                 listLogData.Add(new LogData
                 {
                     FieldName = ViewResources.Policy,
-                    NewValue = elementNew.Attribute("Policy").Value
+                    NewValue = element.Attribute("Policy").Value
                 });
 
                 listLogData.Add(new LogData
                 {
                     FieldName = ViewResources.URL,
-                    NewValue = elementNew.Attribute("URL").Value
+                    NewValue = element.Attribute("URL").Value
                 });
 
                 listLogData.Add(new LogData
                 {
                     FieldName = ViewResources.Display_Order,
-                    NewValue = elementNew.Attribute("DisplayOrder").Value
+                    NewValue = element.Attribute("DisplayOrder").Value
                 });
 
                 listLogData.Add(new LogData
                 {
                     FieldName = ViewResources.Active,
-                    NewValue = elementNew.Attribute("IsActive").Value == "1" ? "true" : "false"
+                    NewValue = element.Attribute("IsActive").Value == "1" ? "true" : "false"
                 });
 
                 ViewBag.IsInsert = true;
@@ -588,8 +583,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         public PartialViewResult _NAP_Site_InsertWithSiteURL(LogExecSp log)
         {
-            XElement elementNew = XElement.Parse(log.Data);
-            XElement elementOld = XElement.Parse(log.OldData ?? "<ROOT/>");
+            XElement element = XElement.Parse(log.Data);
 
             if (log.ActionId == (int)LogAction.NAP_Site_InsertWithSiteURL)
             {
@@ -597,28 +591,28 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 listLogData.Add(new LogData
                 {
                     FieldName = ViewResources.Site_Name,
-                    NewValue = elementNew.Attribute("SiteName").Value
+                    NewValue = element.Attribute("SiteName").Value
                 });
 
                 listLogData.Add(new LogData
                 {
                     FieldName = ViewResources.Description,
-                    NewValue = elementNew.Attribute("Description").Value
+                    NewValue = element.Attribute("Description").Value
                 });
 
                 listLogData.Add(new LogData
                 {
                     FieldName = ViewResources.Environment,
-                    NewValue = elementNew.Attribute("Environment").Value
+                    NewValue = element.Attribute("Environment").Value
                 });
 
                 listLogData.Add(new LogData
                 {
                     FieldName = ViewResources.Active,
-                    NewValue = elementNew.Attribute("IsActive").Value == "1" ? "true" : "false"
+                    NewValue = element.Attribute("IsActive").Value == "1" ? "true" : "false"
                 });
 
-                string strUrl = elementNew.Attribute("Value").Value.DecodeXMLValue();
+                string strUrl = element.Attribute("Value").Value.DecodeXMLValue();
 
                 var listSiteUrl = new List<SiteUrl>();
                 XDocument documentSiteUrl = XDocument.Parse(strUrl);
@@ -1417,8 +1411,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         public PartialViewResult _NAP_MailingList_Insert(LogExecSp log)
         {
-            XElement elementNew = XElement.Parse(log.Data);
-            XElement elementOld = XElement.Parse(log.OldData ?? "<ROOT/>");
+            XElement element = XElement.Parse(log.Data);
 
             if (log.ActionId == (int)LogAction.NAP_MailingList_Insert)
             {
@@ -1426,62 +1419,62 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 listLogData.Add(new LogData
                 {
                     FieldName = ViewResources.List_Key,
-                    NewValue = elementNew.Attribute("ListKey").Value
+                    NewValue = element.Attribute("ListKey").Value
                 });
                 listLogData.Add(new LogData
                 {
                     FieldName = ViewResources.List_Name,
-                    NewValue = elementNew.Attribute("ListName").Value
+                    NewValue = element.Attribute("ListName").Value
                 });
                 listLogData.Add(new LogData
                 {
                     FieldName = ViewResources.Description,
-                    NewValue = elementNew.Attribute("Description").Value
+                    NewValue = element.Attribute("Description").Value
                 });
                 listLogData.Add(new LogData
                 {
                     FieldName = ViewResources.Site_Name,
-                    NewValue = elementNew.Attribute("SiteName").Value
+                    NewValue = element.Attribute("SiteName").Value
                 });
                 listLogData.Add(new LogData
                 {
                     FieldName = ViewResources.Environment,
-                    NewValue = elementNew.Attribute("Environment").Value
+                    NewValue = element.Attribute("Environment").Value
                 });
                 listLogData.Add(new LogData
                 {
                     FieldName = ViewResources.ListFunction,
-                    NewValue = elementNew.Attribute("ListFunctionName").Value
+                    NewValue = element.Attribute("ListFunctionName").Value
                 });
                 listLogData.Add(new LogData
                 {
                     FieldName = ViewResources.Function,
-                    NewValue = elementNew.Attribute("FunctionName").Value
+                    NewValue = element.Attribute("FunctionName").Value
                 });
                 listLogData.Add(new LogData
                 {
                     FieldName = ViewResources.To,
-                    NewValue = elementNew.Attribute("ToList").Value
+                    NewValue = element.Attribute("ToList").Value
                 });
                 listLogData.Add(new LogData
                 {
                     FieldName = ViewResources.Cc,
-                    NewValue = elementNew.Attribute("CcList").Value
+                    NewValue = element.Attribute("CcList").Value
                 });
                 listLogData.Add(new LogData
                 {
                     FieldName = ViewResources.Bcc,
-                    NewValue = elementNew.Attribute("BccList").Value
+                    NewValue = element.Attribute("BccList").Value
                 });
                 listLogData.Add(new LogData
                 {
                     FieldName = ViewResources.Internal,
-                    NewValue = elementNew.Attribute("IsInternal").Value
+                    NewValue = element.Attribute("IsInternal").Value
                 });
                 listLogData.Add(new LogData
                 {
                     FieldName = ViewResources.Activate,
-                    NewValue = elementNew.Attribute("IsActive").Value
+                    NewValue = element.Attribute("IsActive").Value
                 });
 
                 ViewBag.IsInsert = true;

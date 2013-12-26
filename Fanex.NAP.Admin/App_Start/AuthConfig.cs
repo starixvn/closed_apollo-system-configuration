@@ -20,7 +20,7 @@ namespace Fanex.NAP.Admin.App_Start
     /// <summary>
     /// Authorize config.
     /// </summary>
-    public class AuthConfig
+    public static class AuthConfig
     {
         /// <summary>
         /// Register authorize data.

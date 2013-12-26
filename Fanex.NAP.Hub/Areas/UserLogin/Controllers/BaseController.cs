@@ -27,8 +27,6 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
 
         private bool _enableDirectLogin = NapSettings.Settings.EnableDirectLogin;
 
-        private ViewFlags _viewFlags;
-
         public BaseController()
         {
             this.CurrentContext = new CurrentContext();
@@ -61,7 +59,7 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
 
             set
             {
-                ViewBag.ViewFlags = _viewFlags = value;
+                ViewBag.ViewFlags = value;
             }
         }  
     }

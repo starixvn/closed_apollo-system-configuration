@@ -32,25 +32,22 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         private readonly IMailingListService _mailingListService;
         private readonly IFunctionService _functionService;
         private readonly ISiteService _siteService;
-        private readonly IUserService _userService;
         private readonly IGroupService _groupService;
         
         public MailingListController()
-            : this(null, null, null, null, null)
+            : this(null, null, null, null)
         {
         }
 
         public MailingListController(
             IFunctionService functionService, 
             ISiteService siteService, 
-            IUserService userService, 
             IGroupService groupService, 
             IMailingListService mailingListService)
         {
             _mailingListService = mailingListService ?? new MailingListService { ServiceContext = ServiceContext };
             _functionService = functionService ?? new FunctionService { ServiceContext = ServiceContext };
             _siteService = siteService ?? new SiteService { ServiceContext = ServiceContext };
-            _userService = userService ?? new UserService { ServiceContext = ServiceContext };
             _groupService = groupService ?? new GroupService { ServiceContext = ServiceContext };
         }
 
@@ -257,15 +254,14 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         [NapAuth(FunctionKey = FunctionKeys.ManageMailingList, Policy = Constant.Policy.Host)]
         public ActionResult Edit(int id)
         {
-            var criteria = new UpdateMailingListCriteria();
-            var siteName = string.Empty;
-            var isITGroup = CheckIsPortalAminOrITGroup();
             var mailingList = _mailingListService.GetById(id);
 
             if (ReferenceEquals(mailingList, null))
             {
                 return RedirectToAction("Manage");
             }
+
+            var criteria = new UpdateMailingListCriteria();
 
             criteria.ListId = mailingList.Id;
             criteria.ListKey = mailingList.Key;
@@ -282,6 +278,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             criteria.IsInternal = mailingList.IsInternal;
             criteria.IsActive = mailingList.IsActive;
 
+            var isITGroup = CheckIsPortalAminOrITGroup();
             var functionItemList = GetFunctionList(criteria.SiteId, criteria.Environment);
             var mailFunctionItemList = GetMailFunctionList(criteria.Environment);
 
@@ -301,14 +298,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         [NapAuth(FunctionKey = FunctionKeys.ManageMailingList, Policy = Constant.Policy.Host)]
         public ActionResult Edit(UpdateMailingListCriteria criteria)
         {
-            var siteName = string.Empty;
             var isITGroup = CheckIsPortalAminOrITGroup();
-
-            ViewBag.IsITGroup = isITGroup;
-
             var functionItemList = GetFunctionList(criteria.SiteId, criteria.Environment);
             var mailFunctionItemList = GetMailFunctionList(criteria.Environment);
 
+            ViewBag.IsITGroup = isITGroup;
             ViewBag.MailFunctionList = mailFunctionItemList;
             ViewBag.FunctionList = functionItemList;
             ViewBag.IsITGroup = isITGroup;

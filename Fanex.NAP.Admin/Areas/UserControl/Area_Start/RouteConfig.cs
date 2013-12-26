@@ -14,7 +14,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Area_Start
     /// <summary>
     /// Route config.
     /// </summary>
-    public class RouteConfig
+    public static class RouteConfig
     {
         public static void RegisterRoutes(string areaName, AreaRegistrationContext context)
         {

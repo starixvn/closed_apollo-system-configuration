@@ -34,27 +34,21 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         private readonly IMenuItemService _menuItemService;
         private readonly ISiteService _siteService;
         private readonly IFunctionService _functionService;
-        private readonly IUserService _userService;
 
         #endregion
 
         #region Contructors
 
         public MenuController()
-            : this(null, null, null, null)
+            : this(null, null, null)
         {
         }
 
-        public MenuController(
-            IMenuItemService menuitemService,
-            ISiteService siteService,
-            IFunctionService functionService,
-            IUserService userService)
+        public MenuController(IMenuItemService menuitemService, ISiteService siteService, IFunctionService functionService)
         {
             _menuItemService = menuitemService ?? new MenuItemService { ServiceContext = this.ServiceContext };
             _siteService = siteService ?? new SiteService { ServiceContext = this.ServiceContext };
-            this._functionService = functionService ?? new FunctionService { ServiceContext = this.ServiceContext };
-            _userService = userService ?? new UserService { ServiceContext = this.ServiceContext };
+            _functionService = functionService ?? new FunctionService { ServiceContext = this.ServiceContext };
         }
 
         #endregion

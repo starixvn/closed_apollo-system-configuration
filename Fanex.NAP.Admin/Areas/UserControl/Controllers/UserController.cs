@@ -303,9 +303,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             ViewBag.PageIndex = pageIndex;
             ViewBag.ReturnGroupId = groupId ?? 0;
 
-            // get view flag
-            var viewFlag = (ViewFlags)ViewFlags;
-
             var siteList = new List<ISite>();
             var editableSiteList = new List<ISite>();
             var siteLevelList = new List<SiteLevel>();

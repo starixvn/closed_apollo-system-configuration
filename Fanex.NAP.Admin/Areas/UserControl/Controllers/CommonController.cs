@@ -10,24 +10,14 @@
 namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 {
     using System.Web.Mvc;
-    using Fanex.NAP.Core.Service.Impl;
-    using Fanex.NAP.Core.Service.Interface;
 
     /// <summary>
     /// Common controller.
     /// </summary>
     public class CommonController : Controller
     {
-        private readonly IMaintenanceService _maintenanceService;
-
         public CommonController()
-            : this(null)
         {
-        }
-
-        public CommonController(IMaintenanceService maintenanceService)
-        {
-            _maintenanceService = maintenanceService ?? new MaintenanceService();
         }
 
         // GET: /UserControl/Common/
