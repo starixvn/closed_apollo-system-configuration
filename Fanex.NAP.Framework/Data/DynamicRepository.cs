@@ -35,17 +35,10 @@ namespace Fanex.NAP.Framework.Data
         /// <returns>Returned object.</returns>
         public virtual T Get<T>(ICriteria criteria)
         {
-            try
+            using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
             {
-                using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
-                {
-                    T entity = objectDb.QueryEntity<T>(criteria.GetSpParams());
-                    return entity;
-                }
-            }
-            catch
-            {
-                throw;
+                T entity = objectDb.QueryEntity<T>(criteria.GetSpParams());
+                return entity;
             }
         }
 
@@ -56,18 +49,11 @@ namespace Fanex.NAP.Framework.Data
         /// <returns>Number of object.</returns>
         public virtual int Count(ICriteria criteria)
         {
-            try
+            using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
             {
-                using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
-                {
-                    int count = Convert.ToInt32(objectDb.ExecuteScalar(criteria.GetSpParams()));
+                int count = Convert.ToInt32(objectDb.ExecuteScalar(criteria.GetSpParams()));
 
-                    return count;
-                }
-            }
-            catch
-            {
-                throw;
+                return count;
             }
         }
 
@@ -89,18 +75,11 @@ namespace Fanex.NAP.Framework.Data
         /// <returns>List of object.</returns>
         public virtual IEnumerable<T> Fetch<T>(ICriteria criteria)
         {
-            try
+            using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
             {
-                using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
-                {
-                    IEnumerable<T> entityList = objectDb.Query<T>(criteria.GetSpParams());
+                IEnumerable<T> entityList = objectDb.Query<T>(criteria.GetSpParams());
 
-                    return entityList;
-                }
-            }
-            catch
-            {
-                throw;
+                return entityList;
             }
         }
 
@@ -113,23 +92,16 @@ namespace Fanex.NAP.Framework.Data
         /// <returns>List of object.</returns>
         public virtual IEnumerable<T> Fetch<T>(ICriteria criteria, Action<Orderable<T>> order)
         {
-            try
+            using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
             {
-                using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
+                IEnumerable<T> entityList = objectDb.Query<T>(criteria.GetSpParams());
+
+                if (entityList != null && entityList.Any())
                 {
-                    IEnumerable<T> entityList = objectDb.Query<T>(criteria.GetSpParams());
-
-                    if (entityList != null && entityList.Any())
-                    {
-                        var orderable = new Orderable<T>(entityList);
-                    }
-
-                    return entityList;
+                    var orderable = new Orderable<T>(entityList);
                 }
-            }
-            catch
-            {
-                throw;
+
+                return entityList;
             }
         }
 
@@ -141,20 +113,13 @@ namespace Fanex.NAP.Framework.Data
         /// <returns>Returned object.</returns>
         public virtual T Single<T>(dynamic parameters)
         {
-            try
-            {
-                var hash = this.ConvertDynamicParamsToHashtable(parameters);
-                var settingKey = this.GetSettingKeyFromDynamicParam(parameters);
+            var hash = this.ConvertDynamicParamsToHashtable(parameters);
+            var settingKey = this.GetSettingKeyFromDynamicParam(parameters);
 
-                using (var objectDb = new ObjectDb(settingKey))
-                {
-                    var entity = objectDb.QueryEntity<T>(null, hash);
-                    return entity;
-                }
-            }
-            catch
+            using (var objectDb = new ObjectDb(settingKey))
             {
-                throw;
+                var entity = objectDb.QueryEntity<T>(null, hash);
+                return entity;
             }
         }
 
@@ -166,20 +131,13 @@ namespace Fanex.NAP.Framework.Data
         /// <returns>List of object.</returns>
         public virtual IEnumerable<T> Query<T>(dynamic parameters)
         {
-            try
-            {
-                var hash = this.ConvertDynamicParamsToHashtable(parameters);
-                var settingKey = this.GetSettingKeyFromDynamicParam(parameters);
+            var hash = this.ConvertDynamicParamsToHashtable(parameters);
+            var settingKey = this.GetSettingKeyFromDynamicParam(parameters);
 
-                using (var objectDb = new ObjectDb(settingKey))
-                {
-                    var entityList = objectDb.Query<T>(null, hash);
-                    return entityList;
-                }
-            }
-            catch
+            using (var objectDb = new ObjectDb(settingKey))
             {
-                throw;
+                var entityList = objectDb.Query<T>(null, hash);
+                return entityList;
             }
         }
 
@@ -190,19 +148,12 @@ namespace Fanex.NAP.Framework.Data
         /// <returns>Number of records.</returns>
         public virtual int Length(dynamic parameters)
         {
-            try
-            {
-                var hash = this.ConvertDynamicParamsToHashtable(parameters);
-                var settingKey = this.GetSettingKeyFromDynamicParam(parameters);
+            var hash = this.ConvertDynamicParamsToHashtable(parameters);
+            var settingKey = this.GetSettingKeyFromDynamicParam(parameters);
 
-                using (var objectDb = new ObjectDb(settingKey))
-                {
-                    return Convert.ToInt32(objectDb.ExecuteScalar(hash));
-                }
-            }
-            catch
+            using (var objectDb = new ObjectDb(settingKey))
             {
-                throw;
+                return Convert.ToInt32(objectDb.ExecuteScalar(hash));
             }
         }
 

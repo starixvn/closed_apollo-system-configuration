@@ -95,7 +95,7 @@ namespace Fanex.NAP.Core.Web.Context
         /// <returns>Domain element.</returns>
         public DomainElement GetCurrentDomain()
         {
-            var domainList = NapSettings.Settings.Domains;
+            DomainCollection domainList = NapSettings.Settings.Domains;
 
             string currentDomain = HttpContext.Current.Request.Url.Authority;
             string currentPath = HttpContext.Current.Request.ApplicationPath;

@@ -59,8 +59,8 @@ namespace Fanex.NAP.Core.Web.Auth
 
         public static AuthInfo CreateUserData(string authInfoXml)
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(AuthInfo));
-            AuthInfo authInfo = (AuthInfo)serializer.Deserialize(new StringReader(authInfoXml));
+            var serializer = new XmlSerializer(typeof(AuthInfo));
+            var authInfo = (AuthInfo)serializer.Deserialize(new StringReader(authInfoXml));
 
             return authInfo;
         }
@@ -71,7 +71,7 @@ namespace Fanex.NAP.Core.Web.Auth
         /// <returns>XML string.</returns>
         public string ToXml()
         {
-            string xml = string.Empty;
+            var xml = string.Empty;
 
             using (var sw = new StringWriter())
             {

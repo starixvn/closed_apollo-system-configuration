@@ -15,7 +15,7 @@ namespace Fanex.NAP.Core.Domain
     public interface IMenuItem : IEntity<int, string>
     {
         string Description { get; set; }
-        
+
         IMenuItem Parent { get; set; }
 
         IFunction Function { get; set; }

@@ -10,6 +10,7 @@
 namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Threading.Tasks;
@@ -22,6 +23,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
     using Fanex.NAP.Admin.Core.Services.Interface;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Criteria.MailingList;
+    using Fanex.NAP.Core.Domain;
     using Fanex.NAP.Core.Service.Impl;
     using Fanex.NAP.Core.Service.Interface;
     using Fanex.NAP.Core.Web.Attribute;
@@ -146,7 +148,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 ExchangeId = id
             };
 
-            var exchangeRate = this._exchangeRateService.GetById(criteria);
+            ExchangeRateModel exchangeRate = this._exchangeRateService.GetById(criteria);
 
             return this.View(exchangeRate);
         }
@@ -222,7 +224,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         public ActionResult ExportExchangeRate()
         {
             var criteria = new GetAllExchangeRateCriteria();
-            var exchangeRateList = this._exchangeRateService.GetAll(criteria);
+            IEnumerable<ExchangeRateModel> exchangeRateList = this._exchangeRateService.GetAll(criteria);
             var excelResult = this._exchangeRateService.ExportExchangeRate(exchangeRateList.ToList());
             var fileName = string.Format("ExchangeRate_{0}", Utilities.ShortDateFormat(DateTime.Now));
 
@@ -238,8 +240,8 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         [NonAction]
         private void SendMailExchangeRate(string currency, double oldActualRate, double newActualRate)
         {
-            var templatePath = this._exchangeRateService.GetExchangeRateTemplateEmail();
-            var userName = this.CurrentSession.Username;
+            string templatePath = this._exchangeRateService.GetExchangeRateTemplateEmail();
+            string userName = this.CurrentSession.Username;
 
             var criteria = new GetMailingListByFunctionKeyAndSiteCriteria
             {
@@ -247,7 +249,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 SiteId = this.SiteId
             };
 
-            var mailingLists = this._mailingListService.GetByFunctionKeyAndSite(criteria);
+            IEnumerable<IMailingList> mailingLists = this._mailingListService.GetByFunctionKeyAndSite(criteria);
 
             //// send mail
             Task taskSendMail = new Task(() => this._exchangeRateService.SendMailExchangeRate(

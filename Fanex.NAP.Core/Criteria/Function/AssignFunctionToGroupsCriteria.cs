@@ -39,7 +39,7 @@ namespace Fanex.NAP.Core.Criteria.Function
 
                 if (GroupRead != null)
                 {
-                    foreach (var groupId in GroupRead)
+                    foreach (string groupId in GroupRead)
                     {
                         value.AppendFormat(AssignPermissionTpl, groupId, 1); // 1 -> read
                     }
@@ -47,7 +47,7 @@ namespace Fanex.NAP.Core.Criteria.Function
 
                 if (GroupHost != null)
                 {
-                    foreach (var userId in GroupHost)
+                    foreach (string userId in GroupHost)
                     {
                         value.AppendFormat(AssignPermissionTpl, userId, 2); // 2 -> host
                     }

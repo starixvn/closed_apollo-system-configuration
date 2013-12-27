@@ -52,7 +52,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         public BaseController()
         {
             CurrentContext = new CurrentContext();
-            ViewBag.Session = CurrentSession = new CurrentSession();
+            CurrentSession = new CurrentSession();
             ViewBag.ServiceContext = ServiceContext = new ServiceContext
             {
                 UserId = this.CurrentSession.UserId,

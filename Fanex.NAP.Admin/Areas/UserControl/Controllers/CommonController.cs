@@ -20,7 +20,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
         }
 
-        // GET: /UserControl/Common/
+        /// <summary>
+        /// Unauthorize page.
+        /// </summary>
         public ActionResult Unauthorize()
         {
             return View();

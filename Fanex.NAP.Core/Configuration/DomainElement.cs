@@ -13,7 +13,7 @@ namespace Fanex.NAP.Core.Configuration
 
     /// <summary>
     /// Domain Element.
-    /// </summary>    
+    /// </summary>
     public class DomainElement : ConfigurationElement
     {
         private const string __NAP_DOMAIN_NAME = "Name";

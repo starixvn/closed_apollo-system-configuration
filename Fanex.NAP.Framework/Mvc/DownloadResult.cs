@@ -53,9 +53,7 @@ namespace Fanex.NAP.Framework.Mvc
             if (!string.IsNullOrEmpty(this.FileDownloadName))
             {
                 this.FileDownloadName = this.FileDownloadName.Replace(" ", string.Empty);
-                context.HttpContext.Response.AddHeader(
-                    "content-disposition",
-                    "attachment; filename=" + this.FileDownloadName);
+                context.HttpContext.Response.AddHeader("content-disposition", "attachment; filename=" + this.FileDownloadName);
             }
 
             string filePath = context.HttpContext.Server.MapPath(this.VirtualPath);

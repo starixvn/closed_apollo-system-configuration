@@ -293,7 +293,6 @@
     <Compile Include="Web\Context\ICurrentContext.cs" />
     <Compile Include="Web\Session\ICurrentSession.cs" />
     <Compile Include="Web\HtmlHelperExtensions.cs" />
-    <Compile Include="Web\UrlHelperExtensions.cs" />
     <Compile Include="Web\Validation\CollectionStringLengthAttribute.cs" />
     <Compile Include="Web\ViewFlags.cs" />
     <Compile Include="Web\ViewResources.Designer.cs">

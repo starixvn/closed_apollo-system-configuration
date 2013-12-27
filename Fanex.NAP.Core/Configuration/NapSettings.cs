@@ -13,7 +13,7 @@ namespace Fanex.NAP.Core.Configuration
 
     /// <summary>
     /// Custom configuration for NAP.
-    /// </summary>    
+    /// </summary>
     public class NapSettings : ConfigurationSection
     {
         #region consts

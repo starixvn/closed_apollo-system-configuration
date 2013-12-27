@@ -63,8 +63,8 @@ namespace Fanex.NAP.Framework.Mvc
                 {
                     @class = cssDatePicker,
                     mindate = minDate != null && minDate != DateTime.MinValue
-                    ? ((DateTime)minDate).ToString(clientFormateDate)
-                    : "null",
+                        ? ((DateTime)minDate).ToString(clientFormateDate)
+                        : "null",
                     maxdate = ((DateTime)maxDate).ToString(clientFormateDate)
                 });
 
@@ -121,9 +121,8 @@ namespace Fanex.NAP.Framework.Mvc
             object htmlAttributes = null)
         {
             var list = new List<SelectListItem>();
-            var now = DateTime.Now.Year;
 
-            for (var i = now; i >= fromYear; i--)
+            for (var i = DateTime.Now.Year; i >= fromYear; i--)
             {
                 list.Add(new SelectListItem
                 {
@@ -176,9 +175,8 @@ namespace Fanex.NAP.Framework.Mvc
         {
             // currentYear = currentYear ?? DateTime.Now.Year;
             var list = new List<SelectListItem>();
-            var endMonth = 12; // (currentYear.Value < DateTime.Now.Year) ? 12 : DateTime.Now.Month;
             
-            for (var i = endMonth; i >= 1; i--)
+            for (var i = 12; i >= 1; i--)
             {
                 list.Add(new SelectListItem
                 {

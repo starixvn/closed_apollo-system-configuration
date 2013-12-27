@@ -17,6 +17,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
     using System.Web.Mvc;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Criteria.Function;
+    using Fanex.NAP.Core.Domain;
     using Fanex.NAP.Core.Helpers;
     using Fanex.NAP.Core.Model;
     using Fanex.NAP.Core.Model.ValueObject;
@@ -24,6 +25,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
     using Fanex.NAP.Core.Service.Interface;
     using Fanex.NAP.Core.Web;
     using Fanex.NAP.Core.Web.Attribute;
+    using Fanex.NAP.Framework.Data;
 
     /// <summary>
     /// Function controller.
@@ -136,7 +138,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             {
                 // checks duplicate function name
                 criteria.FunctionName = criteria.FunctionName.Trim();
-                var function = this._functionService.GetByNameAndSite(criteria.FunctionName, criteria.SiteId);
+                IFunction function = this._functionService.GetByNameAndSite(criteria.FunctionName, criteria.SiteId);
 
                 if (function != null)
                 {
@@ -161,7 +163,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 criteria.CreatedDate = DateTime.Now;
 
                 // inserts function and assigns it to all site-admins of the current site and all portal admins
-                var result = this._functionService.Insert(criteria);
+                ICommandResult result = this._functionService.Insert(criteria);
 
                 if (result != null && result.IsSuccessful)
                 {
@@ -186,9 +188,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         [NapAuth(FunctionKey = FunctionKeys.ManageFunction, Policy = Constant.Policy.Host)]
         public ActionResult Duplicate(int id, int? siteId = null)
         {
-            int functionId = id; // id of the function-to-duplicate
-            var function = this._functionService.GetById(functionId);
-            var site = _siteService.GetById(function.Site.Id);
+            IFunction function = this._functionService.GetById(id);
 
             if (function == null)
             {
@@ -197,20 +197,22 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
             ViewBag.OriginFunctionName = function.Name;
 
+            ISite site = _siteService.GetById(function.Site.Id);
+
             var criteria = new DuplicateFunctionCriteria
-                {
-                    FunctionId = function.Id,
-                    FunctionName = function.Name + " Copy",
-                    Description = function.Description,
-                    SiteId = this.SiteId,
-                    SiteName = site.Name,
-                    Readonly = function.Crud == (byte)Constant.Crud.Read,
-                    ParentId = function.Parent != null ? (int?)function.Parent.Id : null,
-                    DisplayOrder = function.DisplayOrder,
-                    IsActive = function.IsActive,
-                    Environment = function.Environment,
-                    ReturnSiteId = siteId ?? function.Site.Id
-                };
+            {
+                FunctionId = function.Id,
+                FunctionName = function.Name + " Copy",
+                Description = function.Description,
+                SiteId = this.SiteId,
+                SiteName = site.Name,
+                Readonly = function.Crud == (byte)Constant.Crud.Read,
+                ParentId = function.Parent != null ? (int?)function.Parent.Id : null,
+                DisplayOrder = function.DisplayOrder,
+                IsActive = function.IsActive,
+                Environment = function.Environment,
+                ReturnSiteId = siteId ?? function.Site.Id
+            };
 
             GetSitesAndFunctionsForAddNew(criteria, getSiteList: false);
 
@@ -226,7 +228,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         [NapAuth(FunctionKey = FunctionKeys.ManageFunction, Policy = Constant.Policy.Host)]
         public ActionResult Duplicate(DuplicateFunctionCriteria criteria)
         {
-            var function = this._functionService.GetById(criteria.FunctionId);
+            IFunction function = this._functionService.GetById(criteria.FunctionId);
 
             if (function == null)
             {
@@ -264,7 +266,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 criteria.CreatedBy = CurrentSession.UserId;
                 criteria.CreatedDate = DateTime.Now;
 
-                var result = this._functionService.Duplicate(criteria);
+                ICommandResult result = this._functionService.Duplicate(criteria);
 
                 if (result != null && result.IsSuccessful)
                 {
@@ -288,14 +290,14 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         [NapAuth(FunctionKey = FunctionKeys.ManageFunction, Policy = Constant.Policy.Host)]
         public ActionResult Edit(int id)
         {
-            var criteria = new UpdateFunctionCriteria();
-
-            var function = this._functionService.GetById(id);
+            IFunction function = this._functionService.GetById(id);
 
             if (ReferenceEquals(function, null))
             {
                 return RedirectToAction("Manage");
             }
+
+            var criteria = new UpdateFunctionCriteria();
 
             criteria.FunctionId = function.Id;
             criteria.SiteId = function.Site.Id;
@@ -311,7 +313,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             criteria.Environment = function.Environment;
 
             // get parent function list
-            var functionList = this._functionService.GetBySite(criteria.SiteId, criteria.Environment, true);
+            IEnumerable<IFunction> functionList = this._functionService.GetBySite(criteria.SiteId, criteria.Environment, true);
 
             ViewBag.ParentFunctionItemList = functionList
                 .Where(f => f.Id != id && (f.Parent == null || f.Parent.Id != id))
@@ -335,14 +337,14 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         [NapAuth(FunctionKey = FunctionKeys.ManageFunction, Policy = Constant.Policy.Host)]        
         public ActionResult Edit(UpdateFunctionCriteria criteria)
         {
-            var currentFunction = this._functionService.GetById(criteria.FunctionId);
+            IFunction currentFunction = this._functionService.GetById(criteria.FunctionId);
 
             if (ReferenceEquals(currentFunction, null))
             {
                 return RedirectToAction("Manage");
             }
 
-            var functionList = this._functionService.GetBySite(criteria.SiteId, criteria.Environment, true);
+            IEnumerable<IFunction> functionList = this._functionService.GetBySite(criteria.SiteId, criteria.Environment, true);
 
             ViewBag.ParentFunctionItemList = functionList.Select(s => new SelectListItem
             {
@@ -355,7 +357,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             {
                 // checks Function Name duplication
                 criteria.FunctionName = criteria.FunctionName.Trim();
-                var function = this._functionService.GetByNameAndSite(criteria.FunctionName, criteria.SiteId);
+                IFunction function = this._functionService.GetByNameAndSite(criteria.FunctionName, criteria.SiteId);
 
                 if (function != null && function.Id != criteria.FunctionId)
                 {
@@ -402,7 +404,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                         var listGroups = _groupService.GetByFunctionAndSite(function.Id, function.Site.Id)
                                                         .Where(u => u.Policy == (int)Constant.Policy.Host).ToList();
 
-                        if (listUsers.Count > 0 || listGroups.Count > 0)
+                        if (listUsers.Any() || listGroups.Any())
                         {
                             ModelState.AddModelError("Readonly", ViewResources.Privileged_User_Group_Message);
 
@@ -417,7 +419,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 criteria.ModifiedBy = CurrentSession.UserId;
                 criteria.ModifiedDate = DateTime.Now;
 
-                var result = this._functionService.Update(criteria);
+                ICommandResult result = this._functionService.Update(criteria);
 
                 if (result != null && result.IsSuccessful)
                 {
@@ -443,13 +445,15 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             if (Request.IsAjaxRequest())
             {
-                var result = this._functionService.UpdateStatus(new UpdateStatusFunctionCriteria
+                var criteria = new UpdateStatusFunctionCriteria
                 {
                     FunctionId = id,
                     IsActive = isActive,
                     ModifiedBy = CurrentSession.UserId,
                     ModifiedDate = DateTime.Now
-                });
+                };
+
+                ICommandResult result = this._functionService.UpdateStatus(criteria);
 
                 if (result != null && result.IsSuccessful)
                 {
@@ -472,27 +476,24 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         [NapAuth(FunctionKey = FunctionKeys.ManageFunction, Policy = Constant.Policy.Read)]
         public ActionResult PrivilegedGroupsAndUsers(int id = 0)
         {
-            int functionId = id;
-            int siteId = 0;
-
-            var function = this._functionService.GetById(functionId);
+            var function = this._functionService.GetById(id);
 
             if (function == null)
             {
                 return HttpNotFound();
             }
 
-            siteId = function.Site.Id;
+            int siteId = function.Site.Id;
 
             ViewBag.Function = function;
-            ViewBag.Users = _userService.GetByFunctionAndSite(functionId, siteId).ToList();
-            ViewBag.Groups = _groupService.GetByFunctionAndSite(functionId, siteId).ToList();
+            ViewBag.Users = _userService.GetByFunctionAndSite(id, siteId).ToList();
+            ViewBag.Groups = _groupService.GetByFunctionAndSite(id, siteId).ToList();
 
             // gets logged-in-user privileges
             ViewFlags.HasAssignFunctionToUserRight =
-                HasRightOnSite(function.Site.Id, FunctionKeys.AssignFunctionToUser, Constant.Policy.Host);
+                HasRightOnSite(siteId, FunctionKeys.AssignFunctionToUser, Constant.Policy.Host);
             ViewFlags.HasAssignFunctionToGroupRight =
-                HasRightOnSite(function.Site.Id, FunctionKeys.AssignFunctionToGroup, Constant.Policy.Host);
+                HasRightOnSite(siteId, FunctionKeys.AssignFunctionToGroup, Constant.Policy.Host);
 
             ViewBag.GroupSelectList = _groupService.GetAllSelectListItem();
             ViewBag.SiteId = siteId.ToString();
@@ -525,7 +526,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 int groupId = gid;
                 string username = q.Trim();
 
-                PagerList<UserLevel> userList = new PagerList<UserLevel>(pageIndex, pageSize, 0, new List<UserLevel>());
+                var userList = new PagerList<UserLevel>(pageIndex, pageSize, 0, new List<UserLevel>());
                 int totalUsers = 0;
 
                 var function = this._functionService.GetById(functionId);
@@ -535,7 +536,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                     return HttpNotFound();
                 }
 
-                var users = _userService.SearchUserExcludeFunction(
+                IQueryable<UserLevel> users = _userService.SearchUserExcludeFunction(
                     pageIndex,
                     pageSize,
                     out totalUsers,
@@ -547,7 +548,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 userList = new PagerList<UserLevel>(pageIndex, pageSize, totalUsers, users);
 
                 // checks currently-logged-in user's policy on the function
-                var adminPolicy = _userService.GetUserFunctionPolicy(CurrentSession.UserId, functionId);
+                int adminPolicy = _userService.GetUserFunctionPolicy(CurrentSession.UserId, functionId);
                 ViewBag.IsReadonlyAssign = adminPolicy < (int)Constant.Policy.Host;
 
                 return View(userList);
@@ -564,15 +565,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// <param name="hostList">List of function which has host permission.</param>
         /// <returns>Result string.</returns>
         [NapAuth(FunctionKey = FunctionKeys.AssignFunctionToUser, Policy = Constant.Policy.Host)]
-        public string AddPrivilegedUsers(
-            int id = 0,
-            string readList = EmptyString,
-            string hostList = EmptyString)
+        public string AddPrivilegedUsers(int id = 0, string readList = EmptyString, string hostList = EmptyString)
         {
             if (Request.IsAjaxRequest())
             {
-                int functionId = id;
-                var function = this._functionService.GetById(functionId);
+                var function = this._functionService.GetById(id);
 
                 if (function == null)
                 {
@@ -589,7 +586,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                     ModifiedDate = DateTime.Now
                 };
 
-                var result = this._functionService.AssignFunctionToUsers(criteria);
+                ICommandResult result = this._functionService.AssignFunctionToUsers(criteria);
 
                 if (result != null && result.IsSuccessful)
                 {
@@ -597,7 +594,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 }
             }
 
-            throw new Exception(ViewResources.Unexpected_Error);
+            return ViewResources.Unexpected_Error;
         }
 
         /// <summary>
@@ -614,17 +611,17 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 int functionId = fid;
                 string groupName = q.Trim();
 
-                var function = this._functionService.GetById(functionId);
+                IFunction function = this._functionService.GetById(functionId);
 
                 if (function == null)
                 {
                     return HttpNotFound();
                 }
 
-                var group = _groupService.SearchGroupExcludeFunction(groupName, function.Site.Id, fid);
+                IEnumerable<IGroup> group = _groupService.SearchGroupExcludeFunction(groupName, function.Site.Id, fid);
 
                 // checks currently-logged-in user's policy on the function
-                var adminPolicy = _userService.GetUserFunctionPolicy(CurrentSession.UserId, fid);
+                int adminPolicy = _userService.GetUserFunctionPolicy(CurrentSession.UserId, fid);
                 ViewBag.IsReadonlyAssign = adminPolicy < (int)Constant.Policy.Host;
 
                 return View(group);
@@ -646,7 +643,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             if (Request.IsAjaxRequest())
             {
                 int functionId = id;
-                var function = this._functionService.GetById(functionId);
+                IFunction function = this._functionService.GetById(functionId);
 
                 if (function == null)
                 {
@@ -663,7 +660,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                     ModifiedDate = DateTime.Now
                 };
 
-                var result = this._functionService.AssignFunctionToGroups(criteria);
+                ICommandResult result = this._functionService.AssignFunctionToGroups(criteria);
 
                 if (result != null && result.IsSuccessful)
                 {
@@ -671,7 +668,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 }
             }
 
-            throw new Exception(ViewResources.Unexpected_Error);
+            return ViewResources.Unexpected_Error;
         }
 
         #endregion
@@ -689,7 +686,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             if (Request.IsAjaxRequest())
             {
-                var functionList = this._functionService.GetBySite(siteId, this.Environment, true).ToList();
+                List<IFunction> functionList = this._functionService.GetBySite(siteId, this.Environment, true).ToList();
 
                 functionList.Insert(0, new Function { Id = 0, Name = ViewResources.None });
 
@@ -714,12 +711,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             {
                 if (functionId != 0)
                 {
-                    var function = this._functionService.GetById(functionId);
+                    IFunction function = this._functionService.GetById(functionId);
+                    List<IFunction> functionList = this._functionService.GetBySite(function.Site.Id, env, true).ToList();
 
-                    var functionList = this._functionService.GetBySite(function.Site.Id, env, true).ToList();
-
-                    functionList = functionList.Where(f => f.Id != functionId && (f.Parent == null
-                                                || f.Parent.Id != functionId)).ToList();
+                    functionList = 
+                        functionList.Where(f => f.Id != functionId && (f.Parent == null || f.Parent.Id != functionId)).ToList();
 
                     functionList.Insert(0, new Function { Id = 0, Name = ViewResources.None });
 
@@ -748,7 +744,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         [NapAuth(FunctionKey = FunctionKeys.ManageFunction, Policy = Constant.Policy.Host)]
         public JsonResult GetFunctionKey(int functionId, string functionName)
         {
-            var tempFunction = this._functionService.GetById(functionId);
+            IFunction tempFunction = this._functionService.GetById(functionId);
 
             if (ReferenceEquals(tempFunction, null))
             {
@@ -756,7 +752,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             }
 
             // checks Function Name duplication
-            var function = this._functionService.GetByNameAndSite(functionName, tempFunction.Site.Id);
+            IFunction function = this._functionService.GetByNameAndSite(functionName, tempFunction.Site.Id);
 
             if (function != null && function.Id != tempFunction.Id)
             {
@@ -765,6 +761,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
             // checks Function Key duplication
             string functionKey = GenerateFunctionKey(functionName);
+
 
             function = this._functionService.GetByKeyAndSite(functionKey, tempFunction.Site.Id);
 
@@ -790,10 +787,10 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             List<Function> functionList, 
             Function parent)
         {
-            var childFunctionList = functionList.Where(f => f.Parent != null && f.Parent.Id == parent.Id)
+            List<Function> childFunctionList = functionList.Where(f => f.Parent != null && f.Parent.Id == parent.Id)
                 .OrderBy(f => f.DisplayOrder).ToList();
 
-            foreach (var childFunction in childFunctionList)
+            foreach (Function childFunction in childFunctionList)
             {
                 orderedFunctionList.Add(childFunction);
                 InsertChildFunction(ref orderedFunctionList, functionList, childFunction);

@@ -52,7 +52,7 @@ namespace Fanex.NAP.Core.Web.Attribute
 
         private bool CheckSessionAuthorization()
         {
-            ICurrentSession session = new CurrentSession();
+            var session = new CurrentSession();
 
             if (session == null || string.IsNullOrEmpty(session.Username))
             {

@@ -7,6 +7,7 @@
 //   <change who="Ricky.Nguyen" date="2012.6.25">Created</change>
 //   <change who="Anders.Le" date="2012.6.25">Add comment</change>
 // </history>
+
 namespace Fanex.NAP.Framework.Data
 {
     using System;

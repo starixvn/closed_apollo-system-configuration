@@ -101,6 +101,6 @@ namespace Fanex.NAP.Core.Configuration
         protected override object GetElementKey(ConfigurationElement element)
         {
             return ((DomainElement)element).Name + ((DomainElement)element).Path;
-        }        
+        }
     }
 }

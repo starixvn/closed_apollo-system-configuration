@@ -23,6 +23,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
     using Fanex.NAP.Core.Service.Interface;
     using Fanex.NAP.Core.Web;
     using Fanex.NAP.Core.Web.Attribute;
+    using Fanex.NAP.Framework.Data;
 
     /// <summary>
     /// Group controller.
@@ -128,7 +129,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             if (ModelState.IsValid)
             {
                 // Check name exist
-                var group = _groupService.GetByName(criteria.GroupName);
+                IGroup group = _groupService.GetByName(criteria.GroupName);
 
                 if (!ReferenceEquals(group, null))
                 {
@@ -141,7 +142,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 criteria.CreatedBy = CurrentSession.UserId;
                 criteria.CreatedDate = DateTime.Now;
 
-                var result = _groupService.Insert(criteria);
+                ICommandResult result = _groupService.Insert(criteria);
 
                 if (result != null && result.IsSuccessful)
                 {
@@ -167,7 +168,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             var criteria = new UpdateGroupCriteria();
 
-            var group = _groupService.GetById(id);
+            IGroup group = _groupService.GetById(id);
 
             if (ReferenceEquals(group, null))
             {
@@ -196,7 +197,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             if (ModelState.IsValid)
             {
                 // Check name exist
-                var group = _groupService.GetByName(criteria.GroupName);
+                IGroup group = _groupService.GetByName(criteria.GroupName);
 
                 if (!ReferenceEquals(group, null))
                 {
@@ -238,13 +239,15 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             if (Request.IsAjaxRequest())
             {
-                var result = _groupService.UpdateStatus(new UpdateStatusGroupCriteria
+                var criteria = new UpdateStatusGroupCriteria
                 {
                     GroupId = id,
                     IsActive = isActive,
                     ModifiedBy = CurrentSession.UserId,
                     ModifiedDate = DateTime.Now
-                });
+                };
+                
+                ICommandResult result = _groupService.UpdateStatus(criteria);
 
                 if (result != null && result.IsSuccessful)
                 {
@@ -273,8 +276,8 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
             siteId = siteId == 0 || this.SiteId != NapAdminId ? this.SiteId : siteId;
 
-            var group = _groupService.GetById(id);
-            var site = _siteService.GetById(siteId);
+            IGroup group = _groupService.GetById(id);
+            ISite site = _siteService.GetById(siteId);
 
             if (group == null || site == null)
             {
@@ -285,7 +288,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             criteria.GroupName = group.Name;
             criteria.SiteId = site.Id;
 
-            ViewBag.ViewFlags.HasAssignFunctionRight =
+            ViewFlags.HasAssignFunctionRight =
                 HasRightOnSite(criteria.SiteId, FunctionKeys.AssignFunctionToGroup, Constant.Policy.Host);
 
             if (CurrentSession.Level == (int)Constant.Level.PortalAdmin)
@@ -295,11 +298,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             else
             {
                 ViewBag.SiteSelectList = _siteService.GetSelectListItemByUserAndFunctionKeyIncludeGroup(
-                                                    CurrentSession.UserId,
-                                                    FunctionKeys.AssignFunctionToGroup,
-                                                    this.Environment,
-                                                    policy: Constant.Policy.Read,
-                                                    selectedSiteId: criteria.SiteId);
+                    CurrentSession.UserId,
+                    FunctionKeys.AssignFunctionToGroup,
+                    this.Environment,
+                    policy: Constant.Policy.Read,
+                    selectedSiteId: criteria.SiteId);
             }
 
             ViewBag.FunctionList = this._functionService.GetBySiteInHierarchy(criteria.SiteId, Environment, true);
@@ -323,8 +326,8 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         public ActionResult AssignPermission(AssignFunctionGroupCriteria criteria)
         {
             // check group and site
-            var group = _groupService.GetById(criteria.GroupId);
-            var site = _siteService.GetById(criteria.SiteId);
+            IGroup group = _groupService.GetById(criteria.GroupId);
+            ISite site = _siteService.GetById(criteria.SiteId);
 
             if (group == null || site == null)
             {
@@ -333,9 +336,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
             // check policy
             int policy = _userService.GetUserSiteFunctionKeyPolicy(
-                                            CurrentSession.UserId,
-                                            criteria.SiteId,
-                                            FunctionKeys.AssignFunctionToGroup);
+                CurrentSession.UserId,
+                criteria.SiteId,
+                FunctionKeys.AssignFunctionToGroup);
 
             if (policy < (int)Constant.Policy.Read)
             {
@@ -360,18 +363,16 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             listGroupFuncRemove.AddRange(listGroupFuncPolicy);
 
             // list function policy of current user login
-            List<FunctionPolicy> listCurrentUserFuncPolicy = this._functionService.GetByUserAndSiteIncludeGroup(
-                                                                                    CurrentSession.UserId,
-                                                                                    criteria.SiteId,
-                                                                                    Environment).ToList();
+            List<FunctionPolicy> listCurrentUserFuncPolicy = 
+                this._functionService.GetByUserAndSiteIncludeGroup(CurrentSession.UserId, criteria.SiteId, Environment).ToList();
 
             // check function host,contains in list function
             if (!criteria.FuncHost.IsNullOrDBNull())
             {
-                foreach (var itemFunc in criteria.FuncHost)
+                foreach (int itemFunc in criteria.FuncHost)
                 {
                     // function find from list function, policy is host
-                    var tempFuncHost = listFunc.Where(f => f.Id == itemFunc).FirstOrDefault();
+                    IFunction tempFuncHost = listFunc.Where(f => f.Id == itemFunc).FirstOrDefault();
 
                     if (tempFuncHost.IsNullOrDBNull())
                     {
@@ -385,7 +386,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             // check function read, with current user login have permission
             if (!criteria.FuncRead.IsNullOrDBNull())
             {
-                foreach (var itemFunc in criteria.FuncRead)
+                foreach (int itemFunc in criteria.FuncRead)
                 {
                     listGroupFuncRemove.Remove(f => f.Function.Id == itemFunc);
                 }
@@ -395,12 +396,10 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             // check for function policy will be remove ( set policy = 0 )
             listGroupFuncRemove = listGroupFuncRemove.Where(f => f.Policy > 0).ToList();
 
-            foreach (var itemFunc in listGroupFuncRemove)
+            foreach (FunctionPolicy itemFunc in listGroupFuncRemove)
             {
                 var tempFunc = listCurrentUserFuncPolicy
-                                    .Where(f =>
-                                        f.Function.Id == itemFunc.Function.Id
-                                        && f.Policy >= itemFunc.Policy).FirstOrDefault();
+                    .Where(f =>f.Function.Id == itemFunc.Function.Id && f.Policy >= itemFunc.Policy).FirstOrDefault();
 
                 if (tempFunc.IsNullOrDBNull())
                 {
@@ -409,7 +408,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             }
 
             // assign permission
-            var result = _groupService.AssignFunction(criteria);
+            ICommandResult result = _groupService.AssignFunction(criteria);
 
             if (result != null && result.IsSuccessful)
             {

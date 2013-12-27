@@ -43,19 +43,14 @@ namespace Fanex.NAP.Core.Web.Auth
                 if (httpCookie != null)
                 {
                     FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(httpCookie.Value);
-                    if (ticket == null || ticket.Expired)
-                    {
-                        return;
-                    }
 
-                    FormsIdentity identity = new FormsIdentity(ticket);
-                    if (string.IsNullOrEmpty(ticket.UserData))
+                    if (ticket == null || ticket.Expired || string.IsNullOrEmpty(ticket.UserData))
                     {
                         return;
                     }
 
                     this._authInfo = AuthInfo.CreateUserData(ticket.UserData);
-                    this._identity = identity;
+                    this._identity = new FormsIdentity(ticket);
                 }
             }
         }

@@ -484,7 +484,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// <param name="selectedSiteId">Input Selected site.</param>
         /// <returns>Return a site list.</returns>
         [NonAction]
-        private IList<SelectListItem> GetSiteList(int siteId, string environment, int selectedSiteId = 0)
+        private IList<SelectListItem> GetSiteList(int siteId, string environment)
         {
             IList<SelectListItem> siteItemList = null;
 
