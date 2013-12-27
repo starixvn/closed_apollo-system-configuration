@@ -21,8 +21,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         }
 
         /// <summary>
-        /// Unauthorize page.
+        /// Un-authorize page.
         /// </summary>
+        /// <returns>Action result.</returns>
         public ActionResult Unauthorize()
         {
             return View();

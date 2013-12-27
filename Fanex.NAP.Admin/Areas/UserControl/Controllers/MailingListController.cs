@@ -481,7 +481,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// </summary>
         /// <param name="siteId">Input siteId.</param>
         /// <param name="environment">Input environment.</param>
-        /// <param name="selectedSiteId">Input Selected site.</param>
         /// <returns>Return a site list.</returns>
         [NonAction]
         private IList<SelectListItem> GetSiteList(int siteId, string environment)

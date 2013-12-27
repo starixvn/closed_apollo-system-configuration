@@ -399,7 +399,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             foreach (FunctionPolicy itemFunc in listGroupFuncRemove)
             {
                 var tempFunc = listCurrentUserFuncPolicy
-                    .Where(f =>f.Function.Id == itemFunc.Function.Id && f.Policy >= itemFunc.Policy).FirstOrDefault();
+                    .Where(f => f.Function.Id == itemFunc.Function.Id && f.Policy >= itemFunc.Policy).FirstOrDefault();
 
                 if (tempFunc.IsNullOrDBNull())
                 {

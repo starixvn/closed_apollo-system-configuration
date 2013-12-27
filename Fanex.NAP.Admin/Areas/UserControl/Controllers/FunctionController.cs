@@ -762,7 +762,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             // checks Function Key duplication
             string functionKey = GenerateFunctionKey(functionName);
 
-
             function = this._functionService.GetByKeyAndSite(functionKey, tempFunction.Site.Id);
 
             if (function != null && function.Id != tempFunction.Id)
