@@ -248,7 +248,7 @@
     <Compile Include="Repository\Impl\FunctionRepository.cs" />
     <Compile Include="Repository\Impl\GroupRepository.cs" />
     <Compile Include="Repository\Impl\MenuItemRepository.cs" />
-    <Compile Include="Repository\Impl\RepositoryBase.cs" />
+    <Compile Include="Repository\Impl\BaseRepository.cs" />
     <Compile Include="Repository\Impl\SiteRepository.cs" />
     <Compile Include="Repository\Impl\UserRepository.cs" />
     <Compile Include="Repository\Interface\IMailingListRepository.cs" />

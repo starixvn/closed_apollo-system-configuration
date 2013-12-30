@@ -29,7 +29,7 @@ namespace Fanex.NAP.Core.Repository.Impl
     /// <summary>
     /// Group repository.
     /// </summary>
-    public class GroupRepository : RepositoryBase<IGroup>, IGroupRepository
+    public class GroupRepository : BaseRepository<IGroup>, IGroupRepository
     {
         /// <summary>
         /// Gets group.

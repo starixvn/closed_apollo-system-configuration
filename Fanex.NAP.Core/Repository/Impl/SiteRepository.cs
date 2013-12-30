@@ -27,7 +27,7 @@ namespace Fanex.NAP.Core.Repository.Impl
     /// <summary>
     /// Site repository.
     /// </summary>
-    public class SiteRepository : RepositoryBase<ISite>, ISiteRepository
+    public class SiteRepository : BaseRepository<ISite>, ISiteRepository
     {
         /// <summary>
         /// Gets site.

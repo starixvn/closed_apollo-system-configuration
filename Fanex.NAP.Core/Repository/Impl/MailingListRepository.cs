@@ -24,7 +24,7 @@ namespace Fanex.NAP.Core.Repository.Impl
     /// <summary>
     /// MailingList Repository.
     /// </summary>
-    public class MailingListRepository : RepositoryBase<IMailingList>, IMailingListRepository
+    public class MailingListRepository : BaseRepository<IMailingList>, IMailingListRepository
     {
         /// <summary>
         /// Get Mailing List Object.

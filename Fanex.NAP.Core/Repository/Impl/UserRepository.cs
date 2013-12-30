@@ -29,7 +29,7 @@ namespace Fanex.NAP.Core.Repository.Impl
     /// <summary>
     /// User repository.
     /// </summary>
-    public class UserRepository : RepositoryBase<IUser>, IUserRepository
+    public class UserRepository : BaseRepository<IUser>, IUserRepository
     {
         /// <summary>
         /// Gets user.

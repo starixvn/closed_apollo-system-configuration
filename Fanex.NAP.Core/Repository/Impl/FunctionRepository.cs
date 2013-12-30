@@ -29,7 +29,7 @@ namespace Fanex.NAP.Core.Repository.Impl
     /// <summary>
     /// Function repository.
     /// </summary>
-    public class FunctionRepository : RepositoryBase<IFunction>, IFunctionRepository
+    public class FunctionRepository : BaseRepository<IFunction>, IFunctionRepository
     {
         /// <summary>
         /// Gets function.

@@ -27,7 +27,7 @@ namespace Fanex.NAP.Core.Repository.Impl
     /// <summary>
     /// Menu item repository.
     /// </summary>
-    public class MenuItemRepository : RepositoryBase<IMenuItem>, IMenuItemRepository
+    public class MenuItemRepository : BaseRepository<IMenuItem>, IMenuItemRepository
     {
         /// <summary>
         /// Gets menu item.
