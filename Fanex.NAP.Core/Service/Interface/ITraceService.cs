@@ -12,7 +12,7 @@ namespace Fanex.NAP.Core.Service.Interface
     using System;
     using System.Linq;
     using Fanex.NAP.Core.Model.ValueObject;
-    using Fanex.NAP.Framework.Data;
+    using Fanex.NAP.Framework.Command;
 
     public interface ITraceService : IBaseService
     {

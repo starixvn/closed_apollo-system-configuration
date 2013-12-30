@@ -11,6 +11,7 @@ namespace Fanex.NAP.Core.Repository.Impl
 {
     using System;
     using System.Collections;
+    using Fanex.NAP.Framework.Command;
     using Fanex.NAP.Framework.Data;
 
     /// <summary>

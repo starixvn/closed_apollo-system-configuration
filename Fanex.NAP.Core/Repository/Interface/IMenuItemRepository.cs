@@ -11,6 +11,7 @@ namespace Fanex.NAP.Core.Repository.Interface
 {
     using Fanex.NAP.Core.Criteria.MenuItem;
     using Fanex.NAP.Core.Domain;
+    using Fanex.NAP.Framework.Command;
     using Fanex.NAP.Framework.Data;
 
     public interface IMenuItemRepository : IRepository<IMenuItem>

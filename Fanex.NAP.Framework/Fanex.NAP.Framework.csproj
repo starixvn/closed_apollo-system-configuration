@@ -75,7 +75,9 @@
   <ItemGroup>
     <Compile Include="Collections\IPageOfItems.cs" />
     <Compile Include="Collections\PageOfItems.cs" />
-    <Compile Include="Data\CommandResultBase.cs" />
+    <Compile Include="Command\CommandResult.cs" />
+    <Compile Include="Command\CommandResultBase.cs" />
+    <Compile Include="Command\ICommand.cs" />
     <Compile Include="Data\CriteriaBase.cs" />
     <Compile Include="Data\DynamicRepository.cs" />
     <Compile Include="Data\ICriteria.cs" />
@@ -85,17 +87,17 @@
     <Compile Include="Data\IRepository.cs" />
     <Compile Include="Data\Orderable.cs" />
     <Compile Include="Data\ReadonlyRepository.cs" />
-    <Compile Include="Data\ICommandResult.cs" />
+    <Compile Include="Command\ICommandResult.cs" />
     <Compile Include="Data\SpParamAttribute.cs" />
     <Compile Include="Domain\EntityBase.cs" />
     <Compile Include="Domain\IEntity.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Extensions\DataTableExtension.cs" />
+    <Compile Include="Helpers\ObjectHelper.cs" />
     <Compile Include="Mvc\DelegatingResult.cs" />
     <Compile Include="Mvc\DownloadResult.cs" />
     <Compile Include="Mvc\ExcelResult.cs" />
-    <Compile Include="Mvc\HtmlHelperExtensions.cs" />
     <Compile Include="Mvc\SpreadSheetResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

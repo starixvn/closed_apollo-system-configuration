@@ -15,7 +15,7 @@ namespace Fanex.NAP.Core.Service.Interface
     using Fanex.NAP.Core.Criteria.Group;
     using Fanex.NAP.Core.Domain;
     using Fanex.NAP.Core.Model.ValueObject;
-    using Fanex.NAP.Framework.Data;
+    using Fanex.NAP.Framework.Command;
 
     /// <summary>
     /// Group service interface.

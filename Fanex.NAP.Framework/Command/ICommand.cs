@@ -7,7 +7,7 @@
 //   <change who="Anders.Le" date="2012.6.6">Created</change>
 // </history>
 
-namespace Fanex.NAP.Core.Command
+namespace Fanex.NAP.Framework.Command
 {
     using System.Data;
 

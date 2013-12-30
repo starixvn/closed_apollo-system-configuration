@@ -15,7 +15,7 @@ namespace Fanex.NAP.Core.Service.Interface
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Criteria.MenuItem;
     using Fanex.NAP.Core.Domain;
-    using Fanex.NAP.Framework.Data;
+    using Fanex.NAP.Framework.Command;
 
     /// <summary>
     /// Menu item service interface.

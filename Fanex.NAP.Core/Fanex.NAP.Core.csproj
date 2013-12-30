@@ -112,8 +112,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>FunctionKeys.tt</DependentUpon>
     </Compile>
-    <Compile Include="Command\CommandResult.cs" />
-    <Compile Include="Command\ICommand.cs" />
     <Compile Include="Configuration\DomainElement.cs" />
     <Compile Include="Configuration\DomainCollection.cs" />
     <Compile Include="Configuration\NapSettings.cs" />
@@ -288,6 +286,8 @@
     <Compile Include="Web\Auth\NapPrincipal.cs" />
     <Compile Include="Web\Context\CurrentContext.cs" />
     <Compile Include="Web\BundleHelper.cs" />
+    <Compile Include="Web\NumberExtensions.cs" />
+    <Compile Include="Web\DateTimeExtensions.cs" />
     <Compile Include="Web\UserAgentTools.cs" />
     <Compile Include="Web\Session\CurrentSession.cs" />
     <Compile Include="Web\Context\ICurrentContext.cs" />

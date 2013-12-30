@@ -16,7 +16,7 @@ namespace Fanex.NAP.Core.Service.Interface
     using Fanex.NAP.Core.Criteria.Function;
     using Fanex.NAP.Core.Domain;
     using Fanex.NAP.Core.Model.ValueObject;
-    using Fanex.NAP.Framework.Data;
+    using Fanex.NAP.Framework.Command;
 
     public interface IFunctionService : IBaseService
     {

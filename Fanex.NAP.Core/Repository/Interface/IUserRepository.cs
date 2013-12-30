@@ -15,6 +15,7 @@ namespace Fanex.NAP.Core.Repository.Interface
     using Fanex.NAP.Core.Criteria.User;
     using Fanex.NAP.Core.Domain;
     using Fanex.NAP.Core.Model.ValueObject;
+    using Fanex.NAP.Framework.Command;
     using Fanex.NAP.Framework.Data;
 
     public interface IUserRepository : IRepository<IUser>

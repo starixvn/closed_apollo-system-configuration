@@ -18,6 +18,7 @@ namespace Fanex.NAP.Core.Repository.Impl
     using Fanex.NAP.Core.Domain;
     using Fanex.NAP.Core.Model;
     using Fanex.NAP.Core.Repository.Interface;
+    using Fanex.NAP.Framework.Command;
     using Fanex.NAP.Framework.Data;
 
     /// <summary>

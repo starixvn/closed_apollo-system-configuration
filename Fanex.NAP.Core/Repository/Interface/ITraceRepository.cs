@@ -12,6 +12,7 @@ namespace Fanex.NAP.Core.Repository.Interface
 {
     using System.Linq;
     using Fanex.NAP.Core.Model.ValueObject;
+    using Fanex.NAP.Framework.Command;
     using Fanex.NAP.Framework.Data;
 
     /// <summary>

@@ -9,6 +9,8 @@
 
 namespace Fanex.NAP.Framework.Data
 {
+    using Fanex.NAP.Framework.Command;
+
     public interface IRepository<T> : IReadonlyRepository<T>
     {
         ICommandResult Insert(T entity);

@@ -7,7 +7,7 @@
 //   <change who="Kos.Nguyen" date="2012.8.14">Created</change>
 // </history>
 
-namespace Fanex.NAP.Framework.Data
+namespace Fanex.NAP.Framework.Command
 {
     /// <summary>
     /// Command result.
