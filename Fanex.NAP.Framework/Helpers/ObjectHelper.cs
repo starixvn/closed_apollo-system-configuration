@@ -13,7 +13,7 @@ namespace Fanex.NAP.Framework.Helpers
     using System.Reflection;
 
     /// <summary>
-    /// HTML helper.
+    /// Object helper.
     /// </summary>
     public static class ObjectHelper
     {
