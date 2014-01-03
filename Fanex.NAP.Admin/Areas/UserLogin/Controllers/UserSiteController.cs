@@ -9,9 +9,11 @@
 
 namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
 {
+    using System.Collections.Generic;
     using System.Web;
     using System.Web.Mvc;
     using Fanex.Common;
+    using Fanex.NAP.Core.Model.ValueObject;
     using Fanex.NAP.Core.Service.Impl;
     using Fanex.NAP.Core.Service.Interface;
     using Fanex.NAP.Core.Web.Session;
@@ -21,15 +23,9 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
     /// </summary>
     public class UserSiteController : BaseController
     {
-        #region members
-
         private ISiteService _siteService;
         private ICurrentSession _currentSession;
         private IUserService _userService;
-
-        #endregion
-
-        #region ctors
 
         public UserSiteController()
             : this(null, null, null)
@@ -43,10 +39,6 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
             _userService = userService ?? new UserService();
         }
 
-        #endregion
-
-        #region actions
-
         /// <summary>
         /// View user sites.
         /// </summary>
@@ -55,7 +47,7 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
         {
             if (HttpContext.User.Identity.IsAuthenticated && _currentSession.UserId > 0)
             {
-                var siteUrlList = _siteService.GetSiteUrlByUser(_currentSession.UserId, this.Environment);
+                IEnumerable<SiteUrl> siteUrlList = _siteService.GetSiteUrlByUser(_currentSession.UserId, this.Environment);
 
                 // for re-checkin
                 ViewBag.OnUserId = _currentSession.OnUserId; 
@@ -74,7 +66,7 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
         [HttpGet]
         public ActionResult Forward(int id)
         {
-            var siteUrl = _siteService.GetSiteUrlById(id);
+            SiteUrl siteUrl = _siteService.GetSiteUrlById(id);
 
             if (siteUrl == null)
             {
@@ -91,7 +83,5 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
                     Cryptography.CfsEnCrypt(_currentSession.OnUserId.ToString()),
                     Cryptography.CfsEnCrypt(time)));
         }
-
-        #endregion
     }
 }

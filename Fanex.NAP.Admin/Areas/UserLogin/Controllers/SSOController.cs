@@ -28,17 +28,11 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
     /// </summary>
     public class SSOController : BaseController
     {
-        #region members
-
         private const int ExpiredDuration = 30;
 
         private IUserService _userService;
         private IMenuItemService _menuItemService;
         private ICurrentSession _currentSession;
-
-        #endregion
-
-        #region ctors
 
         public SSOController()
             : this(null, null, null)
@@ -51,8 +45,6 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
             _menuItemService = menuItemService ?? new MenuItemService();
             _currentSession = currentSession ?? new CurrentSession();
         }
-
-        #endregion
 
         /// <summary>
         /// Index page.
@@ -71,7 +63,7 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
             time = Cryptography.CfsDeCrypt(time.Replace(" ", "+"));
             string currentTime = _userService.UserSSOGetTime();
 
-            var expiration = Convert.ToDateTime(currentTime) - Convert.ToDateTime(time);
+            TimeSpan expiration = Convert.ToDateTime(currentTime) - Convert.ToDateTime(time);
 
             if (expiration.TotalSeconds <= ExpiredDuration)
             {
@@ -95,7 +87,7 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
 
                 if (criteria.OnUserId != 0)
                 {
-                    var user = _userService.GetById(criteria.UserId) as User;
+                    User user = _userService.GetById(criteria.UserId) as User;
 
                     // Save user session and auth info
                     _currentSession.UserId = user.Id;
@@ -124,8 +116,6 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
 
             return Redirect(FormsAuthentication.LoginUrl);
         }
-
-        #region utilities
 
         /// <summary>
         /// Create authorize information.
@@ -158,7 +148,5 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
 
             Response.Cookies.Add(authCookie);
         }
-
-        #endregion
     }
 }

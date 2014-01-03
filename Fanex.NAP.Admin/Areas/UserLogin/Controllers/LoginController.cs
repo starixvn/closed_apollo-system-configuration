@@ -16,11 +16,10 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Security;
-    using Fanex.Common;
-    using Fanex.Common.Extensions;
     using Fanex.NAP.Core.Configuration;
     using Fanex.NAP.Core.Criteria.User;
     using Fanex.NAP.Core.Model;
+    using Fanex.NAP.Core.Model.ValueObject;
     using Fanex.NAP.Core.Service.Impl;
     using Fanex.NAP.Core.Service.Interface;
     using Fanex.NAP.Core.Web;
@@ -62,7 +61,7 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
             _groupService = groupService ?? new GroupService();
             _siteService = siteService ?? new SiteService();
             _menuItemService = menuItemService ?? new MenuItemService();
-            this._currentSession = currentSession ?? new CurrentSession();
+            _currentSession = currentSession ?? new CurrentSession();
             _maintenanceService = maintenanceService ?? new MaintenanceService();
         }
 
@@ -82,7 +81,9 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
                 return Redirect(NapSettings.Settings.HubUrl);
             }
 
-            if (_maintenanceService.GetDowntimeInfo().IsDowntime)
+            Downtime downTime = _maintenanceService.GetDowntimeInfo();
+
+            if (downTime.IsDowntime)
             {
                 return RedirectToAction("Offline", "Common");
             }
@@ -222,7 +223,7 @@ namespace Fanex.NAP.Hub.Areas.UserLogin.Controllers
         [HttpPost]
         public ActionResult ReCheckLogin()
         {
-            var maintenanceInfo = _maintenanceService.GetDowntimeInfo();
+            Downtime maintenanceInfo = _maintenanceService.GetDowntimeInfo();
 
             if (maintenanceInfo.IsDowntime)
             {

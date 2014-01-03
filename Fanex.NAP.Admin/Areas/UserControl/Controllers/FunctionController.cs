@@ -810,7 +810,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             {
                 // portal admin
                 ViewBag.SiteItemList = _siteService.GetAllSelectListItem(criteria.Environment, true, criteria.SiteId);
-                ViewBag.ViewFlags.HasEditRight = true;
+                ViewFlags.HasEditRight = true;
             }
             else
             {
@@ -822,7 +822,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                         policy: Constant.Policy.Read,
                         selectedSiteId: criteria.SiteId);
 
-                ViewBag.ViewFlags.HasEditRight =
+                ViewFlags.HasEditRight =
                     HasRight(FunctionKeys.ManageFunction, Constant.Policy.Host)
                     && HasRightOnSite(criteria.SiteId, FunctionKeys.ManageFunction, Constant.Policy.Host);
             }

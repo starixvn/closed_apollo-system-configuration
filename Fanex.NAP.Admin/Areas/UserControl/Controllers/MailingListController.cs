@@ -778,9 +778,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 }
             }
 
-            var temp = emailList.ToArray();
-
-            return string.Join(";", temp);
+            return string.Join(";", emailList.ToArray());
         }
     }
 }
