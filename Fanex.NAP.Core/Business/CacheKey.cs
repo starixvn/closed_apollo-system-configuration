@@ -6,10 +6,9 @@
 // <history>
 //   <change who="Kos.Nguyen" date="2012.10.10">Created</change>
 // </history>
+
 namespace Fanex.NAP.Core.Business
 {
-    using System.Diagnostics.CodeAnalysis;
-
     /// <summary>
     /// Cache key.
     /// </summary>

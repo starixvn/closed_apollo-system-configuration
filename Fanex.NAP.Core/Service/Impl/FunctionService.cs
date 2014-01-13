@@ -178,16 +178,16 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 var result = new Dictionary<ISite, IEnumerable<IFunction>>();
 
-                var siteList = functionList.GroupBy(f => f.Site.Id)
+                List<Site> siteList = functionList.GroupBy(f => f.Site.Id)
                     .Select(s => new Site
                     {
                         Id = s.Key,
                         Name = s.Where(f => f.Site.Id == s.Key).FirstOrDefault().Site.Name
                     }).ToList();
 
-                foreach (var site in siteList)
+                foreach (Site site in siteList)
                 {
-                    var subFunctionList = functionList.Where(f => f.Site.Id == site.Id).ToList();
+                    List<IFunction> subFunctionList = functionList.Where(f => f.Site.Id == site.Id).ToList();
 
                     result.Add(site, subFunctionList);
                 }
@@ -414,14 +414,14 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 var result = new Dictionary<ISite, IEnumerable<FunctionPolicy>>();
 
-                var siteList = functionPolicyList.GroupBy(f => f.Site.Id)
+                List<Site> siteList = functionPolicyList.GroupBy(f => f.Site.Id)
                     .Select(s => new Site
                     {
                         Id = s.Key,
                         Name = s.Where(f => f.Site.Id == s.Key).FirstOrDefault().Site.Name
                     }).ToList();
 
-                foreach (var site in siteList)
+                foreach (Site site in siteList)
                 {
                     var subFunctionPolicyList = functionPolicyList.Where(f => f.Site.Id == site.Id).ToList();
 
@@ -515,14 +515,14 @@ namespace Fanex.NAP.Core.Service.Impl
 
                 var result = new Dictionary<ISite, IEnumerable<FunctionPolicy>>();
 
-                var siteList = functionPolicyList.GroupBy(f => f.Site.Id)
+                List<Site> siteList = functionPolicyList.GroupBy(f => f.Site.Id)
                     .Select(s => new Site
                     {
                         Id = s.Key,
                         Name = s.Where(f => f.Site.Id == s.Key).FirstOrDefault().Site.Name
                     }).ToList();
 
-                foreach (var site in siteList)
+                foreach (Site site in siteList)
                 {
                     var subFunctionPolicyList = functionPolicyList.Where(f => f.Site.Id == site.Id).ToList();
 

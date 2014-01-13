@@ -13,6 +13,7 @@ namespace Fanex.NAP.Core.Repository.Impl
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Data;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using Fanex.Common.Extensions;
@@ -99,7 +100,7 @@ namespace Fanex.NAP.Core.Repository.Impl
         {
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (IDataReader reader = db.ExecuteReader(criteria.GetSpParams()))
                 {
                     var functionPolicyList = new List<FunctionPolicy>();
 
@@ -151,7 +152,7 @@ namespace Fanex.NAP.Core.Repository.Impl
         {
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (IDataReader reader = db.ExecuteReader(criteria.GetSpParams()))
                 {
                     var functionPolicyList = new List<FunctionPolicy>();
 

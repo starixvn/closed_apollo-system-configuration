@@ -9,7 +9,6 @@
 
 namespace Fanex.NAP.Hub.Controllers
 {
-    using System.Diagnostics.CodeAnalysis;
     using System.Web.Mvc;
 
     /// <summary>

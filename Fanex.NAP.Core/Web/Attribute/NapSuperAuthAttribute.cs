@@ -9,6 +9,7 @@
 
 namespace Fanex.NAP.Core.Web.Attribute
 {
+    using System.Web;
     using System.Web.Mvc;
     using Fanex.NAP.Core.Web.Session;
 
@@ -32,7 +33,7 @@ namespace Fanex.NAP.Core.Web.Attribute
 
             if (!CheckSessionAuthorization())
             {
-                var response = filterContext.HttpContext.Response;
+                HttpResponseBase response = filterContext.HttpContext.Response;
 
                 if (filterContext.HttpContext.Request.IsAjaxRequest())
                 {

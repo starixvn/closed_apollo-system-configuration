@@ -17,6 +17,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
     using System.Web.Mvc;
     using System.Xml.Linq;
     using Fanex.NAP.Core.Criteria.Trace;
+    using Fanex.NAP.Core.Domain;
     using Fanex.NAP.Core.Helpers;
     using Fanex.NAP.Core.Model;
     using Fanex.NAP.Core.Model.ValueObject;
@@ -167,7 +168,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                                                 criteria.To,
                                                 criteria.SiteId);
 
-            var listSite = _siteService.GetAll().ToList();
+            List<ISite> listSite = _siteService.GetAll().ToList();
             listSite.Add(new Site
             {
                 Id = 0,

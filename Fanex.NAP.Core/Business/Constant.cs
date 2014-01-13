@@ -9,8 +9,6 @@
 
 namespace Fanex.NAP.Core.Business
 {
-    using System.Diagnostics.CodeAnalysis;
-
     /// <summary>
     /// The constant class.
     /// </summary>

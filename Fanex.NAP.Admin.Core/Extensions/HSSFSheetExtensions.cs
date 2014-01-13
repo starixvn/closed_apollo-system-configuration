@@ -10,8 +10,8 @@
 namespace Fanex.NAP.Admin.Core.Extensions
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using NPOI.SS.UserModel;
-    using NPOI.SS.Util;
 
     /// <summary>
     /// HSSFSheet Extensions.
@@ -27,10 +27,12 @@ namespace Fanex.NAP.Admin.Core.Extensions
         /// <returns>Return the copied sheet.</returns>
         public static ISheet CloneSheet(this IWorkbook workbook, string sourceSheetName, string newSheetName)
         {
-            var sheetIndex = workbook.GetSheetIndex(sourceSheetName);
-            var newSheet = workbook.CloneSheet(sheetIndex);
-            var newSheetIndex = workbook.GetSheetIndex(newSheet);
+            int sheetIndex = workbook.GetSheetIndex(sourceSheetName);
+            ISheet newSheet = workbook.CloneSheet(sheetIndex);
+            int newSheetIndex = workbook.GetSheetIndex(newSheet);
+
             workbook.SetSheetName(newSheetIndex, newSheetName);
+
             return newSheet;
         }
 
@@ -41,11 +43,11 @@ namespace Fanex.NAP.Admin.Core.Extensions
         /// <param name="sheetName">The sheet name.</param>
         public static void RemoveSheet(this IWorkbook workbook, string sheetName)
         {
-            var sheet = workbook.GetSheet(sheetName);
+            ISheet sheet = workbook.GetSheet(sheetName);
 
             if (sheet != null)
             {
-                var sheetIndex = workbook.GetSheetIndex(sheet);
+                int sheetIndex = workbook.GetSheetIndex(sheet);
                 workbook.RemoveSheetAt(sheetIndex);
             }
         }
@@ -62,27 +64,27 @@ namespace Fanex.NAP.Admin.Core.Extensions
         {
             if (sheet.LastRowNum < destRowIndex)
             {
-                for (var i = sheet.LastRowNum + 1; i <= destRowIndex; i++)
+                for (int i = sheet.LastRowNum + 1; i <= destRowIndex; i++)
                 {
                     sheet.CreateRow(i);
                 }
             }
 
             // Get the source / new row
-            var sourceRow = sourceSheet.GetRow(sourceRowIndex);
+            IRow sourceRow = sourceSheet.GetRow(sourceRowIndex);
             if (sourceRow == null)
             {
                 return null;
             }
 
-            var newRow = sheet.GetRow(destRowIndex) ?? sheet.CreateRow(destRowIndex);
+            IRow newRow = sheet.GetRow(destRowIndex) ?? sheet.CreateRow(destRowIndex);
 
             // Loop through source columns to add to new row
             for (int i = 0; i < sourceRow.LastCellNum; i++)
             {
                 // Grab a copy of the old/new cell
-                var oldCell = sourceRow.GetCell(i);
-                var newCell = newRow.CreateCell(i);
+                ICell oldCell = sourceRow.GetCell(i);
+                ICell newCell = newRow.CreateCell(i);
 
                 sheet.CopyCell(oldCell, newCell);
             }
@@ -97,6 +99,7 @@ namespace Fanex.NAP.Admin.Core.Extensions
         /// <param name="sourceCell">Source Cell.</param>
         /// <param name="destCell">Destination Cell.</param>
         /// <returns>Return the copied cell.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         public static ICell CopyCell(this ISheet sheet, ICell sourceCell, ICell destCell)
         {
             // If the old cell is null jump to next cell
@@ -106,13 +109,12 @@ namespace Fanex.NAP.Admin.Core.Extensions
             }
 
             destCell.CellStyle = sourceCell.CellStyle;
-            //// If there is a cell comment, copy
+
             if (destCell.CellComment != null)
             {
                 destCell.CellComment = sourceCell.CellComment;
             }
 
-            //// If there is a cell hyperlink, copy
             if (sourceCell.Hyperlink != null)
             {
                 destCell.Hyperlink = sourceCell.Hyperlink;
@@ -120,11 +122,13 @@ namespace Fanex.NAP.Admin.Core.Extensions
 
             //// Set the cell data type & Set the cell data value
             destCell.SetCellType(sourceCell.CellType);
+
             switch (sourceCell.CellType)
             {
                 case CellType.BLANK:
                     destCell.SetCellValue(sourceCell.StringCellValue);
                     break;
+
                 case CellType.BOOLEAN:
                     destCell.SetCellValue(sourceCell.BooleanCellValue);
                     break;
@@ -147,21 +151,6 @@ namespace Fanex.NAP.Admin.Core.Extensions
             }
 
             return destCell;
-        }
-
-        /// <summary>
-        /// MergeCells method is used to Merge a region.
-        /// </summary>
-        /// <param name="sheet">Main sheet object.</param>
-        /// <param name="firstRow">First row index, base by zero.</param>
-        /// <param name="firstCol">First column index, , base by zero.</param>
-        /// <param name="lastRow">Last row index, base by zero.</param>
-        /// <param name="lastCol">Last column Index.</param>
-        /// <returns>Return affected cell count.</returns>
-        public static int MergeCells(this ISheet sheet, int firstRow, int firstCol, int lastRow, int lastCol)
-        {
-            var rangeAddress = new CellRangeAddress(firstRow, lastRow, firstCol, lastCol);
-            return sheet.AddMergedRegion(rangeAddress);
         }
 
         /// <summary>

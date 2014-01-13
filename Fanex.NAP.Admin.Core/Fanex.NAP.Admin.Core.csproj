@@ -37,12 +37,6 @@
     <Reference Include="Fanex.Data">
       <HintPath>..\_Dependencies\Fanex\Release\Fanex.Data.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Logging">
-      <HintPath>..\_Dependencies\Fanex\Release\Fanex.Logging.dll</HintPath>
-    </Reference>
-    <Reference Include="Fanex.MailDeliver.MailClient">
-      <HintPath>..\_Dependencies\MailService\Fanex.MailDeliver.MailClient.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Data">
       <HintPath>..\_Dependencies\Entlib\Microsoft.Practices.EnterpriseLibrary.Data.dll</HintPath>
     </Reference>
@@ -54,8 +48,6 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />

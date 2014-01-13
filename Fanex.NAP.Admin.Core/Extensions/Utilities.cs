@@ -11,35 +11,12 @@ namespace Fanex.NAP.Admin.Core.Extensions
 {
     using System;
     using System.Globalization;
-    using System.IO;
-    using Fanex.Logging;
 
     /// <summary>
     /// Utilities class.
     /// </summary>
     public static class Utilities
     {
-        /// <summary>
-        /// Function to Read a file.
-        /// </summary>
-        /// <param name="filePath">File path.</param>
-        /// <returns>Content of file.</returns>
-        public static string ReadTextFile(string filePath)
-        {
-            try
-            {
-                using (var sr = new StreamReader(filePath))
-                {
-                    return sr.ReadToEnd();
-                }
-            }
-            catch (Exception ex)
-            {
-                LogService.Error(ex.Message, ex);
-                return string.Empty;
-            }
-        }
-
         /// <summary>
         /// Get Date Format (year-month-day).
         /// </summary>

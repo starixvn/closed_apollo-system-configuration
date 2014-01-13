@@ -118,7 +118,7 @@ namespace Fanex.NAP.Core.Web.Attribute
                 return false;
             }
 
-            var policy = UserService.GetUserSiteFunctionKeyPolicy(userId, _SiteId, FunctionKey);
+            int policy = UserService.GetUserSiteFunctionKeyPolicy(userId, _SiteId, FunctionKey);
 
             return policy >= (int)Policy;
         }

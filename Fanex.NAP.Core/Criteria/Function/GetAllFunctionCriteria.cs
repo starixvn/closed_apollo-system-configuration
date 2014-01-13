@@ -9,7 +9,6 @@
 
 namespace Fanex.NAP.Core.Criteria.Function
 {
-    using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.Framework.Data;
 
     /// <summary>

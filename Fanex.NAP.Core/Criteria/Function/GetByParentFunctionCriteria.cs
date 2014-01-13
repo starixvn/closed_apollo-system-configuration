@@ -6,8 +6,6 @@
 
 namespace Fanex.NAP.Core.Criteria.Function
 {
-    using System.Diagnostics.CodeAnalysis;
-
     /// <summary>
     /// Get by parent.
     /// </summary>

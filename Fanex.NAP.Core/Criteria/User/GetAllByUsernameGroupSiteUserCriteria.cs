@@ -10,7 +10,6 @@
 namespace Fanex.NAP.Core.Criteria.User
 {
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using System.Text;
     using System.Web.Mvc;
     using Fanex.NAP.Framework.Data;

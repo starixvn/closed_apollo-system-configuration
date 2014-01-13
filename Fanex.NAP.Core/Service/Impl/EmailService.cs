@@ -98,6 +98,7 @@ namespace Fanex.NAP.Core.Service.Impl
             }
 
             var regex = new Regex(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*");
+
             return regex.IsMatch(email);
         }
     }

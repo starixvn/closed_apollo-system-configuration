@@ -26,6 +26,7 @@ namespace Fanex.NAP.Admin.Core.Services.Impl
     using Fanex.NAP.Core.Service.Impl;
     using Fanex.NAP.Core.Web;
     using NPOI.HSSF.UserModel;
+    using NPOI.SS.UserModel;
 
     /// <summary>
     /// Exchange Rate Service.
@@ -113,13 +114,9 @@ namespace Fanex.NAP.Admin.Core.Services.Impl
             var isValid = true;
 
             isValid = CheckInValidCurrency(errorMsg, exchangeRate, isUpdate, isValid);
-
             isValid = CheckInValidActualRate(errorMsg, exchangeRate, isValid);
-
             isValid = CheckInValidMinBet(errorMsg, exchangeRate, isValid);
-
             isValid = CheckInValidMinBetLive(errorMsg, exchangeRate, isValid);
-
             isValid = CheckInValidMultipliedBy(errorMsg, exchangeRate, isValid);
 
             return isValid;
@@ -133,7 +130,7 @@ namespace Fanex.NAP.Admin.Core.Services.Impl
         public HSSFWorkbook ExportExchangeRate(List<ExchangeRateModel> exchangeRateList)
         {
             HSSFWorkbook hssfworkbook;
-            var templatePath = HttpContext.Current.Server.MapPath(_FilePathExcelTemplate);
+            string templatePath = HttpContext.Current.Server.MapPath(_FilePathExcelTemplate);
             using (var template = new FileStream(templatePath, FileMode.Open, FileAccess.Read))
             {
                 hssfworkbook = new HSSFWorkbook(template);
@@ -158,14 +155,14 @@ namespace Fanex.NAP.Admin.Core.Services.Impl
                 }
 
                 sheet.CopyRow(templateSheet, rowTemplateNeedCopy, rowIndex);
-                var row = sheet.GetRow(rowIndex);
+                IRow row = sheet.GetRow(rowIndex);
 
-                var cellCurrency = row.GetCell(0);
-                var cellActualRate = row.GetCell(1);
-                var cellMinBet = row.GetCell(2);
-                var cellMinBetLive = row.GetCell(3);
-                var cellDescription = row.GetCell(4);
-                var cellMultipliedBy = row.GetCell(5);
+                ICell cellCurrency = row.GetCell(0);
+                ICell cellActualRate = row.GetCell(1);
+                ICell cellMinBet = row.GetCell(2);
+                ICell cellMinBetLive = row.GetCell(3);
+                ICell cellDescription = row.GetCell(4);
+                ICell cellMultipliedBy = row.GetCell(5);
 
                 cellCurrency.SetCellValue(item.Currency);
                 cellActualRate.SetCellValue((double)item.ActualRate);
@@ -201,11 +198,17 @@ namespace Fanex.NAP.Admin.Core.Services.Impl
         {
             if (mailingLists != null && mailingLists.Any())
             {
-                var bodyTemplate = Utilities.ReadTextFile(templatePath);
+                var bodyTemplate = string.Empty;
+
+                using (var sr = new StreamReader(templatePath))
+                {
+                    bodyTemplate = sr.ReadToEnd();
+                }
+
                 var body = string.Format(bodyTemplate, currency, oldActualRate, newActualRate, userName);
                 var subject = string.Format(Lang.SubjectEmailExchangeRate, currency, Utilities.ShortDateFormat(DateTime.Now), userName);
 
-                foreach (var item in mailingLists)
+                foreach (IMailingList item in mailingLists)
                 {
                     EmailService.SendEmail(item.ToList, item.CCList, item.BCCList, subject, body);
                 }

@@ -12,11 +12,10 @@ namespace Fanex.NAP.Core.Repository.Impl
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Data;
     using System.Linq;
-
     using Fanex.Common.Extensions;
     using Fanex.Data;
-
     using Fanex.NAP.Core.Criteria.Group;
     using Fanex.NAP.Core.Criteria.Misc;
     using Fanex.NAP.Core.Domain;
@@ -158,7 +157,7 @@ namespace Fanex.NAP.Core.Repository.Impl
         {
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (IDataReader reader = db.ExecuteReader(criteria.GetSpParams()))
                 {
                     var userLevelList = new List<GroupPolicy>();
 

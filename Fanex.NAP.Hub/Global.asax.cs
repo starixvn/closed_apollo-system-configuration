@@ -12,11 +12,10 @@ namespace Fanex.NAP.Hub
 {
     using System;
     using System.Web;
-    using System.Web.Http;
     using System.Web.Mvc;
-    using System.Web.Optimization;
     using System.Web.Routing;
     using System.Web.Security;
+    using Fanex.Data.Configuration;
     using Fanex.Logging;
     using Fanex.NAP.Core.Criteria.User;
     using Fanex.NAP.Core.Service.Impl;
@@ -27,7 +26,7 @@ namespace Fanex.NAP.Hub
     /// <summary>
     /// Note: For instructions on enabling IIS6 or IIS7 classic mode, visit http://go.microsoft.com/?LinkId=9394801 .
     /// </summary>
-    public class MvcApplication : System.Web.HttpApplication
+    public class MvcApplication : HttpApplication
     {
         /// <summary>
         /// Registers the global filters.
@@ -46,11 +45,6 @@ namespace Fanex.NAP.Hub
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional });
-
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
@@ -67,9 +61,7 @@ namespace Fanex.NAP.Hub
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
 
-            BundleTable.Bundles.RegisterTemplateBundles();
-
-            Fanex.Data.Configuration.DbSettingProviderManager.Current.Start();
+            DbSettingProviderManager.Current.Start();
         }
 
         /// <summary>
@@ -103,9 +95,10 @@ namespace Fanex.NAP.Hub
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         protected void Session_End(object sender, EventArgs e)
         {
-            ICurrentSession _currentSession = new CurrentSession();
-            IUserService _userService = new UserService();
-            LogOutUserCriteria logOutUserCriteria = new LogOutUserCriteria();
+            var _currentSession = new CurrentSession();
+            var _userService = new UserService();
+            var logOutUserCriteria = new LogOutUserCriteria();
+
             logOutUserCriteria.OnUserId = _currentSession.OnUserId;
             _userService.UserLogOut(logOutUserCriteria);
             _currentSession.ClearAll();
