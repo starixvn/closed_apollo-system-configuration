@@ -38,7 +38,7 @@ namespace Fanex.NAP.Core.Repository.Impl
         /// <returns>The user object.</returns>
         public override IUser Get(ICriteria criteria)
         {
-            using (ObjectDb objectDb = new ObjectDb(criteria.GetSettingKey()))
+            using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
             {
                 var objUser = objectDb.QueryEntity<User, Group, User, User, User>(
                     (u, g, uc, um) => { u.Group = g; u.Creator = uc; u.Modifier = um; return u; },
@@ -56,7 +56,7 @@ namespace Fanex.NAP.Core.Repository.Impl
         /// <returns>List of user.</returns>
         public override IEnumerable<IUser> Fetch(ICriteria criteria)
         {
-            using (ObjectDb objectDb = new ObjectDb(criteria.GetSettingKey()))
+            using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
             {
                 var objListUser = objectDb.Query<User, Group, User, User, User>(
                     (u, g, uc, um) => { u.Group = g; u.Creator = uc; u.Modifier = um; return u; },

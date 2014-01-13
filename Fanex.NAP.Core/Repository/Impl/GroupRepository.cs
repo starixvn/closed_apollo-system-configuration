@@ -38,7 +38,7 @@ namespace Fanex.NAP.Core.Repository.Impl
         /// <returns>The group.</returns>
         public override IGroup Get(ICriteria criteria)
         {
-            using (ObjectDb objectDb = new ObjectDb(criteria.GetSettingKey()))
+            using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
             {
                 var objGroup = objectDb.QueryEntity<Group, User, User, Group>(
                     (g, cu, mu) => { g.Creator = cu; g.Modifier = mu; return g; },
@@ -56,7 +56,7 @@ namespace Fanex.NAP.Core.Repository.Impl
         /// <returns>List of group.</returns>
         public override IEnumerable<IGroup> Fetch(ICriteria criteria)
         {
-            using (ObjectDb objectDb = new ObjectDb(criteria.GetSettingKey()))
+            using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
             {
                 var listGroup = objectDb.Query<Group, User, User, Group>(
                     (g, cu, mu) => { g.Creator = cu; g.Modifier = mu; return g; },
@@ -80,7 +80,7 @@ namespace Fanex.NAP.Core.Repository.Impl
             hash = logCriteria.AddSpParams(hash);
             hash = (new ResultCriteria()).AddSpParams(hash);
 
-            using (ObjectDb objectDb = new ObjectDb(criteria.GetSettingKey()))
+            using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
             {
                 objectDb.ExecuteNonQuery(hash);
                 criteria.GroupId = Convert.ToInt32(objectDb.GetParameterValue("GroupId"));
@@ -101,7 +101,7 @@ namespace Fanex.NAP.Core.Repository.Impl
             hash = logCriteria.AddSpParams(hash);
             hash = (new ResultCriteria()).AddSpParams(hash);
 
-            using (ObjectDb objectDb = new ObjectDb(criteria.GetSettingKey()))
+            using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
             {
                 objectDb.ExecuteNonQuery(hash);
                 return GetCommandResult(hash);

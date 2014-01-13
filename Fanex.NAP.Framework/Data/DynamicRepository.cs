@@ -113,8 +113,8 @@ namespace Fanex.NAP.Framework.Data
         /// <returns>Returned object.</returns>
         public virtual T Single<T>(dynamic parameters)
         {
-            var hash = this.ConvertDynamicParamsToHashtable(parameters);
-            var settingKey = this.GetSettingKeyFromDynamicParam(parameters);
+            dynamic hash = this.ConvertDynamicParamsToHashtable(parameters);
+            dynamic settingKey = this.GetSettingKeyFromDynamicParam(parameters);
 
             using (var objectDb = new ObjectDb(settingKey))
             {
@@ -131,8 +131,8 @@ namespace Fanex.NAP.Framework.Data
         /// <returns>List of object.</returns>
         public virtual IEnumerable<T> Query<T>(dynamic parameters)
         {
-            var hash = this.ConvertDynamicParamsToHashtable(parameters);
-            var settingKey = this.GetSettingKeyFromDynamicParam(parameters);
+            dynamic hash = this.ConvertDynamicParamsToHashtable(parameters);
+            dynamic settingKey = this.GetSettingKeyFromDynamicParam(parameters);
 
             using (var objectDb = new ObjectDb(settingKey))
             {
@@ -166,7 +166,7 @@ namespace Fanex.NAP.Framework.Data
             Check.Argument.IsNotNull(parameters, "parameters");
 
             Type type = parameters.GetType();
-            var propInfo = type.GetProperty("SettingKey");
+            PropertyInfo propInfo = type.GetProperty("SettingKey");
 
             if (propInfo == null)
             {
