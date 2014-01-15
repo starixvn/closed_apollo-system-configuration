@@ -62,7 +62,7 @@ namespace Fanex.NAP.Framework.Helpers
         /// <returns>True : has, false : not have.</returns>
         public static bool HasPropertyInfo(object obj, string propertyName)
         {
-            var propertyInfo = GetPropertyInfo(obj, propertyName);
+            PropertyInfo propertyInfo = GetPropertyInfo(obj, propertyName);
 
             return propertyInfo != null;
         }

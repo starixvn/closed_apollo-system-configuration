@@ -9,7 +9,6 @@
 
 namespace Fanex.NAP.Hub.Areas.UserLogin
 {
-    using System.Diagnostics.CodeAnalysis;
     using System.Web.Mvc;
 
     /// <summary>

@@ -11,7 +11,9 @@
 namespace Fanex.NAP.Core.Service.Interface
 {
     using System;
+    using System.Collections.Generic;
     using Fanex.NAP.Core.Criteria.Misc;
+    using Fanex.NAP.Framework.Data;
 
     /// <summary>
     /// Base service interface.
@@ -19,6 +21,12 @@ namespace Fanex.NAP.Core.Service.Interface
     public interface IBaseService
     {
         IServiceContext ServiceContext { get; set; }
+
+        IEnumerable<T> GetData<T>(ICriteria criteria);
+
+        IEnumerable<T> GetData<T>(ICriteria criteria, out int totalItems);
+
+        T GetItem<T>(ICriteria criteria) where T : new();
 
         void HandleException(Exception ex);
 

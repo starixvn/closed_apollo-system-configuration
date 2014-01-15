@@ -18,8 +18,6 @@ namespace Fanex.NAP.Core.Criteria.User
     {
         public string Username { get; set; }
 
-        public int? SiteId { get; set; }
-
         public int PageIndex { get; set; }
 
         public int PageSize { get; set; }

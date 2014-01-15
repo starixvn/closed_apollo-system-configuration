@@ -38,7 +38,8 @@ namespace Fanex.NAP.Admin.App_Start
 
                     if (httpCookie != null)
                     {
-                        var ticket = FormsAuthentication.Decrypt(httpCookie.Value);
+                        FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(httpCookie.Value);
+
                         if (ticket == null || ticket.Expired || string.IsNullOrEmpty(ticket.UserData))
                         {
                             return;
