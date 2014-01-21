@@ -16,11 +16,13 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
     using System.Web.Mvc;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Criteria.Site;
+    using Fanex.NAP.Core.Domain;
     using Fanex.NAP.Core.Model.ValueObject;
     using Fanex.NAP.Core.Service.Impl;
     using Fanex.NAP.Core.Service.Interface;
     using Fanex.NAP.Core.Web;
     using Fanex.NAP.Core.Web.Attribute;
+    using Fanex.NAP.Framework.Command;
 
     /// <summary>
     /// Site controller.
@@ -86,7 +88,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         [NapAuth(FunctionKey = FunctionKeys.ManageSite, Policy = Constant.Policy.Host)]
         public ActionResult AddNew()
         {
-            return View(new InsertSiteCriteria
+            var criteria = new InsertSiteCriteria
             {
                 Environment = this.Environment,
                 Urls = new List<SiteUrl> 
@@ -97,7 +99,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                         IsDefault = true 
                     } 
                 }
-            });
+            };
+
+            return View(criteria);
         }
 
         /// <summary>
@@ -115,11 +119,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 // check url
                 if (!ReferenceEquals(criteria.Urls, null))
                 {
-                    foreach (var itemUrl in criteria.Urls)
+                    foreach (SiteUrl itemUrl in criteria.Urls)
                     {
-                        bool isuri = Uri.IsWellFormedUriString(itemUrl.Url, UriKind.Absolute);
-
-                        if (!isuri)
+                        if (!Uri.IsWellFormedUriString(itemUrl.Url, UriKind.Absolute))
                         {
                             ModelState.AddModelError("SiteUrls", string.Format(ViewResources.InvalidURLValidationMsg, criteria.SiteUrls));
                             return View(criteria);
@@ -156,7 +158,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 // add new site
                 criteria.Environment = this.Environment;
 
-                var result = _siteService.Insert(criteria);
+                ICommandResult result = _siteService.Insert(criteria);
 
                 if (result != null && result.IsSuccessful)
                 {
@@ -221,7 +223,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 }
 
                 // updates site
-                var result = _siteService.Update(criteria);
+                ICommandResult result = _siteService.Update(criteria);
 
                 if (result != null && result.IsSuccessful)
                 {
@@ -244,7 +246,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         [NapAuth(FunctionKey = FunctionKeys.ManageSite, Policy = Constant.Policy.Read)]
         public ActionResult EditUrl(int id)
         {
-            var site = _siteService.GetById(id);
+            ISite site = _siteService.GetById(id);
 
             if (site == null)
             {
@@ -275,7 +277,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             if (Request.IsAjaxRequest())
             {
-                var siteUrl = _siteService.GetSiteUrlById(id);
+                SiteUrl siteUrl = _siteService.GetSiteUrlById(id);
 
                 if (siteUrl != null)
                 {
@@ -284,15 +286,14 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                     string result = Constant.OK;
 
                     // Check URL
-                    bool isuri = Uri.IsWellFormedUriString(url, UriKind.Absolute);
-                    if (!isuri)
+                    if (!Uri.IsWellFormedUriString(url, UriKind.Absolute))
                     {
                         result = "invalid";
                     }
                     else
                     {
                         // Check URL duplication
-                        var altUrls = _siteService.GetSiteUrlBySiteId(siteUrl.Site.Id, siteUrl.Environment);
+                        IEnumerable<SiteUrl> altUrls = _siteService.GetSiteUrlBySiteId(siteUrl.Site.Id, siteUrl.Environment);
 
                         if (altUrls.Where(x => x.SiteUrlId != id && x.Url == url).Any())
                         {
@@ -301,7 +302,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                         else
                         {
                             // update site URL
-                            _siteService.UpdateSiteUrl(new UpdateSiteUrlCriteria
+                            var criteria = new UpdateSiteUrlCriteria
                             {
                                 SiteUrlId = id,
                                 SiteId = siteUrl.Site.Id,
@@ -309,7 +310,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                                 Environment = siteUrl.Environment,
                                 IsActive = isActive,
                                 IsDefault = siteUrl.IsDefault
-                            });
+                            };
+
+                            this._siteService.UpdateSiteUrl(criteria);
                         }
                     }
 
@@ -331,16 +334,18 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             if (Request.IsAjaxRequest())
             {
-                var siteUrl = _siteService.GetSiteUrlById(id);
+                SiteUrl siteUrl = _siteService.GetSiteUrlById(id);
 
                 if (siteUrl != null)
                 {
-                    _siteService.UpdateDefaultSiteUrl(new UpdateDefaultSiteUrlCriteria
+                    var criteria = new UpdateDefaultSiteUrlCriteria
                     {
                         SiteUrlId = id,
                         SiteId = siteUrl.Site.Id,
                         Environment = this.Environment
-                    });
+                    };
+
+                    this._siteService.UpdateDefaultSiteUrl(criteria);
 
                     return Json(Constant.OK);
                 }
@@ -363,7 +368,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             if (Request.IsAjaxRequest())
             {
-                var site = _siteService.GetById(siteId);
+                ISite site = _siteService.GetById(siteId);
 
                 if (site != null)
                 {
@@ -372,8 +377,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                     string result = Constant.OK;
 
                     // check url
-                    bool isuri = Uri.IsWellFormedUriString(url, UriKind.Absolute);
-                    if (!isuri)
+                    if (!Uri.IsWellFormedUriString(url, UriKind.Absolute))
                     {
                         result = "invalid";
                     }
@@ -398,7 +402,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                                 IsDefault = false
                             };
 
-                            var cmdResult = _siteService.InsertSiteUrl(criteria);
+                            ICommandResult cmdResult = _siteService.InsertSiteUrl(criteria);
 
                             if (cmdResult != null && cmdResult.IsSuccessful)
                             {
@@ -433,7 +437,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             if (Request.IsAjaxRequest())
             {
-                var result = _siteService.UpdateStatus(new UpdateStatusSiteCriteria
+                ICommandResult result = _siteService.UpdateStatus(new UpdateStatusSiteCriteria
                 {
                     SiteId = id,
                     IsActive = isActive

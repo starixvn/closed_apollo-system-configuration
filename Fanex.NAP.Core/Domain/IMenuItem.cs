@@ -20,6 +20,8 @@ namespace Fanex.NAP.Core.Domain
 
         IFunction Function { get; set; }
 
+        ISite Site { get; set; }
+
         IUser Creator { get; set; }
 
         IUser Modifier { get; set; }

@@ -213,7 +213,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 criteria.ModifiedBy = CurrentSession.UserId;
                 criteria.ModifiedDate = DateTime.Now;
 
-                var result = _groupService.Update(criteria);
+                ICommandResult result = _groupService.Update(criteria);
 
                 if (result != null && result.IsSuccessful)
                 {

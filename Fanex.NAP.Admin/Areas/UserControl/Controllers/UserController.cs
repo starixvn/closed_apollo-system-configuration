@@ -26,6 +26,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
     using Fanex.NAP.Core.Service.Interface;
     using Fanex.NAP.Core.Web;
     using Fanex.NAP.Core.Web.Attribute;
+    using Fanex.NAP.Framework.Command;
 
     /// <summary>
     /// User controller.
@@ -469,12 +470,12 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                     
                 // add new user
                 criteria.UserPwd = Cryptography.CfsEnCode(criteria.UserPwd);
-                criteria.FirstName = criteria.FirstName == null ? string.Empty : criteria.FirstName;
-                criteria.LastName = criteria.LastName == null ? string.Empty : criteria.LastName;
-                criteria.Email = criteria.Email == null ? string.Empty : criteria.Email;
+                criteria.FirstName = criteria.FirstName ?? string.Empty;
+                criteria.LastName = criteria.LastName ?? string.Empty;
+                criteria.Email = criteria.Email ?? string.Empty;
 
                 // assign all functions to the new user if he is site admin or portal admin
-                var result = _userService.Insert(criteria);
+                ICommandResult result = _userService.Insert(criteria);
 
                 if (result != null && result.IsSuccessful)
                 {
@@ -546,11 +547,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             if (ModelState.IsValid)
             {
-                criteria.FirstName = criteria.FirstName == null ? string.Empty : criteria.FirstName;
-                criteria.LastName = criteria.LastName == null ? string.Empty : criteria.LastName;
-                criteria.Email = criteria.Email == null ? string.Empty : criteria.Email;
+                criteria.FirstName = criteria.FirstName ?? string.Empty;
+                criteria.LastName = criteria.LastName ?? string.Empty;
+                criteria.Email = criteria.Email ?? string.Empty;
 
-                var result = _userService.InsertOrUpdate(criteria);
+                ICommandResult result = _userService.InsertOrUpdate(criteria);
 
                 if (result != null && result.IsSuccessful)
                 {
@@ -629,7 +630,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
                 criteria.UserPwd = Cryptography.CfsEnCode(criteria.UserPwd);
 
-                var result = _userService.InsertOrUpdate(criteria);
+                ICommandResult result = _userService.InsertOrUpdate(criteria);
 
                 if (result != null && result.IsSuccessful)
                 {
@@ -672,7 +673,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                     criteria.CustId = user.Id;
                     criteria.UserPwd = Cryptography.CfsEnCode(criteria.UserPwd);
 
-                    var result = _userService.InsertOrUpdate(criteria);
+                    ICommandResult result = _userService.InsertOrUpdate(criteria);
 
                     if (result != null && result.IsSuccessful)
                     {
@@ -723,8 +724,8 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 siteId = this.SiteId;
             }
 
-            var user = _userService.GetById(id);
-            var site = _siteService.GetById(siteId);
+            IUser user = _userService.GetById(id);
+            ISite site = _siteService.GetById(siteId);
 
             if (ReferenceEquals(user, null) || ReferenceEquals(site, null))
             {
@@ -760,10 +761,8 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             }
 
             ViewBag.FunctionList = _functionService.GetBySiteInHierarchy(criteria.SiteId, Environment, true).ToList();
-            ViewBag.UserFuncPolicyList = _functionService.GetByUserAndSite(
-                                                                criteria.UserId,
-                                                                criteria.SiteId,
-                                                                this.Environment);
+            ViewBag.UserFuncPolicyList = 
+                _functionService.GetByUserAndSite(criteria.UserId, criteria.SiteId, this.Environment);
             ViewBag.CurrentUserFuncPolicyList =
                 this._functionService.GetByUserAndSiteIncludeGroup(CurrentSession.UserId, criteria.SiteId, Environment);
             ViewBag.AdminLevel = CurrentSession.Level;
@@ -783,8 +782,8 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         public ActionResult AssignPermission(AssignFunctionUserCriteria criteria)
         {
             // check user and site
-            var user = _userService.GetById(criteria.UserId);
-            var site = _siteService.GetById(criteria.SiteId);
+            IUser user = _userService.GetById(criteria.UserId);
+            ISite site = _siteService.GetById(criteria.SiteId);
 
             if (user == null || site == null)
             {
@@ -829,10 +828,10 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             // check function host,contains in list function
             if (!criteria.FuncHost.IsNullOrDBNull())
             {
-                foreach (var itemFunc in criteria.FuncHost)
+                foreach (int itemFunc in criteria.FuncHost)
                 {
                     // function find from list function, policy is host
-                    var tempFuncHost = listFunc.Where(f => f.Id == itemFunc).FirstOrDefault();
+                    IFunction tempFuncHost = listFunc.Where(f => f.Id == itemFunc).FirstOrDefault();
 
                     if (tempFuncHost.IsNullOrDBNull())
                     {
@@ -847,7 +846,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             // check function read, with current user login have permission
             if (!criteria.FuncRead.IsNullOrDBNull())
             {
-                foreach (var itemFunc in criteria.FuncRead)
+                foreach (int itemFunc in criteria.FuncRead)
                 {
                     listUserFuncRemove.Remove(f => f.Function.Id == itemFunc);
                 }
@@ -856,9 +855,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             // check permission current user login with user be assign permission
             // check for function policy will be remove ( set policy = 0 )
             listUserFuncRemove = listUserFuncRemove.Where(f => f.Policy > 0).ToList();
-            foreach (var itemFunc in listUserFuncRemove)
+            foreach (FunctionPolicy itemFunc in listUserFuncRemove)
             {
-                var tempFunc = listCurrentUserFuncPolicy
+                FunctionPolicy tempFunc = listCurrentUserFuncPolicy
                                     .Where(f =>
                                         f.Function.Id == itemFunc.Function.Id
                                         && f.Policy >= itemFunc.Policy).FirstOrDefault();
@@ -869,7 +868,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 }
             }
 
-            var result = _userService.AssignFunction(criteria);
+            ICommandResult result = _userService.AssignFunction(criteria);
 
             if (result != null && result.IsSuccessful)
             {
@@ -923,7 +922,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 string xmlValue = "<ROOT>";
                 string[] strValueSiteLevel = value.Split(';');
 
-                foreach (var item in strValueSiteLevel)
+                foreach (string item in strValueSiteLevel)
                 {
                     if (!item.IsNullOrTrimEmpty())
                     {
@@ -943,7 +942,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 };
 
                 // assigns all functions to the user if he/she is site-admin or portal-admin
-                var result = _userService.AssignSite(criteria);
+                ICommandResult result = _userService.AssignSite(criteria);
 
                 if (result != null && result.IsSuccessful)
                 {
@@ -994,7 +993,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 criteria.LastName = criteria.LastName ?? string.Empty;
                 criteria.Email = criteria.Email ?? string.Empty;
 
-                var result = _userService.InsertOrUpdate(criteria);
+                ICommandResult result = _userService.InsertOrUpdate(criteria);
 
                 if (result != null && result.IsSuccessful)
                 {
@@ -1076,8 +1075,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             {
                 if (groupId != 0)
                 {
-                    IEnumerable<FunctionPolicy> listFunctionPolicy = 
-                        this._functionService.GetByGroup(groupId, this.Environment);
+                    IEnumerable<FunctionPolicy> listFunctionPolicy = this._functionService.GetByGroup(groupId, this.Environment);
 
                     return Json(listFunctionPolicy);
                 }
@@ -1106,14 +1104,14 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                     CreatedDate = DateTime.Now
                 };
 
-                var user = _userService.GetById(userId);
+                IUser user = _userService.GetById(userId);
 
                 if (user != null)
                 {
                     throw new Exception(string.Format("User {0} (id: {1}) existed in NAP!", user.Username, user.Id));
                 }
 
-                var result = _userService.InsertOrUpdate(criteria);
+                ICommandResult result = _userService.InsertOrUpdate(criteria);
 
                 if (result != null && result.IsSuccessful)
                 {
@@ -1172,10 +1170,8 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             }
 
             ViewBag.FunctionList = _functionService.GetBySiteInHierarchy(criteria.SiteId, Environment, true).ToList();
-            ViewBag.UserFuncPolicyList = _functionService.GetByUserAndSiteIncludeGroup(
-                                                                criteria.UserId,
-                                                                criteria.SiteId,
-                                                                this.Environment);
+            ViewBag.UserFuncPolicyList = 
+                _functionService.GetByUserAndSiteIncludeGroup(criteria.UserId, criteria.SiteId, this.Environment);
 
             ViewBag.CurrentUserFuncPolicyList =
                 this._functionService.GetByUserAndSiteIncludeGroup(CurrentSession.UserId, criteria.SiteId, Environment);

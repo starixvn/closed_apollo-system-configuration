@@ -22,6 +22,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
     using Fanex.NAP.Core.Service.Interface;
     using Fanex.NAP.Core.Web;
     using Fanex.NAP.Core.Web.Attribute;
+    using Fanex.NAP.Framework.Command;
 
     /// <summary>
     /// Menu controller.
@@ -133,7 +134,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 criteria.ParentId = criteria.ParentId == 0 ? null : criteria.ParentId;
                 criteria.ParentName = criteria.ParentId == 0 || criteria.ParentId == null ? null : criteria.ParentName;
 
-                var result = _menuItemService.Insert(criteria);
+                ICommandResult result = _menuItemService.Insert(criteria);
 
                 if (result != null && result.IsSuccessful)
                 {
@@ -157,13 +158,14 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         [NapAuth(FunctionKey = FunctionKeys.ManageMenu, Policy = Constant.Policy.Host)]
         public ActionResult EditMenuItem(int menuItemId)
         {
-            var criteria = new UpdateMenuItemCriteria();
-            var menuItem = (MenuItem)_menuItemService.GetById(menuItemId);
+            IMenuItem menuItem = _menuItemService.GetById(menuItemId);
 
             if (menuItem == null)
             {
                 return RedirectToAction("Manage");
             }
+
+            var criteria = new UpdateMenuItemCriteria();
 
             criteria.MenuItemId = menuItem.Id;
             criteria.MenuItemName = menuItem.Name;
@@ -229,7 +231,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 criteria.ParentId = criteria.ParentId == 0 ? null : criteria.ParentId;
                 criteria.ParentName = criteria.ParentId == 0 || criteria.ParentId == null ? null : criteria.ParentName;
 
-                var result = _menuItemService.Update(criteria);
+                ICommandResult result = _menuItemService.Update(criteria);
 
                 if (result != null && result.IsSuccessful)
                 {
@@ -256,7 +258,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             if (Request.IsAjaxRequest())
             {
-                List<IMenuItem> menuItemList = new List<IMenuItem>();
+                var menuItemList = new List<IMenuItem>();
 
                 environment = !string.IsNullOrEmpty(environment) ? environment : this.Environment;
                 menuItemList.Add(new MenuItem { Id = 0, Name = ViewResources.None });
@@ -309,13 +311,15 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             if (Request.IsAjaxRequest())
             {
-                var result = _menuItemService.UpdateStatus(new UpdateStatusMenuItemCriteria
+                var criteria = new UpdateStatusMenuItemCriteria
                 {
                     IsActive = isActive,
                     MenuItemId = id,
                     ModifiedBy = CurrentSession.UserId,
                     ModifiedDate = DateTime.Now
-                });
+                };
+
+                ICommandResult result = _menuItemService.UpdateStatus(criteria);
 
                 if (result != null && result.IsSuccessful)
                 {
