@@ -142,11 +142,9 @@ namespace Fanex.NAP.Core.Service.Impl
                         isActive = site.IsActive;
                     }
                 }
-
-                return isActive;
             }
 
-            return false;
+            return isActive;
         }
 
         /// <summary>

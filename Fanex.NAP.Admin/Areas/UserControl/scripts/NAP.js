@@ -142,30 +142,30 @@ var NAP = function ($) {
 } (jQuery);
 
 $(document).ready(function () {
-    NAP.initCoreValues();
+	NAP.initCoreValues();
 
-    NAP.headlineMsgBox = $.msgbox({
-        message: '',
-        //containerId: 'msg-bar',
-        type: 'err',
-        modal: false,
-        position: ['top:130', 'center'],
-        theme: '',
-        zIndex: 9999,
-        useAnimation: false
-    });
+	NAP.headlineMsgBox = $.msgbox({
+		message: '',
+		//containerId: 'msg-bar',
+		type: 'err',
+		modal: false,
+		position: ['top:130', 'center'],
+		theme: '',
+		zIndex: 9999,
+		useAnimation: false
+	});
 
-    NAP.loadingBox = $.msgbox({
-        message: 'Loading...',
-        type: 'warn',
-        modal: true,
-        position: ['top:5', 'center'],
-        closeBtn: false,
-        theme: '',
-        zIndex: 9999,
-        sticky: true,
-        useAnimation: false
-    });
+	NAP.loadingBox = $.msgbox({
+		message: 'Loading...',
+		type: 'warn',
+		modal: true,
+		position: ['top:5', 'center'],
+		closeBtn: false,
+		theme: '',
+		zIndex: 9999,
+		sticky: true,
+		useAnimation: false
+	});
 });
 
 // -- Utilities -- //

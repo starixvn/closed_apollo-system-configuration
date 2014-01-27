@@ -33,7 +33,7 @@ var LogExecSp = function ($) {
 				buttonImage: LogExecSp.buttonImage,
 				buttonText: "To",
 				buttonImageOnly: true,
-				onSelect: function (selectedDate) {
+				onSelect: function () {
 				}
 			});
 		}

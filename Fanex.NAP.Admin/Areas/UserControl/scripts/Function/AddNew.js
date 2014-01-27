@@ -76,8 +76,7 @@ $(document).ready(function () {
 	});
 
 	AddNewFunction.form.submit(function () {
-		var $this = $(this),
-			parentId = AddNewFunction.parentId.val();
+		var parentId = AddNewFunction.parentId.val();
 
 		if (parentId.length > 0) {
 			AddNewFunction.parentName.val(AddNewFunction.parentId.find("option[value=" + parentId + "]").text());

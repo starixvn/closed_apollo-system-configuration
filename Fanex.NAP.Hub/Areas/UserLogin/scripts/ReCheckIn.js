@@ -1,45 +1,43 @@
 ﻿var Recheckin = function ($) {
 
-    return {
-        time: null,
-        root: null,
-        headlineMsgBox: null,
-        kickedOutMsg: null,
+	return {
+		time: null,
+		root: null,
+		headlineMsgBox: null,
+		kickedOutMsg: null,
 
-        init: function () {
-            Recheckin.time = 5000;
-            Recheckin.root = location.protocol + '//' + location.host + $('#NapHubRoot').val();
-            Recheckin.kickedOutMsg = 'You have logged in from another session or your login session has expired!';
-        },
+		init: function () {
+			Recheckin.time = 5000;
+			Recheckin.root = location.protocol + '//' + location.host + $('#NapHubRoot').val();
+			Recheckin.kickedOutMsg = 'You have logged in from another session or your login session has expired!';
+		},
 
-        reCheckin: function () {
+		reCheckin: function () {
 
-            $.ajax({
-                url: Recheckin.root + "UserLogin/Login/ReCheckLogin",
-                type: "POST",
-                dataType: "json",
-                success: function (result) {
-                    if (result == "1") {
-                        Recheckin.headlineMsgBox.showInfo(Recheckin.kickedOutMsg, { closeBtn: false });
-                    }
-                    if (result == "-1") {
-                        window.location.href = Recheckin.root + "UserLogin/Common/Offline";
-                    }
-                },
-                error: function (request, status, error) {
-                }
-            });
-        },
+			$.ajax({
+				url: Recheckin.root + "UserLogin/Login/ReCheckLogin",
+				type: "POST",
+				dataType: "json",
+				success: function (result) {
+					if (result == "1") {
+						Recheckin.headlineMsgBox.showInfo(Recheckin.kickedOutMsg, { closeBtn: false });
+					}
+					if (result == "-1") {
+						window.location.href = Recheckin.root + "UserLogin/Common/Offline";
+					}
+				}
+			});
+		},
 
-        closeBrowser: function () {
-            var index = window;
-            while (index != index.parent) // Jump out
-            {
-                index = index.parent;
-            }
-            index.close();
-        }
-    }
+		closeBrowser: function () {
+			var index = window;
+			while (index != index.parent) // Jump out
+			{
+				index = index.parent;
+			}
+			index.close();
+		}
+	};
 
 } (jQuery);
 

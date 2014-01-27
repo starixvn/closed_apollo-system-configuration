@@ -16,8 +16,7 @@ $(document).ready(function () {
 	DuplicateFunction.parentName = $('#ParentName');
 
 	DuplicateFunction.form.submit(function () {
-		var $this = $(this),
-			parentId = DuplicateFunction.parentId.val();
+		var parentId = DuplicateFunction.parentId.val();
 
 		if (parentId.length > 0) {
 			DuplicateFunction.parentName.val(DuplicateFunction.parentId.find("option[value=" + parentId + "]").text());

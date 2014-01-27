@@ -33,7 +33,7 @@ var LogUserLogin = function ($) {
 				buttonImage: LogUserLogin.buttonImage,
 				buttonText: "To",
 				buttonImageOnly: true,
-				onSelect: function (selectedDate) {
+				onSelect: function () {
 				}
 			});
 		}

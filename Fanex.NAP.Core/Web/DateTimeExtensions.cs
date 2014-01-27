@@ -17,6 +17,7 @@ namespace Fanex.NAP.Core.Web
     public static class DateTimeExtensions
     {
         public const string ShortDateFormat = "MM/dd/yyyy";
+        public const string ShortDateFormatForFileName = "yyyyMMdd";
 
         /// <summary>
         /// Gets first date of month.
@@ -86,6 +87,31 @@ namespace Fanex.NAP.Core.Web
         public static string ToShortFormatedDateWithoutSeparator(this DateTime date)
         {
             return date.ToString(ShortDateFormat).Replace("/", string.Empty);
+        }
+
+        /// <summary>
+        /// Format a DateTime value to short date format, separated by '-'.
+        /// </summary>
+        /// <param name="date">DateTime type that the method needs to be attached to.</param>
+        /// <returns>Formatted date such as 2013-10-10.</returns>
+        public static string ToShortFormatedDateForFileName(this DateTime? date)
+        {
+            if (date.HasValue)
+            {
+                return date.Value.ToShortFormatedDateForFileName();
+            }
+
+            return string.Empty;
+        }
+
+        /// <summary>
+        /// Format a DateTime value to short date format, separated by '-'.
+        /// </summary>
+        /// <param name="date">DateTime type that the method needs to be attached to.</param>
+        /// <returns>Formatted date such as 2013-10-10.</returns>
+        public static string ToShortFormatedDateForFileName(this DateTime date)
+        {
+            return date.ToString(ShortDateFormatForFileName);
         }
     }
 }

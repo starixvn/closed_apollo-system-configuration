@@ -25,8 +25,6 @@
                     if (result == "-1") {
                         window.location.href = Recheckin.root + "UserLogin/Common/Offline";
                     }
-                },
-                error: function (request, status, error) {
                 }
             });
         },
