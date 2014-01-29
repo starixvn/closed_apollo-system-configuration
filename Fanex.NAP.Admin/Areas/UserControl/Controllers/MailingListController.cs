@@ -14,15 +14,17 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
     using System.Linq;
     using System.Text;
     using System.Web.Mvc;
-    using Fanex.Logging;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Criteria.Function;
     using Fanex.NAP.Core.Criteria.MailingList;
+    using Fanex.NAP.Core.Domain;
     using Fanex.NAP.Core.Model;
+    using Fanex.NAP.Core.Model.ValueObject;
     using Fanex.NAP.Core.Service.Impl;
     using Fanex.NAP.Core.Service.Interface;
     using Fanex.NAP.Core.Web;
     using Fanex.NAP.Core.Web.Attribute;
+    using Fanex.NAP.Framework.Command;
 
     /// <summary>
     /// MailingList Controller.
@@ -92,7 +94,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             if (Request.IsAjaxRequest())
             {
-                var result = _mailingListService.Update(new UpdateIsInternalMailingListCriteria
+                ICommandResult result = _mailingListService.Update(new UpdateIsInternalMailingListCriteria
                 {
                     ListId = id,
                     IsInternal = isInternal,
@@ -118,29 +120,37 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         [NapAuth(FunctionKey = FunctionKeys.ManageMailingList, Policy = Constant.Policy.Read)]
         public ActionResult Manage(int? siteId)
         {
-            GetMailingListByUserAndSiteIncludeGroupCriteria criteria = null;
-
-            var hasEditRight = false;
-            var isITGroup = CheckIsPortalAminOrITGroup();
-
-            criteria = new GetMailingListByUserAndSiteIncludeGroupCriteria
+            var criteria = new GetMailingListByUserAndSiteIncludeGroupCriteria
             {
                 UserId = CurrentSession.UserId,
                 SiteId = siteId ?? this.SiteId,
                 Environment = this.Environment,
-                IsInternal = isITGroup
+                IsInternal =  CheckIsPortalAdminOrITGroup()
             };
-                
-            var mailingList = _mailingListService.GetBySite(criteria);
-            IList<SelectListItem> siteItemList = new List<SelectListItem>();
 
-            GetSitesAndPolicyForManageAction(criteria, ref hasEditRight, ref siteItemList);
+            if (this.UserIsPortalAdmin)
+            {
+                ViewBag.SiteItemList = _siteService.GetAllSelectListItem(criteria.Environment, true, criteria.SiteId);
+                ViewFlags.HasEditRight = true;
+            }
+            else
+            {
+                var sites = _siteService.GetSiteLevelByUser(this.CurrentSession.UserId, this.Environment);
+                if (sites != null)
+                {
+                    ViewBag.SiteItemList = sites.Select(s => new SelectListItem
+                    {
+                        Text = s.Site.Name,
+                        Value = s.Site.Id.ToString(),
+                    }).ToList();
+                }
+
+                ViewFlags.HasEditRight = HasRight(FunctionKeys.ManageMailingList, Constant.Policy.Host);
+            }
 
             ViewBag.IsPortalAdmin = this.UserIsPortalAdmin;
-            ViewBag.MailingList = mailingList;
-            ViewBag.IsITGroup = isITGroup;
-            ViewBag.ViewFlags.HasEditRight = hasEditRight;
-            ViewBag.SiteItemList = siteItemList;
+            ViewBag.MailingList = _mailingListService.GetBySite(criteria);
+            ViewBag.IsITGroup = criteria.IsInternal;
 
             return View(criteria);
         }
@@ -154,22 +164,32 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         [NapAuth(FunctionKey = FunctionKeys.ManageMailingList, Policy = Constant.Policy.Read)]
         public ActionResult Manage(GetMailingListByUserAndSiteIncludeGroupCriteria criteria)
         {
-            var hasEditRight = false;
-            var isITGroup = CheckIsPortalAminOrITGroup();
-
             criteria.UserId = CurrentSession.UserId;
-            criteria.IsInternal = isITGroup;
+            criteria.IsInternal = CheckIsPortalAdminOrITGroup();
 
-            var mailingList = _mailingListService.GetBySite(criteria);
-            IList<SelectListItem> siteItemList = new List<SelectListItem>();
+            if (this.UserIsPortalAdmin)
+            {
+                ViewBag.SiteItemList = _siteService.GetAllSelectListItem(criteria.Environment, true, criteria.SiteId);
+                ViewFlags.HasEditRight = true;
+            }
+            else
+            {
+                var sites = _siteService.GetSiteLevelByUser(this.CurrentSession.UserId, this.Environment);
+                if (sites != null)
+                {
+                    ViewBag.SiteItemList = sites.Select(s => new SelectListItem
+                    {
+                        Text = s.Site.Name,
+                        Value = s.Site.Id.ToString(),
+                    }).ToList();
+                }
 
-            GetSitesAndPolicyForManageAction(criteria, ref hasEditRight, ref siteItemList);
+                ViewFlags.HasEditRight = HasRight(FunctionKeys.ManageMailingList, Constant.Policy.Host);
+            }
 
             ViewBag.IsPortalAdmin = this.UserIsPortalAdmin;
-            ViewBag.MailingList = mailingList;
-            ViewBag.IsITGroup = isITGroup;
-            ViewBag.ViewFlags.HasEditRight = hasEditRight;
-            ViewBag.SiteItemList = siteItemList;
+            ViewBag.MailingList = _mailingListService.GetBySite(criteria);
+            ViewBag.IsITGroup = criteria.IsInternal;
 
             return View(criteria);
         }
@@ -198,7 +218,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             ViewBag.FunctionList = functionItemList;
             ViewBag.MailFunctionList = mailFunctionItemList;
             ViewBag.SiteItemList = siteItemList;
-            ViewBag.IsITGroup = CheckIsPortalAminOrITGroup();
+            ViewBag.IsITGroup = CheckIsPortalAdminOrITGroup();
 
             return View(criteria);
         }
@@ -219,7 +239,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             ViewBag.FunctionList = functionItemList;
             ViewBag.MailFunctionList = mailFunctionItemList;
             ViewBag.SiteItemList = siteItemList;
-            ViewBag.IsITGroup = CheckIsPortalAminOrITGroup();
+            ViewBag.IsITGroup = CheckIsPortalAdminOrITGroup();
 
             if (ModelState.IsValid)
             {
@@ -278,7 +298,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             criteria.IsInternal = mailingList.IsInternal;
             criteria.IsActive = mailingList.IsActive;
 
-            var isITGroup = CheckIsPortalAminOrITGroup();
+            var isITGroup = CheckIsPortalAdminOrITGroup();
             var functionItemList = GetFunctionList(criteria.SiteId, criteria.Environment);
             var mailFunctionItemList = GetMailFunctionList(criteria.Environment);
 
@@ -298,7 +318,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         [NapAuth(FunctionKey = FunctionKeys.ManageMailingList, Policy = Constant.Policy.Host)]
         public ActionResult Edit(UpdateMailingListCriteria criteria)
         {
-            var isITGroup = CheckIsPortalAminOrITGroup();
+            var isITGroup = CheckIsPortalAdminOrITGroup();
             var functionItemList = GetFunctionList(criteria.SiteId, criteria.Environment);
             var mailFunctionItemList = GetMailFunctionList(criteria.Environment);
 
@@ -431,7 +451,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// </summary>
         /// <returns>Is True or False.</returns>
         [NonAction]
-        private bool CheckIsPortalAminOrITGroup()
+        private bool CheckIsPortalAdminOrITGroup()
         {
             var userIsPortalAdminOrIT = this.UserIsPortalAdmin;
             if (!userIsPortalAdminOrIT)
@@ -441,39 +461,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             }
 
             return userIsPortalAdminOrIT;
-        }
-
-        /// <summary>
-        /// Get list sites and policy for view Manage.
-        /// </summary>
-        /// <param name="criteria">GetMailingListBySiteCriteria input value to get.</param>
-        /// <param name="hasEditRight">Return role is edit or no.</param>
-        /// <param name="siteItemList">Return list sites.</param>
-        [NonAction]
-        private void GetSitesAndPolicyForManageAction(
-            GetMailingListByUserAndSiteIncludeGroupCriteria criteria, 
-            ref bool hasEditRight, 
-            ref IList<SelectListItem> siteItemList)
-        {
-            if (this.UserIsPortalAdmin)
-            {
-                siteItemList = _siteService.GetAllSelectListItem(criteria.Environment, true, criteria.SiteId);
-                hasEditRight = true;
-            }
-            else
-            {
-                var sites = _siteService.GetSiteLevelByUser(this.CurrentSession.UserId, this.Environment);
-                if (sites != null)
-                {
-                    siteItemList = sites.Select(s => new SelectListItem
-                    {
-                        Text = s.Site.Name,
-                        Value = s.Site.Id.ToString(),
-                    }).ToList();
-                }
-
-                hasEditRight = HasRight(FunctionKeys.ManageMailingList, Constant.Policy.Host);
-            }
         }
 
         /// <summary>
@@ -525,7 +512,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             }
             else
             {
-                var functionList = _functionService.GetByUserAndSiteIncludeGroup(this.CurrentSession.UserId, siteId, environment);
+                IEnumerable<FunctionPolicy> functionList = _functionService.GetByUserAndSiteIncludeGroup(this.CurrentSession.UserId, siteId, environment);
                 if (functionList != null)
                 {
                     functionList = functionList.Where(t => t.Policy >= (byte)Constant.Policy.Host);
@@ -550,7 +537,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             IList<SelectListItem> mailFunctionItemList = null;
 
-            GetByParentKeyAndSiteCriteria getByParentKeyAndSiteCriteria = new GetByParentKeyAndSiteCriteria
+            var getByParentKeyAndSiteCriteria = new GetByParentKeyAndSiteCriteria
             {
                 SiteId = this.SiteId,
                 ParentKey = FunctionKeys.MailingList,
@@ -564,7 +551,8 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 getByParentKeyAndSiteCriteria.UserId = this.CurrentSession.UserId;
             }
 
-            var mailFunctionList = _functionService.GetByParentKeyAndSite(getByParentKeyAndSiteCriteria).ToList();
+            IEnumerable<IFunction> mailFunctionList = _functionService.GetByParentKeyAndSite(getByParentKeyAndSiteCriteria);
+
             if (mailFunctionList != null)
             {
                 mailFunctionItemList = mailFunctionList.Select(s => new SelectListItem
@@ -616,18 +604,20 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         {
             var isValid = true;
             //// checks duplicate mailing list name
-            string listName = criteria.ListName = criteria.ListName != null ? criteria.ListName.Trim() : string.Empty;
-            var mailingList = _mailingListService.GetByName(listName);
+            criteria.ListName = criteria.ListName != null ? criteria.ListName.Trim() : string.Empty;
+            
             if (string.IsNullOrWhiteSpace(criteria.ListName))
             {
-                ModelState.AddModelError("ListName", string.Format(ViewResources.Field_Required, listName));
+                ModelState.AddModelError("ListName", string.Format(ViewResources.Field_Required, criteria.ListName));
                 isValid = false;
             }
             else
             {
+                var mailingList = _mailingListService.GetByName(criteria.ListName);
+
                 if (mailingList != null)
                 {
-                    ModelState.AddModelError("ListName", string.Format(ViewResources.DuplicateMsg, listName));
+                    ModelState.AddModelError("ListName", string.Format(ViewResources.DuplicateMsg, criteria.ListName));
                     isValid = false;
                 }
                 else
@@ -767,9 +757,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
             if (!string.IsNullOrWhiteSpace(emails))
             {
-                var arrEmail = emails.Split(';');
+                string[] arrEmail = emails.Split(';');
 
-                foreach (var email in arrEmail)
+                foreach (string email in arrEmail)
                 {
                     if (!emailList.Contains(email.Trim().ToLower()))
                     {

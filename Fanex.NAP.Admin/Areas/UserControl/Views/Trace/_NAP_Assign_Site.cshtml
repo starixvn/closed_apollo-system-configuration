@@ -33,7 +33,7 @@
 				<tbody>
 					@{
 	int i = 1;
-	foreach (var item in listSiteUrlOld)
+	foreach (SiteLevel item in listSiteUrlOld)
 	{
 		string rowCss = i % 2 == 0 ? string.Empty : "class='alt'";
 		
@@ -61,7 +61,7 @@
 		</div>
 	</div>
 }
-@if (listSiteUrl.Count > 0)
+@if (listSiteUrl.Any())
 { 
 	<br />
 	<h1>Site New Value</h1>
@@ -92,7 +92,7 @@
 				<tbody>
 					@{
 	int i = 1;
-	foreach (var item in listSiteUrl)
+	foreach (SiteLevel item in listSiteUrl)
 	{
 		string rowCss = i % 2 == 0 ? string.Empty : "class='alt'";
 		

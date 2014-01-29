@@ -7,29 +7,27 @@
     var viewFlags = (ViewFlags)ViewBag.ViewFlags;
 }
 @section Head {
-    <link href="~/Areas/UserControl/themes/nap/style.less" rel="stylesheet" type="text/css" />
-    <script src="~/Areas/UserControl/scripts/lib/jsrender.js" type="text/javascript"></script>
-    <script type="text/x-jsrender" id="DropdownListTpl">
+	<link href="~/Areas/UserControl/themes/nap/style.less" rel="stylesheet" type="text/css" />
+	<script src="~/Areas/UserControl/scripts/lib/jsrender.js" type="text/javascript"></script>
+	<script type="text/x-jsrender" id="DropdownListTpl">
 		<option value="{{:Id}}">{{:Name}}</option>
-    </script>
+	</script>
 }
 @section Headline {
-    <h1>
-        <span class="title"><span class="first">@ViewResources.Function @ViewResources.Management
-            /</span>
-            @ViewBag.Title
-        </span>
-        @if (Model.SiteId == null)
-        { 
-            @Html.ActionLink("← " + ViewResources.Back_To_List, "Manage", "Function", null,
-                new { @class = "lnk" })
-        }
-        else
-        {
-            @Html.ActionLink("← " + ViewResources.Back_To_List, "Manage", "Function", new { siteId = Model.SiteId },
-                new { @class = "lnk" })
-        }
-    </h1>
+	<h1>
+		<span class="title">
+			<span class="first">@ViewResources.Function @ViewResources.Management /</span> @ViewBag.Title
+		</span>
+		@if (Model.SiteId == null)
+		{ 
+			@Html.ActionLink("← " + ViewResources.Back_To_List, "Manage", "Function", null, new { @class = "lnk" })
+		}
+		else
+		{
+			@Html.ActionLink("← " + ViewResources.Back_To_List, "Manage", "Function", new { siteId = Model.SiteId },
+				new { @class = "lnk" })
+		}
+	</h1>
 }
 @using (Html.BeginForm())
 {

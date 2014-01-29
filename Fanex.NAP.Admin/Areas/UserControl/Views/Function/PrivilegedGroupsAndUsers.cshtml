@@ -12,8 +12,8 @@
 }
 @section Headline {
 	<h1>
-		<span class="title"><span class="first">@ViewResources.Function @ViewResources.Management
-			/</span>
+		<span class="title">
+			<span class="first">@ViewResources.Function @ViewResources.Management /</span>
 			@string.Format("Privileged Groups and Users of '{0}' Function", function.Name)
 		</span>
 		@Html.ActionLink("← " + ViewResources.Back_To_List, "Manage", "Function", new { siteId = ViewBag.SiteId }, new { @class = "lnk" })
@@ -22,11 +22,11 @@
 <div class="grid-wrp pnl-wrp">
 	<div class="pnl-header">
 		<div class="pnl-header-content"><span>@ViewResources.Group_List</span>
-        @if (viewFlags.HasAssignFunctionToGroupRight)
+		@if (viewFlags.HasAssignFunctionToGroupRight)
 		{
 			<a href="javascript:;" id="btn-add-group" title="@ViewResources.Add_groups_to_list"></a>
 		}
-        </div>
+		</div>
 		<div class="pnl-header-toggle"></div>
 	</div>
 	<div class="pnl-body">
@@ -53,7 +53,7 @@
 				@if (groupList != null && groupList.Count > 0)
 				{
 					int i = 0;
-					foreach (var item in groupList)
+					foreach (GroupPolicy item in groupList)
 					{
 						string rowCss = i % 2 == 0 ? string.Empty : "class='alt'";
 		
@@ -256,8 +256,7 @@
 					@Html.Label("GroupId", ViewResources.Group, new { id = string.Empty })
 				</div>
 				<div class="edit-field">
-					@Html.DropDownList("GroupId", (List<SelectListItem>)ViewBag.GroupSelectList,
-                        ViewResources.All_Groups)
+					@Html.DropDownList("GroupId", (List<SelectListItem>)ViewBag.GroupSelectList, ViewResources.All_Groups)
 				</div>
 			</div>
 			<div class="filter-cell">

@@ -1,4 +1,6 @@
-﻿var EditMenuItem = function ($) {
+﻿/* global NAP: false */
+
+var EditMenuItem = function ($) {
 
 	return {
 		form: null,

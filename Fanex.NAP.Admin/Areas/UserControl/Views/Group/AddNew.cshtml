@@ -10,8 +10,7 @@
 @section Headline {
 	<h1>
 		<span class="title">
-			<span class="first">@ViewResources.Group @ViewResources.Management /</span>
-			@ViewBag.Title
+			<span class="first">@ViewResources.Group @ViewResources.Management /</span> @ViewBag.Title
 		</span>
 		@Html.ActionLink("← " + ViewResources.Back_To_List, "Manage", "Group", null, new { @class = "lnk" })
 	</h1>

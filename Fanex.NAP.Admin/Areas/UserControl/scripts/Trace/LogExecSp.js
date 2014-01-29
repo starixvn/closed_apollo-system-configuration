@@ -1,4 +1,5 @@
-﻿
+﻿/* global NAP: false */
+
 var LogExecSp = function ($) {
 
 	return {
@@ -18,7 +19,7 @@ var LogExecSp = function ($) {
 				buttonImageOnly: true,
 				onSelect: function (selectedDate) {
 					$("#To").datepicker("option", "minDate", selectedDate);
-					if ($("#To").val() == '') {
+					if ($("#To").val() === '') {
 						$("#To").val($(this).val());
 					}
 				}

@@ -1,4 +1,6 @@
-﻿var PrivilegedGroupsAndUsers = function ($) {
+﻿/* global NAP: false */
+
+var PrivilegedGroupsAndUsers = function () {
 
 	return {
 		groupGrid: null,
@@ -64,7 +66,7 @@ $(document).ready(function () {
 
 		var searchName = $this.attr('name');
 
-		if (searchName == "user") {
+		if (searchName === "user") {
 			$.ajax({
 				url: NAP.resolveClientUrl("Function/PrivilegedUsers?fid=" + functionId + "&gid=" + groupId + "&q=" + username),
 				type: 'GET',
@@ -80,7 +82,7 @@ $(document).ready(function () {
 						var userGridWrp = $('#user-grid-wrp');
 
 						// binds user list to popup
-						if (userGridWrp.length == 0) {
+						if (userGridWrp.length === 0) {
 							userGridWrp = $('<div id="user-grid-wrp"></div>').insertAfter(form);
 						}
 						userGridWrp.html(result);
@@ -98,7 +100,7 @@ $(document).ready(function () {
 									userId = $this.attr('uid'),
 									policy = $this.parents('tr').find('td:last input[type=radio]:checked');
 
-									if (policy.length == 0) {
+									if (policy.length === 0) {
 										readList.push(userId);
 									} else {
 										if (policy.attr('id').indexOf('read') >= 0) {
@@ -122,9 +124,9 @@ $(document).ready(function () {
 										NAP.loadingBox.close();
 									},
 									success: function (result) {
-										if (result.toUpperCase() == 'OK') {
+										if (result.toUpperCase() === 'OK') {
 											NAP.headlineMsgBox.showInfo('Your changes were saved!', { closeBtn: false });
-											setTimeout('window.location.reload()', 2000);
+											setTimeout(window.location.reload, 2000);
 										}
 									},
 									error: function (xhr, status, err) {
@@ -151,7 +153,7 @@ $(document).ready(function () {
 							if (thisIsChecked) {
 								btnAddUser.attr('disabled', false);
 							} else {
-								if (userGridWrp.find('.grid input[type=checkbox][uid]:checked').length == 0) {
+								if (userGridWrp.find('.grid input[type=checkbox][uid]:checked').length === 0) {
 									btnAddUser.attr('disabled', true);
 									userGridWrp.find('.grid input[type=checkbox]:not([uid]):first').attr('checked', false);
 								}
@@ -164,7 +166,7 @@ $(document).ready(function () {
 				}
 			});
 		}
-		if (searchName == "group") {
+		if (searchName === "group") {
 			$.ajax({
 				url: NAP.resolveClientUrl("Function/PrivilegedGroups?fid=" + functionId + "&q=" + groupName),
 				type: 'GET',
@@ -180,7 +182,7 @@ $(document).ready(function () {
 						var groupGridWrp = $('#group-grid-wrp');
 
 						// binds user list to popup
-						if (groupGridWrp.length == 0) {
+						if (groupGridWrp.length === 0) {
 							groupGridWrp = $('<div id="group-grid-wrp"></div>').insertAfter(form);
 						}
 						groupGridWrp.html(result);
@@ -198,7 +200,7 @@ $(document).ready(function () {
 									groupId = $this.attr('gid'),
 									policy = $this.parents('tr').find('td:last input[type=radio]:checked');
 
-									if (policy.length == 0) {
+									if (policy.length === 0) {
 										readList.push(groupId);
 									} else {
 										if (policy.attr('id').indexOf('read') >= 0) {
@@ -222,9 +224,9 @@ $(document).ready(function () {
 										NAP.loadingBox.close();
 									},
 									success: function (result) {
-										if (result.toUpperCase() == 'OK') {
+										if (result.toUpperCase() === 'OK') {
 											NAP.headlineMsgBox.showInfo('Your changes were saved!', { closeBtn: false });
-											setTimeout('window.location.reload()', 2000);
+											setTimeout(window.location.reload, 2000);
 										}
 									},
 									error: function (xhr, status, err) {
@@ -251,7 +253,7 @@ $(document).ready(function () {
 							if (thisIsChecked) {
 								btnAddGroup.attr('disabled', false);
 							} else {
-								if (groupGridWrp.find('.grid input[type=checkbox][gid]:checked').length == 0) {
+								if (groupGridWrp.find('.grid input[type=checkbox][gid]:checked').length === 0) {
 									btnAddGroup.attr('disabled', true);
 									groupGridWrp.find('.grid input[type=checkbox]:not([gid]):first').attr('checked', false);
 								}
@@ -267,7 +269,7 @@ $(document).ready(function () {
 	});
 
 	NAP.dialogPopup.on('keypress', '.filter-form input[type=text]', function (e) {
-		if (e.keyCode == 13) {
+		if (e.keyCode === 13) {
 			$(this).parents('.filter-form').find('input[type=submit]').click();
 		}
 	});

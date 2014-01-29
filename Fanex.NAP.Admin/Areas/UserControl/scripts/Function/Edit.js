@@ -1,133 +1,131 @@
-﻿var EditFunction = function ($) {
+﻿/* global NAP: false */
 
-    return {
-        form: null,
-        parentId: null,
-        parentName: null,
-        parent: null,
-        btnRegenerate: null,
+var EditFunction = function ($) {
 
-        getFunctionParentByEnvironment: function (environment, functionId) {
-            var url = NAP.resolveClientUrl('Function/GetFunctionParentByEnvironment?functionid=' + functionId + '&environment=' + environment);
+	return {
+		form: null,
+		parentId: null,
+		parentName: null,
+		parent: null,
+		btnRegenerate: null,
 
-            $.ajax({
-                url: url,
-                type: 'POST',
-                dataType: 'JSON',
-                cache: false,
-                async: false,
-                success: function (result) {
-                    var content = eval(result);
+		getFunctionParentByEnvironment: function (environment, functionId) {
+			var url = NAP.resolveClientUrl('Function/GetFunctionParentByEnvironment?functionid=' + functionId + '&environment=' + environment);
 
-                    EditFunction.parent.html('');
+			$.ajax({
+				url: url,
+				type: 'POST',
+				dataType: 'JSON',
+				cache: false,
+				async: false,
+				success: function (result) {
+					var content = eval(result);
 
-                    if (content.length > 0) {
+					EditFunction.parent.html('');
 
-                        EditFunction.parent.attr('disabled', false);
-                        EditFunction.parent.append($('#DropdownListTpl').render(content));
+					if (content.length > 0) {
 
-                        EditFunction.parent.val(EditFunction.parentId);
-                    }
-                    else {
-                        EditFunction.parent.attr('disabled', true);
-                    }
-                },
-                error: function (xhr, status, err) {
-                    NAP.handleAjaxError(xhr, status, err);
-                }
-            });
-        },
+						EditFunction.parent.attr('disabled', false);
+						EditFunction.parent.append($('#DropdownListTpl').render(content));
 
-        getFunctionKey: function () {
-            var functionId = $('#FunctionId').val();
-            var functionName = $('#FunctionName').val();
+						EditFunction.parent.val(EditFunction.parentId);
+					}
+					else {
+						EditFunction.parent.attr('disabled', true);
+					}
+				},
+				error: function (xhr, status, err) {
+					NAP.handleAjaxError(xhr, status, err);
+				}
+			});
+		},
 
-            $.ajax({
-                url: NAP.resolveClientUrl("Function/GetFunctionKey" + "?functionId=" + functionId + "&functionName=" + functionName),
-                type: 'POST',
-                contentType: 'application/json',
-                dataType: 'json',
-                cache: false,
-                beforeSend: function () {
-                    //NAP.loadingBox.show();
-                },
-                complete: function () {
-                    //NAP.loadingBox.close();
-                },
-                success: function (result) {
+		getFunctionKey: function () {
+			var functionId = $('#FunctionId').val();
+			var functionName = $('#FunctionName').val();
 
-                    switch (result) {
-                        case 0:
+			$.ajax({
+				url: NAP.resolveClientUrl("Function/GetFunctionKey" + "?functionId=" + functionId + "&functionName=" + functionName),
+				type: 'POST',
+				contentType: 'application/json',
+				dataType: 'json',
+				cache: false,
+				beforeSend: function () {
+					//NAP.loadingBox.show();
+				},
+				complete: function () {
+					//NAP.loadingBox.close();
+				},
+				success: function (result) {
 
-                            $('#error').append("");
+					switch (result) {
+						case 0:
+							$('#error').append("");
+							var template = '<div data-valmsg-summary="true" class="validation-summary-errors">' + 
+								'<ul><li>' + functionName + ' already exists. Please choose another!</li></ul>' + '</div>';
 
-                            var template = '<div data-valmsg-summary="true" class="validation-summary-errors">'
-											+ '<ul><li>' + functionName + ' already exists. Please choose another!</li></ul>'
-											+ '</div>';
+							$('#error').append(template);
+							$('#FunctionName').addClass('input-validation-error');
+							break;
 
-                            $('#error').append(template);
+						case -1:
+							break;
 
-                            $('#FunctionName').addClass('input-validation-error');
+						case -2:
+							$('#error').append("");
+							var template = '<div data-valmsg-summary="true" class="validation-summary-errors">' + 
+								'<ul><li>' + result + ' already exists. Please choose another!</li></ul>' + '</div>';
 
-                            break;
-                        case -1:
-                            break;
-                        case -2:
-                            $('#error').append("");
+							$('#error').append(template);
+							$('#FunctionName').addClass('input-validation-error');
+							break;
 
-                            var template = '<div data-valmsg-summary="true" class="validation-summary-errors">'
-											+ '<ul><li>' + result + ' already exists. Please choose another!</li></ul>'
-											+ '</div>';
+						default:
+							$('#txtFunctionKey').removeAttr('disabled');
+							$('#FunctionKey').val(result);
+							$('#txtFunctionKey').val(result);
+							$('#txtFunctionKey').attr('disabled', 'disabled');
+					}
 
-                            $('#error').append(template);
-
-                            $('#FunctionName').addClass('input-validation-error');
-                            break;
-                        default:
-                            $('#txtFunctionKey').removeAttr('disabled');
-                            $('#FunctionKey').val(result);
-                            $('#txtFunctionKey').val(result);
-                            $('#txtFunctionKey').attr('disabled', 'disabled');
-                    }
-
-                },
-                error: function (xhr, status, err) {
-                    NAP.handleAjaxError(xhr, status, err);
-                }
-            });
-        }
-    };
+				},
+				error: function (xhr, status, err) {
+					NAP.handleAjaxError(xhr, status, err);
+				}
+			});
+		}
+	};
 
 } (jQuery);
 
 $(document).ready(function () {
-    EditFunction.form = $('form:first');
-    EditFunction.parent = $('#ParentId');
-    EditFunction.parentName = $('#ParentName');
-    EditFunction.parentId = EditFunction.parent.val();
-    EditFunction.btnRegenerate = $('#btn-regen');
+	EditFunction.form = $('form:first');
+	EditFunction.parent = $('#ParentId');
+	EditFunction.parentName = $('#ParentName');
+	EditFunction.parentId = EditFunction.parent.val();
+	EditFunction.btnRegenerate = $('#btn-regen');
 
-    EditFunction.form.submit(function () {
-        var $this = $(this),
+	EditFunction.form.submit(function () {
+		var $this = $(this),
 			parentId = EditFunction.parent.val();
 
-        $this.find('input[type=submit]').focus();
+		$this.find('input[type=submit]').focus();
 
-        if (parentId.length > 0) {
-            EditFunction.parentName.val(EditFunction.parent.find("option[value=" + parentId + "]").text());
-        }
-    });
+		if (parentId.length > 0) {
+			EditFunction.parentName.val(EditFunction.parent.find("option[value=" + parentId + "]").text());
+		}
+	});
 
-    $('input[type=radio]').click(function () {
-        var environment = $(this).val();
-        var functionId = $('#FunctionId').val();
-        EditFunction.getFunctionParentByEnvironment(environment, functionId);
-    });
+	$('input[type=radio]').click(function () {
+		var environment = $(this).val();
+		var functionId = $('#FunctionId').val();
 
-    EditFunction.btnRegenerate.click(function () {
-        var msg = "Are you sure you want to generate Function Key from Function Name?";
-        NAP.headlineMsgBox.confirm(msg, function () {
-            EditFunction.getFunctionKey();
-        }, { modal: true, closeBtn: false });
-    });
+		EditFunction.getFunctionParentByEnvironment(environment, functionId);
+	});
+
+	EditFunction.btnRegenerate.click(function () {
+		var msg = "Are you sure you want to generate Function Key from Function Name?";
+		NAP.headlineMsgBox.confirm(msg, function () {
+			EditFunction.getFunctionKey();
+		}, { modal: true, closeBtn: false });
+	});
 });

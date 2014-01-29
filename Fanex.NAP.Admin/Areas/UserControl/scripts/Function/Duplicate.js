@@ -1,4 +1,4 @@
-﻿var DuplicateFunction = function ($) {
+﻿var DuplicateFunction = function () {
 
 	return {
 		form: null,

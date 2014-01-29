@@ -1,88 +1,88 @@
 ﻿@{
     var listUserOld = (List<UserPolicy>)ViewBag.UserPolicyOld ?? null;
-    var ListUserNew = (List<UserPolicy>)ViewBag.UserPolicyNew ?? null;        
+    var ListUserNew = (List<UserPolicy>)ViewBag.UserPolicyNew ?? null;
 }
 <br />
 <h1>@ViewResources.User @ViewResources.Old_Value</h1>
 <br />
 <div class="grid-wrp pnl-wrp">
-    <div class="pnl-header">
-        <div class="pnl-header-content">
-            &nbsp;</div>
-    </div>
-    <div class="pnl-body">
-        <table class="grid">
-            <thead>
-                <tr>
-                    <th>
-                        #
-                    </th>
-                    <th>
-                        @ViewResources.Name
-                    </th>
-                    <th>
-                        @ViewResources.Policy
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @{
-                    int i = 1;
-                    foreach (var item in listUserOld)
-                    {
-                        string rowCss = i % 2 == 0 ? string.Empty : "class='alt'";
+	<div class="pnl-header">
+		<div class="pnl-header-content">
+			&nbsp;</div>
+	</div>
+	<div class="pnl-body">
+		<table class="grid">
+			<thead>
+				<tr>
+					<th>
+						#
+					</th>
+					<th>
+						@ViewResources.Name
+					</th>
+					<th>
+						@ViewResources.Policy
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				@{
+					int i = 1;
+					foreach (UserPolicy item in listUserOld)
+					{
+						string rowCss = i % 2 == 0 ? string.Empty : "class='alt'";
 
-                    <tr @Html.Raw(rowCss)>
-                        <td>
-                            @i
-                        </td>
-                        <td>@item.User.Username
-                        </td>
-                        <td class="align-center">@item.Policy.ToPolicy()
-                        </td>
-                    </tr>
-                        i++;
-                    }
-                }
-            </tbody>
-        </table>
-        <br />
-        <h1>@ViewResources.User @ViewResources.Add_New</h1>
-        <br />
-        <table class="grid">
-            <thead>
-                <tr>
-                    <th>
-                        #
-                    </th>
-                    <th>
-                        @ViewResources.Name
-                    </th>
-                    <th>
-                        @ViewResources.Policy
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @{
-                    i = 1;
-                    foreach (var item in ListUserNew)
-                    {
-                        string rowCss = i % 2 == 0 ? string.Empty : "class='alt'";
+					<tr @Html.Raw(rowCss)>
+						<td>
+							@i
+						</td>
+						<td>@item.User.Username
+						</td>
+						<td class="align-center">@item.Policy.ToPolicy()
+						</td>
+					</tr>
+						i++;
+					}
+				}
+			</tbody>
+		</table>
+		<br />
+		<h1>@ViewResources.User @ViewResources.Add_New</h1>
+		<br />
+		<table class="grid">
+			<thead>
+				<tr>
+					<th>
+						#
+					</th>
+					<th>
+						@ViewResources.Name
+					</th>
+					<th>
+						@ViewResources.Policy
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				@{
+					i = 1;
+					foreach (UserPolicy item in ListUserNew)
+					{
+						string rowCss = i % 2 == 0 ? string.Empty : "class='alt'";
 
-                    <tr @Html.Raw(rowCss)>
-                        <td>
-                            @i
-                        </td>
-                        <td>@item.User.Username
-                        </td>
-                        <td class="align-center">@item.Policy.ToPolicy()
-                        </td>
-                    </tr>
-                        i++;
-                    }
-                }
-            </tbody>
-        </table>
-    </div>
+					<tr @Html.Raw(rowCss)>
+						<td>
+							@i
+						</td>
+						<td>@item.User.Username
+						</td>
+						<td class="align-center">@item.Policy.ToPolicy()
+						</td>
+					</tr>
+						i++;
+					}
+				}
+			</tbody>
+		</table>
+	</div>
 </div>

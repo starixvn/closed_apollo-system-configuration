@@ -1,4 +1,5 @@
-﻿
+﻿/* global NAP: false */
+
 var LogUserLogin = function ($) {
 
 	return {
@@ -18,7 +19,7 @@ var LogUserLogin = function ($) {
 				buttonImageOnly: true,
 				onSelect: function (selectedDate) {
 					$("#To").datepicker("option", "minDate", selectedDate);
-					if ($("#To").val() == '') {
+					if ($("#To").val() === '') {
 						$("#To").val($(this).val());
 					}
 				}

@@ -9,203 +9,202 @@
     <link href="~/Areas/UserControl/themes/nap/style.less" rel="stylesheet" type="text/css" />
 }
 @section Headline {
-    <h1>
-        <span class="title"><span class="first">@ViewResources.Function @ViewResources.Management
-            /</span>
-            @ViewBag.Title
-        </span>
-        @if (viewFlags.HasEditRight)
-        {
-            @Html.ActionLink("+ " + ViewResources.Create_New + " " + ViewResources.Function, "AddNew", "Function", new { siteId = Model.SiteId },
-                new { @class = "lnk" })
-        }
-    </h1>
+	<h1>
+		<span class="title">
+			<span class="first">@ViewResources.Function @ViewResources.Management /</span> @ViewBag.Title
+		</span>
+		@if (viewFlags.HasEditRight)
+		{
+			@Html.ActionLink("+ " + ViewResources.Create_New + " " + ViewResources.Function, "AddNew", "Function", new { siteId = Model.SiteId },
+				new { @class = "lnk" })
+		}
+	</h1>
 }
 @if (viewFlags.IsNapAdminSite)
 {
-    <section id="filter-bar">
-        @using (Html.BeginForm())
-        {
-            <div class="filter-form">
-                <div class="lbl-field width-auto">
-                    @Html.LabelFor(m => m.SiteId, ViewResources.Site)
-                </div>
-                <div class="edit-field">
-                    @Html.DropDownListFor(m => m.SiteId, (List<SelectListItem>)ViewBag.SiteItemList)
-                </div>
-                @Html.HiddenFor(m => m.Environment)
-                <div class="submit">
-                    <input type="submit" value="@ViewResources.Submit" />
-                </div>
-            </div>
-            @*<div class="grid-view-mode">
-                <a href="javascript:;" class="tree-mode active tip" id="btnTreeView" title="@ViewResources.Tree_View">
-                    @ViewResources.Tree_View
-                </a><a href="javascript:;" class="grid-mode tip" id="btnGridView" title="@ViewResources.Grid_View">
-                    @ViewResources.Grid_View
-                </a>
-            </div>*@
-        }
-    </section>
+	<section id="filter-bar">
+		@using (Html.BeginForm())
+		{
+			<div class="filter-form">
+				<div class="lbl-field width-auto">
+					@Html.LabelFor(m => m.SiteId, ViewResources.Site)
+				</div>
+				<div class="edit-field">
+					@Html.DropDownListFor(m => m.SiteId, (List<SelectListItem>)ViewBag.SiteItemList)
+				</div>
+				@Html.HiddenFor(m => m.Environment)
+				<div class="submit">
+					<input type="submit" value="@ViewResources.Submit" />
+				</div>
+			</div>
+			@*<div class="grid-view-mode">
+				<a href="javascript:;" class="tree-mode active tip" id="btnTreeView" title="@ViewResources.Tree_View">
+					@ViewResources.Tree_View
+				</a><a href="javascript:;" class="grid-mode tip" id="btnGridView" title="@ViewResources.Grid_View">
+					@ViewResources.Grid_View
+				</a>
+			</div>*@
+		}
+	</section>
 }
 <div class="grid-wrp pnl-wrp">
-    <div class="pnl-header">
-        <div class="pnl-header-content">
-            &nbsp;</div>
-        <div class="pnl-header-toggle">
-        </div>
-    </div>
-    <div class="pnl-body">
-        <table class="grid">
-            <thead>
-                <tr>
-                    <th style="width: auto">
-                        @ViewResources.Name
-                    </th>
-                    <th class="grid-mode-only" style="display: none; width: auto">
-                        @ViewResources.Parent
-                    </th>
-                    <th style="width: 60px">
-                        @ViewResources.Order
-                    </th>
-                    <th style="width: 80px">
-                        @ViewResources.Read_only
-                    </th>
-                    <th style="width: 140px">
-                        @ViewResources.Modified_Date
-                    </th>
-                    <th style="width: 120px">
-                        @ViewResources.Modified_By
-                    </th>
-                    @if (!viewFlags.IsLive)
-                    {
-                        <th style="width: 100px">
-                            @ViewResources.Environment
-                        </th>
-                    }
-                    <th style="width: 60px">
-                        @ViewResources.Active
-                    </th>
-                    <th style="width: 60px">
-                        @ViewResources.Action
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @{
-                    var functionCount = functionList.Count;
-                    int i = 0;
-                    string rowBg = "class='alt'";
+	<div class="pnl-header">
+		<div class="pnl-header-content">
+			&nbsp;</div>
+		<div class="pnl-header-toggle">
+		</div>
+	</div>
+	<div class="pnl-body">
+		<table class="grid">
+			<thead>
+				<tr>
+					<th style="width: auto">
+						@ViewResources.Name
+					</th>
+					<th class="grid-mode-only" style="display: none; width: auto">
+						@ViewResources.Parent
+					</th>
+					<th style="width: 60px">
+						@ViewResources.Order
+					</th>
+					<th style="width: 80px">
+						@ViewResources.Read_only
+					</th>
+					<th style="width: 140px">
+						@ViewResources.Modified_Date
+					</th>
+					<th style="width: 120px">
+						@ViewResources.Modified_By
+					</th>
+					@if (!viewFlags.IsLive)
+					{
+						<th style="width: 100px">
+							@ViewResources.Environment
+						</th>
+					}
+					<th style="width: 60px">
+						@ViewResources.Active
+					</th>
+					<th style="width: 60px">
+						@ViewResources.Action
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				@{
+					var functionCount = functionList.Count;
+					int i = 0;
+					string rowBg = "class='alt'";
 
-                    foreach (IFunction function in functionList)
-                    {
-                        var funcNameStyle = i == functionCount - 1 ? "nbt" : "nbt nbb";
+					foreach (IFunction function in functionList)
+					{
+						var funcNameStyle = i == functionCount - 1 ? "nbt" : "nbt nbb";
 
-                        if (function.Parent == null)
-                        {
-                            funcNameStyle = i == functionCount - 1 ? string.Empty : "nbb";
-                            rowBg = rowBg == string.Empty ? "class='alt'" : string.Empty;
-                        }
+						if (function.Parent == null)
+						{
+							funcNameStyle = i == functionCount - 1 ? string.Empty : "nbb";
+							rowBg = rowBg == string.Empty ? "class='alt'" : string.Empty;
+						}
 
-                    <tr @Html.Raw(rowBg)>
-                        <td class="@Html.Raw(funcNameStyle)">
-                            @IndentChildFunction(function, functionList, 0)
-                        </td>
-                        <td class="grid-mode-only" style="display: none">
-                            @(function.Parent != null ? function.Parent.Name : string.Empty)
-                        </td>
-                        <td class="align-center">
-                            @function.DisplayOrder
-                        </td>
-                        <td class="align-center">
-                            @if (function.Crud == (byte)Constant.Crud.Read)
-                            {
-                                <img src="~/areas/usercontrol/themes/nap/img/blank.png" alt="" class="ico-tick" />
-                            }
-                        </td>
-                        <td class="align-center">
-                            @function.ModifiedDate.ToFullDateString()
-                        </td>
-                        <td>
-                            @(function.Modifier == null ? string.Empty : function.Modifier.Username)
-                        </td>
-                        @if (!viewFlags.IsLive)
-                        {
-                            <td class="align-center">
-                                @function.Environment
-                            </td>
-                        }
-                        <td class="align-center">
-                            @if (viewFlags.HasEditRight)
-                            {
-                                string activateText = function.IsActive ? "Deactivate" : "Activate";
+					<tr @Html.Raw(rowBg)>
+						<td class="@Html.Raw(funcNameStyle)">
+							@IndentChildFunction(function, functionList, 0)
+						</td>
+						<td class="grid-mode-only" style="display: none">
+							@(function.Parent != null ? function.Parent.Name : string.Empty)
+						</td>
+						<td class="align-center">
+							@function.DisplayOrder
+						</td>
+						<td class="align-center">
+							@if (function.Crud == (byte)Constant.Crud.Read)
+							{
+								<img src="~/areas/usercontrol/themes/nap/img/blank.png" alt="" class="ico-tick" />
+							}
+						</td>
+						<td class="align-center">
+							@function.ModifiedDate.ToFullDateString()
+						</td>
+						<td>
+							@(function.Modifier == null ? string.Empty : function.Modifier.Username)
+						</td>
+						@if (!viewFlags.IsLive)
+						{
+							<td class="align-center">
+								@function.Environment
+							</td>
+						}
+						<td class="align-center">
+							@if (viewFlags.HasEditRight)
+							{
+								string activateText = function.IsActive ? "Deactivate" : "Activate";
 
-                                @Html.CheckBox(string.Format("chk-function-{0}", function.Id),
-                        function.IsActive, new
-                        {
-                            fid = function.Id,
-                            fname = function.Name,
-                            title = string.Format("{0} '{1}'", activateText, function.Name)
-                        })
-                            }
-                            else
-                            {
-                                if (function.IsActive)
-                                {
-                                <img src="~/areas/usercontrol/themes/nap/img/blank.png" alt="" class="ico-tick" />
-                                }
-                            }
-                        </td>
-                        <td>
-                            <div class="action-wrp">
-                                <span class="btn-action">@ViewResources.Action</span>
-                                <div class="relative">
-                                    <ul class="actions">
-                                        <li>
-                                            @Html.ActionLink(ViewResources.View_privileged_groups_and_users,
-                                    "PrivilegedGroupsAndUsers",
-                                    new { id = function.Id, siteId = Model.SiteId }, new { @class = "dd-user-info" })
-                                        </li>
-                                        @if (viewFlags.HasEditRight)
-                                        {
-                                            <li>
-                                                @Html.ActionLink(string.Format("{0} '{1}'", ViewResources.Edit, function.Name),
-                                            "Edit", new { id = function.Id, siteId = Model.SiteId },
-                                        new
-                                        {
-                                            @class = "dd-edit"
-                                        })
-                                            </li>
-                                            <li>
-                                                @Html.ActionLink(string.Format("{0} '{1}'", ViewResources.Duplicate, function.Name),
-                                            "Duplicate", new { id = function.Id, siteId = Model.SiteId },
-                                        new
-                                        {
-                                            @class = "dd-duplicate",
-                                            title = string.Format("Duplicate '{0}'", function.Name)
-                                        })
-                                            </li>
-                                        }
-                                    </ul>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                                        i++;
-                    }
+								@Html.CheckBox(string.Format("chk-function-{0}", function.Id),
+						function.IsActive, new
+						{
+							fid = function.Id,
+							fname = function.Name,
+							title = string.Format("{0} '{1}'", activateText, function.Name)
+						})
+							}
+							else
+							{
+								if (function.IsActive)
+								{
+								<img src="~/areas/usercontrol/themes/nap/img/blank.png" alt="" class="ico-tick" />
+								}
+							}
+						</td>
+						<td>
+							<div class="action-wrp">
+								<span class="btn-action">@ViewResources.Action</span>
+								<div class="relative">
+									<ul class="actions">
+										<li>
+											@Html.ActionLink(ViewResources.View_privileged_groups_and_users,
+									"PrivilegedGroupsAndUsers",
+									new { id = function.Id, siteId = Model.SiteId }, new { @class = "dd-user-info" })
+										</li>
+										@if (viewFlags.HasEditRight)
+										{
+											<li>
+												@Html.ActionLink(string.Format("{0} '{1}'", ViewResources.Edit, function.Name),
+											"Edit", new { id = function.Id, siteId = Model.SiteId },
+										new
+										{
+											@class = "dd-edit"
+										})
+											</li>
+											<li>
+												@Html.ActionLink(string.Format("{0} '{1}'", ViewResources.Duplicate, function.Name),
+											"Duplicate", new { id = function.Id, siteId = Model.SiteId },
+										new
+										{
+											@class = "dd-duplicate",
+											title = string.Format("Duplicate '{0}'", function.Name)
+										})
+											</li>
+										}
+									</ul>
+								</div>
+							</div>
+						</td>
+					</tr>
+										i++;
+					}
 
-                    if (i == 0)
-                    {
-                    <tr>
-                        <td colspan="12" class="align-center">
-                            @ViewResources.NoInformationAvailable
-                        </td>
-                    </tr>
-                    }
-                }
-            </tbody>
-        </table>
-    </div>
+					if (i == 0)
+					{
+					<tr>
+						<td colspan="12" class="align-center">
+							@ViewResources.NoInformationAvailable
+						</td>
+					</tr>
+					}
+				}
+			</tbody>
+		</table>
+	</div>
 </div>
 @section Foot {
     <script src="~/Areas/UserControl/scripts/Function/Manage.js" type="text/javascript"></script>

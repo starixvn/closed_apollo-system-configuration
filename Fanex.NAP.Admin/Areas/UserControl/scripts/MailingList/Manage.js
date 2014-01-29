@@ -1,4 +1,6 @@
-﻿var ManageMailingList = function ($) {
+﻿/* global NAP: false */
+
+var ManageMailingList = function ($) {
 	return {
 		Form: null,
 		Grid: null,
@@ -7,7 +9,7 @@
 			ManageMailingList.Grid = $('.grid');
 			ManageMailingList.Form = $('form:first');
 
-			ManageMailingList.Grid.on('mousedown', '.chk-active-item', function (e) {
+			ManageMailingList.Grid.on('mousedown', '.chk-active-item', function () {
 				var $this = $(this),
 				listName = $this.attr('dataname'),
 				active = !$this.is(':checked'),
@@ -32,7 +34,7 @@
 							NAP.loadingBox.close();
 						},
 						success: function (result) {
-							if (result == 'OK') {
+							if (result === 'OK') {
 								var msg = active ? "Activation succeeded!" : "Deactivation succeeded!";
 
 								NAP.headlineMsgBox.showInfo(msg, { closeBtn: false });
@@ -50,7 +52,7 @@
 				}, { modal: true, closeBtn: false });
 			});
 
-			ManageMailingList.Grid.on('mousedown', '.chk-internal-item', function (e) {
+			ManageMailingList.Grid.on('mousedown', '.chk-internal-item', function () {
 				var $this = $(this),
 				listName = $this.attr('dataname'),
 				isInternal = !$this.is(':checked'),
@@ -75,7 +77,7 @@
 							NAP.loadingBox.close();
 						},
 						success: function (result) {
-							if (result == 'OK') {
+							if (result === 'OK') {
 								var msg = isInternal ? "Set internal succeeded!" : "Unset internal succeeded!";
 
 								NAP.headlineMsgBox.showInfo(msg, { closeBtn: false });

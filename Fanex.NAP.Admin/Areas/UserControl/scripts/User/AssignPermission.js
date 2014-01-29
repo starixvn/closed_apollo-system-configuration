@@ -19,10 +19,10 @@
 				if (!thisIsChecked) {
 					var siblings = $('[name=func' + type + '][pid=' + parent.val() + ']:checked');
 
-					if (siblings.length == 0) {
+					if (siblings.length === 0) {
 						parent.attr('checked', false);
 
-						if (type == 'Read') {
+						if (type === 'Read') {
 							parent.parents('tr').find('[name=funcHost]').attr('checked', false);
 						}
 					}
@@ -39,18 +39,18 @@
 				chkHost = $this.find('[name=funcHost][type=hidden]'),
 				chkRead = $this.find('[name=funcRead][type=hidden]');
 
-				if (chkRead != undefined) {                    
+				if (chkRead !== undefined) {
 					var parent = $('#funcRead' + chkRead.attr('pid'));
-					if (parent.is(':checked') && parent.attr('pdisabled') == undefined) {
+					if (parent.is(':checked') && parent.attr('pdisabled') === undefined) {
 						parent.attr('pdisabled', '1');
 						parent.after('<input type="checkbox" checked="checked" disabled="disabled"/>');
 						parent.hide();
 					}
 				}
 
-				if (chkHost != undefined) {
+				if (chkHost !== undefined) {
 					var parent = $('#funcHost' + chkHost.attr('pid'));
-					if (parent.is(':checked') && parent.attr('pdisabled') == undefined) {
+					if (parent.is(':checked') && parent.attr('pdisabled') === undefined) {
 						parent.attr('pdisabled', '1');
 						parent.after('<input type="checkbox" checked="checked" disabled="disabled"/>');
 						parent.hide();
@@ -73,7 +73,7 @@ $(document).ready(function () {
 				chkHost = $this.find('[name=funcHost]'),
 				chkRead = $this.find('[name=funcRead]');
 
-			if (chkHost.is(':checked') || chkHost.attr('checked') == "checked") {
+			if (chkHost.is(':checked') || chkHost.attr('checked') === "checked") {
 				chkRead.removeAttr('name');
 			} else {
 				chkHost.removeAttr('name');
@@ -87,7 +87,7 @@ $(document).ready(function () {
 			row = $this.parents('tr'),
 			table = row.parents('table');
 
-		if ($this.attr('name') == 'funcHost') {
+		if ($this.attr('name') === 'funcHost') {
 			// host checked -> read checked
 			if (thisIsChecked) {
 				AssignUserPermission.updateParent.call(row.find('[type=checkbox][name=funcRead]').attr('checked', true).get(0), 'Read');
@@ -116,7 +116,7 @@ $(document).ready(function () {
 	});
 
 	var hasAssignPermission = $('#HasAssignPermission').val().toLowerCase();
-	if (hasAssignPermission == "false") {
+	if (hasAssignPermission === "false") {
 		$('input[type=checkbox]').attr('disabled', true);
 		$('#btnAssignPermission').hide();
 	}

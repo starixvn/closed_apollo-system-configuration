@@ -1,5 +1,5 @@
 ﻿
-var AddNewSite = function ($) {
+var AddNewSite = function () {
 
 	return {
 		form: null,
@@ -19,7 +19,7 @@ $(document).ready(function () {
 			parentRow = $this.parents('tr'),
 			prevRows = parentRow.prevAll('tr');
 
-		parentRow.fadeOut('fast', function () { $(this).remove() });
+		parentRow.fadeOut('fast', function () { $(this).remove(); });
 		$('.tipsy').remove();
 
 		// shifts index
@@ -66,7 +66,7 @@ $(document).ready(function () {
 
 		// workaround for the bug: pressing "add button" continuously
 		AddNewSite.btnAddUrl = $this.hide();
-		setTimeout("AddNewSite.btnAddUrl.show()", 300);
+		setTimeout(AddNewSite.btnAddUrl.show, 300);
 	});
 
 	AddNewSite.form.submit(function () {
@@ -82,7 +82,7 @@ $(document).ready(function () {
 			$this.val(thisValue);
 
 			otherTextboxes.each(function () {
-				if ($.trim($(this).val()) == thisValue) {
+				if ($.trim($(this).val()) === thisValue) {
 					$(this).addClass('input-validation-error');
 					$this.addClass('input-validation-error');
 

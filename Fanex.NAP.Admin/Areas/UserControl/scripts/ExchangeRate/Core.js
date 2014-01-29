@@ -1,12 +1,14 @@
-﻿if (typeof (Fanex) == 'undefined') { // Require Fanex namespace
+﻿/* global Validators: false */
+
+if (typeof (Fanex) === 'undefined') { // Require Fanex namespace
 	Fanex = {};
 	Fanex.CloneObject = function (obj) {
 		var newObj = (obj instanceof Array) ? [] : {};
-		for (i in obj) {
-			if (i == 'clone') {
+		for (var i in obj) {
+			if (i === 'clone') {
 				continue;
 			}
-			if (obj[i] && typeof obj[i] == "object") {
+			if (obj[i] && typeof obj[i] === "object") {
 				newObj[i] = Fanex.CloneObject(obj[i]);
 			} else {
 				newObj[i] = obj[i];
@@ -15,7 +17,7 @@
 		return newObj;
 	};
 	String.Empty = ""; // Extend static string
-	String.prototype.Format = function (args) {
+	String.prototype.Format = function () {
 		var formatted = this;
 		for (var i = 0; i < arguments.length; i++) {
 			var regexp = new RegExp('\\{' + i + '\\}', 'gi');
@@ -25,7 +27,7 @@
 	};
 	String.prototype.FormatNumber = function (number) { // Format a number to 1,234,567.89
 		number += String.Empty;
-		x = number.split('.');
+		var x = number.split('.');
 		var x1 = x[0];
 		var x2 = x.length > 1 ? '.' + x[1] : String.Empty;
 		var rgx = /(\d+)(\d{3})/;
@@ -36,9 +38,9 @@
 	};
 	String.prototype.FormatNumber5Decimal = function (number) { // Format a number to 1,234,567.89
 		number = (Math.round(number * 100000) / 100000).toString();
-		x = number.split('.');
-		x1 = x[0];
-		x2 = x.length > 1 ? '.' + x[1] : String.Empty;
+		var x = number.split('.');
+		var x1 = x[0];
+		var x2 = x.length > 1 ? '.' + x[1] : String.Empty;
 		var rgx = /(\d+)(\d{3})/;
 		while (rgx.test(x1)) {
 			x1 = x1.replace(rgx, '$1' + ',' + '$2');
@@ -47,12 +49,13 @@
 	};
 	String.prototype.escapeHtml = function () { // Replace all ampersands with &amp; and all <’s and >’s with &lt; and &gt;, respectively:
 		var result = String.Empty;
+
 		for (var i = 0; i < this.length; i++) {
-			if (this.charAt(i) == "&" && this.length - i - 1 >= 4 && this.substr(i, 4) != "&amp;") {
+			if (this.charAt(i) === "&" && this.length - i - 1 >= 4 && this.substr(i, 4) !== "&amp;") {
 				result = result + "&amp;";
-			} else if (this.charAt(i) == "<") {
+			} else if (this.charAt(i) === "<") {
 				result = result + "&lt;";
-			} else if (this.charAt(i) == ">") {
+			} else if (this.charAt(i) === ">") {
 				result = result + "&gt;";
 			} else {
 				result = result + this.charAt(i);
@@ -63,14 +66,14 @@
 	(function () { // Parse float with string has commas inside parseFloat(string, true)
 		var proxied = window.parseFloat;
 		window.parseFloat = function () {
-			if (arguments[1] === true && typeof (arguments[0]) == 'string') {
+			if (arguments[1] === true && typeof (arguments[0]) === 'string') {
 				arguments[0] = arguments[0].replace(/,/g, String.Empty); // Replace all occurrences of comma to empty
 			}
 			return proxied.apply(this, arguments);
 		};
 	})();
 	Fanex.FormatNumberFloat = function (number) { // Format a number to 12,345
-		if (number == String.Empty) {
+		if (number === String.Empty) {
 			return 0;
 		}
 
@@ -105,12 +108,12 @@
 		}
 
 		dotPosition = num.indexOf(".");
-		if ((typeof (isFloat) != 'undefined') && isFloat && dotPosition > 0) {
+		if ((typeof (isFloat) !== 'undefined') && isFloat && dotPosition > 0) {
 			afterDot = num.substring(dotPosition + 1, num.length).replace(/[^0-9]/g, String.Empty);
 			num = num.substring(0, dotPosition);
 		}
 		num = Fanex.FormatNumberFloat(num);
-		if ((typeof (isFloat) != 'undefined') && isFloat && dotPosition > 0) {
+		if ((typeof (isFloat) !== 'undefined') && isFloat && dotPosition > 0) {
 			eval(obj).value = num + "." + afterDot;
 			num = obj.value;
 		} else {
@@ -142,11 +145,11 @@
 			num = num.substring(0, 15);
 		}
 
-		if (evt.keyCode != 96) {
+		if (evt.keyCode !== 96) {
 			num = (Math.round(num * 100000) / 100000).toString();
 		}
 		else {
-			if (value.indexOf('.') != -1) {
+			if (value.indexOf('.') !== -1) {
 				var arr = value.split('.');
 				if (arr[1].length > 5) {
 					//num = num.substring(0, num.length -1);
@@ -155,12 +158,12 @@
 			}
 		}
 		dotPosition = num.indexOf(".");
-		if ((typeof (isFloat) != 'undefined') && isFloat && dotPosition > 0) {
+		if ((typeof (isFloat) !== 'undefined') && isFloat && dotPosition > 0) {
 			afterDot = num.substring(dotPosition + 1, num.length).replace(/[^0-9]/g, String.Empty);
 			num = num.substring(0, dotPosition);
 		}
 		num = Fanex.FormatNumberFloat(num);
-		if ((typeof (isFloat) != 'undefined') && isFloat && dotPosition > 0) {
+		if ((typeof (isFloat) !== 'undefined') && isFloat && dotPosition > 0) {
 			eval(obj).value = num + "." + afterDot;
 			num = obj.value;
 		} else {
@@ -185,7 +188,7 @@
 		var charCode = ('charCode' in e ? e.charCode : e.keyCode);
 
 		// allow special key presses
-		if (charCode == 0 || e.altKey || e.ctrlKey || e.metaKey) {
+		if (charCode === 0 || e.altKey || e.ctrlKey || e.metaKey) {
 			return;
 		}
 
@@ -207,12 +210,12 @@
 		var charCode = ('charCode' in e ? e.charCode : e.keyCode);
 		var value = $(this).val();
 
-		if (value.indexOf('.') == -1 && charCode == 46) {
+		if (value.indexOf('.') === -1 && charCode === 46) {
 			return;
 		}
 
 		// allow special key presses
-		if (charCode == 0 || e.altKey || e.ctrlKey || e.metaKey) {
+		if (charCode === 0 || e.altKey || e.ctrlKey || e.metaKey) {
 			return;
 		}
 
@@ -247,7 +250,7 @@
 			iCaretPos = oSel.text.length;
 		}
 		// Firefox support
-		else if (oField.selectionStart || oField.selectionStart == '0') {
+		else if (oField.selectionStart || oField.selectionStart === '0') {
 			iCaretPos = oField.selectionStart;
 		}
 
@@ -270,7 +273,7 @@
 			oSel.select();
 		}
 		// Firefox support
-		else if (oField.selectionStart || oField.selectionStart == '0') {
+		else if (oField.selectionStart || oField.selectionStart === '0') {
 			oField.selectionStart = iCaretPos;
 			oField.selectionEnd = iCaretPos;
 			oField.focus();
@@ -278,7 +281,7 @@
 	};
 
 	Fanex.ValidateMessage = function (elementInput, errorMessage, xpos, pointerx) {
-		var isXPos = (typeof (xpos) != "undefined" && xpos != null);
+		var isXPos = (typeof (xpos) !== "undefined" && xpos !== null);
 		if (isXPos && pointerx) {
 			Validators.show(elementInput, errorMessage, xpos, pointerx, -45, 38, 18, 5000, false);
 		}

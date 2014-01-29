@@ -1,4 +1,6 @@
-﻿var AssignGroupPermission = function ($) {
+﻿/* global NAP: false */
+
+var AssignGroupPermission = function ($) {
 
 	return {
 		updateForm: null,
@@ -18,10 +20,10 @@
 				if (!thisIsChecked) {
 					var siblings = $('[name=func' + type + '][pid=' + parent.val() + ']:checked');
 
-					if (siblings.length == 0) {
+					if (siblings.length === 0) {
 						parent.attr('checked', false);
 
-						if (type == 'Read') {
+						if (type === 'Read') {
 							parent.parents('tr').find('[name=funcHost]').attr('checked', false);
 						}
 					}
@@ -38,18 +40,18 @@
 				chkHost = $this.find('[name=funcHost][type=hidden]'),
 				chkRead = $this.find('[name=funcRead][type=hidden]');
 
-				if (chkRead != undefined) {
+				if (chkRead !== undefined) {
 					var parent = $('#funcRead' + chkRead.attr('pid'));
-					if (parent.is(':checked') && parent.attr('pdisabled') == undefined) {
+					if (parent.is(':checked') && parent.attr('pdisabled') === undefined) {
 						parent.attr('pdisabled', '1');
 						parent.after('<input type="checkbox" checked="checked" disabled="disabled"/>');
 						parent.hide();
 					}
 				}
 
-				if (chkHost != undefined) {
+				if (chkHost !== undefined) {
 					var parent = $('#funcHost' + chkHost.attr('pid'));
-					if (parent.is(':checked') && parent.attr('pdisabled') == undefined) {
+					if (parent.is(':checked') && parent.attr('pdisabled') === undefined) {
 						parent.attr('pdisabled', '1');
 						parent.after('<input type="checkbox" checked="checked" disabled="disabled"/>');
 						parent.hide();
@@ -88,7 +90,7 @@ $(document).ready(function () {
 			row = $this.parents('tr'),
 			table = row.parents('table');
 
-		if ($this.attr('name') == 'funcHost') {
+		if ($this.attr('name') === 'funcHost') {
 			// host checked -> read checked
 			if (thisIsChecked) {
 				AssignGroupPermission.updateParent.call(row.find('[name=funcRead]').attr('checked', true).get(0), 'Read');

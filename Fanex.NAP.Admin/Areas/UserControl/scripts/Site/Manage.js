@@ -1,9 +1,10 @@
-﻿
-var ManageSite = function ($) {
+﻿/* global NAP: false */
 
-    return {
-        grid: null
-    };
+var ManageSite = function () {
+
+	return {
+		grid: null
+	};
 
 } (jQuery);
 
@@ -17,7 +18,7 @@ $(document).ready(function () {
 	// #endregion
 
 	// #region activate/deactivate functions
-	ManageSite.grid.on('mousedown', 'input[type=checkbox][sid]', function (e) {
+	ManageSite.grid.on('mousedown', 'input[type=checkbox][sid]', function () {
 		var $this = $(this),
 			siteName = $this.attr('sname'),
 			isActive = !$this.is(':checked'),
@@ -42,7 +43,7 @@ $(document).ready(function () {
 					NAP.loadingBox.close();
 				},
 				success: function (result) {
-					if (result == 'OK') {
+					if (result === 'OK') {
 						var msg = isActive ? "Activation succeeded!" : "Deactivation succeeded!";
 
 						NAP.headlineMsgBox.showInfo(msg, { closeBtn: false });

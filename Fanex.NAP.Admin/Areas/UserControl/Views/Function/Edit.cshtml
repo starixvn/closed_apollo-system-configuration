@@ -17,8 +17,7 @@
 @section Headline {
 	<h1>
 		<span class="title">
-			<span class="first">@ViewResources.Function @ViewResources.Management /</span>
-			@ViewBag.Title
+			<span class="first">@ViewResources.Function @ViewResources.Management /</span> @ViewBag.Title
 		</span>
 		@Html.ActionLink("← " + ViewResources.Back_To_List, "Manage", "Function", new { siteId = Model.SiteId }, new { @class = "lnk" })
 	</h1>
@@ -78,17 +77,6 @@
 				@Html.CheckBoxFor(m => m.Readonly)
 			</div>
 		</div>
-		@*<div class="form-row">
-			<div class="lbl-field">
-				@Html.LabelFor(m => m.Crud, ViewResources.CRUD)
-			</div>
-			<div class="edit-field rdo-field">
-				@Html.RadioButtonFor(m => m.Crud, (int)Constant.Crud.Read, new { @id = "Crud-Read", @name = "Crud" })
-				@Html.Label(Constant.Crud.Read.ToString())
-				@Html.RadioButtonFor(m => m.Crud, (int)Constant.Crud.Host, new { @id = "Crud-Host", @name = "Crud" })
-				@Html.Label(Constant.Crud.Host.ToString())
-			</div>
-		</div>*@
 		@if (viewFlags.IsLive)
 		{
 			@Html.HiddenFor(m => m.Environment)

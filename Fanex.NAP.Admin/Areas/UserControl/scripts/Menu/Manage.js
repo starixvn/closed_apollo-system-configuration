@@ -1,5 +1,6 @@
-﻿
-var ManageMenu = function ($) {
+﻿/* global NAP: false */
+
+var ManageMenu = function () {
 
 	return {
 		grid: null,
@@ -37,7 +38,7 @@ $(document).ready(function () {
 	// #endregion
 
 	// #region activate/deactivate functions
-	ManageMenu.grid.on('mousedown', 'input[type=checkbox][miid]', function (e) {
+	ManageMenu.grid.on('mousedown', 'input[type=checkbox][miid]', function () {
 		var $this = $(this),
 			menuItemName = $this.attr('miname'),
 			isActive = !$this.is(':checked'),
@@ -62,7 +63,7 @@ $(document).ready(function () {
 					NAP.loadingBox.close();
 				},
 				success: function (result) {
-					if (result == 'OK') {
+					if (result === 'OK') {
 						var msg = isActive ? "Activation succeeded!" : "Deactivation succeeded!";
 
 						NAP.headlineMsgBox.showInfo(msg, { closeBtn: false });

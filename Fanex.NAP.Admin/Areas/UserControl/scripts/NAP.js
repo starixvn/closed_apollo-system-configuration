@@ -21,7 +21,7 @@ var NAP = function ($) {
 			NAP.dialogPopup = $('<div id="dialog-popup"></div>').appendTo('body');
 
 			NAP.msieVersion = NAP.getIeVersion();
-			NAP.agentIsOldIe = NAP.msieVersion != -1 && NAP.msieVersion < 9.0;
+			NAP.agentIsOldIe = NAP.msieVersion !== -1 && NAP.msieVersion < 9.0;
 			NAP.agentIsApple = NAP.agentIs('apple') != null;
 			NAP.agentIsMobile = NAP.agentIs('mobile') != null;
 		},
@@ -33,9 +33,9 @@ var NAP = function ($) {
 		},
 		// Handles common error when making ajax request
 		handleAjaxError: function (xhr, status, err) {
-			if (xhr.status == 403) {
+			if (xhr.status === 403) {
 				NAP.headlineMsgBox.showErr('Unauthorized request rejected!', { sticky: true });
-			} else if (xhr.status == 404) {
+			} else if (xhr.status === 404) {
 				NAP.headlineMsgBox.showErr('Resources not found!', { sticky: true });
 			} else {
 				NAP.headlineMsgBox.showErr('An unexpected error has occurred!', { sticky: true });
@@ -48,7 +48,9 @@ var NAP = function ($) {
 				var usrAgent = navigator.userAgent;
 				var reg = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");
 
-				if (reg.exec(usrAgent) != null) version = parseFloat(RegExp.$1);
+				if (reg.exec(usrAgent) != null) {
+					version = parseFloat(RegExp.$1);
+				}
 			}
 
 			return version;
@@ -67,27 +69,21 @@ var NAP = function ($) {
 						navigator.userAgent.match(/iPod/i);
 				case 'mobile':
 					return
-					// Apple
-					navigator.userAgent.match(/iPad/i) ||
+						// Apple
+						navigator.userAgent.match(/iPad/i) ||
 						navigator.userAgent.match(/iPhone/i) ||
 						navigator.userAgent.match(/iPod/i) ||
-					// RIM
+						// RIM
 						navigator.userAgent.match(/BlackBerry/i) ||
-						navigator.userAgent.match(/PlayBook/i)
-					// Windows Phone
-					navigator.userAgent.match(/Windows Phone/i);
-					// Android
-					navigator.userAgent.match(/Android/i);
-					// General
-					navigator.userAgent.match(/Touch/i);
+						navigator.userAgent.match(/PlayBook/i);
+						// Windows Phone
+						navigator.userAgent.match(/Windows Phone/i) ||
+						// Android
+						navigator.userAgent.match(/Android/i) ||
+						// General
+						navigator.userAgent.match(/Touch/i);
 				default: return null;
 			}
-		},
-		alert: function (title, msg, callback) {
-
-		},
-		confirm: function (title, msg, callback) {
-
 		},
 		popup: function (title, html) {
 			NAP.dialogPopup.html(html).dialog({
@@ -174,7 +170,7 @@ $(document).ready(function () {
 String.prototype.format = function () {
 	var args = arguments;
 	return this.replace(/{(\d+)}/g, function (match, number) {
-		return typeof args[number] != 'undefined' ? args[number]: match;
+		return typeof args[number] !== 'undefined' ? args[number]: match;
 	});
 };
 

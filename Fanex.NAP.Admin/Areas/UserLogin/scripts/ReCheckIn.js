@@ -1,43 +1,45 @@
-﻿var Recheckin = function ($) {
+﻿/* global NAP: false */
 
-    return {
-        time: null,
-        root: null,
-        headlineMsgBox: null,
-        kickedOutMsg: null,
+var Recheckin = function ($) {
 
-        init: function () {
-            Recheckin.time = 5000;
-            Recheckin.root = location.protocol + '//' + location.host + NAP.NAPRoot;
-            Recheckin.kickedOutMsg = 'You have logged in from another session or your login session has expired!';
-        },
+	return {
+		time: null,
+		root: null,
+		headlineMsgBox: null,
+		kickedOutMsg: null,
 
-        reCheckin: function () {
+		init: function () {
+			Recheckin.time = 5000;
+			Recheckin.root = location.protocol + '//' + location.host + NAP.NAPRoot;
+			Recheckin.kickedOutMsg = 'You have logged in from another session or your login session has expired!';
+		},
 
-            $.ajax({
-                url: Recheckin.root + "UserLogin/Login/ReCheckLogin",
-                type: "POST",
-                dataType: "json",
-                success: function (result) {
-                    if (result == "1") {
-                        Recheckin.headlineMsgBox.showInfo(Recheckin.kickedOutMsg, { closeBtn: false });
-                    }
-                    if (result == "-1") {
-                        window.location.href = Recheckin.root + "UserLogin/Common/Offline";
-                    }
-                }
-            });
-        },
+		reCheckin: function () {
 
-        closeBrowser: function () {
-            var index = window;
-            while (index != index.parent) // Jump out
-            {
-                index = index.parent;
-            }
-            index.close();
-        }
-    }
+			$.ajax({
+				url: Recheckin.root + "UserLogin/Login/ReCheckLogin",
+				type: "POST",
+				dataType: "json",
+				success: function (result) {
+					if (result === "1") {
+						Recheckin.headlineMsgBox.showInfo(Recheckin.kickedOutMsg, { closeBtn: false });
+					}
+					if (result === "-1") {
+						window.location.href = Recheckin.root + "UserLogin/Common/Offline";
+					}
+				}
+			});
+		},
+
+		closeBrowser: function () {
+			var index = window;
+			while (index !== index.parent) // Jump out
+			{
+				index = index.parent;
+			}
+			index.close();
+		}
+	};
 
 } (jQuery);
 
@@ -60,5 +62,5 @@ $(document).ready(function () {
         }
     });
 
-    setInterval("Recheckin.reCheckin()", Recheckin.time);
+    setInterval(Recheckin.reCheckin, Recheckin.time);
 });

@@ -11,9 +11,8 @@
 }
 @section Headline {
 	<h1>
-		<span class="title"><span class="first">@ViewResources.Site @ViewResources.Management
-			/</span>
-			@ViewBag.Title
+		<span class="title">
+			<span class="first">@ViewResources.Site @ViewResources.Management /</span> @ViewBag.Title
 		</span>
 		@if (viewFlags.HasEditRight)
 		{
@@ -132,13 +131,13 @@
 							{
 								string activateTitle = site.IsActive ? ViewResources.Deactivate : ViewResources.Activate;
 
-								@Html.CheckBox(string.Format("chk-site-{0}", site.Id),
-							site.IsActive, new
-							{
-								sid = site.Id,
-								sname = site.Name,
-								title = string.Format("{0} '{1}'", activateTitle, site.Name)
-							})
+								@Html.CheckBox(string.Format("chk-site-{0}", site.Id), site.IsActive, 
+									new
+									{
+										sid = site.Id,
+										sname = site.Name,
+										title = string.Format("{0} '{1}'", activateTitle, site.Name)
+									})
 							}
 							else if (site.IsActive)
 							{
@@ -163,11 +162,11 @@
 							</td>
 							<td>
 								@Html.ActionLink("Edit", "Edit", new { id = site.Id },
-							    new
-							    {
-								    @class = "btn-edit tip",
-								    title = string.Format("{0} '{1}'", ViewResources.Edit, site.Name)
-							    })
+									new
+									{
+										@class = "btn-edit tip",
+										title = string.Format("{0} '{1}'", ViewResources.Edit, site.Name)
+									})
 							</td>
 						}
 					</tr>

@@ -1,4 +1,6 @@
-﻿var AddNewMenuItem = function ($) {
+﻿/* global NAP: false */
+
+var AddNewMenuItem = function ($) {
 
 	return {
 		form: null,

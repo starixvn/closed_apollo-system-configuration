@@ -1,4 +1,6 @@
-﻿var MailingList = function ($) {
+﻿/* global NAP: false */
+
+var MailingList = function ($) {
 	return {
 		ListFunctionId: null,
 		FunctionId: null,
@@ -22,7 +24,7 @@
 
 			MailingList.SiteId.change(function () {
 				var environment = "";
-				if ($("#Environment").val() == undefined) {
+				if ($("#Environment").val() === undefined) {
 					environment = $('input[name=Environment]:checked').val();
 				}
 				else {
@@ -43,8 +45,8 @@
 				var keyCode = e.which || e.keyCode;
 				var object = $(this);
 
-				if (keyCode == 8) {
-					if (object.val().length == 0) {
+				if (keyCode === 8) {
+					if (object.val().length === 0) {
 						var objectRemove = object.parent().prev();
 						if (objectRemove.hasClass("search-choice-focus")) {
 							objectRemove.remove();
@@ -58,7 +60,7 @@
 					var objectRemove = object.parent().prev();
 					objectRemove.removeClass("search-choice-focus");
 
-					if (keyCode == 13 || keyCode == 188 || keyCode == 32 || keyCode == 59 || keyCode == 186) {
+					if (keyCode === 13 || keyCode === 188 || keyCode === 32 || keyCode === 59 || keyCode === 186) {
 						MailingList.autoCompleteEmail(object);
 						e.preventDefault();
 					}
@@ -68,7 +70,7 @@
 				object.width(width);
 			});
 
-			$(".input-to").keyup(function (e) {
+			$(".input-to").keyup(function () {
 				var object = $(this);
 				var width = 25 + (object.val().length * 7); // 25: is width default input
 				object.width(width);
@@ -90,7 +92,7 @@
 				$(this).children(".search-field").first().children("input").first().focus();
 			});
 
-			$("#btnSubmit").click(function (e) {
+			$("#btnSubmit").click(function () {
 				var toList = "";
 				var ccList = "";
 				var bccList = "";
@@ -138,11 +140,6 @@
 				ccList = ccList.length > 0 ? ccList.substr(0, (ccList.length - 2)) : "";
 				bccList = bccList.length > 0 ? bccList.substr(0, (bccList.length - 2)) : "";
 				mailError = mailError.length > 0 ? mailError.substr(0, (mailError.length - 2)) : "";
-
-				if (mailError.length > 0) {
-					//sNAP.headlineMsgBox.confirm("There are some email invalid: " + mailError);
-					//alert("Email is invalid: " + mailError);
-				}
 
 				$("#ToList").val(toList);
 				$("#CCList").val(ccList);
@@ -261,9 +258,8 @@
 
 							$('#error').append("");
 
-							var template = '<div data-valmsg-summary="true" class="validation-summary-errors">'
-											+ '<ul><li>' + listName + ' already exists. Please choose another!</li></ul>'
-											+ '</div>';
+							var template = '<div data-valmsg-summary="true" class="validation-summary-errors">' + 
+								'<ul><li>' + listName + ' already exists. Please choose another!</li></ul>' + '</div>';
 
 							$('#error').append(template);
 
@@ -275,9 +271,8 @@
 						case -2:
 							$('#error').append("");
 
-							var template = '<div data-valmsg-summary="true" class="validation-summary-errors">'
-											+ '<ul><li>' + result + ' already exists. Please choose another!</li></ul>'
-											+ '</div>';
+							var template = '<div data-valmsg-summary="true" class="validation-summary-errors">' + 
+								'<ul><li>' + result + ' already exists. Please choose another!</li></ul>' + '</div>';
 
 							$('#error').append(template);
 
@@ -299,9 +294,9 @@
 		checkValidateMailTo: function () {
 			var isValid = true;
 
-			if ($("#to-list").children().find(".search-choice").length == 0
-                && $("#to-list").children().find(".search-field").children().val().length == 0
-                && $("#ToList").hasClass("input-validation-error")) {
+			if ($("#to-list").children().find(".search-choice").length === 0 &&
+				$("#to-list").children().find(".search-field").children().val().length === 0 && 
+				$("#ToList").hasClass("input-validation-error")) {
 				isValid = false;
 			}
 

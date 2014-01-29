@@ -1,5 +1,6 @@
-﻿
-var AddExisting = function ($) {
+﻿/* global NAP: false */
+
+var AddExisting = function () {
 
 	return {
 		gridWrp: null,
@@ -63,7 +64,7 @@ $(document).ready(function () {
 				NAP.loadingBox.close();
 				result = result.toLowerCase();
 
-				if (result == 'error') {
+				if (result === 'error') {
 					NAP.headlineMsgBox.showErr("Unknowned error detected!");
 				}
 				else {
@@ -80,7 +81,7 @@ $(document).ready(function () {
 	AddExisting.form.submit(function () {
 		var username = AddExisting.txtUsername.val();
 
-		if ($.trim(username).length == 0) {
+		if ($.trim(username).length === 0) {
 			NAP.headlineMsgBox.showErr('Username cannot be blank!');
 
 			return false;

@@ -792,9 +792,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
             // check policy
             int policy = _userService.GetUserSiteFunctionKeyPolicy(
-                                            CurrentSession.UserId,
-                                            criteria.SiteId,
-                                            FunctionKeys.AssignFunctionToUser);
+                CurrentSession.UserId,
+                criteria.SiteId,
+                FunctionKeys.AssignFunctionToUser);
 
             if (policy < (int)Constant.Policy.Read)
             {
@@ -820,10 +820,8 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             listUserFuncRemove.AddRange(listUserFuncPolicy);
 
             // list current user login function policy
-            List<FunctionPolicy> listCurrentUserFuncPolicy = this._functionService.GetByUserAndSiteIncludeGroup(
-                                                                                    CurrentSession.UserId,
-                                                                                    criteria.SiteId,
-                                                                                    Environment).ToList();
+            List<FunctionPolicy> listCurrentUserFuncPolicy = 
+                _functionService.GetByUserAndSiteIncludeGroup(CurrentSession.UserId, criteria.SiteId, Environment).ToList();
 
             // check function host,contains in list function
             if (!criteria.FuncHost.IsNullOrDBNull())
@@ -858,9 +856,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             foreach (FunctionPolicy itemFunc in listUserFuncRemove)
             {
                 FunctionPolicy tempFunc = listCurrentUserFuncPolicy
-                                    .Where(f =>
-                                        f.Function.Id == itemFunc.Function.Id
-                                        && f.Policy >= itemFunc.Policy).FirstOrDefault();
+                    .Where(f => f.Function.Id == itemFunc.Function.Id && f.Policy >= itemFunc.Policy).FirstOrDefault();
 
                 if (tempFunc.IsNullOrDBNull())
                 {

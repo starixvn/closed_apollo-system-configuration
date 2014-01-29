@@ -1,5 +1,6 @@
-﻿
-var ManageGroup = function ($) {
+﻿/* global NAP: false */
+
+var ManageGroup = function () {
 
 	return {
 		grid: null
@@ -42,7 +43,7 @@ $(document).ready(function () {
 	// #endregion
 
 	// #region activate/deactivate functions
-	ManageGroup.grid.on('mousedown', 'input[type=checkbox][gid]', function (e) {
+	ManageGroup.grid.on('mousedown', 'input[type=checkbox][gid]', function () {
 		var $this = $(this),
 			groupName = $this.attr('gname'),
 			isActive = !$this.is(':checked'),
@@ -67,7 +68,7 @@ $(document).ready(function () {
 					NAP.loadingBox.close();
 				},
 				success: function (result) {
-					if (result == 'OK') {
+					if (result === 'OK') {
 						var msg = isActive ? "Activation succeeded!" : "Deactivation succeeded!";
 
 						NAP.headlineMsgBox.showInfo(msg, { closeBtn: false });
@@ -85,32 +86,6 @@ $(document).ready(function () {
 		}, { modal: true, closeBtn: false });
 	});
 	// #endregion
-
-//    ManageGroup.grid.on('click', '.num-of-user', function () {
-//        var $this = $(this),
-//			groupId = $this.attr('gid'),
-//			groupName = $this.attr('gname');
-
-//        $.ajax({
-//            url: NAP.resolveClientUrl("User/UserList?groupid=" + groupId),
-//            type: 'POST',
-//            dataType: 'html',
-//            cache: false,
-//            success: function (result) {
-//                if (result.length > 0) {
-//                    NAP.popup("Users of '" + groupName + "' group", result);
-//                }
-//            },
-//            error: function (xhr, status, err) {
-//                NAP.handleAjaxError(xhr, status, err);
-//            }
-//        });
-
-//        return false;
-//    });
-
-	// #region actions dropdownlist
-	// var event = NAP.agentIsOldIe || NAP.agentIsApple ? 'click' : 'hover';
 
 	ManageGroup.grid.on('click', '.btn-action', function (e) {
 		var $this = $(this),

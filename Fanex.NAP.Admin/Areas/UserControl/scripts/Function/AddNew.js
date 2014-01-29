@@ -1,4 +1,6 @@
-﻿var AddNewFunction = function ($) {
+﻿/* global NAP: false */
+
+var AddNewFunction = function ($) {
 
 	return {
 		form: null,

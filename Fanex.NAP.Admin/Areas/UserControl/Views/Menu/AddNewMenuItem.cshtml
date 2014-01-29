@@ -14,150 +14,149 @@
     </script>
 }
 @section Headline {
-    <h1>
-        <span class="title"><span class="first">@ViewResources.Menu @ViewResources.Management
-            /</span>
-            @ViewBag.Title
-        </span>
-        @if (Model.SiteId == null)
-        { 
-            @Html.ActionLink("← " + ViewResources.Back_To_List, "Manage", "Menu", null, new { @class = "lnk" })
-        }
-        else
-        {
-            @Html.ActionLink("← " + ViewResources.Back_To_List, "Manage", "Menu", new { siteId = Model.SiteId }, new { @class = "lnk" })
-        }
-    </h1>
+	<h1>
+		<span class="title">
+			<span class="first">@ViewResources.Menu @ViewResources.Management /</span> @ViewBag.Title
+		</span>
+		@if (Model.SiteId == null)
+		{ 
+			@Html.ActionLink("← " + ViewResources.Back_To_List, "Manage", "Menu", null, new { @class = "lnk" })
+		}
+		else
+		{
+			@Html.ActionLink("← " + ViewResources.Back_To_List, "Manage", "Menu", new { siteId = Model.SiteId }, new { @class = "lnk" })
+		}
+	</h1>
 }
 @using (Html.BeginForm())
 {
-    <div class="form">
-        <div class="form-row summary">
-            <div class="lbl-field">
-            </div>
-            <div class="edit-field">
-                @Html.ValidationSummary()
-            </div>
-        </div>
-        <div class="form-row required">
-            <div class="lbl-field">
-                @Html.LabelFor(m => m.MenuItemName, "Name:")
-            </div>
-            <div class="edit-field">
-                @Html.TextBoxFor(m => m.MenuItemName)
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="lbl-field">
-                @Html.LabelFor(m => m.SiteId, "Site:")
-            </div>
-            <div class="edit-field">
-                @Html.DropDownListFor(m => m.SiteId, (List<SelectListItem>)ViewBag.Site, new { @class = "chzn-select" })
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="lbl-field">
-                @Html.LabelFor(m => m.Description, "Description:")
-            </div>
-            <div class="edit-field">
-                @Html.TextBoxFor(m => m.Description)
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="lbl-field">
-                @Html.LabelFor(m => m.Url, "Url:")
-            </div>
-            <div class="edit-field">
-                @Html.TextBoxFor(m => m.Url)
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="lbl-field">
-                @Html.LabelFor(m => m.IsActive, "Status:")
-            </div>
-            <div class="edit-field chk-field">
-                @Html.CheckBoxFor(m => m.IsActive)
-                @Html.LabelFor(m => m.IsActive, ViewResources.Active)
-            </div>
-        </div>
-        @if (!viewFlags.IsLive)
-        {
-            <div class="form-row">
-                <div class="lbl-field">
-                    @Html.LabelFor(m => m.Environment, "Environment:")
-                </div>
-                <div class="edit-field rdo-field">
-                    @Html.RadioButtonFor(m => m.Environment, "UAT", new { @id = "Environment-UAT", @class = "environment" })
-                    @Html.Label("Environment-UAT", ViewResources.UAT)
-                    @Html.RadioButtonFor(m => m.Environment, "LIVE", new { @id = "Environment-LIVE", @class = "environment" })
-                    @Html.Label("Environment-LIVE", ViewResources.LIVE)
-                </div>
-            </div>
-        }
-        else
-        {
-            @Html.HiddenFor(m => m.Environment)
-        }
-        <div class="form-row">
-            <div class="lbl-field">
-                @Html.LabelFor(m => m.ParentId, "Parent:")
-            </div>
-            <div class="edit-field">
-                @Html.DropDownListFor(m => m.ParentId, (List<SelectListItem>)ViewBag.Parent, ViewResources.None, new { @class = "chzn-select" })
-                @Html.HiddenFor(m => m.ParentName)
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="lbl-field">
-                @Html.LabelFor(m => m.FunctionId, "Function:")
-            </div>
-            <div class="edit-field">
-                @Html.DropDownListFor(m => m.FunctionId, (List<SelectListItem>)ViewBag.Function, new { @class = "chzn-select" })
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="lbl-field">
-                @Html.LabelFor(m => m.Policy, "Policy:")
-            </div>
-            <div class="edit-field rdo-field">
-                @Html.RadioButtonFor(m => m.Policy, (int)Constant.Policy.Read, new { @id = "Policy-Read", @name = "Policy" })
-                @Html.Label(ViewResources.Read, new { @for = "Policy-Read" })
-                @Html.RadioButtonFor(m => m.Policy, (int)Constant.Policy.Host, new { @id = "Policy-Host", @name = "Policy" })
-                @Html.Label(ViewResources.Host, new { @for = "Policy-Host" })
-            </div>
-        </div>
-        <div class="form-row required">
-            <div class="lbl-field">
-                @Html.LabelFor(m => m.DisplayOrder, "Display Order:")
-            </div>
-            <div class="edit-field">
-                @Html.TextBoxFor(m => m.DisplayOrder, new { @class = "numeric" })
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="lbl-field">
-            </div>
-            <div class="edit-field">
-                @if (!success)
-                {
-                    <input type="submit" value="@ViewResources.Save" />
-                    <button class="cancel" onclick="NAP.redirect('Menu/Manage?siteId=@Model.SiteId', 0); return false;">@ViewResources.Cancel</button>
-                }
-            </div>
-        </div>
-    </div>
+	<div class="form">
+		<div class="form-row summary">
+			<div class="lbl-field">
+			</div>
+			<div class="edit-field">
+				@Html.ValidationSummary()
+			</div>
+		</div>
+		<div class="form-row required">
+			<div class="lbl-field">
+				@Html.LabelFor(m => m.MenuItemName, "Name:")
+			</div>
+			<div class="edit-field">
+				@Html.TextBoxFor(m => m.MenuItemName)
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="lbl-field">
+				@Html.LabelFor(m => m.SiteId, "Site:")
+			</div>
+			<div class="edit-field">
+				@Html.DropDownListFor(m => m.SiteId, (List<SelectListItem>)ViewBag.Site, new { @class = "chzn-select" })
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="lbl-field">
+				@Html.LabelFor(m => m.Description, "Description:")
+			</div>
+			<div class="edit-field">
+				@Html.TextBoxFor(m => m.Description)
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="lbl-field">
+				@Html.LabelFor(m => m.Url, "Url:")
+			</div>
+			<div class="edit-field">
+				@Html.TextBoxFor(m => m.Url)
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="lbl-field">
+				@Html.LabelFor(m => m.IsActive, "Status:")
+			</div>
+			<div class="edit-field chk-field">
+				@Html.CheckBoxFor(m => m.IsActive)
+				@Html.LabelFor(m => m.IsActive, ViewResources.Active)
+			</div>
+		</div>
+		@if (!viewFlags.IsLive)
+		{
+			<div class="form-row">
+				<div class="lbl-field">
+					@Html.LabelFor(m => m.Environment, "Environment:")
+				</div>
+				<div class="edit-field rdo-field">
+					@Html.RadioButtonFor(m => m.Environment, "UAT", new { @id = "Environment-UAT", @class = "environment" })
+					@Html.Label("Environment-UAT", ViewResources.UAT)
+					@Html.RadioButtonFor(m => m.Environment, "LIVE", new { @id = "Environment-LIVE", @class = "environment" })
+					@Html.Label("Environment-LIVE", ViewResources.LIVE)
+				</div>
+			</div>
+		}
+		else
+		{
+			@Html.HiddenFor(m => m.Environment)
+		}
+		<div class="form-row">
+			<div class="lbl-field">
+				@Html.LabelFor(m => m.ParentId, "Parent:")
+			</div>
+			<div class="edit-field">
+				@Html.DropDownListFor(m => m.ParentId, (List<SelectListItem>)ViewBag.Parent, ViewResources.None, new { @class = "chzn-select" })
+				@Html.HiddenFor(m => m.ParentName)
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="lbl-field">
+				@Html.LabelFor(m => m.FunctionId, "Function:")
+			</div>
+			<div class="edit-field">
+				@Html.DropDownListFor(m => m.FunctionId, (List<SelectListItem>)ViewBag.Function, new { @class = "chzn-select" })
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="lbl-field">
+				@Html.LabelFor(m => m.Policy, "Policy:")
+			</div>
+			<div class="edit-field rdo-field">
+				@Html.RadioButtonFor(m => m.Policy, (int)Constant.Policy.Read, new { @id = "Policy-Read", @name = "Policy" })
+				@Html.Label(ViewResources.Read, new { @for = "Policy-Read" })
+				@Html.RadioButtonFor(m => m.Policy, (int)Constant.Policy.Host, new { @id = "Policy-Host", @name = "Policy" })
+				@Html.Label(ViewResources.Host, new { @for = "Policy-Host" })
+			</div>
+		</div>
+		<div class="form-row required">
+			<div class="lbl-field">
+				@Html.LabelFor(m => m.DisplayOrder, "Display Order:")
+			</div>
+			<div class="edit-field">
+				@Html.TextBoxFor(m => m.DisplayOrder, new { @class = "numeric" })
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="lbl-field">
+			</div>
+			<div class="edit-field">
+				@if (!success)
+				{
+					<input type="submit" value="@ViewResources.Save" />
+					<button class="cancel" onclick="NAP.redirect('Menu/Manage?siteId=@Model.SiteId', 0); return false;">@ViewResources.Cancel</button>
+				}
+			</div>
+		</div>
+	</div>
 }
 @section Foot {
-    <script src="~/Areas/UserControl/scripts/Menu/AddNewMenuItem.js" type="text/javascript"></script>
-    <script src="~/Areas/UserControl/scripts/lib/jquery.numeric-1.3.js" type="text/javascript"></script>
-    @if (success)
-    {
-        string dialogMsg = string.Format(ViewResources.AddSuccessMsg, ViewResources.Menu_Item + " '" + Model.MenuItemName + "'", 3);
+	<script src="~/Areas/UserControl/scripts/Menu/AddNewMenuItem.js" type="text/javascript"></script>
+	<script src="~/Areas/UserControl/scripts/lib/jquery.numeric-1.3.js" type="text/javascript"></script>
+	@if (success)
+	{
+		string dialogMsg = string.Format(ViewResources.AddSuccessMsg, ViewResources.Menu_Item + " '" + Model.MenuItemName + "'", 3);
 
-        <script type="text/javascript">
-            $(function () {
-                NAP.showSuccessMsg('@dialogMsg', 'Menu/Manage?siteId=@Model.SiteId', 4000);
-            });
-        </script>
-    }
+		<script type="text/javascript">
+			$(function () {
+				NAP.showSuccessMsg('@dialogMsg', 'Menu/Manage?siteId=@Model.SiteId', 4000);
+			});
+		</script>
+	}
 }

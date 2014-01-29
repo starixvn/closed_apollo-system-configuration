@@ -1,4 +1,6 @@
-﻿// NOTE: in this document
+﻿/* global NAP: false */
+
+// NOTE: in this document
 //  + assigner indicates the current-logged-in user
 //  + assignee indicates the the user assigned privileges to
 
@@ -61,7 +63,7 @@ $(document).ready(function () {
 	AssignSite.userId = $('#UserId').val();
 	AssignSite.hasAssignSiteRight = $('#HasAssignSiteRight').val().toLowerCase();
 
-	if (AssignSite.hasAssignSiteRight == 'true') {
+	if (AssignSite.hasAssignSiteRight === 'true') {
 		// disables dropdownlist of inactive sites and/or
 		// enables dropdownlist of active sites
 		var toggleSite = function () {

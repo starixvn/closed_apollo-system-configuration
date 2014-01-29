@@ -1,4 +1,4 @@
-var Layout = function ($) {
+var Layout = function () {
 
 	return {
 		filterBar: null,
@@ -38,7 +38,7 @@ $(document).ready(function () {
 		var $this = $(this),
 			menuId = $.cookie('menu-id');
 
-		if ($this.attr('mid') == menuId) {
+		if ($this.attr('mid') === menuId) {
 			$this.addClass('current').parents('li').addClass('current');
 		}
 	});
