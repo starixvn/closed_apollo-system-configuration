@@ -125,7 +125,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 UserId = CurrentSession.UserId,
                 SiteId = siteId ?? this.SiteId,
                 Environment = this.Environment,
-                IsInternal =  CheckIsPortalAdminOrITGroup()
+                IsInternal = CheckIsPortalAdminOrITGroup()
             };
 
             if (this.UserIsPortalAdmin)
