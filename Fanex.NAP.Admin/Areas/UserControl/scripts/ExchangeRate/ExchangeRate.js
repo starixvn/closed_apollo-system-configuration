@@ -1,6 +1,8 @@
 ﻿/* global NAP: false */
 
-var ExchRate = function ($) {
+"use strict";
+
+var ExchRate = (function ($) {
 	return {
 		initView: function () {
 			$('.btn-edit').click(function () {
@@ -58,25 +60,38 @@ var ExchRate = function ($) {
 				var minBet = $("#MinBet").val();
 				var minBetLive = $("#MinBetLive").val();
 
+				if (multipliedBy.length > 0) {
+					multipliedBy = parseFloat(multipliedBy, true).toString() === 'NaN' ? -1 : parseFloat(multipliedBy, true);
+				}
+				if (actualRate.length > 0) {
+					actualRate = parseFloat(actualRate, true).toString() === 'NaN' ? -1 : parseFloat(actualRate, true);
+				}
+				if (minBet.length > 0) {
+					minBet = parseFloat(minBet, true).toString() === 'NaN' ? -1 : parseFloat(minBet, true);
+				}
+				if (minBetLive.length > 0) {
+					minBetLive = parseFloat(minBetLive, true).toString() === 'NaN' ? -1 : parseFloat(minBetLive, true);
+				}
+
 				var url = "";
 				if (isUpdate) {
 					url = "ExchangeRate/Update" +
 					"?exchangeId=" + $("#ExchangeId").val() +
 					"&Currency=" + encodeURIComponent($("#Currency").val()) +
 					"&description=" + encodeURIComponent($("#Description").val()) +
-					"&multipliedBy=" + (multipliedBy.length > 0 ? (parseFloat(multipliedBy, true).toString() === 'NaN' ? -1 : parseFloat(multipliedBy, true)) : multipliedBy) +
-					"&actualRate=" + (actualRate.length > 0 ? (parseFloat(actualRate, true).toString() === 'NaN' ? -1 : parseFloat(actualRate, true)) : actualRate) +
-					"&minBet=" + (minBet.length > 0 ? (parseFloat(minBet, true).toString() === 'NaN' ? -1 : parseFloat(minBet, true)) : minBet) +
-					"&minBetLive=" + (minBetLive.length > 0 ? (parseFloat(minBetLive, true).toString() === 'NaN' ? -1 : parseFloat(minBetLive, true)) : minBetLive);
+					"&multipliedBy=" + multipliedBy +
+					"&actualRate=" + actualRate +
+					"&minBet=" + minBet +
+					"&minBetLive=" + minBetLive;
 				}
 				else {
 					url = "ExchangeRate/insert" +
 					"?currency=" + encodeURIComponent($("#Currency").val()) +
 					"&description=" + encodeURIComponent($("#Description").val()) +
-					"&multipliedBy=" + (multipliedBy.length > 0 ? (parseFloat(multipliedBy, true).toString() === 'NaN' ? -1 : parseFloat(multipliedBy, true)) : multipliedBy) +
-					"&actualRate=" + (actualRate.length > 0 ? (parseFloat(actualRate, true).toString() === 'NaN' ? -1 : parseFloat(actualRate, true)) : actualRate) +
-					"&minBet=" + (minBet.length > 0 ? (parseFloat(minBet, true).toString() === 'NaN' ? -1 : parseFloat(minBet, true)) : minBet) +
-					"&minBetLive=" + (minBetLive.length > 0 ? (parseFloat(minBetLive, true).toString() === 'NaN' ? -1 : parseFloat(minBetLive, true)) : minBetLive);
+					"&multipliedBy=" + multipliedBy +
+					"&actualRate=" + actualRate +
+					"&minBet=" + minBet +
+					"&minBetLive=" + minBetLive;
 				}
 
 				$.ajax({
@@ -170,7 +185,7 @@ var ExchRate = function ($) {
 			msgWrp.append("<li>" + NAP.htmlDecode(msg) + "</li>");
 			htmlObject.addClass("input-validation-error");
 		},
-		removeErrorMsg: function (msg) {
+		removeErrorMsg: function () {
 			$('input').removeClass('input-validation-error');
 			var msgWrp = $('.validation-summary-valid').removeClass('validation-summary-errors');
 			msgWrp.find('ul:first').html("");
@@ -181,4 +196,4 @@ var ExchRate = function ($) {
 			NAP.showSuccessMsgCountDown(url, msec / 1000);
 		}
 	};
-} (jQuery);
+} (jQuery));

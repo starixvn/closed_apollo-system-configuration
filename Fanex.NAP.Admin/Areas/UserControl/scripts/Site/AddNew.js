@@ -1,5 +1,6 @@
-﻿
-var AddNewSite = function () {
+﻿"use strict";
+
+var AddNewSite = (function () {
 
 	return {
 		form: null,
@@ -9,7 +10,7 @@ var AddNewSite = function () {
 		}
 	};
 
-} (jQuery);
+} (jQuery));
 
 $(document).ready(function () {
 	AddNewSite.form = $('form:first');

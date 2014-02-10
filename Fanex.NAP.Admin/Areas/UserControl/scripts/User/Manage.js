@@ -1,6 +1,8 @@
 ﻿/* global NAP: false */
 
-var ManageUser = function () {
+"use strict";
+
+var ManageUser = (function () {
 
 	return {
 		grid: null,
@@ -8,7 +10,7 @@ var ManageUser = function () {
 		siteId: null
 	};
 
-} (jQuery);
+} (jQuery));
 
 $(document).ready(function () {
 	ManageUser.grid = $('.grid');

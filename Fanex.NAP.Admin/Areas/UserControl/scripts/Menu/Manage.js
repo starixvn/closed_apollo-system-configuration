@@ -1,13 +1,15 @@
 ﻿/* global NAP: false */
 
-var ManageMenu = function () {
+"use strict";
+
+var ManageMenu = (function () {
 
 	return {
 		grid: null,
 		form: null
 	};
 
-} (jQuery);
+} (jQuery));
 
 $(document).ready(function () {
 	ManageMenu.grid = $('.grid');

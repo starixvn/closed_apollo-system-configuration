@@ -1,12 +1,14 @@
 ﻿/* global NAP: false */
 
-var ManageGroup = function () {
+"use strict";
+
+var ManageGroup = (function () {
 
 	return {
 		grid: null
 	};
 
-} (jQuery);
+} (jQuery));
 
 $(document).ready(function () {
 	ManageGroup.grid = $('.grid');
@@ -53,7 +55,7 @@ $(document).ready(function () {
 		NAP.headlineMsgBox.confirm(msg, function () {
 			var groupId = $this.attr('gid');
 
-			$this.attr('checked', active).change();
+			$this.attr('checked', isActive).change();
 
 			$.ajax({
 				url: NAP.resolveClientUrl("Group/Activate" + "?id=" + groupId + "&isActive=" + isActive),

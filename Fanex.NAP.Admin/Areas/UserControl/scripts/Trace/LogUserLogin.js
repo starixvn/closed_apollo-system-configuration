@@ -1,6 +1,8 @@
 ﻿/* global NAP: false */
 
-var LogUserLogin = function ($) {
+"use strict";
+
+var LogUserLogin = (function ($) {
 
 	return {
 		grid: null,
@@ -40,7 +42,7 @@ var LogUserLogin = function ($) {
 		}
 	};
 
-} (jQuery);
+} (jQuery));
 
 $(document).ready(function () {
 	LogUserLogin.grid = $('.grid');

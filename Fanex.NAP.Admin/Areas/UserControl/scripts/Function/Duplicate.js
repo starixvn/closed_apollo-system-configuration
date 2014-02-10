@@ -1,4 +1,6 @@
-﻿var DuplicateFunction = function () {
+﻿"use strict";
+
+var DuplicateFunction = (function () {
 
 	return {
 		form: null,
@@ -7,7 +9,7 @@
 		parentName: null
 	};
 
-} (jQuery);
+} (jQuery));
 
 $(document).ready(function () {
 	DuplicateFunction.form = $('form:first');

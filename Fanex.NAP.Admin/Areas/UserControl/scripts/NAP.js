@@ -1,5 +1,8 @@
+/* jshint freeze: false */
 
-var NAP = function ($) {
+"use strict";
+
+var NAP = (function ($) {
 
 	return {
 		NAPAdminRoot: null,
@@ -32,7 +35,7 @@ var NAP = function ($) {
 			return NAP.NAPRoot + relativeUrl;
 		},
 		// Handles common error when making ajax request
-		handleAjaxError: function (xhr, status, err) {
+		handleAjaxError: function (xhr) {
 			if (xhr.status === 403) {
 				NAP.headlineMsgBox.showErr('Unauthorized request rejected!', { sticky: true });
 			} else if (xhr.status === 404) {
@@ -41,6 +44,7 @@ var NAP = function ($) {
 				NAP.headlineMsgBox.showErr('An unexpected error has occurred!', { sticky: true });
 			}
 		},
+		/* jshint ignore:start */
 		getIeVersion: function () {
 			var version = -1; // Return value assumes failure.
 
@@ -55,6 +59,7 @@ var NAP = function ($) {
 
 			return version;
 		},
+		/* jshint ignore:end */
 		agentIs: function (name) {
 			switch (name.toLowerCase()) {
 				case 'ipad':
@@ -68,21 +73,16 @@ var NAP = function ($) {
 						navigator.userAgent.match(/iPhone/i) ||
 						navigator.userAgent.match(/iPod/i);
 				case 'mobile':
-					return
-						// Apple
-						navigator.userAgent.match(/iPad/i) ||
+					return navigator.userAgent.match(/iPad/i) ||		// Apple
 						navigator.userAgent.match(/iPhone/i) ||
 						navigator.userAgent.match(/iPod/i) ||
-						// RIM
-						navigator.userAgent.match(/BlackBerry/i) ||
-						navigator.userAgent.match(/PlayBook/i);
-						// Windows Phone
-						navigator.userAgent.match(/Windows Phone/i) ||
-						// Android
-						navigator.userAgent.match(/Android/i) ||
-						// General
-						navigator.userAgent.match(/Touch/i);
-				default: return null;
+						navigator.userAgent.match(/BlackBerry/i) ||		// RIM
+						navigator.userAgent.match(/PlayBook/i) ||
+						navigator.userAgent.match(/Windows Phone/i) ||	// Windows Phone
+						navigator.userAgent.match(/Android/i) ||		// Android
+						navigator.userAgent.match(/Touch/i);			// General
+				default:
+					return null;
 			}
 		},
 		popup: function (title, html) {
@@ -135,7 +135,7 @@ var NAP = function ($) {
 		}
 	};
 
-} (jQuery);
+} (jQuery));
 
 $(document).ready(function () {
 	NAP.initCoreValues();
@@ -179,18 +179,4 @@ Array.prototype.remove = function (from, to) {
 	var rest = this.slice((to || from) + 1 || this.length);
 	this.length = from < 0 ? this.length + from : from;
 	return this.push.apply(this, rest);
-};
-
-// Array Remove All elements matched the criteria
-Array.prototype.removeAll = function (criteria) {
-	var length = this.length;
-
-	for (var i = 0; i < length; i++) {
-		var element = this[i];
-
-		if (criteria(element)) {
-			this.splice(i--, 1);
-			length--;
-		}
-	}
 };

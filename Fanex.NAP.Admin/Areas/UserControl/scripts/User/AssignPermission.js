@@ -1,4 +1,6 @@
-﻿var AssignUserPermission = function ($) {
+﻿"use strict";
+
+var AssignUserPermission = (function ($) {
 
 	return {
 		updateForm: null,
@@ -39,8 +41,10 @@
 				chkHost = $this.find('[name=funcHost][type=hidden]'),
 				chkRead = $this.find('[name=funcRead][type=hidden]');
 
+				var parent;
+
 				if (chkRead !== undefined) {
-					var parent = $('#funcRead' + chkRead.attr('pid'));
+					parent = $('#funcRead' + chkRead.attr('pid'));
 					if (parent.is(':checked') && parent.attr('pdisabled') === undefined) {
 						parent.attr('pdisabled', '1');
 						parent.after('<input type="checkbox" checked="checked" disabled="disabled"/>');
@@ -49,7 +53,7 @@
 				}
 
 				if (chkHost !== undefined) {
-					var parent = $('#funcHost' + chkHost.attr('pid'));
+					parent = $('#funcHost' + chkHost.attr('pid'));
 					if (parent.is(':checked') && parent.attr('pdisabled') === undefined) {
 						parent.attr('pdisabled', '1');
 						parent.after('<input type="checkbox" checked="checked" disabled="disabled"/>');
@@ -60,7 +64,7 @@
 		}
 	};
 
-} (jQuery);
+} (jQuery));
 
 $(document).ready(function () {
 	AssignUserPermission.grid = $('.grid:first');

@@ -1,13 +1,15 @@
 ﻿/* global NAP: false */
 
-var ManageFunction = function () {
+"use strict";
+
+var ManageFunction = (function () {
 
 	return {
 		grid: null,
 		form: null
 	};
 
-} (jQuery);
+} (jQuery));
 
 $(document).ready(function () {
 	ManageFunction.grid = $('.grid');

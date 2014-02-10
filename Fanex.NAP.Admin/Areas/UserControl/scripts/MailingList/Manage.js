@@ -1,6 +1,8 @@
 ﻿/* global NAP: false */
 
-var ManageMailingList = function ($) {
+"use strict";
+
+var ManageMailingList = (function ($) {
 	return {
 		Form: null,
 		Grid: null,
@@ -96,9 +98,9 @@ var ManageMailingList = function ($) {
 			});
 		}
 	};
-} (jQuery);
+} (jQuery));
 
 $(document).ready(function () {
-    ManageMailingList.init();
+	ManageMailingList.init();
 });
 

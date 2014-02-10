@@ -17,6 +17,8 @@ namespace Fanex.NAP.Admin
     using Fanex.Data.Configuration;
     using Fanex.Logging;
     using Fanex.NAP.Admin.App_Start;
+    using System.Data.SqlClient;
+    using System.Collections.Specialized;
 
     /// <summary>
     /// MVC application.
@@ -48,13 +50,39 @@ namespace Fanex.NAP.Admin
 
             if (!Request.IsLocal)
             {
+                // Remove sensitive log data
+                var formVariable = string.Empty;
+                int length = Request.Form.Count;
+
+                for (int i = 0; i < length; i++)
+                {
+                    if (!Request.Form.Keys[i].Equals("password", StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        if (i != 0)
+                        {
+                            formVariable += "&";
+                        }
+                        formVariable += string.Format("{0}={1}", Request.Form.Keys[i], Request.Form[Request.Form.Keys[i]]);
+                    }
+                }
+
+                // Get base exception data
                 string message = ex.Message +
+                    "\r\nType: " + ex.GetType().ToString() +
                     "\r\nSource: " + ex.Source +
                     "\r\nDomain: " + HttpContext.Current.Request.Headers["Host"] +
-                    "\r\nForm: " + Request.Form.ToString() +
-                    "\r\nQueryString: " + Request.QueryString.ToString() +
-                    "\r\nTargetSite: " + ex.TargetSite +
-                    "\r\nStackTrace: " + ex.StackTrace;
+                    "\r\nForm Variable: " + formVariable +
+                    "\r\nQuery String: " + Request.QueryString.ToString() +
+                    "\r\nTarget Site: " + ex.TargetSite +
+                    "\r\nStack Trace: " + ex.StackTrace;
+
+                // Get additional exception data
+                if (ex is SqlException)
+                {
+                    message += "\r\nProcedure: " + ((SqlException)ex).Procedure +
+                        "\r\nLine Number: " + ((SqlException)ex).LineNumber +
+                        "\r\nServer: " + ((SqlException)ex).Server;
+                }
 
                 LogService.Error(message);
             }

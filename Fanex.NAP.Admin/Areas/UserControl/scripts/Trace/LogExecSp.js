@@ -1,6 +1,8 @@
 ﻿/* global NAP: false */
 
-var LogExecSp = function ($) {
+"use strict";
+
+var LogExecSp = (function ($) {
 
 	return {
 		grid: null,
@@ -40,7 +42,7 @@ var LogExecSp = function ($) {
 		}
 	};
 
-} (jQuery);
+} (jQuery));
 
 $(document).ready(function () {
 	LogExecSp.grid = $('.grid');

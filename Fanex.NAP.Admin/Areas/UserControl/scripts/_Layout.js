@@ -1,4 +1,6 @@
-var Layout = function () {
+"use strict";
+
+var Layout = (function () {
 
 	return {
 		filterBar: null,
@@ -7,7 +9,7 @@ var Layout = function () {
 		frmPage: null
 	};
 
-} (jQuery);
+} (jQuery));
 
 $(document).ready(function () {
 	Layout.page = $('#page');

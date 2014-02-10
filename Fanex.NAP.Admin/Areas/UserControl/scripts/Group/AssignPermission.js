@@ -1,6 +1,8 @@
 ﻿/* global NAP: false */
 
-var AssignGroupPermission = function ($) {
+"use strict";
+
+var AssignGroupPermission = (function ($) {
 
 	return {
 		updateForm: null,
@@ -40,8 +42,10 @@ var AssignGroupPermission = function ($) {
 				chkHost = $this.find('[name=funcHost][type=hidden]'),
 				chkRead = $this.find('[name=funcRead][type=hidden]');
 
+				var parent;
+
 				if (chkRead !== undefined) {
-					var parent = $('#funcRead' + chkRead.attr('pid'));
+					parent = $('#funcRead' + chkRead.attr('pid'));
 					if (parent.is(':checked') && parent.attr('pdisabled') === undefined) {
 						parent.attr('pdisabled', '1');
 						parent.after('<input type="checkbox" checked="checked" disabled="disabled"/>');
@@ -50,7 +54,7 @@ var AssignGroupPermission = function ($) {
 				}
 
 				if (chkHost !== undefined) {
-					var parent = $('#funcHost' + chkHost.attr('pid'));
+					parent = $('#funcHost' + chkHost.attr('pid'));
 					if (parent.is(':checked') && parent.attr('pdisabled') === undefined) {
 						parent.attr('pdisabled', '1');
 						parent.after('<input type="checkbox" checked="checked" disabled="disabled"/>');
@@ -61,7 +65,7 @@ var AssignGroupPermission = function ($) {
 		}
 	};
 
-} (jQuery);
+} (jQuery));
 
 $(document).ready(function () {
 	AssignGroupPermission.grid = $('.grid:first');

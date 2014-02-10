@@ -1,6 +1,8 @@
 ﻿/* global NAP: false */
 
-var AddExisting = function () {
+"use strict";
+
+var AddExisting = (function () {
 
 	return {
 		gridWrp: null,
@@ -11,7 +13,7 @@ var AddExisting = function () {
 		formAdd: null
 	};
 
-} (jQuery);
+} (jQuery));
 
 $(document).ready(function () {
 	AddExisting.gridWrp = $('#grid-wrp');
@@ -56,7 +58,7 @@ $(document).ready(function () {
 			type: 'POST',
 			dataType: 'html',
 			cache: false,
-			beforeSend: function (xhr) {
+			beforeSend: function () {
 				NAP.loadingBox.show();
 				NAP.closePopup();
 			},

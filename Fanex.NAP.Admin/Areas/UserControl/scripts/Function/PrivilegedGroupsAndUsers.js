@@ -1,6 +1,8 @@
 ﻿/* global NAP: false */
 
-var PrivilegedGroupsAndUsers = function () {
+"use strict";
+
+var PrivilegedGroupsAndUsers = (function () {
 
 	return {
 		groupGrid: null,
@@ -14,7 +16,7 @@ var PrivilegedGroupsAndUsers = function () {
 		addUserBox: null
 	};
 
-} (jQuery);
+} (jQuery));
 
 $(document).ready(function () {
 	PrivilegedGroupsAndUsers.groupGrid = $('#group-grid');

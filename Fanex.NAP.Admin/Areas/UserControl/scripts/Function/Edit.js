@@ -1,6 +1,8 @@
 ﻿/* global NAP: false */
 
-var EditFunction = function ($) {
+"use strict";
+
+var EditFunction = (function ($) {
 
 	return {
 		form: null,
@@ -19,14 +21,12 @@ var EditFunction = function ($) {
 				cache: false,
 				async: false,
 				success: function (result) {
-					var content = eval(result);
-
 					EditFunction.parent.html('');
 
-					if (content.length > 0) {
+					if (result.length > 0) {
 
 						EditFunction.parent.attr('disabled', false);
-						EditFunction.parent.append($('#DropdownListTpl').render(content));
+						EditFunction.parent.append($('#DropdownListTpl').render(result));
 
 						EditFunction.parent.val(EditFunction.parentId);
 					}
@@ -57,13 +57,13 @@ var EditFunction = function ($) {
 					//NAP.loadingBox.close();
 				},
 				success: function (result) {
+					var template;
 
 					switch (result) {
 						case 0:
 							$('#error').append("");
-							var template = '<div data-valmsg-summary="true" class="validation-summary-errors">' + 
+							template = '<div data-valmsg-summary="true" class="validation-summary-errors">' +
 								'<ul><li>' + functionName + ' already exists. Please choose another!</li></ul>' + '</div>';
-
 							$('#error').append(template);
 							$('#FunctionName').addClass('input-validation-error');
 							break;
@@ -73,9 +73,8 @@ var EditFunction = function ($) {
 
 						case -2:
 							$('#error').append("");
-							var template = '<div data-valmsg-summary="true" class="validation-summary-errors">' + 
+							template = '<div data-valmsg-summary="true" class="validation-summary-errors">' +
 								'<ul><li>' + result + ' already exists. Please choose another!</li></ul>' + '</div>';
-
 							$('#error').append(template);
 							$('#FunctionName').addClass('input-validation-error');
 							break;
@@ -86,7 +85,6 @@ var EditFunction = function ($) {
 							$('#txtFunctionKey').val(result);
 							$('#txtFunctionKey').attr('disabled', 'disabled');
 					}
-
 				},
 				error: function (xhr, status, err) {
 					NAP.handleAjaxError(xhr, status, err);
@@ -95,7 +93,7 @@ var EditFunction = function ($) {
 		}
 	};
 
-} (jQuery);
+} (jQuery));
 
 $(document).ready(function () {
 	EditFunction.form = $('form:first');

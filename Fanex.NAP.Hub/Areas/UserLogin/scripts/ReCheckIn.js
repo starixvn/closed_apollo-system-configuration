@@ -1,4 +1,6 @@
-﻿var Recheckin = function ($) {
+﻿"use strict";
+
+var Recheckin = (function ($) {
 
 	return {
 		time: null,
@@ -38,7 +40,7 @@
 		}
 	};
 
-} (jQuery);
+} (jQuery));
 
 
 $(document).ready(function () {

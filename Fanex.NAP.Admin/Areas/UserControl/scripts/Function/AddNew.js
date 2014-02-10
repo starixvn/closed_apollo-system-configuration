@@ -1,6 +1,8 @@
 ﻿/* global NAP: false */
 
-var AddNewFunction = function ($) {
+"use strict";
+
+var AddNewFunction = (function ($) {
 
 	return {
 		form: null,
@@ -14,17 +16,15 @@ var AddNewFunction = function ($) {
 			$.ajax({
 				url: url,
 				type: 'POST',
-				dataType: 'html',
+				dataType: 'json',
 				cache: false,
 				async: false,
 				success: function (result) {
-					var content = eval(result);
-
 					AddNewFunction.parentId.html('');
 
-					if (content.length > 0) {
+					if (result.length > 0) {
 						AddNewFunction.parentId.attr('disabled', false);
-						AddNewFunction.parentId.append($('#DropdownListTpl').render(content));
+						AddNewFunction.parentId.append($('#DropdownListTpl').render(result));
 					}
 					else {
 						AddNewFunction.parentId.attr('disabled', true);
@@ -46,13 +46,11 @@ var AddNewFunction = function ($) {
 				cache: false,
 				async: false,
 				success: function (result) {
-					var content = eval(result);
-
 					AddNewFunction.parentId.html('');
 
-					if (content.length > 0) {
+					if (result.length > 0) {
 						AddNewFunction.parentId.attr('disabled', false);
-						AddNewFunction.parentId.append($('#DropdownListTpl').render(content));
+						AddNewFunction.parentId.append($('#DropdownListTpl').render(result));
 					}
 					else {
 						AddNewFunction.parentId.attr('disabled', true);
@@ -65,7 +63,7 @@ var AddNewFunction = function ($) {
 		}
 	};
 
-} (jQuery);
+} (jQuery));
 
 $(document).ready(function () {
 	AddNewFunction.form = $('form:first');

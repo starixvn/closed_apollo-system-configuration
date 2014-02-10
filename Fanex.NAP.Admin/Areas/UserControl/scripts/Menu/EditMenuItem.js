@@ -1,6 +1,8 @@
 ﻿/* global NAP: false */
 
-var EditMenuItem = function ($) {
+"use strict";
+
+var EditMenuItem = (function ($) {
 
 	return {
 		form: null,
@@ -16,18 +18,15 @@ var EditMenuItem = function ($) {
 			$.ajax({
 				url: url,
 				type: 'POST',
-				dataType: 'html',
+				dataType: 'json',
 				cache: false,
 				async: false,
 				success: function (result) {
-					var content = eval(result);
-
 					EditMenuItem.functions.html('');
 
-					if (content.length > 0) {
+					if (result.length > 0) {
 						EditMenuItem.functions.attr('disabled', false);
-						EditMenuItem.functions.append($('#DropdownListTpl').render(content));
-
+						EditMenuItem.functions.append($('#DropdownListTpl').render(result));
 						EditMenuItem.functions.val(EditMenuItem.functionId);
 					}
 					else {
@@ -41,24 +40,20 @@ var EditMenuItem = function ($) {
 		},
 
 		getMenuBySite: function (menuItemId, environment) {
-
 			var url = 'ListMenuItemBySite?menuItemId=' + menuItemId + '&environment=' + environment;
 
 			$.ajax({
 				url: url,
 				type: 'POST',
-				dataType: 'html',
+				dataType: 'json',
 				cache: false,
 				async: false,
 				success: function (result) {
-					var content = eval(result);
-
 					EditMenuItem.parent.html('');
 
-					if (content.length > 0) {
+					if (result.length > 0) {
 						EditMenuItem.parent.attr('disabled', false);
-						EditMenuItem.parent.append($('#DropdownListTpl').render(content));
-
+						EditMenuItem.parent.append($('#DropdownListTpl').render(result));
 						EditMenuItem.parent.val(EditMenuItem.parentId);
 					}
 					else {
@@ -72,7 +67,7 @@ var EditMenuItem = function ($) {
 		}
 	};
 
-} (jQuery);
+} (jQuery));
 
 $(document).ready(function () {
 	EditMenuItem.form = $('form:first');

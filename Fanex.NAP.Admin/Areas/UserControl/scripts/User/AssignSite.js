@@ -1,10 +1,12 @@
 ﻿/* global NAP: false */
 
+"use strict";
+
 // NOTE: in this document
 //  + assigner indicates the current-logged-in user
 //  + assignee indicates the the user assigned privileges to
 
-var AssignSite = function ($) {
+var AssignSite = (function ($) {
 
 	return {
 		userId: null,
@@ -55,7 +57,7 @@ var AssignSite = function ($) {
 		}
 	};
 
-} (jQuery);
+} (jQuery));
 
 $(document).ready(function () {
 	AssignSite.form = $('form:first');

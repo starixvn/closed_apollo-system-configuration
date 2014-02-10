@@ -1,21 +1,8 @@
-﻿/* global Validators: false */
+﻿/* jshint freeze: false */
 
+/* jshint ignore:start */
 if (typeof (Fanex) === 'undefined') { // Require Fanex namespace
 	Fanex = {};
-	Fanex.CloneObject = function (obj) {
-		var newObj = (obj instanceof Array) ? [] : {};
-		for (var i in obj) {
-			if (i === 'clone') {
-				continue;
-			}
-			if (obj[i] && typeof obj[i] === "object") {
-				newObj[i] = Fanex.CloneObject(obj[i]);
-			} else {
-				newObj[i] = obj[i];
-			}
-		}
-		return newObj;
-	};
 	String.Empty = ""; // Extend static string
 	String.prototype.Format = function () {
 		var formatted = this;
@@ -177,12 +164,6 @@ if (typeof (Fanex) === 'undefined') { // Require Fanex namespace
 		return true;
 	};
 
-	// Arguments: number to round, number of decimal places
-	Fanex.RoundNumber = function (number, decimals) {
-		var newnumber = new Number(number + '').toFixed(parseInt(decimals));
-		return parseFloat(newnumber); // Output the result to the form field (change for your purposes)
-	};
-
 	Fanex.HandleKeyDownInputNumber = function (e) {
 		e = e || event;
 		var charCode = ('charCode' in e ? e.charCode : e.keyCode);
@@ -291,3 +272,4 @@ if (typeof (Fanex) === 'undefined') { // Require Fanex namespace
 		Validators.animate(elementInput);
 	};
 }
+/* jshint ignore:end */

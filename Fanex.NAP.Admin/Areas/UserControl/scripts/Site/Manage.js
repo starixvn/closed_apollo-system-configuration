@@ -1,12 +1,14 @@
 ﻿/* global NAP: false */
 
-var ManageSite = function () {
+"use strict";
+
+var ManageSite = (function () {
 
 	return {
 		grid: null
 	};
 
-} (jQuery);
+} (jQuery));
 
 $(document).ready(function () {
 	ManageSite.grid = $('.grid');

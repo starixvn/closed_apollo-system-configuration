@@ -1,6 +1,8 @@
 ﻿/* global NAP: false */
 
-var Recheckin = function ($) {
+"use strict";
+
+var Recheckin = (function ($) {
 
 	return {
 		time: null,
@@ -41,26 +43,26 @@ var Recheckin = function ($) {
 		}
 	};
 
-} (jQuery);
+} (jQuery));
 
 
 $(document).ready(function () {
-    Recheckin.init();
+	Recheckin.init();
 
-    Recheckin.headlineMsgBox = $.msgbox({
-        message: '',
-        //containerId: 'msg-bar',
-        type: 'err',
-        modal: false,
-        position: ['top:130', 'center'],
-        theme: '',
-        zIndex: 9999,
-        duration: 2000,
-        useAnimation: false,
-        beforeClose: function () {
-            window.location.href = Recheckin.root + "UserLogin/Login/LogOut";
-        }
-    });
+	Recheckin.headlineMsgBox = $.msgbox({
+		message: '',
+		//containerId: 'msg-bar',
+		type: 'err',
+		modal: false,
+		position: ['top:130', 'center'],
+		theme: '',
+		zIndex: 9999,
+		duration: 2000,
+		useAnimation: false,
+		beforeClose: function () {
+			window.location.href = Recheckin.root + "UserLogin/Login/LogOut";
+		}
+	});
 
-    setInterval(Recheckin.reCheckin, Recheckin.time);
+	setInterval(Recheckin.reCheckin, Recheckin.time);
 });
