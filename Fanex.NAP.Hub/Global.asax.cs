@@ -11,6 +11,7 @@
 namespace Fanex.NAP.Hub
 {
     using System;
+    using System.Data.SqlClient;
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Routing;
@@ -19,10 +20,8 @@ namespace Fanex.NAP.Hub
     using Fanex.Logging;
     using Fanex.NAP.Core.Criteria.User;
     using Fanex.NAP.Core.Service.Impl;
-    using Fanex.NAP.Core.Service.Interface;
     using Fanex.NAP.Core.Web.Auth;
     using Fanex.NAP.Core.Web.Session;
-    using System.Data.SqlClient;
 
     /// <summary>
     /// Note: For instructions on enabling IIS6 or IIS7 classic mode, visit http://go.microsoft.com/?LinkId=9394801 .
@@ -89,6 +88,7 @@ namespace Fanex.NAP.Hub
                         {
                             formVariable += "&";
                         }
+
                         formVariable += string.Format("{0}={1}", Request.Form.Keys[i], Request.Form[Request.Form.Keys[i]]);
                     }
                 }

@@ -10,15 +10,13 @@
 namespace Fanex.NAP.Admin
 {
     using System;
+    using System.Data.SqlClient;
     using System.Web;
     using System.Web.Mvc;
-    using System.Web.Optimization;
     using System.Web.Routing;
     using Fanex.Data.Configuration;
     using Fanex.Logging;
     using Fanex.NAP.Admin.App_Start;
-    using System.Data.SqlClient;
-    using System.Collections.Specialized;
 
     /// <summary>
     /// MVC application.
@@ -62,6 +60,7 @@ namespace Fanex.NAP.Admin
                         {
                             formVariable += "&";
                         }
+
                         formVariable += string.Format("{0}={1}", Request.Form.Keys[i], Request.Form[Request.Form.Keys[i]]);
                     }
                 }
