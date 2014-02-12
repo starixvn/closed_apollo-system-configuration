@@ -18,6 +18,7 @@ namespace Fanex.NAP.Core.Web
     {
         public const string ShortDateFormat = "MM/dd/yyyy";
         public const string ShortDateFormatForFileName = "yyyyMMdd";
+        public const string DateTimeFormat = "MM/dd/yyyy hh:mm:ss tt";
 
         /// <summary>
         /// Gets first date of month.
@@ -112,6 +113,16 @@ namespace Fanex.NAP.Core.Web
         public static string ToShortFormatedDateForFileName(this DateTime date)
         {
             return date.ToString(ShortDateFormatForFileName);
+        }
+
+        /// <summary>
+        /// Converts a DateTime object to a formatted string of date and time values.
+        /// </summary>
+        /// <param name="date">DateTime type that the method needs to be attached to.</param>
+        /// <returns>Formatted date time string such as 10/10/2013 06:30:25 AM.</returns>
+        public static string ToFormatedDateTime(this DateTime date)
+        {
+            return date.ToString(DateTimeFormat);
         }
     }
 }
