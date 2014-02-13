@@ -19,6 +19,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
     using Fanex.NAP.Admin.Core.Criterias;
     using Fanex.NAP.Admin.Core.Extensions;
     using Fanex.NAP.Admin.Core.Models;
+    using Fanex.NAP.Admin.Core.Mvc;
     using Fanex.NAP.Admin.Core.Services.Impl;
     using Fanex.NAP.Admin.Core.Services.Interface;
     using Fanex.NAP.Core.Business;
@@ -27,7 +28,6 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
     using Fanex.NAP.Core.Service.Impl;
     using Fanex.NAP.Core.Service.Interface;
     using Fanex.NAP.Core.Web.Attribute;
-    using Fanex.NAP.Framework.Mvc;
 
     /// <summary>
     /// ExchangeRate Controller.

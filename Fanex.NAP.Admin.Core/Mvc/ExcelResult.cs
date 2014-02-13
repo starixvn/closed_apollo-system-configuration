@@ -8,7 +8,7 @@
 //   <change who="Anders.Le" date="2012.6.20">Change namespace and classname</change>
 // </history>
 
-namespace Fanex.NAP.Framework.Mvc
+namespace Fanex.NAP.Admin.Core.Mvc
 {
     using System;
     using System.IO;
@@ -19,7 +19,8 @@ namespace Fanex.NAP.Framework.Mvc
     /// </summary>
     public class ExcelResult : SpreadSheetResult
     {
-        public ExcelResult(HSSFWorkbook hssfWorkBook, string fileName) : base(hssfWorkBook, fileName) 
+        public ExcelResult(HSSFWorkbook hssfWorkBook, string fileName)
+            : base(hssfWorkBook, fileName)
         {
         }
 
