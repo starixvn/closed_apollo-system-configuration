@@ -15,19 +15,19 @@ var AssignSite = (function ($) {
 		hasAssignSiteRight: null,
 
 		AssignSiteToUser: function (userId) {
-			var value = "";
+		var value = "";
 
-			AssignSite.grid.find('.chbSite').each(function () {
-				var $this = $(this);
+		AssignSite.grid.find('.chbSite').each(function () {
+			var $this = $(this);
 
-				if ($this.is(':checked')) {
-					var siteId = $this.attr('id').substr(8);
-					var level = $('#ddlSiteLevel_' + siteId).val();
-					value += siteId + "," + level + ";";
-				}
-			});
+			if ($this.is(':checked')) {
+				var siteId = $this.attr('id').substr(8);
+				var level = $('#ddlSiteLevel_' + siteId).val();
+				value += siteId + "," + level + ";";
+			}
+		});
 
-			var url = NAP.resolveClientUrl('User/AssignSiteToUser'),
+            var url = NAP.resolveClientUrl('User/AssignSiteToUser'),
 				data = {
 					userId: userId,
 					value: value
@@ -53,41 +53,57 @@ var AssignSite = (function ($) {
 				error: function (xhr, status, err) {
 					NAP.handleAjaxError(xhr, status, err);
 				}
-			});
-		}
-	};
+				});
+			},
+
+			btnApplyHandler: function () {
+				// TODO : call ajax to apply change
+			}
+		};
 
 } (jQuery));
 
 $(document).ready(function () {
-	AssignSite.form = $('form:first');
 	AssignSite.grid = $('.grid');
 	AssignSite.userId = $('#UserId').val();
 	AssignSite.hasAssignSiteRight = $('#HasAssignSiteRight').val().toLowerCase();
 
 	if (AssignSite.hasAssignSiteRight === 'true') {
-		// disables dropdownlist of inactive sites and/or
-		// enables dropdownlist of active sites
-		var toggleSite = function () {
-			var $this = $(this), // this --> checkbox
-				thisId = $this.attr('id').substr(8);
+		AssignSite.grid.on('click', '.btn-edit', function () {
+			var $this = $(this),
+			thisRow = $this.parents('tr'),
+			thisSelect = thisRow.find('select'),
+			thisLevelLabel = thisSelect.prev(),
+			thisBtnApply = $this.next('.btn-apply'),
+			thisBtnCancel = thisBtnApply.next('.btn-cancel');
 
-			if ($this.is(':checked') && !$this.is(':disabled')) {
-				$('#ddlSiteLevel_' + thisId).attr('disabled', false);
-			} else {
-				$('#ddlSiteLevel_' + thisId).attr('disabled', true);
-			}
-		};
+			thisLevelLabel.hide();
+			thisSelect.show();   // enables select level
+			$this.hide();        // hides edit button
 
-		AssignSite.grid.find('.chbSite').each(function () {
-			toggleSite.call(this);
-		}).click(function () {
-			toggleSite.call(this);
+			// shows cancel button and bind the click event, which will cancel the process
+			thisBtnCancel.fadeIn().click(function () {
+				thisSelect.hide();
+				thisLevelLabel.show();
+				thisBtnApply.fadeOut();
+				$(this).fadeOut(function () { $this.show(); });
+			});
+
+			// shows apply button and bind the click event, which will updates the site url
+			thisBtnApply.fadeIn().click(AssignSite.btnApplyHandler);
 		});
 
-		AssignSite.form.submit(function () {
-			AssignSite.AssignSiteToUser(AssignSite.userId);
-			return false;
+		AssignSite.grid.on('click', '.chbSite', function () {
+			var $this = $(this),
+			siteName = $this.attr('name'),
+			isInActive = !$this.is(':checked'),
+			actionName = isInActive ? 'deactivate' : 'activate',
+			message = "Are you sure you want to " + actionName + " '" + siteName + "' ?";
+
+			NAP.headlineMsgBox.confirm(message, function () {
+				$this.attr('checked', !isInActive);
+				// TODO : call ajax to change
+			}, { modal: true, closeBtn: false });
 		});
 	}
 });

@@ -63,6 +63,30 @@ namespace Fanex.NAP.Core.Service.Impl
         #region get
 
         /// <summary>
+        /// Get available sites for user.
+        /// </summary>
+        /// <param name="userId">The user identity.</param>
+        /// <param name="liveSitesOnly">The live sites only boolean.</param>
+        /// <returns>The list site.</returns>
+        public IEnumerable<ISite> GetAvailableSitesForUser(int userId, bool liveSitesOnly = false)
+        {
+            Check.Argument.IsNotNegativeOrZero(userId, "userId");
+
+            var criteria = new GetAvailableSitesForUserCriteria
+            {
+                UserId = userId,
+                LiveSitesOnly = liveSitesOnly
+            };
+
+            if (criteria.IsValid())
+            {
+                return this._siteRepository.Fetch(criteria).OrderBy(site => site.Name);
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Get site by ID.
         /// </summary>
         /// <param name="id">The site ID.</param>

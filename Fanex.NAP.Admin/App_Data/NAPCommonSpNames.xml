@@ -34,6 +34,10 @@
             <Mapping DataField="SiteEnvironment" ObjectProperty="Environment" />
         </Setting>
         <Setting Key="NAP_Site_GetUserSiteLevel" SpName="NAP_Site_GetUserSiteLevel" DbName="SVRNAP.bodb_NAP.bodbAdminNet"></Setting>
+        <Setting Key="NAP_User_GetAvailableSitesForUser" SpName="NAP_User_GetAvailableSitesForUser" DbName="SVRNAP.bodb_NAP.bodbAdminNet" >
+          <Mapping DataField="SiteId" ObjectProperty="Id" />
+          <Mapping DataField="SiteName" ObjectProperty="Name" />
+        </Setting>
     </Function>
     <Function Name="Function">
         <Setting Key="NAP_Function_GetAll" SpName="NAP_Function_GetAll" DbName="SVRNAP.bodb_NAP.bodbAdminNet">

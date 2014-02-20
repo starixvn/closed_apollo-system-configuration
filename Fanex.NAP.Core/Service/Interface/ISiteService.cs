@@ -24,6 +24,8 @@ namespace Fanex.NAP.Core.Service.Interface
 
     public interface ISiteService : IBaseService
     {
+        IEnumerable<ISite> GetAvailableSitesForUser(int userId, bool liveSitesOnly);
+
         ISite GetById(int id);
 
         ISite GetByName(string name);

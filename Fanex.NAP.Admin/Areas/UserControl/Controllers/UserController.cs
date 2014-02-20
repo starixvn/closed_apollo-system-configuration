@@ -312,7 +312,8 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             if (UserIsPortalAdmin)
             {
                 siteList = _siteService.GetAll(this.Environment, true).ToList();
-                currentUserSiteLevelList = _siteService.GetSiteLevelByUser(CurrentSession.UserId, this.Environment, true).ToList();
+                currentUserSiteLevelList = _siteService.GetSiteLevelByUser(CurrentSession.UserId, this.Environment, null).ToList();
+                ViewFlags.HasAssignSiteReadRight = true;
                 ViewFlags.HasAssignSiteRight = true;
             }
             else
@@ -323,6 +324,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                                                 this.Environment,
                                                 policy: Constant.Policy.Read).ToList();
 
+                ViewFlags.HasAssignSiteReadRight = HasRight(FunctionKeys.AssignSiteToUser, Constant.Policy.Read);
                 ViewFlags.HasAssignSiteRight = HasRight(FunctionKeys.AssignSiteToUser, Constant.Policy.Host);
 
                 if (ViewFlags.HasAssignSiteRight)
@@ -334,14 +336,14 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                                                             policy: Constant.Policy.Host).ToList();
                 }
 
-                currentUserSiteLevelList = _siteService.GetSiteLevelByUser(CurrentSession.UserId, this.Environment, true).ToList();
+                currentUserSiteLevelList = _siteService.GetSiteLevelByUser(CurrentSession.UserId, this.Environment, null).ToList();
             }
 
-            siteLevelList = _siteService.GetSiteLevelByUser(id, this.Environment, true).ToList();
+            siteLevelList = _siteService.GetSiteLevelByUser(id, this.Environment, null).ToList(); 
 
             ViewBag.SiteList = siteList;                                 // list of site which current user has Assign Site To User permission
             ViewBag.CurrentUserSiteLevelList = currentUserSiteLevelList; // current login site level list
-            ViewBag.SiteLevelList = siteLevelList;                       // selected user site level list
+            ViewBag.SiteLevelList = siteLevelList;                       // selected or un-selected user site level list
             ViewBag.EditableSiteList = editableSiteList;                 // list of site which current user has Assign Site To User HOST permission
             ViewBag.Level = CurrentSession.Level;                       // current login user level
             ViewBag.UserId = id;                                         // selected user ID
@@ -354,6 +356,38 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         }
 
         #endregion
+
+        #region Get Available Sites for User
+
+        /// <summary>
+        /// Get available sites for user.
+        /// </summary>
+        /// <param name="userId">The user identity.</param>
+        /// <param name="username">The username.</param>
+        /// <param name="siteId">The site identity.</param>
+        /// <param name="groupId">The group identity.</param>
+        /// <returns>The list sites available for user.</returns>
+        [HttpGet]
+        [NapAuth(FunctionKey = FunctionKeys.AssignSiteToUser, Policy = Constant.Policy.Read)]
+        public ActionResult GetAvailableSitesForUser(
+            int userId,
+            string username,
+            int? siteId,
+            int? groupId) 
+        {
+            var availableSite = new List<ISite>();
+            var liveSitesOnly = this.Environment.Equals(Constant.UAT) ? false : true;
+            availableSite = _siteService.GetAvailableSitesForUser(userId, liveSitesOnly).ToList();
+
+            ViewBag.AvailableSitesForUser = availableSite;
+            ViewBag.Username = username;
+            ViewBag.UserId = userId;
+            ViewBag.SiteId = siteId;
+            ViewBag.GroupId = groupId;
+            return View("~/Areas/UserControl/Views/User/AssignNewSite.cshtml");
+        }
+
+        #endregion Get Available Sites for User
 
         #region User Info
 

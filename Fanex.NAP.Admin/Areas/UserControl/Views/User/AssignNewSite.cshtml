@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = ViewResources.NAP_Admin;
+    string headline = string.Format("Assign New Site to User '{0}'", ViewBag.Username);
+}
+
+@section Head {
+    <link href="~/Areas/UserControl/themes/nap/style.less" rel="stylesheet" type="text/css" /> 
+}
+
+@section Headline {
+    <h1>
+        <span class="title"><span class="first">@ViewResources.User_Management /</span>
+            @headline
+        </span>
+
+        @if (ViewBag.SiteId == null)
+        { 
+            @Html.ActionLink("← " + ViewResources.Back_To_List, "AssignSite", "User", null,
+            new { @class = "lnk" })
+        }
+        else
+        {
+            @Html.ActionLink("← " + ViewResources.Back_To_List, "AssignSite", "User",
+                new
+                {
+                    id = ViewBag.UserId,
+                    siteId = ViewBag.SiteId,
+                    groupId = ViewBag.GroupId
+                }, new { @class = "lnk" })
+        }
+    </h1>
+}

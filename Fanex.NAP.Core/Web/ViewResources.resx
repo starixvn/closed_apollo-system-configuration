@@ -756,4 +756,10 @@
   <data name="Accounting_Portal" xml:space="preserve">
     <value>Accounting Portal</value>
   </data>
+  <data name="OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="AssignNewSite" xml:space="preserve">
+    <value>Assign New Site</value>
+  </data>
 </root>

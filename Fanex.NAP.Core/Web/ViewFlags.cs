@@ -24,6 +24,7 @@ namespace Fanex.NAP.Core.Web
             this.HasAssignFunctionRight = false;
             this.HasAssignFunctionToUserRight = false;
             this.HasAssignFunctionToGroupRight = false;
+            this.HasAssignSiteReadRight = false;
             this.HasAssignSiteRight = false;
             this.IsShowLevelColumn = false;
             this.IsShowActionColumn = false;
@@ -35,6 +36,8 @@ namespace Fanex.NAP.Core.Web
         public bool HasEditRight { get; set; }
 
         public bool IsNapAdminSite { get; set; }
+
+        public bool HasAssignSiteReadRight { get; set; }
 
         public bool HasAssignSiteRight { get; set; }
 

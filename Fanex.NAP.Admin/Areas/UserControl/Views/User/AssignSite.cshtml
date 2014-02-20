@@ -9,22 +9,34 @@
     var level = ViewBag.Level != null ? (int)ViewBag.Level : 0;
     var isSelftEdit = ViewBag.IsSelfEdit != null ? (bool)ViewBag.IsSelfEdit : false;
     var isPortalAdmin = ViewBag.IsPortalAdmin != null ? (bool)ViewBag.IsPortalAdmin : false;
-    int NapAdminId = 1;
     var siteList = ViewBag.SiteList as List<ISite>;                 // list of site which current login user has Assign User To Site permission
     var editableSiteList = ViewBag.EditableSiteList as List<ISite>; // list of site which current login user has Assign User To Site "Host" permission
     var siteLevelList = ViewBag.SiteLevelList as List<SiteLevel>;
     var currentUserSiteLevelList = ViewBag.CurrentUserSiteLevelList as List<SiteLevel>;
     var currentSiteId = ViewBag.CurrentSiteId != null ? (int)ViewBag.CurrentSiteId : 0;
 }
+
 @section Head {
-    <link href="~/Areas/UserControl/themes/nap/user/assign-site.less" rel="stylesheet"
-        type="text/css" />
+    <link href="~/Areas/UserControl/themes/nap/user/assign-site.less" rel="stylesheet" type="text/css" /> 
 }
+
 @section Headline {
     <h1>
         <span class="title"><span class="first">@ViewResources.User_Management /</span>
             @headline
         </span>
+        @if (viewFlags.HasAssignSiteRight && ViewBag.UserId != null)
+        {
+            @Html.ActionLink("+ " + ViewResources.AssignNewSite, "GetAvailableSitesForUser", "User",
+                new
+                {
+                    userId = ViewBag.UserId,
+                    username = ViewBag.Username,
+                    siteId = ViewBag.SiteId,
+                    groupId = ViewBag.ReturnGroupId
+                }, new { @class = "lnk" })
+        }
+        
         @if (ViewBag.SiteId == null)
         { 
             @Html.ActionLink("← " + ViewResources.Back_To_List, "Manage", "User", null, new { @class = "lnk" })
@@ -41,115 +53,173 @@
         }
     </h1>
 }
+
 @Html.Hidden("UserId", (int)ViewBag.UserId)
 @Html.Hidden("HasAssignSiteRight", viewFlags.HasAssignSiteRight)
-<div class="form">
-    @using (Html.BeginForm())
-    {
-        <div class="form-row">
+
+<div class="grid-wrp pnl-wrp no-scale">
+    <div class="pnl-header">
+        <div class="pnl-header-content"></div>
+        <div class="pnl-header-toggle"></div>
+    </div> 
+    <div class="pnl-body">
             <table class="grid no-scale">
                 <thead>
                     <tr>
                         <th>
-                            @ViewResources.Active
+                            #
                         </th>
                         <th>
-                            @ViewResources.Site_Name
+                            @ViewResources.Site
                         </th>
                         <th>
                             @ViewResources.Level
                         </th>
+                        <th>
+                            @ViewResources.Active
+                        </th>
+                        @if (viewFlags.HasAssignSiteRight)
+                        {
+                            <th>
+                            @ViewResources.Edit
+                            </th>
+                        } 
                     </tr>
                 </thead>
                 <tbody>
-                    @if (siteList != null && siteList.Any())
+                    @if (siteLevelList != null && siteLevelList.Any())
                     {
-                        foreach (var site in siteList)
+                        var index = 1;
+                        var isChecked = false;
+                        var isEnabled = false;
+                        string checkedAttribute = string.Empty;
+                        string disabledAttribute = string.Empty;
+                        string disabledClass = string.Empty;
+                        string userSelected = string.Empty;
+                        bool hasRenderHtml = false;
+
+                        foreach (var siteLevel in siteLevelList)
                         {
-                            var siteLevel = siteLevelList.Where(s => s.Site.Id == site.Id).FirstOrDefault();
-                            var currentUserSiteLevel = currentUserSiteLevelList.Where(s => s.Site.Id == site.Id).FirstOrDefault();
-                            var isChecked = siteLevel != null;
-                            var isEnabled = (currentSiteId != site.Id || !isSelftEdit) &&		// not current site self edit
-                                ((isPortalAdmin && (siteLevel == null || siteLevel.Level < (int)Constant.Level.PortalAdmin))		// portal admin
-                                || (viewFlags.HasAssignSiteRight && currentUserSiteLevel != null		// have edit right and greater level in that site
-                                && editableSiteList != null && editableSiteList.Count(s => s.Id == site.Id) > 0 &&
-                                (siteLevel == null || currentUserSiteLevel.Level > siteLevel.Level
-                                || (currentUserSiteLevel.Level == (int)Constant.Level.User && siteLevel.Level == (int)Constant.Level.User))));
-                            var isEnabledLevel = isEnabled && isChecked;
-                            string checkedAttribute = isChecked ? "checked=\"checked\"" : string.Empty;
-                            string disabledAttribute = !isEnabled ? "disabled=\"disabled\"" : string.Empty;
-                            string disabledAttributeLevel = !isEnabledLevel ? "disabled=\"disabled\"" : string.Empty;
-                            string userSelected = isChecked && siteLevel.Level == (int)Constant.Level.User
-                                ? "selected=\"selected\"" : string.Empty;
-					
-                        <tr>
-                            <td class="align-center">
-                                <input type="checkbox" id="chbSite_@site.Id" class="chbSite" @Html.Raw(checkedAttribute) @Html.Raw(disabledAttribute) />
-                            </td>
-                            <td>
-                                <label for="chbSite_@site.Id">@site.Name</label>
-                            </td>
-                            <td class="align-center">
-                                <select id="ddlSiteLevel_@site.Id" @Html.Raw(@disabledAttributeLevel) style="width: 100px">
-                                    <option value="@((int)Constant.Level.User)" @Html.Raw(userSelected)>@ViewResources.User</option>
-                                    @if (level > (int)Constant.Level.SiteAdmin
-                                    || (isChecked && siteLevel.Level == (int)Constant.Level.SiteAdmin))	// current login user level > User
+                            isChecked = siteLevel != null && siteLevel.IsActive;
+
+                            if (!isSelftEdit)                   // if user is not edit himself
+                            {
+                                var site = siteList.Where(s => s.Id == siteLevel.Site.Id).FirstOrDefault();
+
+                                if (site != null)               // if siteLevel is belong to list site has Assign Site to User
+                                {
+                                    var currentUserSiteLevel = currentUserSiteLevelList.Where(s => s.Site.Id == siteLevel.Site.Id).FirstOrDefault();
+
+                                    isEnabled = (isPortalAdmin && (siteLevel == null || siteLevel.Level < (int)Constant.Level.PortalAdmin))		// portal admin
+                                            ||
+                                            (viewFlags.HasAssignSiteRight && currentUserSiteLevel != null		// have edit right and greater level in that site
+                                                && editableSiteList != null && editableSiteList.Count(s => s.Id == siteLevel.Site.Id) > 0 &&
+                                                (siteLevel == null || currentUserSiteLevel.Level > siteLevel.Level
+                                                || (currentUserSiteLevel.Level == (int)Constant.Level.User && siteLevel.Level == (int)Constant.Level.User)
+                                                )
+                                            );
+                                    userSelected = isChecked && siteLevel.Level == (int)Constant.Level.User
+                                                                ? "selected=\"selected\"" : string.Empty;
+                                    hasRenderHtml = true;
+                                }
+                            }
+                            else
+                            {
+                                isEnabled = (currentSiteId != siteLevel.Site.Id) &&
+                                             (
+                                                (isPortalAdmin && (siteLevel == null || siteLevel.Level < (int)Constant.Level.PortalAdmin))
+                                             || ( currentSiteId != siteLevel.Site.Id && siteLevel.Level == (int)Constant.Level.User)
+                                             );
+                                hasRenderHtml = true;
+                            }
+
+                            if (hasRenderHtml)
+                            {
+                                checkedAttribute = isChecked ? "checked=\"checked\"" : string.Empty;
+                                disabledAttribute = !isEnabled ? "disabled=\"disabled\"" : string.Empty;
+                                disabledClass = !isEnabled ? "disabled" : string.Empty;
+
+                                <tr>
+                                    <td class="align-center">
+                                        @index
+                                    </td>
+                                    <td>
+                                        <label for="lbSite_@siteLevel.Site.Id">@siteLevel.Site.Name</label>
+                                    </td>
+                                    <td>
+                                        <label for="lbLevel_@siteLevel.Site.Id">
+                                            @GetLevelName(siteLevel.Level)
+                                        </label>
+                                        <select id="ddlSiteLevel_@siteLevel.Site.Id" style="display: none;">
+                                            <option value="@ViewResources.User" @Html.Raw(userSelected)>@ViewResources.User</option>
+                                            @if (level > (int)Constant.Level.SiteAdmin)
+                                            {
+                                                string siteAdminSelected = isChecked && siteLevel.Level == (int)Constant.Level.SiteAdmin
+                                                                    ? "selected=\"selected\"" : string.Empty;
+                                                <option value="@ViewResources.Site_Admin" @Html.Raw(siteAdminSelected)>@ViewResources.Site_Admin</option>
+                                            }
+                                        </select>
+                                    </td>
+
+                                    @if (viewFlags.HasAssignSiteRight)
                                     {
-                                        string siteAdminSelected = isChecked && siteLevel.Level == (int)Constant.Level.SiteAdmin
-                                            ? "selected=\"selected\"" : string.Empty;
-
-                                        <option value="@((int)Constant.Level.SiteAdmin)" @Html.Raw(siteAdminSelected)>@ViewResources.Site_Admin</option>
-
-                                        if (site.Id == NapAdminId && isChecked && siteLevel.Level == (int)Constant.Level.PortalAdmin)	// selected user level is Portal Admin
+                                        <td class="align-center">
+                                            <input type="checkbox" id="chbSite_@siteLevel.Site.Id" class="chbSite" name="@siteLevel.Site.Name"
+                                                @Html.Raw(checkedAttribute) @Html.Raw(disabledAttribute) />
+                                        </td>
+                                    }
+                                    else if (viewFlags.HasAssignSiteReadRight)
+                                    {
+                                        if (isChecked)
                                         {
-                                            string portalAdminSelected = isChecked && siteLevel.Level == (int)Constant.Level.PortalAdmin
-                                                ? "selected=\"selected\"" : string.Empty;
-
-                                        <option value="@((int)Constant.Level.PortalAdmin)" @Html.Raw(portalAdminSelected)>@ViewResources.Portal_Admin</option>
+                                            <td class="align-center">
+                                                <img class="ico-tick" alt="" src=""/>
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td class="align-center"></td>
                                         }
                                     }
-                                </select>
-                            </td>
-                        </tr>
-                        }
-                    }
-                    @if (isSelftEdit)
-                    {
-                        foreach (var site in currentUserSiteLevelList)
-                        {
-                            if (siteList == null || siteList.Count(s => s.Id == site.Site.Id) == 0)
-                            {
-                                string userSelected = site.Level == (int)Constant.Level.User
-                                    ? "selected=\"selected\"" : string.Empty;
-                        <tr>
-                            <td class="align-center">
-                                <input type="checkbox" id="chbSite_@site.Site.Id" class="chbSite" checked="checked" disabled="disabled" />
-                            </td>
-                            <td>
-                                <label for="chbSite_@site.Site.Id">@site.Site.Name</label>
-                            </td>
-                            <td class="align-center">
-                                <select id="ddlSiteLevel_@site.Site.Id" disabled="disabled" style="width: 100px">
-                                    <option value="@((int)Constant.Level.User)" @Html.Raw(userSelected)>@ViewResources.User</option>
-                                </select>
-                            </td>
-                        </tr>
+
+                                    @if (viewFlags.HasAssignSiteRight)
+                                    {
+                                        <td>
+                                            <a class="btn-edit @Html.Raw(disabledClass)" href="javascript:;"></a>
+                                            <a class="btn-apply" href="javascript:;" style="display:none;">@ViewResources.OK</a>
+                                            <a class="btn-cancel" href="javascript:;" style="display:none;">@ViewResources.Cancel</a>
+                                        </td>
+                                    }
+                                </tr>
+                            }
+
+                            hasRenderHtml = false;
+                            index++;
                             }
                         }
-                    }
+                        @functions{  // get name of level
+                            public string GetLevelName(int level) {
+                                string levelName = string.Empty;
+
+                                if (level == (int)Constant.Level.User)
+                                {
+                                    levelName = @ViewResources.User;
+                                }
+                                else if (level == (int)Constant.Level.SiteAdmin)
+                                {
+                                    levelName = @ViewResources.Site_Admin;
+                                }
+                                else if (level == (int)Constant.Level.PortalAdmin)
+                                {
+                                    levelName = @ViewResources.Portal_Admin;
+                                }
+
+                                return levelName;
+                            }
+                        }
                 </tbody>
             </table>
-        </div>
-                    if (isPortalAdmin || viewFlags.HasAssignSiteRight)
-                    {
-        <div class="form-row">
-            <div class="edit-field">
-                <input type="submit" value="@ViewResources.Save" id="btn-submit" />
-                <button class="cancel" onclick="NAP.redirect('User/Manage/@ViewBag.PageIndex?siteId=@ViewBag.SiteId&groupId=@ViewBag.ReturnGroupId', 0); return false;">@ViewResources.Cancel</button>
-            </div>
-        </div>
-                    }
-    }
+      </div>
 </div>
 @section Foot {
     <script src="~/Areas/UserControl/scripts/User/AssignSite.js" type="text/javascript"></script>
