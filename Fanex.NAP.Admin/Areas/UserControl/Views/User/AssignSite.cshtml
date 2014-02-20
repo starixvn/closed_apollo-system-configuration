@@ -126,10 +126,7 @@
                             else
                             {
                                 isEnabled = (currentSiteId != siteLevel.Site.Id) &&
-                                             (
-                                                (isPortalAdmin && (siteLevel == null || siteLevel.Level < (int)Constant.Level.PortalAdmin))
-                                             || ( currentSiteId != siteLevel.Site.Id && siteLevel.Level == (int)Constant.Level.User)
-                                             );
+                                             (isPortalAdmin || siteLevel.Level == (int)Constant.Level.User);
                                 hasRenderHtml = true;
                             }
 
