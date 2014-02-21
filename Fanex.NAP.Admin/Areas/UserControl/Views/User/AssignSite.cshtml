@@ -33,7 +33,9 @@
                     userId = ViewBag.UserId,
                     username = ViewBag.Username,
                     siteId = ViewBag.SiteId,
-                    groupId = ViewBag.ReturnGroupId
+                    groupId = ViewBag.ReturnGroupId,
+                    pageIndex = ViewBag.PageIndex,
+                    level = level
                 }, new { @class = "lnk" })
         }
         
@@ -101,6 +103,8 @@
                         foreach (var siteLevel in siteLevelList)
                         {
                             isChecked = siteLevel != null && siteLevel.IsActive;
+                            var hasHostRightInSiteOfLoginUser = editableSiteList != null && editableSiteList.Count(s => s.Id == siteLevel.Site.Id)  > 0;
+                            var isSelectedUserInSite = siteLevel.Level == (int)Constant.Level.User;
 
                             if (!isSelftEdit)                   // if user is not edit himself
                             {
@@ -113,9 +117,9 @@
                                     isEnabled = (isPortalAdmin && (siteLevel == null || siteLevel.Level < (int)Constant.Level.PortalAdmin))		// portal admin
                                             ||
                                             (viewFlags.HasAssignSiteRight && currentUserSiteLevel != null		// have edit right and greater level in that site
-                                                && editableSiteList != null && editableSiteList.Count(s => s.Id == siteLevel.Site.Id) > 0 &&
+                                                && hasHostRightInSiteOfLoginUser &&
                                                 (siteLevel == null || currentUserSiteLevel.Level > siteLevel.Level
-                                                || (currentUserSiteLevel.Level == (int)Constant.Level.User && siteLevel.Level == (int)Constant.Level.User)
+                                                || (currentUserSiteLevel.Level == (int)Constant.Level.User && isSelectedUserInSite)
                                                 )
                                             );
                                     userSelected = isChecked && siteLevel.Level == (int)Constant.Level.User
@@ -125,8 +129,8 @@
                             }
                             else
                             {
-                                isEnabled = (currentSiteId != siteLevel.Site.Id) &&
-                                             (isPortalAdmin || siteLevel.Level == (int)Constant.Level.User);
+                                isEnabled = (currentSiteId != siteLevel.Site.Id) 
+                                        && (isPortalAdmin || (isChecked && hasHostRightInSiteOfLoginUser && isSelectedUserInSite));
                                 hasRenderHtml = true;
                             }
 
@@ -141,12 +145,12 @@
                                         @index
                                     </td>
                                     <td>
-                                        <label for="lbSite_@siteLevel.Site.Id">@siteLevel.Site.Name</label>
+                                        <span id="lbSite_@siteLevel.Site.Id">@siteLevel.Site.Name</span>
                                     </td>
-                                    <td>
-                                        <label for="lbLevel_@siteLevel.Site.Id">
+                                    <td class="align-center">
+                                        <span id="lbLevel_@siteLevel.Site.Id">
                                             @GetLevelName(siteLevel.Level)
-                                        </label>
+                                        </span>
                                         <select id="ddlSiteLevel_@siteLevel.Site.Id" style="display: none;">
                                             <option value="@ViewResources.User" @Html.Raw(userSelected)>@ViewResources.User</option>
                                             @if (level > (int)Constant.Level.SiteAdmin)

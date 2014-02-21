@@ -74,6 +74,8 @@ $(document).ready(function () {
 			thisRow = $this.parents('tr'),
 			thisSelect = thisRow.find('select'),
 			thisLevelLabel = thisSelect.prev(),
+			thisChecked = thisRow.find('.chbSite'),
+			originalChecked = thisChecked.is(':checked'),
 			thisBtnApply = $this.next('.btn-apply'),
 			thisBtnCancel = thisBtnApply.next('.btn-cancel');
 
@@ -83,6 +85,10 @@ $(document).ready(function () {
 
 			// shows cancel button and bind the click event, which will cancel the process
 			thisBtnCancel.fadeIn().click(function () {
+				if (thisChecked.is(':checked') !== originalChecked) {
+					thisChecked.attr('checked', originalChecked);
+				}
+
 				thisSelect.hide();
 				thisLevelLabel.show();
 				thisBtnApply.fadeOut();
@@ -93,17 +99,21 @@ $(document).ready(function () {
 			thisBtnApply.fadeIn().click(AssignSite.btnApplyHandler);
 		});
 
-		AssignSite.grid.on('click', '.chbSite', function () {
+		AssignSite.grid.on('mousedown', '.chbSite', function () {
 			var $this = $(this),
+			editField = $this.parent().next(),
+			btnEdit = editField.find('.btn-edit'),
 			siteName = $this.attr('name'),
-			isInActive = !$this.is(':checked'),
-			actionName = isInActive ? 'deactivate' : 'activate',
+			isActive = !$this.is(':checked'),
+			actionName = isActive ? 'activate' : 'deactivate',
 			message = "Are you sure you want to " + actionName + " '" + siteName + "' ?";
 
-			NAP.headlineMsgBox.confirm(message, function () {
-				$this.attr('checked', !isInActive);
-				// TODO : call ajax to change
-			}, { modal: true, closeBtn: false });
+			if (btnEdit.attr('style') !== "display: none;" && btnEdit.attr('style') !== "display: none") {
+				NAP.headlineMsgBox.confirm(message, function () {
+					$this.attr('checked', isActive);
+					// TODO : call ajax to change
+				}, { modal: true, closeBtn: false });
+			}
 		});
 	}
 });

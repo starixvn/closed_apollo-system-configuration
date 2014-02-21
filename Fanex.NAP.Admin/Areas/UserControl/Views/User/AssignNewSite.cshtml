@@ -1,10 +1,14 @@
 ﻿@{
     ViewBag.Title = ViewResources.NAP_Admin;
     string headline = string.Format("Assign New Site to User '{0}'", ViewBag.Username);
+    var availableSite = ViewBag.AvailableSitesForUser as IList<ISite>;
+    var hostRightSite = ViewBag.HostRightSite as IList<ISite>;
+    var currentUserSiteLevelList = ViewBag.CurrentUserSiteLevelList as IList<SiteLevel>;
+    var level = ViewBag.Level;
 }
 
 @section Head {
-    <link href="~/Areas/UserControl/themes/nap/style.less" rel="stylesheet" type="text/css" /> 
+    <link href="~/Areas/UserControl/themes/nap/user/assign-new-site.less" rel="stylesheet" type="text/css" /> 
 }
 
 @section Headline {
@@ -25,8 +29,69 @@
                 {
                     id = ViewBag.UserId,
                     siteId = ViewBag.SiteId,
-                    groupId = ViewBag.GroupId
+                    groupId = ViewBag.GroupId,
+                    pageIndex = ViewBag.PageIndex
                 }, new { @class = "lnk" })
         }
     </h1>
 }
+
+<div class="form">
+    @using (Html.BeginForm())
+    {
+        <div class="form-row">
+            <div class="lbl-label">
+                @Html.Label(ViewResources.Username)
+            </div>
+            <div class="edit-field username">
+                @ViewBag.Username
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-label">
+                @Html.Label(ViewResources.Site)
+            </div>
+            <div class="edit-field">
+                <select id="siteSelect">
+                    @foreach (var site in availableSite)
+                    {
+                        var currentUserSiteLevel = currentUserSiteLevelList.Where(s => s.Site.Id == site.Id).FirstOrDefault();
+
+                        if (currentUserSiteLevel != null && hostRightSite != null &&
+                            currentUserSiteLevel.Level >= (int)Constant.Level.User &&
+                            hostRightSite.Count(s => s.Id == site.Id)  > 0)
+                        {
+                            <option value="@site.Id">@site.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-label">
+                @Html.Label(ViewResources.Level)
+            </div>
+            <div class="edit-field">
+                <select id="levelSelect">
+                    <option value="@ViewResources.User">@ViewResources.User</option>
+                    @if (level == (int)Constant.Level.PortalAdmin)
+                    {
+                        <option value="@ViewResources.Site_Admin">@ViewResources.Site_Admin</option>
+                    }
+                </select>
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="lbl-field"></div>
+            <div class="edit-field">
+                @{
+                    var btnSaveEnabled = availableSite != null && availableSite.Count == 0
+                                    ? "disabled=\"disabled\"" : string.Empty;
+                    <input type="submit" value="@ViewResources.Save" id="btn-submit" @Html.Raw(@btnSaveEnabled)/>
+                 }
+                <button class="cancel" onclick="NAP.redirect('User/AssignSite/@ViewBag.UserId?siteId=@ViewBag.SiteId&pageIndex=@ViewBag.PageIndex&groupId=@ViewBag.GroupId', 0); return false;">@ViewResources.Cancel</button>
+            </div>
+        </div>
+    }
+</div>

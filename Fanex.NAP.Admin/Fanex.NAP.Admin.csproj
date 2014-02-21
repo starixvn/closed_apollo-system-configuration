@@ -575,6 +575,7 @@
     <Content Include="Areas\UserControl\Views\Shared\_PageLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Areas\UserControl\themes\nap\user\assign-new-site.less" />
     <None Include="Areas\UserControl\themes\nap\user\assign-site.less" />
     <Content Include="Areas\UserControl\Views\User\AssignNewSite.cshtml" />
   </ItemGroup>

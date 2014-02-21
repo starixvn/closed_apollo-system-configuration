@@ -366,6 +366,8 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// <param name="username">The username.</param>
         /// <param name="siteId">The site identity.</param>
         /// <param name="groupId">The group identity.</param>
+        /// <param name="pageIndex">The page index.</param>
+        /// <param name="level">The level of current login user.</param>
         /// <returns>The list sites available for user.</returns>
         [HttpGet]
         [NapAuth(FunctionKey = FunctionKeys.AssignSiteToUser, Policy = Constant.Policy.Read)]
@@ -373,17 +375,41 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             int userId,
             string username,
             int? siteId,
-            int? groupId) 
+            int? groupId,
+            int pageIndex,
+            int level)
         {
             var availableSite = new List<ISite>();
+            var hostRightSite = new List<ISite>();
+            var currentUserSiteLevelList = new List<SiteLevel>();
             var liveSitesOnly = this.Environment.Equals(Constant.UAT) ? false : true;
-            availableSite = _siteService.GetAvailableSitesForUser(userId, liveSitesOnly).ToList();
+
+            if (CurrentSession.UserId != userId)
+            {
+                availableSite = _siteService.GetAvailableSitesForUser(userId, liveSitesOnly).ToList();
+                currentUserSiteLevelList = _siteService.GetSiteLevelByUser(CurrentSession.UserId, this.Environment, true).ToList();
+                bool isHasAssignRight = HasRight(FunctionKeys.AssignSiteToUser, Constant.Policy.Host);
+
+                if (isHasAssignRight)
+                {
+                    hostRightSite = _siteService.GetByUserAndFunctionKeyIncludeGroup(
+                                                            CurrentSession.UserId,
+                                                            FunctionKeys.AssignSiteToUser,
+                                                            this.Environment,
+                                                            policy: Constant.Policy.Host).ToList();
+                }
+            }
 
             ViewBag.AvailableSitesForUser = availableSite;
+            ViewBag.CurrentUserSiteLevelList = currentUserSiteLevelList;
+            ViewBag.HostRightSite = hostRightSite;
             ViewBag.Username = username;
             ViewBag.UserId = userId;
             ViewBag.SiteId = siteId;
             ViewBag.GroupId = groupId;
+            ViewBag.PageIndex = pageIndex;
+            ViewBag.Level = level;
+
             return View("~/Areas/UserControl/Views/User/AssignNewSite.cshtml");
         }
 
@@ -941,37 +967,26 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// Assign site to user.
         /// </summary>
         /// <param name="userId">The user ID.</param>
-        /// <param name="value">List of site.</param>
+        /// <param name="siteId">The site ID.</param>
+        /// <param name="level">The level of user.</param>
+        /// <param name="isActive">The boolean to identify the user active or not.</param>
         /// <returns>Result string.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.AssignSiteToUser, Policy = Constant.Policy.Host)]
-        public string AssignSiteToUser(int userId, string value)
+        public string AssignSiteToUser(int userId, int siteId, int level, bool isActive)
         {
             if (Request.IsAjaxRequest())
             {
-                string xmlValue = "<ROOT>";
-                string[] strValueSiteLevel = value.Split(';');
-
-                foreach (string item in strValueSiteLevel)
-                {
-                    if (!item.IsNullOrTrimEmpty())
-                    {
-                        string[] strTemp = item.Split(',');
-                        xmlValue += "<SiteLevel SiteId='" + strTemp[0] + "' Level='" + strTemp[1] + "' ></SiteLevel>";
-                    }
-                }
-
-                xmlValue += "</ROOT>";
-
                 var criteria = new AssignSiteUserCriteria
                 {
-                    ModifiedBy = CurrentSession.UserId,
-                    ModifiedDate = DateTime.Now,
+                    CreatedBy = CurrentSession.UserId,
+                    CreatedDate = DateTime.Now,
                     UserId = userId,
-                    Value = xmlValue
+                    SiteId = siteId,
+                    Level = level,
+                    IsActive = isActive
                 };
 
-                // assigns all functions to the user if he/she is site-admin or portal-admin
                 ICommandResult result = _userService.AssignSite(criteria);
 
                 if (result != null && result.IsSuccessful)

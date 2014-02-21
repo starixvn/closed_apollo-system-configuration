@@ -5,6 +5,7 @@
 // --------------------------------------------------------------------------
 // <history>
 //   <change who="Edward.Nguyen" date="2012.8.21">Created</change>
+//   <change who="Josh.Phan" date="2014.02.21">Edited</change>
 // </history>
 
 namespace Fanex.NAP.Core.Criteria.User
@@ -19,21 +20,19 @@ namespace Fanex.NAP.Core.Criteria.User
     {
         public int UserId { get; set; }
 
-        /// <summary>
-        /// Gets or sets user site information.
-        /// </summary>
-        /// <value>
-        /// <ROOT><SiteLevel SiteId="4" Level="3" ></SiteLevel></ROOT>.
-        /// </value>
-        public string Value { get; set; }
+        public int SiteId { get; set; }
 
-        public int ModifiedBy { get; set; }
+        public int Level { get; set; }
 
-        public DateTime ModifiedDate { get; set; }
+        public bool IsActive { get; set; }
+
+        public int CreatedBy { get; set; }
+
+        public DateTime CreatedDate { get; set; }
 
         public override string GetSettingKey()
         {
-            return "NAP_User_AssignSite";
+            return "NAP_User_AssignNewSite";
         }
 
         public override bool IsValid()
