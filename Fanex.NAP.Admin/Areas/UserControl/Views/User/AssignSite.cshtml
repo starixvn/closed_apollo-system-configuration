@@ -149,7 +149,7 @@
                                     </td>
                                     <td class="align-center">
                                         <span id="lbLevel_@siteLevel.Site.Id">
-                                            @GetLevelName(siteLevel.Level)
+                                            @siteLevel.Level.ToUserLevel()
                                         </span>
                                         <select id="ddlSiteLevel_@siteLevel.Site.Id" style="display: none;">
                                             <option value="0" @Html.Raw(userSelected)>@ViewResources.User</option>
@@ -196,26 +196,6 @@
 
                             hasRenderHtml = false;
                             index++;
-                            }
-                        }
-                        @functions{  // get name of level
-                            public string GetLevelName(int level) {
-                                string levelName = string.Empty;
-
-                                if (level == (int)Constant.Level.User)
-                                {
-                                    levelName = @ViewResources.User;
-                                }
-                                else if (level == (int)Constant.Level.SiteAdmin)
-                                {
-                                    levelName = @ViewResources.Site_Admin;
-                                }
-                                else if (level == (int)Constant.Level.PortalAdmin)
-                                {
-                                    levelName = @ViewResources.Portal_Admin;
-                                }
-
-                                return levelName;
                             }
                         }
                 </tbody>
