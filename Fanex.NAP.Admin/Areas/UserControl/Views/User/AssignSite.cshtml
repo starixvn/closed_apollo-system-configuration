@@ -152,12 +152,12 @@
                                             @GetLevelName(siteLevel.Level)
                                         </span>
                                         <select id="ddlSiteLevel_@siteLevel.Site.Id" style="display: none;">
-                                            <option value="@ViewResources.User" @Html.Raw(userSelected)>@ViewResources.User</option>
+                                            <option value="0" @Html.Raw(userSelected)>@ViewResources.User</option>
                                             @if (level > (int)Constant.Level.SiteAdmin)
                                             {
                                                 string siteAdminSelected = isChecked && siteLevel.Level == (int)Constant.Level.SiteAdmin
                                                                     ? "selected=\"selected\"" : string.Empty;
-                                                <option value="@ViewResources.Site_Admin" @Html.Raw(siteAdminSelected)>@ViewResources.Site_Admin</option>
+                                                <option value="50" @Html.Raw(siteAdminSelected)>@ViewResources.Site_Admin</option>
                                             }
                                         </select>
                                     </td>
@@ -166,7 +166,7 @@
                                     {
                                         <td class="align-center">
                                             <input type="checkbox" id="chbSite_@siteLevel.Site.Id" class="chbSite" name="@siteLevel.Site.Name"
-                                                @Html.Raw(checkedAttribute) @Html.Raw(disabledAttribute) />
+                                                value="@siteLevel.Level" @Html.Raw(checkedAttribute) @Html.Raw(disabledAttribute) />
                                         </td>
                                     }
                                     else if (viewFlags.HasAssignSiteReadRight)

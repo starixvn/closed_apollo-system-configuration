@@ -94,6 +94,14 @@
     {
     @Html.Action("_NAP_Assign_Permission", "Trace", Model)
     }
+    if (Model.ActionId == (int)LogAction.NAP_User_AssignNewSite)
+    {
+        @Html.Action("_NAP_Assign_New_Site", "Trace", Model)
+    }
+    if (Model.ActionId == (int)LogAction.NAP_User_UpdateSite)
+    {
+        @Html.Action("_NAP_Update_Site", "Trace", Model)
+    }
     if (Model.ActionId == (int)LogAction.NAP_User_AssignSite)
     {
     @Html.Action("_NAP_Assign_Site", "Trace", Model)
@@ -107,7 +115,7 @@
     @Html.Action("_NAP_Function_AssignFunctionToGroups", "Trace", Model)
     }
     
-    if (Model.ActionId == (int)LogAction.NAP_MailingList_Insert)
+@*    if (Model.ActionId == (int)LogAction.NAP_MailingLists_Insert)
     {
         @Html.Action("_NAP_MailingList_Insert", "Trace", Model)
     }
@@ -122,5 +130,5 @@
     if (Model.ActionId == (int)LogAction.NAP_MailingList_UpdateIsInternal)
     {
         @Html.Action("_NAP_MailingList_UpdateInternal", "Trace", Model)
-    }
+    }*@
 }

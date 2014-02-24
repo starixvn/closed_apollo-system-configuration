@@ -1,0 +1,45 @@
+﻿@{
+    var newLog = ViewBag.NewLog as SiteLevel;
+} 
+
+@if (newLog != null)
+{
+    <br />
+    <h1>Site New Value</h1>
+    <br />
+    
+    <div class="grid-wrp pnl-wrp">
+        <div class="pnl-header">
+            <div class="pnl-header-content">  </div>
+        </div>
+        <div class="pnl-body">
+            <table class="grid">
+                <thead>
+                        <tr>
+                            <th>
+	                            @ViewResources.Site_Name
+                            </th>
+                            <th>
+	                            @ViewResources.Level
+                            </th>
+                            <th>
+	                            @ViewResources.Active
+                            </th>
+                        </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>@newLog.Site.Name</td>
+                        <td class="align-center">@newLog.Level.ToUserLevel()</td>
+                        <td class="align-center">
+                             @if (newLog.IsActive)
+                             {
+                                 <img class="ico-tick" alt="" src="/NAPAdmin/areas/usercontrol/themes/nap/img/blank.png">
+                             }
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+}

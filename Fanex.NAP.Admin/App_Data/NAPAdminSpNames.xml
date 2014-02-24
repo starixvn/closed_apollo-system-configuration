@@ -30,6 +30,7 @@
     <Function Name="User">
         <Setting Key="NAP_User_AssignFunction" SpName="NAP_User_AssignFunction" DbName="SVRNAP.bodb_NAP.bodbAdminNet"  />
         <Setting Key="NAP_User_AssignNewSite" SpName="NAP_User_AssignNewSite" DbName="SVRNAP.bodb_NAP.bodbAdminNet" />
+       <Setting Key="NAP_User_UpdateSite" SpName="NAP_User_UpdateSite" DbName="SVRNAP.bodb_NAP.bodbAdminNet" />
         <Setting Key="NAP_User_Insert" SpName="NAP_User_Insert" DbName="SVRNAP.bodb_NAP.bodbAdminNet" />
     </Function>
     <Function Name="Cust">

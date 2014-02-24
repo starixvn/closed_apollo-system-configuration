@@ -1000,6 +1000,44 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
         #endregion
 
+        #region Update Site To User
+        /// <summary>
+        /// Update information of site to user.
+        /// </summary>
+        /// <param name="userId">The user ID.</param>
+        /// <param name="siteId">The site ID.</param>
+        /// <param name="level">The level.</param>
+        /// <param name="isActive">The is active.</param>
+        /// <returns>The result string.</returns>
+        [HttpPost]
+        [NapAuth(FunctionKey = FunctionKeys.AssignSiteToUser, Policy = Constant.Policy.Host)]
+        public string UpdateSiteToUser(int userId, int siteId, int level, bool isActive)
+        {
+            if (Request.IsAjaxRequest())
+            {
+                var criteria = new UpdateSiteToUserCriteria
+                {
+                    ModifiedBy = CurrentSession.UserId,
+                    ModifiedDate = DateTime.Now,
+                    UserId = userId,
+                    SiteId = siteId,
+                    Level = level,
+                    IsActive = isActive
+                };
+
+                ICommandResult result = _userService.UpdateSite(criteria);
+
+                if (result != null && result.IsSuccessful)
+                {
+                    return Constant.OK;
+                }
+            }
+
+            return Constant.ERROR;
+        }
+
+        #endregion Update Site To User
+
         #region Profile
 
         /// <summary>

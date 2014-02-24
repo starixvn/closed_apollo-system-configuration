@@ -101,6 +101,8 @@ namespace Fanex.NAP.Core.Service.Interface
 
         ICommandResult AssignSite(AssignSiteUserCriteria site);
 
+        ICommandResult UpdateSite(UpdateSiteToUserCriteria site);
+
         ICommandResult AssignFunction(AssignFunctionUserCriteria criteria);
 
         ICommandResult ChangePassword(ICriteria user);

@@ -14,23 +14,13 @@ var AssignSite = (function ($) {
 		grid: null,
 		hasAssignSiteRight: null,
 
-		AssignSiteToUser: function (userId) {
-		var value = "";
-
-		AssignSite.grid.find('.chbSite').each(function () {
-			var $this = $(this);
-
-			if ($this.is(':checked')) {
-				var siteId = $this.attr('id').substr(8);
-				var level = $('#ddlSiteLevel_' + siteId).val();
-				value += siteId + "," + level + ";";
-			}
-		});
-
-            var url = NAP.resolveClientUrl('User/AssignSiteToUser'),
+		UpdateSiteToUser: function (userId, siteId, level, isActive) {
+			var url = NAP.resolveClientUrl('User/UpdateSiteToUser'),
 				data = {
 					userId: userId,
-					value: value
+					siteId: siteId,
+					level: level,
+					isActive: isActive
 				};
 
 			$.ajax({
@@ -53,13 +43,9 @@ var AssignSite = (function ($) {
 				error: function (xhr, status, err) {
 					NAP.handleAjaxError(xhr, status, err);
 				}
-				});
-			},
-
-			btnApplyHandler: function () {
-				// TODO : call ajax to apply change
-			}
-		};
+			});
+		}
+	};
 
 } (jQuery));
 
@@ -71,47 +57,65 @@ $(document).ready(function () {
 	if (AssignSite.hasAssignSiteRight === 'true') {
 		AssignSite.grid.on('click', '.btn-edit', function () {
 			var $this = $(this),
-			thisRow = $this.parents('tr'),
-			thisSelect = thisRow.find('select'),
-			thisLevelLabel = thisSelect.prev(),
-			thisChecked = thisRow.find('.chbSite'),
-			originalChecked = thisChecked.is(':checked'),
-			thisBtnApply = $this.next('.btn-apply'),
-			thisBtnCancel = thisBtnApply.next('.btn-cancel');
+				thisRow = $this.parents('tr'),
+				thisSelect = thisRow.find('select'),
+				thisLevelLabel = thisSelect.prev(),
+				thisChecked = thisRow.find('.chbSite'),
+				originalChecked = thisChecked.is(':checked'),
+				thisBtnApply = $this.next('.btn-apply'),
+				thisBtnCancel = thisBtnApply.next('.btn-cancel');
 
 			thisLevelLabel.hide();
 			thisSelect.show();   // enables select level
 			$this.hide();        // hides edit button
 
-			// shows cancel button and bind the click event, which will cancel the process
+			// shows cancel button and bind the click event
 			thisBtnCancel.fadeIn().click(function () {
 				if (thisChecked.is(':checked') !== originalChecked) {
 					thisChecked.attr('checked', originalChecked);
 				}
 
-				thisSelect.hide();
-				thisLevelLabel.show();
-				thisBtnApply.fadeOut();
-				$(this).fadeOut(function () { $this.show(); });
+				showHide($(this), thisBtnApply);
+				var level = thisChecked.val();
+				thisSelect.find('option[value=' + level + ']').attr('selected', true);
 			});
 
-			// shows apply button and bind the click event, which will updates the site url
-			thisBtnApply.fadeIn().click(AssignSite.btnApplyHandler);
+			// shows apply button and bind the click event
+			thisBtnApply.fadeIn().click(function () {
+				var siteId = thisChecked.attr('id').substr(8),
+					level = thisSelect.val(),
+					isActive = thisChecked.is(':checked'),
+					levelName = thisSelect.find(':selected').text();
+
+				thisLevelLabel.text(levelName);
+				thisChecked.val(level);
+				AssignSite.UpdateSiteToUser(AssignSite.userId, siteId, level, isActive);
+				showHide($(this), thisBtnCancel);
+			});
+
+			var showHide = function (currentBtn, otherBtn) {
+				thisSelect.hide();
+				thisLevelLabel.show();
+				otherBtn.fadeOut();
+				currentBtn.fadeOut(function () { $this.show(); });
+			};
 		});
 
 		AssignSite.grid.on('mousedown', '.chbSite', function () {
 			var $this = $(this),
-			editField = $this.parent().next(),
-			btnEdit = editField.find('.btn-edit'),
-			siteName = $this.attr('name'),
-			isActive = !$this.is(':checked'),
-			actionName = isActive ? 'activate' : 'deactivate',
-			message = "Are you sure you want to " + actionName + " '" + siteName + "' ?";
+				editField = $this.parent().next(),
+				btnEdit = editField.find('.btn-edit'),
+				siteName = $this.attr('name'),
+				siteId = $this.attr('id').substr(8),
+				level = $this.val(),
+				isActive = !$this.is(':checked'),
+				actionName = isActive ? 'activate' : 'deactivate',
+				message = "Are you sure you want to " + actionName + " '" + siteName + "' ?";
 
 			if (btnEdit.attr('style') !== "display: none;" && btnEdit.attr('style') !== "display: none") {
 				NAP.headlineMsgBox.confirm(message, function () {
 					$this.attr('checked', isActive);
-					// TODO : call ajax to change
+					AssignSite.UpdateSiteToUser(AssignSite.userId, siteId, level, isActive);
 				}, { modal: true, closeBtn: false });
 			}
 		});

@@ -467,6 +467,25 @@ namespace Fanex.NAP.Core.Service.Impl
         }
 
         /// <summary>
+        /// Update site to user.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>The command result.</returns>
+        public ICommandResult UpdateSite(UpdateSiteToUserCriteria criteria)
+        {
+            Check.Argument.IsNotNull(criteria, "criteria");
+
+            LogExecSpCriteria logCriteria = GetLogExecSpCriteria();
+
+            if (criteria.IsValid() && logCriteria.IsValid())
+            {
+                return this._userRepository.Update(criteria, logCriteria);
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Assign permission to user.
         /// </summary>
         /// <param name="criteria">The criteria.</param>

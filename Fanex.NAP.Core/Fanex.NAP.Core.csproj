@@ -180,6 +180,7 @@
     <Compile Include="Criteria\User\AssignSiteUserCriteria.cs" />
     <Compile Include="Criteria\User\ChangeUserSiteStatusUserCriteria.cs" />
     <Compile Include="Criteria\User\CheckUsernameExistUserCriteria.cs" />
+    <Compile Include="Criteria\User\UpdateSiteToUserCriteria.cs" />
     <Compile Include="Criteria\User\UserSSOGetTimeUserCriteria.cs" />
     <Compile Include="Criteria\User\GetUserListSiteFunctionKeyPolicyUserCriteria.cs" />
     <Compile Include="Criteria\User\GetAllByUsernameGroupSiteUserCriteria.cs" />

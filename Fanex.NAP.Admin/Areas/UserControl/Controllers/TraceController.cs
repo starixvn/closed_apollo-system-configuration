@@ -1281,6 +1281,82 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         }
 
         /// <summary>
+        /// Assign new site.
+        /// </summary>
+        /// <param name="log">Execute SP log.</param>
+        /// <returns>The partial view result.</returns>
+        public PartialViewResult _NAP_Assign_New_Site(LogExecSp log)
+        {
+            XElement elementNew = XElement.Parse(log.Data);
+
+            if (log.ActionId == (int)LogAction.NAP_User_AssignNewSite)
+            { 
+                if (elementNew != null)
+                {
+                    var newSite = new SiteLevel
+                    {
+                        Site = new Site
+                        {
+                            Id = Convert.ToByte(elementNew.Attribute("SiteId").Value),
+                            Name = Convert.ToString(elementNew.Attribute("SiteName").Value)
+                        },
+                        Level = Convert.ToInt32(elementNew.Attribute("Level").Value),
+                        IsActive = elementNew.Attribute("IsActive").Value == "1" ? true : false
+                    };
+
+                    ViewBag.NewLog = newSite;
+                }
+            }
+
+            return PartialView("~/Areas/UserControl/Views/Trace/_NAP_Assign_New_Site.cshtml");
+        }
+
+        /// <summary>
+        /// Update site.
+        /// </summary>
+        /// <param name="log">Execute SP log.</param>
+        /// <returns>The partial view result.</returns>
+        public PartialViewResult _NAP_Update_Site(LogExecSp log) 
+        {
+            XElement newElement = XElement.Parse(log.Data);
+            XElement oldElement = XElement.Parse(log.OldData ?? "<ROOT/>");
+
+            if (oldElement.Attribute("UserId") != null)
+            {
+                var oldSite = new SiteLevel
+                {
+                    Site = new Site
+                    {
+                        Id = Convert.ToByte(oldElement.Attribute("SiteId").Value),
+                        Name = Convert.ToString(oldElement.Attribute("SiteName").Value)
+                    },
+                    Level = Convert.ToInt32(oldElement.Attribute("Level").Value),
+                    IsActive = oldElement.Attribute("IsActive").Value == "1" ? true : false
+                };
+
+                ViewBag.oldSite = oldSite;
+            }
+
+            if (newElement.Attribute("UserId") != null)
+            {
+                var newSite = new SiteLevel
+                {
+                    Site = new Site
+                    {
+                        Id = Convert.ToByte(newElement.Attribute("SiteId").Value),
+                        Name = Convert.ToString(newElement.Attribute("SiteName").Value)
+                    },
+                    Level = Convert.ToInt32(newElement.Attribute("Level").Value),
+                    IsActive = newElement.Attribute("IsActive").Value == "1" ? true : false
+                };
+
+                ViewBag.newSite = newSite;
+            }
+
+            return PartialView("~/Areas/UserControl/Views/Trace/_NAP_Update_Site.cshtml");
+        }
+
+        /// <summary>
         /// Get assign permission to users log detail.
         /// </summary>
         /// <param name="log">Execute SP log.</param>

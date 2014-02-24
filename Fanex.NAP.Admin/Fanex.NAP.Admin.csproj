@@ -135,6 +135,7 @@
     <Content Include="Areas\UserControl\scripts\ExchangeRate\ExchangeRate.js" />
     <Content Include="Areas\UserControl\scripts\MailingList\MailingList.js" />
     <Content Include="Areas\UserControl\scripts\MailingList\Manage.js" />
+    <Content Include="Areas\UserControl\scripts\User\AssignNewSite.js" />
     <Content Include="Areas\UserControl\themes\nap\ie.less" />
     <Content Include="App_Code\RazorHelper.cshtml" />
     <Content Include="Areas\UserControl\themes\nap\mailinglist\MailingList.less" />
@@ -578,6 +579,8 @@
     <None Include="Areas\UserControl\themes\nap\user\assign-new-site.less" />
     <None Include="Areas\UserControl\themes\nap\user\assign-site.less" />
     <Content Include="Areas\UserControl\Views\User\AssignNewSite.cshtml" />
+    <Content Include="Areas\UserControl\Views\Trace\_NAP_Assign_New_Site.cshtml" />
+    <Content Include="Areas\UserControl\Views\Trace\_NAP_Update_Site.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

@@ -8,7 +8,7 @@
 // </summary>
 //
 // <history>
-// Lasted generated date: 12/13/2013 11:19:31 AM
+// Lasted generated date: 2/24/2014 2:29:22 PM
 // </history>
 using System.Diagnostics.CodeAnalysis;
 
@@ -73,6 +73,8 @@ public enum LogAction
       
     NAP_User_AssignFunction = 304,
       
+    NAP_User_AssignNewSite = 403,
+      
     NAP_User_AssignSite = 400,
       
     NAP_User_ChangeUserSiteStatus = 210,
@@ -81,6 +83,8 @@ public enum LogAction
       
     NAP_User_Insert = 107,
       
-    NAP_User_SSOCheckIn = 28
+    NAP_User_SSOCheckIn = 28,
+      
+    NAP_User_UpdateSite = 404
  
 }

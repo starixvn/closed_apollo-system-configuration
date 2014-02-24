@@ -5,6 +5,7 @@
     var hostRightSite = ViewBag.HostRightSite as IList<ISite>;
     var currentUserSiteLevelList = ViewBag.CurrentUserSiteLevelList as IList<SiteLevel>;
     var level = ViewBag.Level;
+    var numberSiteAVailableToAssinge = 0;
 }
 
 @section Head {
@@ -36,6 +37,8 @@
     </h1>
 }
 
+@Html.Hidden("UserId", (int)ViewBag.UserId)
+
 <div class="form">
     @using (Html.BeginForm())
     {
@@ -61,6 +64,7 @@
                             currentUserSiteLevel.Level >= (int)Constant.Level.User &&
                             hostRightSite.Count(s => s.Id == site.Id)  > 0)
                         {
+                            numberSiteAVailableToAssinge++;
                             <option value="@site.Id">@site.Name</option>
                         }
                     }
@@ -73,10 +77,10 @@
             </div>
             <div class="edit-field">
                 <select id="levelSelect">
-                    <option value="@ViewResources.User">@ViewResources.User</option>
+                    <option value="0">@ViewResources.User</option>
                     @if (level == (int)Constant.Level.PortalAdmin)
                     {
-                        <option value="@ViewResources.Site_Admin">@ViewResources.Site_Admin</option>
+                        <option value="50">@ViewResources.Site_Admin</option>
                     }
                 </select>
             </div>
@@ -86,12 +90,17 @@
             <div class="lbl-field"></div>
             <div class="edit-field">
                 @{
-                    var btnSaveEnabled = availableSite != null && availableSite.Count == 0
+                    var btnSaveEnabled = numberSiteAVailableToAssinge == 0
                                     ? "disabled=\"disabled\"" : string.Empty;
                     <input type="submit" value="@ViewResources.Save" id="btn-submit" @Html.Raw(@btnSaveEnabled)/>
                  }
-                <button class="cancel" onclick="NAP.redirect('User/AssignSite/@ViewBag.UserId?siteId=@ViewBag.SiteId&pageIndex=@ViewBag.PageIndex&groupId=@ViewBag.GroupId', 0); return false;">@ViewResources.Cancel</button>
+                <button class="cancel" 
+                        onclick="NAP.redirect('User/AssignSite/@ViewBag.UserId?siteId=@ViewBag.SiteId&pageIndex=@ViewBag.PageIndex&groupId=@ViewBag.GroupId', 0); return false;">@ViewResources.Cancel</button>
             </div>
         </div>
     }
 </div>
+
+@section Foot {
+    <script src="~/Areas/UserControl/scripts/User/AssignNewSite.js" type="text/javascript"></script>
+}
