@@ -102,24 +102,24 @@
     {
     @Html.Action("_NAP_Function_AssignToUsers", "Trace", Model)
     }
-       if (Model.ActionId == (int)LogAction.NAP_Function_AssignFunctionToGroups)
+    if (Model.ActionId == (int)LogAction.NAP_Function_AssignFunctionToGroups)
     {
     @Html.Action("_NAP_Function_AssignFunctionToGroups", "Trace", Model)
     }
     
-    if (Model.ActionId == (int)LogAction.NAP_MailingLists_Insert)
+    if (Model.ActionId == (int)LogAction.NAP_MailingList_Insert)
     {
         @Html.Action("_NAP_MailingList_Insert", "Trace", Model)
     }
-    if (Model.ActionId == (int)LogAction.NAP_MailingLists_Update)
+    if (Model.ActionId == (int)LogAction.NAP_MailingList_Update)
     {
         @Html.Action("_NAP_MailingList_Update", "Trace", Model)
     }
-    if (Model.ActionId == (int)LogAction.NAP_MailingLists_UpdateStatus)
+    if (Model.ActionId == (int)LogAction.NAP_MailingList_UpdateStatus)
     {
         @Html.Action("_NAP_MailingList_UpdateStatus", "Trace", Model)
     }
-    if (Model.ActionId == (int)LogAction.NAP_MailingLists_UpdateIsInternal)
+    if (Model.ActionId == (int)LogAction.NAP_MailingList_UpdateIsInternal)
     {
         @Html.Action("_NAP_MailingList_UpdateInternal", "Trace", Model)
     }
