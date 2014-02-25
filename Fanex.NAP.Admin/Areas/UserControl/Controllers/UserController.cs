@@ -339,17 +339,17 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                 currentUserSiteLevelList = _siteService.GetSiteLevelByUser(CurrentSession.UserId, this.Environment, null).ToList();
             }
 
-            siteLevelList = _siteService.GetSiteLevelByUser(id, this.Environment, null).ToList(); 
+            siteLevelList = _siteService.GetSiteLevelByUser(id, this.Environment, null).ToList();
 
-            ViewBag.SiteList = siteList;                                 // list of site which current user has Assign Site To User permission
-            ViewBag.CurrentUserSiteLevelList = currentUserSiteLevelList; // current login site level list
-            ViewBag.SiteLevelList = siteLevelList;                       // selected or un-selected user site level list
-            ViewBag.EditableSiteList = editableSiteList;                 // list of site which current user has Assign Site To User HOST permission
-            ViewBag.Level = CurrentSession.Level;                       // current login user level
-            ViewBag.UserId = id;                                         // selected user ID
-            ViewBag.Username = _userService.GetById(id).Username;        // selected username
-            ViewBag.IsSelfEdit = CurrentSession.UserId == id;           // self edit or not
-            ViewBag.CurrentSiteId = this.SiteId;                        // current site ID
+            ViewBag.SiteList = siteList;                                    // list of site which current user has Assign Site To User permission
+            ViewBag.CurrentUserSiteLevelList = currentUserSiteLevelList;    // current login site level list
+            ViewBag.SiteLevelList = siteLevelList;                          // selected or un-selected user site level list
+            ViewBag.EditableSiteList = editableSiteList;                    // list of site which current user has Assign Site To User HOST permission
+            ViewBag.Level = CurrentSession.Level;                           // current login user level
+            ViewBag.UserId = id;                                            // selected user ID
+            ViewBag.Username = _userService.GetById(id).Username;           // selected username
+            ViewBag.IsSelfEdit = CurrentSession.UserId == id;               // self edit or not
+            ViewBag.CurrentSiteId = this.SiteId;                            // current site ID
             ViewBag.IsPortalAdmin = UserIsPortalAdmin;
 
             return View();

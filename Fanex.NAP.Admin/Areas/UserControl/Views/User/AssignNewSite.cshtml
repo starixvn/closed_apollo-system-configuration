@@ -5,7 +5,7 @@
     var hostRightSite = ViewBag.HostRightSite as IList<ISite>;
     var currentUserSiteLevelList = ViewBag.CurrentUserSiteLevelList as IList<SiteLevel>;
     var level = ViewBag.Level;
-    var numberSiteAVailableToAssinge = 0;
+    var numberSitesAvailableToAssign = 0;
 }
 
 @section Head {
@@ -64,7 +64,7 @@
                             currentUserSiteLevel.Level >= (int)Constant.Level.User &&
                             hostRightSite.Count(s => s.Id == site.Id)  > 0)
                         {
-                            numberSiteAVailableToAssinge++;
+                            numberSitesAvailableToAssign++;
                             <option value="@site.Id">@site.Name</option>
                         }
                     }
@@ -90,7 +90,7 @@
             <div class="lbl-field"></div>
             <div class="edit-field">
                 @{
-                    var btnSaveEnabled = numberSiteAVailableToAssinge == 0
+                    var btnSaveEnabled = numberSitesAvailableToAssign == 0
                                     ? "disabled=\"disabled\"" : string.Empty;
                     <input type="submit" value="@ViewResources.Save" id="btn-submit" @Html.Raw(@btnSaveEnabled)/>
                  }
