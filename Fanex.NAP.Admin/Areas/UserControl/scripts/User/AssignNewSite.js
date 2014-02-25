@@ -1,7 +1,7 @@
 ﻿"use strict";
 /*global NAP: false*/
 
-var AssignNewSiteToUser = ( function ($) {
+var AssignNewSiteToUser = (function ($) {
 	return {
 		userId: null,
 		siteSelect: null,
@@ -31,12 +31,10 @@ var AssignNewSiteToUser = ( function ($) {
 				success: function (result) {
 					if (result) {
 						NAP.headlineMsgBox.showInfo('Your changes were saved!', { closeBtn: false });
-						AssignNewSiteToUser.siteSelect.find('option[value=' + siteId + ']').remove();
-						AssignNewSiteToUser.levelSelect.find('option[value=0]').attr('selected', true);
-
-						if (AssignNewSiteToUser.siteSelect.find('option').length === 0) {
-							AssignNewSiteToUser.btnSubmit.attr('disabled', true);
-						}
+						var currentSiteId = $('#SiteId').val();
+						var pageIndex = $('#PageIndex').val();
+						var groupId = $('#GroupId').val();
+						NAP.redirect('User/AssignSite/' + userId + '?siteId=' + currentSiteId + '&pageIndex=' + pageIndex + '&groupId=' + groupId, 0);
 					}
 				},
 				error: function (xhr, status, err) {

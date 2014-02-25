@@ -38,6 +38,9 @@
 }
 
 @Html.Hidden("UserId", (int)ViewBag.UserId)
+@Html.Hidden("SiteId", (int)ViewBag.SiteId)
+@Html.Hidden("PageIndex", (int)ViewBag.PageIndex)
+@Html.Hidden("GroupId", (int)ViewBag.GroupId)
 
 <div class="form">
     @using (Html.BeginForm())
