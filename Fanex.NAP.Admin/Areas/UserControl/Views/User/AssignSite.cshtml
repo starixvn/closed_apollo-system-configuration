@@ -94,6 +94,7 @@
                         var index = 1;
                         var isChecked = false;
                         var isEnabled = false;
+                        var isEditEnabled = false;
                         string checkedAttribute = string.Empty;
                         string disabledAttribute = string.Empty;
                         string disabledClass = string.Empty;
@@ -122,6 +123,11 @@
                                                 || (currentUserSiteLevel.Level == (int)Constant.Level.User && isSelectedUserInSite)
                                                 )
                                             );
+
+                                    isEditEnabled = isEnabled  ? isEnabled
+                                                               : !isChecked && currentUserSiteLevel != null && currentUserSiteLevel.IsActive
+                                                                 && viewFlags.HasAssignSiteRight && hasHostRightInSiteOfLoginUser;
+
                                     userSelected = isChecked && siteLevel.Level == (int)Constant.Level.User
                                                                 ? "selected=\"selected\"" : string.Empty;
                                     hasRenderHtml = true;
@@ -131,6 +137,7 @@
                             {
                                 isEnabled = (currentSiteId != siteLevel.Site.Id) 
                                         && (isPortalAdmin || (isChecked && hasHostRightInSiteOfLoginUser && isSelectedUserInSite));
+                                isEditEnabled = isEnabled;
                                 hasRenderHtml = true;
                             }
 
@@ -138,7 +145,7 @@
                             {
                                 checkedAttribute = isChecked ? "checked=\"checked\"" : string.Empty;
                                 disabledAttribute = !isEnabled ? "disabled=\"disabled\"" : string.Empty;
-                                disabledClass = !isEnabled ? "disabled" : string.Empty;
+                                disabledClass = !isEditEnabled ? "disabled" : string.Empty;
 
                                 <tr>
                                     <td class="align-center">
@@ -155,7 +162,7 @@
                                             <option value="0" @Html.Raw(userSelected)>@ViewResources.User</option>
                                             @if (level > (int)Constant.Level.SiteAdmin)
                                             {
-                                                string siteAdminSelected = isChecked && siteLevel.Level == (int)Constant.Level.SiteAdmin
+                                                string siteAdminSelected = siteLevel.Level == (int)Constant.Level.SiteAdmin
                                                                     ? "selected=\"selected\"" : string.Empty;
                                                 <option value="50" @Html.Raw(siteAdminSelected)>@ViewResources.Site_Admin</option>
                                             }

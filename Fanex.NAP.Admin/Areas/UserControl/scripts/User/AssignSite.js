@@ -62,12 +62,14 @@ $(document).ready(function () {
 				thisLevelLabel = thisSelect.prev(),
 				thisChecked = thisRow.find('.chbSite'),
 				originalChecked = thisChecked.is(':checked'),
+				originalDisabledChecked = thisChecked.is(':disabled'),
 				thisBtnApply = $this.next('.btn-apply'),
 				thisBtnCancel = thisBtnApply.next('.btn-cancel');
 
 			thisLevelLabel.hide();
 			thisSelect.show();   // enables select level
 			$this.hide();        // hides edit button
+			thisChecked.attr('disabled', false);
 
 			// shows cancel button and bind the click event
 			thisBtnCancel.fadeIn().click(function () {
@@ -76,6 +78,7 @@ $(document).ready(function () {
 				}
 
 				showHide($(this), thisBtnApply);
+				thisChecked.attr('disabled', originalDisabledChecked);
 				var level = thisChecked.val();
 				thisSelect.find('option[value=' + level + ']').attr('selected', true);
 			});
