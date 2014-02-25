@@ -370,7 +370,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// <param name="level">The level of current login user.</param>
         /// <returns>The list sites available for user.</returns>
         [HttpGet]
-        [NapAuth(FunctionKey = FunctionKeys.AssignSiteToUser, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = FunctionKeys.AssignSiteToUser, Policy = Constant.Policy.Host)]
         public ActionResult GetAvailableSitesForUser(
             int userId,
             string username,
