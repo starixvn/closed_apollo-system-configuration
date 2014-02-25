@@ -41,13 +41,6 @@ var AssignNewSiteToUser = ( function ($) {
 				},
 				error: function (xhr, status, err) {
 					NAP.handleAjaxError(xhr, status, err);
-					// Noted : remember delete after fixed log error.
-					AssignNewSiteToUser.siteSelect.find('option[value=' + siteId + ']').remove();
-					AssignNewSiteToUser.levelSelect.find('option[value=0]').attr('selected', true);
-
-					if (AssignNewSiteToUser.siteSelect.find('option').length === 0) {
-						AssignNewSiteToUser.btnSubmit.attr('disabled', true);
-					}
 				}
 			});
 		}
