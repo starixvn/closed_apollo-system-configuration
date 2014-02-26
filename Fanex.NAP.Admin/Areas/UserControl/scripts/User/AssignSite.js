@@ -10,11 +10,14 @@ var AssignSite = (function ($) {
 
 	return {
 		userId: null,
+		siteId: null,
+		groupId: null,
+		pageIndex: null,
 		form: null,
 		grid: null,
 		hasAssignSiteRight: null,
 
-		UpdateSiteToUser: function (userId, siteId, level, isActive, originalActive, originalLevel, $this) {
+		UpdateSiteToUser: function (userId, siteId, level, isActive) {
 			var url = NAP.resolveClientUrl('User/UpdateSiteToUser'),
 				data = {
 					userId: userId,
@@ -40,15 +43,8 @@ var AssignSite = (function ($) {
 						NAP.headlineMsgBox.showInfo('Your changes were saved!', { closeBtn: false });
 					}
 					else if (result === "ERROR") {
-						var thisRow = $this.parents('tr'),
-							thisLevelLabel = thisRow.find('select').prev(),
-							thisChecked = thisRow.find('.chbSite');
-
-						if (originalLevel !== '') {
-							thisLevelLabel.text(originalLevel);
-						}
-
-						thisChecked.attr('checked', originalActive);
+						NAP.redirect('User/AssignSite/' + userId + '?siteId=' + AssignSite.siteId + 
+										'&pageIndex=' + AssignSite.pageIndex + '&groupId=' + AssignSite.groupId, 0);
 					}
 				},
 				error: function (xhr, status, err) {
@@ -63,6 +59,9 @@ var AssignSite = (function ($) {
 $(document).ready(function () {
 	AssignSite.grid = $('.grid');
 	AssignSite.userId = $('#UserId').val();
+	AssignSite.siteId = $('#SiteId').val();
+	AssignSite.groupId = $('#GroupId').val();
+	AssignSite.pageIndex = $('#PageIndex').val();
 	AssignSite.hasAssignSiteRight = $('#HasAssignSiteRight').val().toLowerCase();
 
 	if (AssignSite.hasAssignSiteRight === 'true') {
@@ -71,7 +70,6 @@ $(document).ready(function () {
 				thisRow = $this.parents('tr'),
 				thisSelect = thisRow.find('select'),
 				thisLevelLabel = thisSelect.prev(),
-				originalLevel = thisSelect.find(':selected').text(),
 				thisChecked = thisRow.find('.chbSite'),
 				originalChecked = thisChecked.is(':checked'),
 				originalDisabledChecked = thisChecked.is(':disabled'),
@@ -104,7 +102,7 @@ $(document).ready(function () {
 
 				thisLevelLabel.text(levelName);
 				thisChecked.val(level);
-				AssignSite.UpdateSiteToUser(AssignSite.userId, siteId, level, isActive, originalChecked, originalLevel, $this);
+				AssignSite.UpdateSiteToUser(AssignSite.userId, siteId, level, isActive);
 				showHide($(this), thisBtnCancel);
 			});
 
@@ -123,15 +121,14 @@ $(document).ready(function () {
 				siteName = $this.attr('name'),
 				siteId = $this.attr('id').substr(8),
 				level = $this.val(),
-				originalActive = $this.is(':checked'),
-				isActive = !originalActive,
+				isActive = !$this.is(':checked'),
 				actionName = isActive ? 'activate' : 'deactivate',
 				message = "Are you sure you want to " + actionName + " '" + siteName + "' ?";
 
 			if (btnEdit.attr('style') !== "display: none;" && btnEdit.attr('style') !== "display: none") {
 				NAP.headlineMsgBox.confirm(message, function () {
 					$this.attr('checked', isActive);
-					AssignSite.UpdateSiteToUser(AssignSite.userId, siteId, level, isActive, originalActive, '', $this);
+					AssignSite.UpdateSiteToUser(AssignSite.userId, siteId, level, isActive);
 				}, { modal: true, closeBtn: false });
 			}
 		});
