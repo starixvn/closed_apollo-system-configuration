@@ -576,8 +576,8 @@
     <Content Include="Areas\UserControl\Views\Shared\_PageLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Areas\UserControl\themes\nap\user\assign-new-site.less" />
-    <None Include="Areas\UserControl\themes\nap\user\assign-site.less" />
+    <Content Include="Areas\UserControl\themes\nap\user\assign-new-site.less" />
+    <Content Include="Areas\UserControl\themes\nap\user\assign-site.less" />
     <Content Include="Areas\UserControl\Views\User\AssignNewSite.cshtml" />
     <Content Include="Areas\UserControl\Views\Trace\_NAP_Assign_New_Site.cshtml" />
     <Content Include="Areas\UserControl\Views\Trace\_NAP_Update_Site.cshtml" />

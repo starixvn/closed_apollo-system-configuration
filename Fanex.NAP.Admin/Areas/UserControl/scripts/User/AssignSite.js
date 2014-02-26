@@ -14,7 +14,7 @@ var AssignSite = (function ($) {
 		grid: null,
 		hasAssignSiteRight: null,
 
-		UpdateSiteToUser: function (userId, siteId, level, isActive) {
+		UpdateSiteToUser: function (userId, siteId, level, isActive, originalActive, originalLevel, $this) {
 			var url = NAP.resolveClientUrl('User/UpdateSiteToUser'),
 				data = {
 					userId: userId,
@@ -36,8 +36,19 @@ var AssignSite = (function ($) {
 					NAP.loadingBox.close();
 				},
 				success: function (result) {
-					if (result) {
+					if (result === "OK") {
 						NAP.headlineMsgBox.showInfo('Your changes were saved!', { closeBtn: false });
+					}
+					else if (result === "ERROR") {
+						var thisRow = $this.parents('tr'),
+							thisLevelLabel = thisRow.find('select').prev(),
+							thisChecked = thisRow.find('.chbSite');
+
+						if (originalLevel !== '') {
+							thisLevelLabel.text(originalLevel);
+						}
+
+						thisChecked.attr('checked', originalActive);
 					}
 				},
 				error: function (xhr, status, err) {
@@ -60,6 +71,7 @@ $(document).ready(function () {
 				thisRow = $this.parents('tr'),
 				thisSelect = thisRow.find('select'),
 				thisLevelLabel = thisSelect.prev(),
+				originalLevel = thisSelect.find(':selected').text(),
 				thisChecked = thisRow.find('.chbSite'),
 				originalChecked = thisChecked.is(':checked'),
 				originalDisabledChecked = thisChecked.is(':disabled'),
@@ -92,7 +104,7 @@ $(document).ready(function () {
 
 				thisLevelLabel.text(levelName);
 				thisChecked.val(level);
-				AssignSite.UpdateSiteToUser(AssignSite.userId, siteId, level, isActive);
+				AssignSite.UpdateSiteToUser(AssignSite.userId, siteId, level, isActive, originalChecked, originalLevel, $this);
 				showHide($(this), thisBtnCancel);
 			});
 
@@ -111,14 +123,15 @@ $(document).ready(function () {
 				siteName = $this.attr('name'),
 				siteId = $this.attr('id').substr(8),
 				level = $this.val(),
-				isActive = !$this.is(':checked'),
+				originalActive = $this.is(':checked'),
+				isActive = !originalActive,
 				actionName = isActive ? 'activate' : 'deactivate',
 				message = "Are you sure you want to " + actionName + " '" + siteName + "' ?";
 
 			if (btnEdit.attr('style') !== "display: none;" && btnEdit.attr('style') !== "display: none") {
 				NAP.headlineMsgBox.confirm(message, function () {
 					$this.attr('checked', isActive);
-					AssignSite.UpdateSiteToUser(AssignSite.userId, siteId, level, isActive);
+					AssignSite.UpdateSiteToUser(AssignSite.userId, siteId, level, isActive, originalActive, '', $this);
 				}, { modal: true, closeBtn: false });
 			}
 		});
