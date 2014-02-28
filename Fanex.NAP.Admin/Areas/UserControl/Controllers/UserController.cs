@@ -1318,7 +1318,7 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
                     isLoginUserCanActivateSiteToSelectedUser = (UserIsPortalAdmin && (siteLevel.Level < (int)Constant.Level.PortalAdmin))       // portal admin
                             ||
-                            (hasAssignSiteRight && currentUserSiteLevel != null                                                                 // have edit right and greater level in that site
+                            (hasAssignSiteRight && currentUserSiteLevel != null             // have edit right and greater level in that site
                                 && hasHostRightInSiteOfLoginUser && currentUserSiteLevel.IsActive &&
                                 (currentUserSiteLevel.Level > siteLevel.Level
                                 || (currentUserSiteLevel.Level == (int)Constant.Level.User && isSelectedUserInSite)));
