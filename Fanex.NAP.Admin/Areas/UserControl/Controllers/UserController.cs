@@ -309,12 +309,35 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             var siteLevelList = new List<SiteLevel>();
             var currentUserSiteLevelList = new List<SiteLevel>();
 
-            GetSiteListOfCurrentUserAndSelectedUser(
-                id, 
-                ref siteList, 
-                ref editableSiteList, 
-                ref siteLevelList, 
-                ref currentUserSiteLevelList);
+            if (UserIsPortalAdmin)
+            {
+                siteList = _siteService.GetAll(this.Environment, true).ToList();
+                ViewFlags.HasAssignSiteReadRight = true;
+                ViewFlags.HasAssignSiteRight = true;
+            }
+            else
+            {
+                siteList = _siteService.GetByUserAndFunctionKeyIncludeGroup(
+                                                CurrentSession.UserId,
+                                                FunctionKeys.AssignSiteToUser,
+                                                this.Environment,
+                                                policy: Constant.Policy.Read).ToList();
+
+                ViewFlags.HasAssignSiteReadRight = HasRight(FunctionKeys.AssignSiteToUser, Constant.Policy.Read);
+                ViewFlags.HasAssignSiteRight = HasRight(FunctionKeys.AssignSiteToUser, Constant.Policy.Host);
+
+                if (ViewFlags.HasAssignSiteRight)
+                {
+                    editableSiteList = _siteService.GetByUserAndFunctionKeyIncludeGroup(
+                                                            CurrentSession.UserId,
+                                                            FunctionKeys.AssignSiteToUser,
+                                                            this.Environment,
+                                                            policy: Constant.Policy.Host).ToList();
+                }
+            }
+
+            currentUserSiteLevelList = _siteService.GetSiteLevelByUser(CurrentSession.UserId, this.Environment, null).ToList();
+            siteLevelList = _siteService.GetSiteLevelByUser(id, this.Environment, null).ToList();
 
             ViewBag.SiteList = siteList;                                    // list of site which current user has Assign Site To User permission
             ViewBag.CurrentUserSiteLevelList = currentUserSiteLevelList;    // current login site level list
@@ -991,16 +1014,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             if (Request.IsAjaxRequest())
             {
                 // check permission again in server
-                bool isEnabled = false;
-                bool isEditEnabled = false;
+                bool canUpdateSiteToUser = false;
 
-                CheckPermissionToUpdateUser(
-                    userId, 
-                    siteId, 
-                    ref isEnabled, 
-                    ref isEditEnabled);
+                canUpdateSiteToUser = CheckPermissionToUpdateUser(userId, siteId);
 
-                if (isEnabled || (!isEnabled && isEditEnabled))
+                if (canUpdateSiteToUser)
                 {
                     var criteria = new UpdateSiteToUserCriteria
                     {
@@ -1246,29 +1264,94 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
             ViewBag.CurrentUserFuncPolicyList =
                 this._functionService.GetByUserAndSiteIncludeGroup(CurrentSession.UserId, criteria.SiteId, Environment);
+        } 
+
+        /// <summary>
+        /// Check permission to update user.
+        /// </summary>
+        /// <param name="userId">The user ID.</param>
+        /// <param name="siteId">The site ID.</param>
+        /// <returns>The boolean variable to identify that updated user or not.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", 
+            Justification = "Reviewed. Suppression is OK here.")]
+        private bool CheckPermissionToUpdateUser(int userId, int siteId)
+        {
+            bool canUpdateSiteToUser = false;
+            bool isLoginUserCanActivateSiteToSelectedUser = false;
+            bool isLoginUserCanEditSiteToSelectedUser = false;
+            bool hasAssignSiteRight = false;
+            bool hasHostRightInSiteOfLoginUser = false;
+            bool isSelectedUserInSite = false;
+            var siteList = new List<ISite>();
+            var editableSiteList = new List<ISite>();
+            var siteLevelList = new List<SiteLevel>();
+            var currentUserSiteLevelList = new List<SiteLevel>();
+
+            hasAssignSiteRight = HasRight(FunctionKeys.AssignSiteToUser, Constant.Policy.Host);
+
+            if (!UserIsPortalAdmin && hasAssignSiteRight)
+            {
+                editableSiteList = _siteService.GetByUserAndFunctionKeyIncludeGroup(
+                                                            CurrentSession.UserId,
+                                                            FunctionKeys.AssignSiteToUser,
+                                                            this.Environment,
+                                                            policy: Constant.Policy.Host).ToList();
+            }
+
+            siteLevelList = _siteService.GetSiteLevelByUser(userId, this.Environment, null).ToList();
+            SiteLevel siteLevel = siteLevelList.Where(s => s.Site.Id == siteId).FirstOrDefault();
+
+            hasHostRightInSiteOfLoginUser = editableSiteList != null && editableSiteList.Count(s => s.Id == siteId) > 0;
+            isSelectedUserInSite = siteLevel.Level == (int)Constant.Level.User;
+
+            // if user is not edit himself
+            if (CurrentSession.UserId != userId)
+            {
+                siteList = GetSiteList(siteList);
+                var site = siteList.Where(s => s.Id == siteId).FirstOrDefault();
+
+                // if siteLevel is belong to list site has Assign Site to User
+                if (site != null)
+                {
+                    currentUserSiteLevelList = _siteService.GetSiteLevelByUser(CurrentSession.UserId, this.Environment, null).ToList();
+                    var currentUserSiteLevel = currentUserSiteLevelList.Where(s => s.Site.Id == siteId).FirstOrDefault();
+
+                    isLoginUserCanActivateSiteToSelectedUser = (UserIsPortalAdmin && (siteLevel.Level < (int)Constant.Level.PortalAdmin))       // portal admin
+                            ||
+                            (hasAssignSiteRight && currentUserSiteLevel != null                                                                 // have edit right and greater level in that site
+                                && hasHostRightInSiteOfLoginUser && currentUserSiteLevel.IsActive &&
+                                (currentUserSiteLevel.Level > siteLevel.Level
+                                || (currentUserSiteLevel.Level == (int)Constant.Level.User && isSelectedUserInSite)));
+
+                    isLoginUserCanEditSiteToSelectedUser = isLoginUserCanActivateSiteToSelectedUser 
+                                                    ? isLoginUserCanActivateSiteToSelectedUser
+                                                    : !siteLevel.IsActive && currentUserSiteLevel != null && currentUserSiteLevel.IsActive
+                                                         && hasAssignSiteRight && hasHostRightInSiteOfLoginUser;
+                }
+            }
+            else
+            {
+                isLoginUserCanActivateSiteToSelectedUser = (this.SiteId != siteId)
+                        && (UserIsPortalAdmin || (siteLevel.IsActive && hasHostRightInSiteOfLoginUser && isSelectedUserInSite));
+                isLoginUserCanEditSiteToSelectedUser = isLoginUserCanActivateSiteToSelectedUser;
+            }
+
+            canUpdateSiteToUser = isLoginUserCanActivateSiteToSelectedUser ||
+                        (!isLoginUserCanActivateSiteToSelectedUser && isLoginUserCanEditSiteToSelectedUser);
+
+            return canUpdateSiteToUser;
         }
 
         /// <summary>
-        /// Get site list of current user and selected user.
+        /// Get list sites.
         /// </summary>
-        /// <param name="userId">The user ID.</param>
-        /// <param name="siteList">The site list of current user.</param>
-        /// <param name="editableSiteList">The site list that current user has host right in Assign Site to User.</param>
-        /// <param name="siteLevelList">The site level list of selected user.</param>
-        /// <param name="currentUserSiteLevelList">The site level list of current user.</param>
-        private void GetSiteListOfCurrentUserAndSelectedUser(
-            int userId,
-            ref List<ISite> siteList,
-            ref List<ISite> editableSiteList,
-            ref List<SiteLevel> siteLevelList,
-            ref List<SiteLevel> currentUserSiteLevelList)
+        /// <param name="siteList">The list of sites.</param>
+        /// <returns>The List ISite.</returns>
+        private List<ISite> GetSiteList(List<ISite> siteList)
         {
             if (UserIsPortalAdmin)
             {
                 siteList = _siteService.GetAll(this.Environment, true).ToList();
-                currentUserSiteLevelList = _siteService.GetSiteLevelByUser(CurrentSession.UserId, this.Environment, null).ToList();
-                ViewFlags.HasAssignSiteReadRight = true;
-                ViewFlags.HasAssignSiteRight = true;
             }
             else
             {
@@ -1277,83 +1360,9 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                                                 FunctionKeys.AssignSiteToUser,
                                                 this.Environment,
                                                 policy: Constant.Policy.Read).ToList();
-
-                ViewFlags.HasAssignSiteReadRight = HasRight(FunctionKeys.AssignSiteToUser, Constant.Policy.Read);
-                ViewFlags.HasAssignSiteRight = HasRight(FunctionKeys.AssignSiteToUser, Constant.Policy.Host);
-
-                if (ViewFlags.HasAssignSiteRight)
-                {
-                    editableSiteList = _siteService.GetByUserAndFunctionKeyIncludeGroup(
-                                                            CurrentSession.UserId,
-                                                            FunctionKeys.AssignSiteToUser,
-                                                            this.Environment,
-                                                            policy: Constant.Policy.Host).ToList();
-                }
-
-                currentUserSiteLevelList = _siteService.GetSiteLevelByUser(CurrentSession.UserId, this.Environment, null).ToList();
             }
 
-            siteLevelList = _siteService.GetSiteLevelByUser(userId, this.Environment, null).ToList();
-        }
-
-        /// <summary>
-        /// Check permission to update user.
-        /// </summary>
-        /// <param name="userId">The user ID.</param>
-        /// <param name="siteId">The site ID.</param>
-        /// <param name="isEnabled">Checkbox active is enabled or not.</param>
-        /// <param name="isEditEnabled">The Edit button is enabled or not.</param>
-        private void CheckPermissionToUpdateUser(
-            int userId, 
-            int siteId, 
-            ref bool isEnabled, 
-            ref bool isEditEnabled)
-        {
-            var siteList = new List<ISite>();
-            var editableSiteList = new List<ISite>();
-            var siteLevelList = new List<SiteLevel>();
-            var currentUserSiteLevelList = new List<SiteLevel>();
-            bool hasHostRightInSiteOfLoginUser = false;
-            bool isSelectedUserInSite = false;
-
-            GetSiteListOfCurrentUserAndSelectedUser(
-                userId,
-                ref siteList,
-                ref editableSiteList,
-                ref siteLevelList,
-                ref currentUserSiteLevelList); 
-
-            SiteLevel siteLevel = siteLevelList.Where(s => s.Site.Id == siteId).FirstOrDefault();
-            hasHostRightInSiteOfLoginUser = editableSiteList != null && editableSiteList.Count(s => s.Id == siteId) > 0;
-            isSelectedUserInSite = siteLevel.Level == (int)Constant.Level.User;
-
-            // if user is not edit himself
-            if (CurrentSession.UserId != userId)
-            {
-                var site = siteList.Where(s => s.Id == siteId).FirstOrDefault();
-
-                // if siteLevel is belong to list site has Assign Site to User
-                if (site != null)
-                {
-                    var currentUserSiteLevel = currentUserSiteLevelList.Where(s => s.Site.Id == siteId).FirstOrDefault();
-                    isEnabled = (UserIsPortalAdmin && (siteLevel.Level < (int)Constant.Level.PortalAdmin))     // portal admin
-                            ||
-                            (ViewFlags.HasAssignSiteRight && currentUserSiteLevel != null           // have edit right and greater level in that site
-                                && hasHostRightInSiteOfLoginUser && currentUserSiteLevel.IsActive &&
-                                (currentUserSiteLevel.Level > siteLevel.Level
-                                || (currentUserSiteLevel.Level == (int)Constant.Level.User && isSelectedUserInSite)));
-
-                    isEditEnabled = isEnabled ? isEnabled
-                                               : !siteLevel.IsActive && currentUserSiteLevel != null && currentUserSiteLevel.IsActive
-                                                 && ViewFlags.HasAssignSiteRight && hasHostRightInSiteOfLoginUser;
-                }
-            }
-            else
-            {
-                isEnabled = (this.SiteId != siteId)
-                        && (UserIsPortalAdmin || (siteLevel.IsActive && hasHostRightInSiteOfLoginUser && isSelectedUserInSite));
-                isEditEnabled = isEnabled;
-            }
+            return siteList;
         }
 
         #endregion

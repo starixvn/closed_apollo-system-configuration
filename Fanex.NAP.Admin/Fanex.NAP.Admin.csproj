@@ -162,6 +162,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="Areas\UserLogin\themes\img\system_configuration.png" />
+    <Content Include="CodeAnalysis\CodeAnalysisConfiguration.xml" />
     <Content Include="EmailTemplates\ExchangeRate.cshtml" />
     <Content Include="ExcelTemplates\ExchangeRateTemplate.xls" />
   </ItemGroup>
