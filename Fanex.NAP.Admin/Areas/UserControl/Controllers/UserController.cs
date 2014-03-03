@@ -1276,18 +1276,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
             Justification = "Reviewed. Suppression is OK here.")]
         private bool CheckPermissionToUpdateUser(int userId, int siteId)
         {
-            bool canUpdateSiteToUser = false;
             bool isLoginUserCanActivateSiteToSelectedUser = false;
             bool isLoginUserCanEditSiteToSelectedUser = false;
-            bool hasAssignSiteRight = false;
-            bool hasHostRightInSiteOfLoginUser = false;
-            bool isSelectedUserInSite = false;
-            var siteList = new List<ISite>();
             var editableSiteList = new List<ISite>();
-            var siteLevelList = new List<SiteLevel>();
-            var currentUserSiteLevelList = new List<SiteLevel>();
 
-            hasAssignSiteRight = HasRight(FunctionKeys.AssignSiteToUser, Constant.Policy.Host);
+            bool hasAssignSiteRight = HasRight(FunctionKeys.AssignSiteToUser, Constant.Policy.Host);
 
             if (!UserIsPortalAdmin && hasAssignSiteRight)
             {
@@ -1298,22 +1291,22 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
                                                             policy: Constant.Policy.Host).ToList();
             }
 
-            siteLevelList = _siteService.GetSiteLevelByUser(userId, this.Environment, null).ToList();
+            List<SiteLevel> siteLevelList = _siteService.GetSiteLevelByUser(userId, this.Environment, null).ToList();
             SiteLevel siteLevel = siteLevelList.Where(s => s.Site.Id == siteId).FirstOrDefault();
 
-            hasHostRightInSiteOfLoginUser = editableSiteList != null && editableSiteList.Count(s => s.Id == siteId) > 0;
-            isSelectedUserInSite = siteLevel.Level == (int)Constant.Level.User;
+            bool hasHostRightInSiteOfLoginUser = editableSiteList != null && editableSiteList.Any(s => s.Id == siteId);
+            bool isSelectedUserInSite = siteLevel.Level == (int)Constant.Level.User;
 
             // if user is not edit himself
             if (CurrentSession.UserId != userId)
             {
-                siteList = GetSiteList(siteList);
+                List<ISite> siteList = GetSiteList();
                 var site = siteList.Where(s => s.Id == siteId).FirstOrDefault();
 
                 // if siteLevel is belong to list site has Assign Site to User
                 if (site != null)
                 {
-                    currentUserSiteLevelList = _siteService.GetSiteLevelByUser(CurrentSession.UserId, this.Environment, null).ToList();
+                    List<SiteLevel> currentUserSiteLevelList = _siteService.GetSiteLevelByUser(CurrentSession.UserId, this.Environment, null).ToList();
                     var currentUserSiteLevel = currentUserSiteLevelList.Where(s => s.Site.Id == siteId).FirstOrDefault();
 
                     isLoginUserCanActivateSiteToSelectedUser = (UserIsPortalAdmin && (siteLevel.Level < (int)Constant.Level.PortalAdmin))       // portal admin
@@ -1325,18 +1318,20 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
 
                     isLoginUserCanEditSiteToSelectedUser = isLoginUserCanActivateSiteToSelectedUser 
                                                     ? isLoginUserCanActivateSiteToSelectedUser
-                                                    : !siteLevel.IsActive && currentUserSiteLevel != null && currentUserSiteLevel.IsActive
-                                                         && hasAssignSiteRight && hasHostRightInSiteOfLoginUser;
+                                                    : !siteLevel.IsActive && currentUserSiteLevel != null && currentUserSiteLevel.IsActive // login user is a user and has host right in selected site
+                                                         && hasAssignSiteRight && hasHostRightInSiteOfLoginUser;                           // and selected user is not a user in site.
                 }
             }
             else
             {
-                isLoginUserCanActivateSiteToSelectedUser = (this.SiteId != siteId)
-                        && (UserIsPortalAdmin || (siteLevel.IsActive && hasHostRightInSiteOfLoginUser && isSelectedUserInSite));
+                isLoginUserCanActivateSiteToSelectedUser = (this.SiteId != siteId)                          // if current site is not selected site.
+                        && (UserIsPortalAdmin ||                                                            // current user is Portal Admin.
+                            (siteLevel.IsActive && hasHostRightInSiteOfLoginUser && isSelectedUserInSite)); // selected user is a user level and active in selected site
+                                                                                                            // and login user has host right in selected site.
                 isLoginUserCanEditSiteToSelectedUser = isLoginUserCanActivateSiteToSelectedUser;
             }
 
-            canUpdateSiteToUser = isLoginUserCanActivateSiteToSelectedUser ||
+            bool canUpdateSiteToUser = isLoginUserCanActivateSiteToSelectedUser ||
                         (!isLoginUserCanActivateSiteToSelectedUser && isLoginUserCanEditSiteToSelectedUser);
 
             return canUpdateSiteToUser;
@@ -1345,10 +1340,11 @@ namespace Fanex.NAP.Admin.Areas.UserControl.Controllers
         /// <summary>
         /// Get list sites.
         /// </summary>
-        /// <param name="siteList">The list of sites.</param>
         /// <returns>The List ISite.</returns>
-        private List<ISite> GetSiteList(List<ISite> siteList)
+        private List<ISite> GetSiteList()
         {
+            var siteList = new List<ISite>();
+
             if (UserIsPortalAdmin)
             {
                 siteList = _siteService.GetAll(this.Environment, true).ToList();
