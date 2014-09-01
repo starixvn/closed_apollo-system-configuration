@@ -224,43 +224,13 @@
     <Content Include="Areas\UserLogin\Views\Common\Offline.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Web.local.Debug.config">
-      <DependentUpon>Web.local.config</DependentUpon>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Web.local.Release.config">
-      <DependentUpon>Web.local.config</DependentUpon>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Web.uat.config">
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Web.uat.Debug.config">
-      <DependentUpon>Web.uat.config</DependentUpon>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Web.uat.Release.config">
-      <DependentUpon>Web.uat.config</DependentUpon>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Web.prod.config">
       <SubType>Designer</SubType>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Web.prod.Debug.config">
-      <DependentUpon>Web.prod.config</DependentUpon>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Web.prod.Release.config">
-      <DependentUpon>Web.prod.config</DependentUpon>
     </Content>
   </ItemGroup>
   <ItemGroup>
