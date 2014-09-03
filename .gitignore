@@ -27,3 +27,5 @@ _ReSharper*/
 [Tt]est[Rr]esult*
 *.vssscc
 $tf*/
+Fanex.NAP.Hub/Fanex.NAP.Hub.Publish.xml
+Fanex.NAP.Admin/Fanex.NAP.Admin.Publish.xml
