@@ -9,11 +9,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.Admin", "Fanex.NA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.Hub", "Fanex.NAP.Hub\Fanex.NAP.Hub.csproj", "{FBA53435-FE84-4C1B-93F1-64407A1ED6DF}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StyleCop", "StyleCop", "{96F00BB8-E8D9-47EC-BBB6-CF0DA64D3CDA}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.Admin.Core", "Fanex.NAP.Admin.Core\Fanex.NAP.Admin.Core.csproj", "{4B55E86F-17AA-488B-A2EA-7F15ABB2E751}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CodeAnalysis", "CodeAnalysis", "{E9050DB4-A83E-4F63-A294-83B050DAB392}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CodeAnalysis", "CodeAnalysis", "{6082A967-E3AA-46E6-9EA9-3CC5E9ED3447}"
 	ProjectSection(SolutionItems) = preProject
 		CodeAnalysis\CodeAnalysisConfiguration.xml = CodeAnalysis\CodeAnalysisConfiguration.xml
 	EndProjectSection
